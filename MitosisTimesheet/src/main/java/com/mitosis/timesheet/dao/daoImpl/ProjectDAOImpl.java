@@ -1,0 +1,127 @@
+package com.mitosis.timesheet.dao.daoImpl;
+
+
+import java.util.List;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
+import com.mitosis.timesheet.dao.ProjectDAO;
+import com.mitosis.timesheet.model.ProjectModel;
+import com.mitosis.timesheet.util.*;
+
+
+public class ProjectDAOImpl extends BaseService implements ProjectDAO  {
+	boolean flag = false;
+	public boolean save(ProjectModel project) {
+		try{
+			begin();
+			persist(project);
+			commit();
+			flag = true;
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close();
+		}
+		return flag;
+	}
+
+
+	public boolean update(ProjectModel project) {
+		try{
+			begin();
+			merge(project);
+			commit();
+			flag = true;
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close();
+		}
+		return flag;
+	}
+
+	public boolean removeProjectById(int projectId){
+		try{
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaDelete<ProjectModel> delete = qb.createCriteriaDelete(ProjectModel.class);
+			Root<ProjectModel> root = delete.from(ProjectModel.class);
+			delete.where(qb.equal(root.get("projectId"), projectId));
+			entityManager.createQuery(delete).executeUpdate();
+			commit();
+			flag=true;
+		}finally{
+			close();
+		}
+		return flag;
+
+	}
+	@Override
+	public List<ProjectModel> showlist() {
+		List<ProjectModel> projectlist = null;
+		try{
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<ProjectModel> cq = qb.createQuery(ProjectModel.class);
+			Root<ProjectModel> root = cq.from(ProjectModel.class);
+			cq.select(root);
+			cq.orderBy(qb.desc(root.get("projectId")));
+			projectlist = entityManager.createQuery(cq).getResultList();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close();
+		}
+		return projectlist;
+	}
+	@Override
+	public boolean checkProjectName(String projectName){
+
+		ProjectModel project=new ProjectModel();
+		try{
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<ProjectModel> cq = qb.createQuery(ProjectModel.class);
+			Root<ProjectModel> root = cq.from(ProjectModel.class);
+			cq.where(qb.equal(root.get("projectName"), projectName));
+			cq.select(root);
+			project=entityManager.createQuery(cq).getSingleResult();
+
+		}catch(Exception e){
+			return flag;
+		}finally{
+			close();
+		}
+		return true;
+	}
+	@Override
+	public String getProjectName(int projectId){
+		String name="";
+		ProjectModel project=new ProjectModel();
+		try{
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<ProjectModel> cq = qb.createQuery(ProjectModel.class);
+			Root<ProjectModel> root = cq.from(ProjectModel.class);
+			cq.where(qb.equal(root.get("projectId"), projectId));
+			cq.select(root);
+			project=entityManager.createQuery(cq).getSingleResult();
+			name=project.getProjectName();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close();
+		}
+		return name;
+	}
+}
+
+

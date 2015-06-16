@@ -1,0 +1,28 @@
+
+<div id="auth_container" style="margin-top: 15%; margin-left: 33%;" ng-controller="forgotpasswordController">
+
+  <h2 style="padding: 10px;">Reset Password</h2>
+<div id="validationmsg_reset_password" style="margin-left: 20%;color:red"></div>
+  <form ng-submit="resetpassword()">
+    <ul>
+   <li>
+            <input required type="password" name="password" id="uname_log" required ng-model="newpassword" placeholder="New Password" class="required requiredField Email fg-input text fg-fw" />
+        </li>
+        <li>
+            <input required type="password" name="password" id="password_log" required ng-model="confirmpassword" placeholder="Confirm Password" class="required requiredField fg-input text fg-fw" />
+        </li>	
+        <li>
+       <div class="clear"></div>     
+          <input type="hidden" name="plan" id="plan" value="1" />	
+            <input type="hidden" name="redirect" id="redirect" value="IjM5M19vdGhlciI_3D" />
+            <input type="hidden" name="login" id="login" value="login" />
+            <input class="submit signin_btn fg-btn blue large inline fg-fw bold" type="submit" value="Submit"/>
+            <input type="hidden" name="submitted" id="submitted" value="true" />
+        </li>
+    </ul>
+ </form>
+</div>
+<div class="alert-msg col-xs-12 col-sm-6" style="margin-left: 25%; margin-top: 5%;"><p class="alert-success"></p></div>
+<div class="alert-msg1 col-xs-12 col-sm-6" style="margin-left: 25%; margin-top: 5%;"><p class="alert-danger"></p></div>
+
+

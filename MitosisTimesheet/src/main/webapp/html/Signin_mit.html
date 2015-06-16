@@ -1,0 +1,113 @@
+
+<div id="auth_wraper" >
+<div id='screenblur' style='height:100%; display:{{blocker}}; position: fixed;
+   top: 0;
+   right: 0;
+   bottom: 0;
+   left: 0;
+   height: 100%;
+   width: 100%;
+   margin: 0;
+   padding: 0;
+   background: #000000;
+   opacity: 0.25;
+   filter: alpha(opacity=25);
+   -moz-opacity: .25;
+   z-index: 100; 
+ '></div>
+    <div id="auth_container">
+
+        <!--Signup Container-->
+        <div  id="login_container" ng-controller="loginController">
+            <img alt="" src="images/mt1.png" style="float: left;"><h2 class="signup_heading"> TimeSheet</h2>    
+            <div style="display:none;" class="login_or"></div>
+            <div id="div_error_box_login"></div>
+            <form ng-submit="login()" >
+                <ul>
+                    <li>
+                        <input required type="text" name="email" id="uname_log" required ng-model="username" ng-trim="false" placeholder="User Name" class="required requiredField Email fg-input text fg-fw" />
+                    </li>
+                    <li>
+                        <input required type="password" name="password" id="password_log" required ng-model="password" ng-trim="false" placeholder="Password" class="required requiredField fg-input text fg-fw" />
+                    </li>	
+                    <li>
+                   <div class="clear"></div>     
+                      <input type="hidden" name="plan" id="plan" value="1" />	
+                        <input type="hidden" name="redirect" id="redirect" value="IjM5M19vdGhlciI_3D" />
+                        <input type="hidden" name="login" id="login" value="login" />
+                        <input class="submit signin_btn fg-btn blue large inline fg-fw bold" type="submit" value="Sign In"/>
+                        <input type="hidden" name="submitted" id="submitted" value="true" />
+                    </li>
+                </ul>	
+            </form> 
+         <div>
+                <a class="forgot-password" id="forgot_pwd" style="cursor: pointer;">Forgot Password?</a>
+                <a id="register" class="signup-btn">Create New Account</a><br>
+                <div class="clearfix"></div>
+            </div>
+
+        </div>
+        <!--/Signup Container-->
+        <!--Login Container-->
+ 
+        <div id="container" ng-controller="signupController">
+        
+         <div id="mydiv" style="z-index: 102;" ng-show="loader">
+		<img src="images/loading_image.gif" id="loading_image"/>
+		</div>
+		
+
+        <div id="signup_container" style="display: none;" ng-show="signup">
+            <h2 class="signup_heading">Create an Account</h2>     
+            <div style="display:none;" class="login_or"></div>
+            <div id="div_error_box_reg" >
+                            </div>
+            <form ng-submit="signup()">
+                <ul>
+                    <li>
+                        <input required type="text" name="uname" id="reg_uname" ng-model="name" placeholder="Full Name" class="required requiredField Username fg-input text fg-fw" />
+                    </li>
+                    <li>
+                        <input required type="email" name="email" id="email"  ng-model="email" placeholder="Email" class="required requiredField Email fg-input text fg-fw" />
+                    </li>
+                    <li>
+                        <input required type="text" name="username" id="username" ng-trim="false" ng-model="username" placeholder="UserName" class="required requiredField fg-input text fg-fw" />
+                    </li>
+                    <li>
+                        <input required type="password" name="password" id="reg_password" ng-trim="false" ng-model="password" placeholder="Password" class="required requiredField Password fg-input text fg-fw" />
+                    </li>
+                   
+                   <li>
+                        <input type="submit" class="submit fg-btn blue large inline fg-fw bold" value="SignUp"/>
+                        <input type="hidden" name="submitted" id="submitted" value="true" />
+                        <a id="signin" style="cursor: pointer; float: right; font-size: 17px; color: gray;"><span style="font-size: 15px; color: gray;"></span>back</a>
+                    </li>
+                </ul>
+            </form>
+        </div>
+        </div>
+     <div id="passwordcontainer"  ng-controller="forgotpasswordController">
+     
+      <div id="loaderdiv" style="z-index: 102;" ng-show="loader">
+		<img src="images/loading_image.gif" id="loading_image"/>
+		</div>
+        
+        <div id='mid' class='reset-container' style="display: none;" ng-show="passwordhide">
+                            <h3 class="heading">Reset Your Password</h3>
+                            <div class='login_bar'></div>
+                            <form ng-submit="mailvalidation()" >
+                            <input id="resetemail" required type='text' class='f_email fg-input text fg-fw' ng-model="resetemailid" id='f_email' placeholder="Email Address"/>
+                            <p class="fg-help">Enter registered email address to reset the password</p>
+                            <p id="error_msg"></p>
+                            <input id='for_sub' class="fg-btn fg-fw block blue large bold" type=submit value="Reset Password"/>
+                            <a id="signin1" style="cursor: pointer; float: right; font-size: 17px; color: gray;"><span style="font-size: 15px; color: gray;"></span>back</a>
+                           </form>
+          </div>
+          </div>
+                    
+    </div>                 		
+</div>
+<script src="js/customized.js"></script>
+
+<div class="alert-msg col-xs-12 col-sm-6" style="margin-left: 25%; margin-top: 5%;"><p class="alert-success"></p></div>
+<div class="alert-msg1 col-xs-12 col-sm-6" style="margin-left: 25%; margin-top: 5%;"><p class="alert-danger"></p></div>
