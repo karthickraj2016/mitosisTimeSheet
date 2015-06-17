@@ -62,7 +62,7 @@ angular.module('myApp', ['ui.router','myApp.controllers','ngStorage','ui.bootstr
           	 })
           .state('account', {
                   url: '/account',
-                  templateUrl: 'html/Account.html',
+                  templateUrl: 'html/account.html',
 //                  controller : 'listcontroller'
           	 })
           .state('resetpassword', {
