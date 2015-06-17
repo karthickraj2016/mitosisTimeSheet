@@ -73,6 +73,9 @@ angular.module('myApp.controllers')
 
     			$(".alert-msg").show().delay(2000).fadeOut(); 
     			$(".alert-success").html("New password has been changed successfully!!!");
+    			$('#password').empty();
+				$('#newpassword').empty();
+				$('#confirmpassword').empty();
     			}
     		})
     		
@@ -84,31 +87,7 @@ angular.module('myApp.controllers')
     	
     },
     
-   /* $scope.showuserdetails= function(){
-    	
-    	
-    	
-    	$http({
-    		url: 'rest/accountdetails/showuserdetails',
-    		method: 'GET',
-    		headers: {
-    			'Content-Type': 'application/json'
-    		}
-    	}).success(function(result, status, headers) {
-    		
-    		console.log(result);
-    		
-    		$scope.name=result.name;
-    		$scope.email=result.eMail;
-    		$scope.username = result.userName;
-    		
-    		
-    	});
-    	
-    	
-    	
-    }*/
-    
+   
     $scope.edituserdetails = function(){
     	
     	var menuJson = angular.toJson({
@@ -136,7 +115,7 @@ angular.module('myApp.controllers')
 			$('.btn-profile-save').hide();
 			$('.btn-profile-cancel').hide();
 			$(".alert-msg").show().delay(2000).fadeOut();
-			$(".alert-success").html("your profile details has been recorded successfully!!!");
+			$(".alert-success").html("your Account details has been recorded successfully!!!");
 		
 			}
 			 else if(result.msg=="updationerror"){
