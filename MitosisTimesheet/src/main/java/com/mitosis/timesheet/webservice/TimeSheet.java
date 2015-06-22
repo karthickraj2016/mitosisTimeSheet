@@ -49,8 +49,6 @@ public class TimeSheet {
 		TimeSheetVo timesheetVo = new TimeSheetVo();
 
 		JSONObject jsonObject = new JSONObject();
-		
-		
 
 		Date date = Date.valueOf(jsonobject.getString("date"));
 		

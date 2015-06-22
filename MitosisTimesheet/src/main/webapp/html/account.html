@@ -12,8 +12,8 @@
     <div class="collapse navbar-collapse" id="myNavbar" ng-controller="HeaderController">
       <ul class="nav navbar-nav" style="margin-left: 30px; margin-top: 8px;">
         <li ng-class="{ active: isActive('/timesheet')}"><a ui-sref="timesheet">Home</a></li>
-        <li ng-class="{ active: isActive('/project')}"><a ui-sref="project">Project Details</a></li>
-        <li ng-class="{ active: isActive('/projectmapping')}"><a ui-sref="projectmapping">Team Assignment</a></li>
+     <!--    <li ng-class="{ active: isActive('/project')}"><a ui-sref="project">Project Details</a></li>
+        <li ng-class="{ active: isActive('/projectmapping')}"><a ui-sref="projectmapping">Team Assignment</a></li> -->
         </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="lb-username"><lable ng-model="name">Welcome {{name}}</lable></li>
@@ -54,7 +54,7 @@
 	    <span class="glyphicon glyphicon-pencil"></span> Edit
 	    </button>
 	    <input type="submit" class="btn btn-primary btn-xs btn-profile-save" value="Save"></input>
-	    <button class="btn btn-primary btn-xs btn-profile-cancel">Cancel</button>
+	    <input type="button" class="btn btn-primary btn-xs btn-profile-cancel" ng-click="cancel()" value="Cancel"></input>
       </div>
     </div>
     <hr style="border: grey;">
@@ -105,13 +105,7 @@ $(".btn-profile-edit").click(function() {
 	$('.btn-profile-save').show();
 	$('.btn-profile-cancel').show();
 });
-$(".btn-profile-cancel").click(function() {
-	$(".span-profile").show();
-	$(".edit-profile").hide();
-	$('.btn-profile-edit').show();	
-	$('.btn-profile-save').hide();
-	$('.btn-profile-cancel').hide();
-});
+
 $(".btn-pwdchange").click(function() {
 	$(".password-change").toggle();
 });
