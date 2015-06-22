@@ -43,10 +43,7 @@ public class AccountDetailsDaoImpl extends BaseService implements AccountDetails
 		
 		
 		UserDetailsModel userDetailsmodel = new UserDetailsModel();
-		
-		
-		System.out.println(userDetailsModel);
-		
+
 
 		try{
 			begin();

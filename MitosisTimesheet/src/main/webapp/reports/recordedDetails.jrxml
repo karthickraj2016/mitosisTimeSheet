@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report3" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fromDate" class="java.util.Date"/>
+	<parameter name="ToDate" class="java.lang.String"/>
+	<parameter name="name" class="java.lang.String"/>
+	<field name="date" class="java.util.Date"/>
+	<field name="hours" class="java.lang.Double"/>
+	<field name="issueNumber" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="109" splitType="Stretch">
+			<staticText>
+				<reportElement x="212" y="12" width="93" height="19"/>
+				<textElement/>
+				<text><![CDATA[Mitosis Timesheet]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="242" y="44" width="84" height="15"/>
+				<textElement/>
+				<text><![CDATA[ - TimesheetList]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="159" y="75" width="32" height="20"/>
+				<textElement/>
+				<text><![CDATA[From:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="75" width="18" height="20"/>
+				<textElement/>
+				<text><![CDATA[To: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="191" y="75" width="85" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$P{fromDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="297" y="75" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{ToDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="188" y="44" width="54" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="41" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<rectangle>
+				<reportElement x="1" y="10" width="507" height="26"/>
+			</rectangle>
+			<line>
+				<reportElement x="310" y="11" width="1" height="25"/>
+			</line>
+			<line>
+				<reportElement x="97" y="10" width="1" height="26"/>
+			</line>
+			<line>
+				<reportElement x="197" y="10" width="1" height="26"/>
+			</line>
+			<textField>
+				<reportElement x="12" y="17" width="70" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Date"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="127" y="15" width="43" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Hours"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="206" y="14" width="92" height="18"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Issue Number"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="343" y="14" width="92" height="18"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Description"]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="31" splitType="Stretch">
+			<line>
+				<reportElement x="1" y="30" width="507" height="1"/>
+			</line>
+			<line>
+				<reportElement x="1" y="-5" width="1" height="35"/>
+			</line>
+			<line>
+				<reportElement x="97" y="-5" width="1" height="35"/>
+			</line>
+			<line>
+				<reportElement x="197" y="-6" width="1" height="36"/>
+			</line>
+			<line>
+				<reportElement x="508" y="-6" width="1" height="36"/>
+			</line>
+			<line>
+				<reportElement x="310" y="-5" width="1" height="35"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="13" y="1" width="50" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{date}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="120" y="2" width="65" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{hours}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="205" y="2" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{issueNumber}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="342" y="3" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="49" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

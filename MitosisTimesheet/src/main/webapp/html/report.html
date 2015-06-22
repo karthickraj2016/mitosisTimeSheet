@@ -1,0 +1,7 @@
+ <div ng-init="dates()" class="form-group" ng-controller="reportsController" >
+ <form ng-submit="recordedList()">
+   From date :<input type="text" required class="form-control" ui-date="dateOptions" ui-date-format="yy-mm-dd" ng-model="timesheet.fromdate"><br/>
+   To date  : <input type="text" required class="form-control" ui-date="dateOptions" ui-date-format="yy-mm-dd" ng-model="timesheet.todate"><br/>
+   <input type="submit" value="generate" ></input>
+   </form>
+    </div>
