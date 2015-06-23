@@ -1,29 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report3" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="156"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="fromDate" class="java.util.Date"/>
-	<parameter name="ToDate" class="java.lang.String"/>
+	<parameter name="ToDate" class="java.util.Date"/>
 	<parameter name="name" class="java.lang.String"/>
 	<field name="date" class="java.util.Date"/>
 	<field name="hours" class="java.lang.Double"/>
 	<field name="issueNumber" class="java.lang.String"/>
 	<field name="description" class="java.lang.String"/>
-	<background>
-		<band splitType="Stretch"/>
-	</background>
+	<field name="project.projectName" class="java.lang.String"/>
 	<title>
-		<band height="109" splitType="Stretch">
+		<band height="96" splitType="Stretch">
 			<staticText>
 				<reportElement x="212" y="12" width="93" height="19"/>
 				<textElement/>
 				<text><![CDATA[Mitosis Timesheet]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="242" y="44" width="84" height="15"/>
+				<reportElement x="242" y="44" width="136" height="15"/>
 				<textElement/>
-				<text><![CDATA[ - TimesheetList]]></text>
+				<text><![CDATA[ - Timesheet Detail Report]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="159" y="75" width="32" height="20"/>
@@ -40,10 +38,10 @@
 				<textElement/>
 				<textFieldExpression class="java.util.Date"><![CDATA[$P{fromDate}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="false">
 				<reportElement x="297" y="75" width="100" height="20"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{ToDate}]]></textFieldExpression>
+				<textFieldExpression class="java.util.Date"><![CDATA[$P{ToDate}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="188" y="44" width="54" height="15"/>
@@ -52,13 +50,10 @@
 			</textField>
 		</band>
 	</title>
-	<pageHeader>
-		<band height="41" splitType="Stretch"/>
-	</pageHeader>
 	<columnHeader>
 		<band height="36" splitType="Stretch">
 			<rectangle>
-				<reportElement x="1" y="10" width="507" height="26"/>
+				<reportElement x="1" y="10" width="554" height="26" backcolor="#F3E822"/>
 			</rectangle>
 			<line>
 				<reportElement x="310" y="11" width="1" height="25"/>
@@ -80,65 +75,72 @@
 				<textFieldExpression class="java.lang.String"><![CDATA["Hours"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="206" y="14" width="92" height="18"/>
+				<reportElement x="322" y="16" width="92" height="18"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA["Issue Number"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="343" y="14" width="92" height="18"/>
+				<reportElement x="442" y="14" width="92" height="18"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA["Description"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="417" y="11" width="1" height="25"/>
+			</line>
+			<textField>
+				<reportElement x="222" y="16" width="81" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Project Name"]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="31" splitType="Stretch">
-			<line>
-				<reportElement x="1" y="30" width="507" height="1"/>
-			</line>
-			<line>
-				<reportElement x="1" y="-5" width="1" height="35"/>
-			</line>
-			<line>
-				<reportElement x="97" y="-5" width="1" height="35"/>
-			</line>
-			<line>
-				<reportElement x="197" y="-6" width="1" height="36"/>
-			</line>
-			<line>
-				<reportElement x="508" y="-6" width="1" height="36"/>
-			</line>
-			<line>
-				<reportElement x="310" y="-5" width="1" height="35"/>
-			</line>
+		<band height="37" splitType="Stretch">
+			<rectangle>
+				<reportElement x="1" y="0" width="554" height="37"/>
+			</rectangle>
 			<textField isBlankWhenNull="true">
-				<reportElement x="13" y="1" width="50" height="20"/>
+				<reportElement x="12" y="4" width="50" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.util.Date"><![CDATA[$F{date}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="97" y="0" width="1" height="37"/>
+			</line>
 			<textField isBlankWhenNull="true">
-				<reportElement x="120" y="2" width="65" height="20"/>
+				<reportElement x="119" y="3" width="65" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.Double"><![CDATA[$F{hours}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="197" y="0" width="1" height="37"/>
+			</line>
+			<line>
+				<reportElement x="197" y="0" width="1" height="37"/>
+			</line>
+			<line>
+				<reportElement x="310" y="0" width="1" height="37"/>
+			</line>
+			<line>
+				<reportElement x="417" y="0" width="1" height="37"/>
+			</line>
+			<textField>
+				<reportElement x="205" y="4" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{project.projectName}]]></textFieldExpression>
+			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="205" y="2" width="100" height="20"/>
+				<reportElement x="317" y="3" width="100" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{issueNumber}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="342" y="3" width="100" height="20"/>
+				<reportElement x="442" y="4" width="100" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="49" splitType="Stretch"/>
-	</columnFooter>
-	<pageFooter>
-		<band height="54" splitType="Stretch"/>
-	</pageFooter>
 	<summary>
 		<band height="42" splitType="Stretch"/>
 	</summary>

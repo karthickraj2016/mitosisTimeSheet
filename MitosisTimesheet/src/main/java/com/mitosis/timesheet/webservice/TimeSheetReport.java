@@ -37,25 +37,25 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import com.mitosis.timesheet.model.TimeSheetModel;
-import com.mitosis.timesheet.service.TimeSheetListService;
-import com.mitosis.timesheet.service.impl.TimeSheetListServiceImpl;
+import com.mitosis.timesheet.service.TimeSheetReportService;
+import com.mitosis.timesheet.service.impl.TimeSheetReportServiceImpl;
 
 
-@Path("timesheetlist")
-public class TimeSheetList {
+@Path("timesheetreport")
+public class TimeSheetReport {
 	
-	TimeSheetListService timeSheetListService  = new TimeSheetListServiceImpl();
+	TimeSheetReportService timeSheetReportService  = new TimeSheetReportServiceImpl();
 	
 	
 	@Context private HttpServletRequest request;
 	
-	@Path("/gettimesheetlist")
+	
+	@Path("/gettimesheetdetailreport")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public JSONObject getTimeSheetList(JSONObject jsonObject) throws JSONException, JRException, IOException{
+	public JSONObject getTimeSheetDetailReport(JSONObject jsonObject) throws JSONException, JRException, IOException{
 		
-		//OutputStream outputStream = null;
 		
 		JSONObject jsonObj = new JSONObject();
 		HttpSession session= request.getSession(true);
@@ -69,14 +69,14 @@ public class TimeSheetList {
 				
 		String name = jsonObject.getString("name");
 		
-		List<TimeSheetModel> timeSheetList = new ArrayList<TimeSheetModel>();
+		List<TimeSheetModel> timeSheetDetailReport = new ArrayList<TimeSheetModel>();
 		
 		Date fromdate = Date.valueOf(jsonObject.getString("fromdate"));
 		
 		Date todate = Date.valueOf(jsonObject.getString("todate"));
 		
 		
-		timeSheetList = timeSheetListService.getTimeSheetReport(fromdate, todate, employeeId);
+		timeSheetDetailReport = timeSheetReportService.getTimeSheetDetailReport(fromdate, todate, employeeId);
 		
 		
 		JasperDesign jasperDesign = JRXmlLoader.load(request.getSession().getServletContext()
@@ -88,10 +88,10 @@ public class TimeSheetList {
 		      Map<String, Object> parameters = new HashMap<String, Object>();
 		      
 		      parameters.put("fromDate", fromdate);
-		      parameters.put("toDate", todate);
+		      parameters.put("ToDate", todate);
 		      parameters.put("name",name);
 		      
-		      JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(timeSheetList);
+		      JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(timeSheetDetailReport);
 		      JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, ds);
 
 		      String path = this.getClass().getClassLoader().getResource("/").getPath();
@@ -102,6 +102,7 @@ public class TimeSheetList {
 
 		      
 		      jsonObj.put("pdfFileName","recordedDetails"+employeeId+".pdf");
+		      jsonObj.put("pdfPath",pdfPath+ "reports/recordedDetails" + employeeId + ".pdf");
 		   
 		
 		return jsonObj;
@@ -117,8 +118,6 @@ public class TimeSheetList {
 		JSONObject jsonobject = new JSONObject();
 		
 		File file = new File(jsonObject.getString("filepath"));
-		
-		
 		
 		if(file.exists()){
 			
@@ -136,7 +135,7 @@ public class TimeSheetList {
 		}
 		
 
-		return jsonObject;
+		return jsonobject;
 		
 		
 		

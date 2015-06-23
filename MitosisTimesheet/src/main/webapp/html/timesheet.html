@@ -23,7 +23,7 @@
         <li ng-class="{ active: isActive('/timesheet')}"><a ui-sref="timesheet">Home</a></li>
        <!--  <li ng-class="{ active: isActive('/project')}"><a ui-sref="project">Project Details</a></li>
         <li ng-class="{ active: isActive('/projectmapping')}"><a ui-sref="projectmapping">Team Assignment</a></li> -->
-        <li ng-class="{ active: isActive('/project')}"><a ui-sref="reports">RecordedList</a></li>
+        <li ng-class="{ active: isActive('/project')}"><a ui-sref="reports">Reports</a></li>
         </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="lb-username"><lable ng-model="name">Welcome {{name}}</lable></li>
@@ -77,8 +77,6 @@
 	
 	</div> 
   </form>
-  
-  	<button style="margin-left: 8px;" ng-click="timesheetreport()" class="btn btn-primary">list</button>
  
 </div>
 <table class="table" style="">

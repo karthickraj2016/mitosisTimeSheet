@@ -10,18 +10,18 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import com.mitosis.timesheet.dao.TimeSheetListDao;
+import com.mitosis.timesheet.dao.TimeSheetReportDao;
 import com.mitosis.timesheet.model.TimeSheetModel;
 import com.mitosis.timesheet.model.UserDetailsModel;
 import com.mitosis.timesheet.util.BaseService;
 
-public class TimeSheetListDaoImpl extends BaseService implements TimeSheetListDao {
+public class TimeSheetReportDaoImpl extends BaseService implements TimeSheetReportDao {
 
 	@Override
-	public List<TimeSheetModel> getTimeSheetReport(Date fromdate, Date todate,int employeeId) {
+	public List<TimeSheetModel> getTimeSheetDetailReport(Date fromdate, Date todate,int employeeId) {
 		// TODO Auto-generated method stub
 		
-		List<TimeSheetModel> timeSheetList = new ArrayList<TimeSheetModel>();
+		List<TimeSheetModel> timeSheetDetailReport = new ArrayList<TimeSheetModel>();
 		try{
 			begin();
 			entityManager.getEntityManagerFactory().getCache().evictAll();
@@ -35,14 +35,14 @@ public class TimeSheetListDaoImpl extends BaseService implements TimeSheetListDa
 			Predicate conditions = qb.and(condition, condition2, condition3);
 			cq.where(conditions);
 			cq.select(root);
-			timeSheetList = entityManager.createQuery(cq).getResultList();
+			timeSheetDetailReport = entityManager.createQuery(cq).getResultList();
 			commit(); 
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{
 			close();
 		}
-		return timeSheetList;
+		return timeSheetDetailReport;
 	}
 	
 	

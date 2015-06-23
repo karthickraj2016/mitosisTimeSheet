@@ -6,8 +6,8 @@ import java.util.List;
 
 import com.mitosis.timesheet.model.TimeSheetModel;
 
-public interface TimeSheetListService {
+public interface TimeSheetReportService {
 
-	public List<TimeSheetModel> getTimeSheetReport(Date fromdate,Date todate, int employeeId);
+	public List<TimeSheetModel> getTimeSheetDetailReport(Date fromdate,Date todate, int employeeId);
 
 }

@@ -87,6 +87,18 @@ angular.module('myApp.controllers')
     	
     },
     
+    $scope.cancel = function(){
+    	
+ 	   $(".span-profile").show();
+ 	 	$(".edit-profile").hide();
+ 	 	$('.btn-profile-edit').show();	
+ 	 	$('.btn-profile-save').hide();
+ 	 	$('.btn-profile-cancel').hide();
+ 	   $scope.accountList();	
+     	
+     	
+     	
+     },
    
     $scope.edituserdetails = function(){
     	

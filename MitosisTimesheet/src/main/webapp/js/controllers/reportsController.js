@@ -36,13 +36,41 @@ angular.module('myApp.controllers')
 	};
 	
 	
-	$scope.recordedList = function(){
+	$scope.detailreport = function(){
+	
+		var menuJson = angular.toJson({"fromdate":$scope.timesheet.fromdate,"todate":$scope.timesheet.todate,"name":$rootScope.name});
 		
 		
-		console.log($scope.timesheet.fromdate+','+$scope.timesheet.todate);
-		console.log($scope.name);
-		$scope.name ="karthick";
-		var menuJson = angular.toJson({"fromdate":$scope.timesheet.fromdate,"todate":$scope.timesheet.todate,"name":$scope.name});
+		$http({
+			url: 'rest/timesheetreport/gettimesheetdetailreport',
+			method: 'POST',
+			data: menuJson,
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).success(function(result, status, headers) {
+			
+			var a = document.createElement('a');
+			 a.href = "/MitosisTimesheet/reports/"+result.pdfFileName;
+			console.log(a);
+				 a.download = "recordedDetails.pdf";
+			 document.body.appendChild(a);
+		        a.click();
+		        document.body.removeChild(a);
+		    $scope.filepath = a.href;
+		        console.log($scope.filepath);
+		        $scope.deletepdfFile(result.pdfPath);
+			
+		});
+		
+		
+		
+		
+		
+	},
+	
+	
+	$scope.summaryreport = function(){
 		
 		
 		$http({
@@ -63,20 +91,15 @@ angular.module('myApp.controllers')
 		        document.body.removeChild(a);
 		    $scope.filepath = a.href;
 		        console.log($scope.filepath);
-		        $scope.deletepdfFile();
+		        $scope.deletepdfFile(result.pdfPath);
 			
 		});
 		
-		
-		
-		
-		
-	},
+	}
 	
-	
-	$scope.deletepdfFile= function(){
+	$scope.deletepdfFile= function(pdfPath){
 		
-		var menuJson = angular.toJson({"filepath":$scope.filepath});
+		var menuJson = angular.toJson({"filepath":pdfPath});
 		
 		$http({
 			url: 'rest/timesheetlist/deletepdffile',
@@ -95,7 +118,12 @@ angular.module('myApp.controllers')
 		
 	}
 	
-
+	function HeaderController($scope, $location) 
+	{ 
+	    $scope.isActive = function (viewLocation) { 
+	        return viewLocation === $location.path();
+	    };
+	}
 
 
 }])

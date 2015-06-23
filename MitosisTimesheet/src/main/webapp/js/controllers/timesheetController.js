@@ -60,7 +60,7 @@ angular.module('myApp.controllers')
 		if(result==""){
 			$state.go('login')
 			}else{
-			$scope.name=result;
+			$rootScope.name=result;
 			
 		}
 	});
@@ -297,27 +297,6 @@ angular.module('myApp.controllers')
 	},
 	
 	
-	$scope.timesheetreport = function(){
-		
-		var menuJson = angular.toJson({
-			"fromdate": "2015-06-09","todate":"2015-06-14","id":230
- 
-	
-		});
-		
-		$http({
-			url: 'rest/timesheetlist/gettimesheetlist',
-			method: 'POST',
-			data:menuJson,
-		}).success(function(result, status, headers) {
-
-			console.log(result);
-		})
-		
-		
-		
-	}
-
 	$scope.logout = function(){
 
 		$http({
