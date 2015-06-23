@@ -21,8 +21,8 @@
     <div class="collapse navbar-collapse" id="myNavbar" ng-controller="HeaderController">
       <ul class="nav navbar-nav" style="margin-left: 30px; margin-top: 8px;">
         <li ng-class="{ active: isActive('/timesheet')}"><a ui-sref="timesheet">Home</a></li>
-        <li ng-class="{ active: isActive('/project')}"><a ui-sref="project">Project Details</a></li>
-        <li ng-class="{ active: isActive('/projectmapping')}"><a ui-sref="projectmapping">Team Assignment</a></li>
+        <li ng-show="manageProject" ng-class="{ active: isActive('/project')}"><a ui-sref="project">Project Details</a></li>
+        <li ng-show="manageTeam" ng-class="{ active: isActive('/projectmapping')}"><a ui-sref="projectmapping">Team Assignment</a></li>
         </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="lb-username"><lable ng-model="name">Welcome {{name}}</lable></li>
@@ -49,7 +49,7 @@
     </div>
     <div class="form-group" style="word-spacing: 0;">
     <span for="dropdown"  style="font-size: 20px;">Billable</span>
-    <select class="form-control" style="" ng-model="project.billable">
+    <select class="form-control" required ng-model="project.billable">
 	<option>Yes</option>
 	<option>No</option>
 	</select>

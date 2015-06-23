@@ -251,8 +251,7 @@ public class Signup {
 			return null;
 		}
 		Object userId = session.getAttribute("userId");
-		/* Object userId=137; */
-
+		
 		UserDetailsModel name = null;
 		String empname = null;
 

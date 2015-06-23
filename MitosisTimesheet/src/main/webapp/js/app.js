@@ -58,7 +58,7 @@ angular.module('myApp', ['ui.router','myApp.controllers','ngStorage','ui.bootstr
           .state('projectmapping', {
                   url: '/projectmapping',
                   templateUrl: 'html/projectmapping.html',
-//                  controller : 'listcontroller'
+                  controller : 'teamController'
           	 })
           .state('account', {
                   url: '/account',
@@ -69,7 +69,12 @@ angular.module('myApp', ['ui.router','myApp.controllers','ngStorage','ui.bootstr
 		  	url: '/resetpassword',
 		  	templateUrl: 'html/reset_pwd.html',
 		  	controller : 'forgotpasswordController'
- });
+             })
+          .state('userRights', {
+		  	url: '/userRights',
+		  	templateUrl: 'html/authority.html',
+		  	controller : 'userRightsController'
+             });
     }
   ]);
 

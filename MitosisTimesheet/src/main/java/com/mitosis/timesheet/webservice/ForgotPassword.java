@@ -57,7 +57,7 @@ public class ForgotPassword {
 		
 		if(isReset.equals("Y")){
 			
-			userDetailsModel.setIsReset(true);
+			userDetailsModel.setReset(true);
 			
 		}
 			boolean isreset = forgotpassword.setpasswordflag(userDetailsModel);
@@ -121,9 +121,9 @@ public class ForgotPassword {
 		userDetailsModel = forgotpassword.getIsreset(id);
 	
 		
-		if(userDetailsModel.getIsReset()){
+		if(userDetailsModel.IsReset()){
 			
-			userDetailsModel.setIsReset(false);
+			userDetailsModel.setReset(false);
 			userDetailsModel.setPassword(password);
 			
 			

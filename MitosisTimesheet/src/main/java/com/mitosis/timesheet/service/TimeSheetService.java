@@ -4,11 +4,9 @@ package com.mitosis.timesheet.service;
 import java.sql.Date;
 import java.util.List;
 
-import org.codehaus.jettison.json.JSONObject;
-
-
-import com.mitosis.timesheet.model.ProjectModel;
+import com.mitosis.timesheet.model.TeamAssignmentModel;
 import com.mitosis.timesheet.model.TimeSheetModel;
+import com.mitosis.timesheet.model.UserDetailsModel;
 
 public interface TimeSheetService {
 	
@@ -23,6 +21,8 @@ public interface TimeSheetService {
 
 	public double getprevioushours(int id);
 	
-	public List<ProjectModel> getprojectList();
+	public List<TeamAssignmentModel> getprojectList(Object userId);
+	
+	public UserDetailsModel getUserDetails(Object userId);
  
 	}

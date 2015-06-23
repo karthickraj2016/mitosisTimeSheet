@@ -63,9 +63,25 @@ angular.module('myApp.controllers')
 			$scope.name=result;
 			
 		}
+	})
+	
+	
+		
+	$http({
+		url: 'rest/timesheet/getUserDetails',
+		method: 'GET',
+		/*data: menuJson,*/
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	}).success(function(result, status, headers) {
+		
+		$scope.manageProject=result.manageProject;
+		$scope.manageTeam=result.manageTeam;
+		/*$scope.manageCustomer=result.manageCustomer;*/
 	});
-	
-	
+
+		
 	$http({
 		
 				url: 'rest/timesheet/getprojectlist',
@@ -80,7 +96,7 @@ angular.module('myApp.controllers')
 				
 				$scope.units=result;
 			});
-			
+
 	$scope.list = function() {
 		
 		$http({

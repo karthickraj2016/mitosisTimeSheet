@@ -7,13 +7,13 @@ import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import com.mitosis.timesheet.dao.TimeSheetDAO;
-import com.mitosis.timesheet.model.ProjectModel;
+import com.mitosis.timesheet.model.TeamAssignmentModel;
 import com.mitosis.timesheet.model.TimeSheetModel;
+import com.mitosis.timesheet.model.UserDetailsModel;
 import com.mitosis.timesheet.util.BaseService;
 
 public class TimeSheetDAOImpl extends BaseService implements TimeSheetDAO{
@@ -128,16 +128,16 @@ public double getprevioushours(int id) {
 }
 
 @Override
-public List<ProjectModel> getprojectList() {
-	List<ProjectModel> projectlist = new ArrayList<ProjectModel>();
+public List<TeamAssignmentModel> getprojectList(Object userId) {
+	List<TeamAssignmentModel> projectlist = new ArrayList<TeamAssignmentModel>();
 	try{
 		begin();
 		entityManager.getEntityManagerFactory().getCache().evictAll();
 		CriteriaBuilder qb = entityManager.getCriteriaBuilder();
-		CriteriaQuery<ProjectModel> cq = qb.createQuery(ProjectModel.class);
-		Root<ProjectModel> root = cq.from(ProjectModel.class);
+		CriteriaQuery<TeamAssignmentModel> cq = qb.createQuery(TeamAssignmentModel.class);
+		Root<TeamAssignmentModel> root = cq.from(TeamAssignmentModel.class);
+		cq.where(qb.equal(root.get("member"), userId));
 		cq.select(root);
-		cq.orderBy(qb.asc(root.get("projectName")));
 		projectlist = entityManager.createQuery(cq).getResultList();
 		System.out.println(projectlist);
 	}catch(Exception e){
@@ -148,6 +148,26 @@ public List<ProjectModel> getprojectList() {
 	return projectlist;
 }
      
-  }
+@Override
+public UserDetailsModel getUserDetails(Object userId){
+	
+	UserDetailsModel userDetails=new UserDetailsModel();
+	try{
+		begin();
+		entityManager.getEntityManagerFactory().getCache().evictAll();
+		CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<UserDetailsModel> cq = qb.createQuery(UserDetailsModel.class);
+		Root<UserDetailsModel> root = cq.from(UserDetailsModel.class);
+		cq.where(qb.equal(root.get("id"),userId));
+		cq.select(root);
+		userDetails = entityManager.createQuery(cq).getSingleResult();
+	}catch(Exception e){
+		e.printStackTrace();
+	}finally{
+		close();
+	}
+	return userDetails;
+}
+}
 
 
