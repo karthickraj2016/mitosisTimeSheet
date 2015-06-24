@@ -95,7 +95,5 @@ public class UserDetailsModel {
 		this.isReset = isReset;
 	}
 	
-	
-
 
 }

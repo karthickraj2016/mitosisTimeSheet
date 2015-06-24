@@ -13,7 +13,7 @@ angular.module('myApp.controllers')
 	var hoursallowed;
 
 	$scope.checkRequired = function(sheet){
-		if(sheet.date == '' || sheet.date == undefined){
+		if(sheet.entryDate == '' || sheet.entryDate == undefined){
 			return true;
 		} else if(sheet.hours == '' || sheet.hours == undefined) {
 			return true;
@@ -34,7 +34,7 @@ angular.module('myApp.controllers')
 		    var dd = dt.getDate();
 		    var mm = dt.getMonth()+1; 
 		    var yyyy = dt.getFullYear();
-		    dt=yyyy+"-"+mm+"-"+dd;
+		    dt=dd+"-"+mm+"-"+yyyy;
 		 $scope.timesheet.date=dt;			
 	};
 
@@ -44,7 +44,7 @@ angular.module('myApp.controllers')
 			changeMonth: true,
 			maxDate:'0d',
 			minDate:-30,
-			dateFormat: 'yy-mm-dd',
+			dateFormat: 'dd-mm-yy',
 
 			/* yearRange: '1900:-0'*/
 	};
@@ -205,7 +205,7 @@ angular.module('myApp.controllers')
 					reqParam.hours=hour;
 				}	
 			var menuJson = angular.toJson({
-				"date": reqParam.date,"hours":reqParam.hours,"issueNumber":reqParam.issueNumber,"description":reqParam.description,"id":reqParam.id,"ProjectId":reqParam.project.projectId
+				"date": reqParam.entryDate,"hours":reqParam.hours,"issueNumber":reqParam.issueNumber,"description":reqParam.description,"id":reqParam.id,"ProjectId":reqParam.project.projectId
 	 
 		
 			});

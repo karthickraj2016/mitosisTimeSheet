@@ -1,11 +1,8 @@
 package com.mitosis.timesheet.service;
 
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
-
-import org.codehaus.jettison.json.JSONObject;
-
 
 import com.mitosis.timesheet.model.ProjectModel;
 import com.mitosis.timesheet.model.TimeSheetModel;

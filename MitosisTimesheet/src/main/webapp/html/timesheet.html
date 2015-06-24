@@ -21,12 +21,12 @@
     <div class="collapse navbar-collapse" id="myNavbar" ng-controller="HeaderController">
       <ul class="nav navbar-nav" style="margin-left: 30px; margin-top: 8px;">
         <li ng-class="{ active: isActive('/timesheet')}"><a ui-sref="timesheet">Home</a></li>
-       <!--  <li ng-class="{ active: isActive('/project')}"><a ui-sref="project">Project Details</a></li>
-        <li ng-class="{ active: isActive('/projectmapping')}"><a ui-sref="projectmapping">Team Assignment</a></li> -->
+        <li ng-show="manageProject" ng-class="{ active: isActive('/project')}"><a ui-sref="project">Project Details</a></li>
+        <li ng-show="manageTeam" ng-class="{ active: isActive('/projectmapping')}"><a ui-sref="projectmapping">Team Assignment</a></li> 
         </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="lb-username"><lable ng-model="name">Welcome {{name}}</lable></li>
-       <li><a style="padding-left: 0;" ui-sref="account"><button class="btn btn-sm btn-primary">Account</button></a></li>
+        <li><a style="padding-left: 0;" ui-sref="account"><button class="btn btn-sm btn-primary">Account</button></a></li>
         <li><button class="btn btn-sm btn-primary btn-logout" ng-click="logout();">Logout</button></li>
       </ul>
     </div>
@@ -43,7 +43,7 @@
 
 <form   class="form-inline form-ts" role="form" id="addEntry" ng-submit="addtimesheet(date,hours,issueNumber,description)">
     <div ng-init="dates()" class="form-group">
-       <input type="text" required class="form-control" ui-date="dateOptions" ui-date-format="yy-mm-dd" ng-model="timesheet.date">
+       <input type="text" required class="form-control" ui-date="dateOptions" ui-date-format="dd-mm-yy" ng-model="timesheet.date">
     </div>
     <!-- <div class="form-group">
    <select required class="form-control" style="color: #B0B0B0;">
@@ -90,9 +90,9 @@
 	<tbody>
 		<tr ng-repeat="sheet in filteredParticipantsResults ">
 			<td>
-				<span ng-show="!showEdit">{{sheet.date}}</span>
-				<span ng-show="showEdit"><input class="form-control" ui-date="dateOptions" ui-date-format="yy-mm-dd" type="text" ng-model="sheet.date"></span>
-				<span style="color:red" ng-show="sheet.date == '' || sheet.date == undefined">Required</span>
+				<span ng-show="!showEdit">{{sheet.entryDate}}</span>
+				<span ng-show="showEdit"><input class="form-control" ui-date="dateOptions" ui-date-format="dd-mm-yy" type="text" ng-model="sheet.entryDate"></span>
+				<span style="color:red" ng-show="sheet.entryDate == '' || sheet.entryDate == undefined">Required</span>
 			</td>
 			<td>
 				<span ng-show="!showEdit">{{sheet.project.projectName}}</span>
