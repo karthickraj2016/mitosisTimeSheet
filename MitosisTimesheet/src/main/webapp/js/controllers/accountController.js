@@ -95,6 +95,26 @@ angular.module('myApp.controllers')
 
 		});
     	
+    	var emailId = $scope.email;
+		
+		$scope.validateEmail = function($email) {
+
+			var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+			return emailReg.test( $email );
+		}
+		
+		var lstIndex = emailId.lastIndexOf('@');
+		if( !$scope.validateEmail(emailId)) {
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("EmailId is not valid");
+			return;
+		} else if(emailId.substring(lstIndex + 1)!='mitosistech.com') {
+			$(".alert-msg1").show().delay(1500).fadeOut(); 
+			$(".alert-danger").html("Invalid domain name, use only mitosistech.com");
+			return;
+		}
+		
+    	
     	
     	$http({
     		url: 'rest/accountdetails/editdetails',
