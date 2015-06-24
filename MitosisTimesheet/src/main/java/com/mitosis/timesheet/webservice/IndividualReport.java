@@ -174,7 +174,7 @@ public class IndividualReport {
 
 		      
 		      jsonObj.put("pdfFileName","individualSummaryReport"+employeeId+".pdf");
-		      jsonObj.put("pdfPath",pdfPath+ "reports/individualSummaryReport.jrxml" + employeeId + ".pdf");
+		      jsonObj.put("pdfPath",pdfPath+ "reports/individualSummaryReport" + employeeId + ".pdf");
 		   
 		   
 		
@@ -195,6 +195,8 @@ public class IndividualReport {
 	@Produces(MediaType.APPLICATION_JSON)
 	public JSONObject deletepdffile(JSONObject jsonObject) throws JSONException{
 		JSONObject jsonobject = new JSONObject();
+		
+		System.out.println(jsonObject);
 		
 		File file = new File(jsonObject.getString("filepath"));
 		
