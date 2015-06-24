@@ -32,7 +32,9 @@ import com.mitosis.timesheet.service.impl.ProjectServiceImpl;
 import com.mitosis.timesheet.service.impl.TimeSheetServiceImpl;
 
 @Path("timesheet")
+
 public class TimeSheet {
+
 	JSONObject jsonobject = new JSONObject();
 	TimeSheetService timeSheetService = new TimeSheetServiceImpl();
 	@Context private HttpServletRequest request;
@@ -43,9 +45,8 @@ public class TimeSheet {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
+	
 	public JSONObject insertDetails(JSONObject jsonobject) throws JSONException, ParseException{
-
-
 
 		TimeSheetModel timeSheetModel = new TimeSheetModel();
 		
@@ -69,14 +70,11 @@ public class TimeSheet {
 
 		double hourentry = hoursentered + jsonobject.getDouble("hours");
 
-
-
 		if(hoursallowed==0){
 
 			jsonObject.put("value","done");
 
 			return jsonObject;
-
 		}
 
 		if(totalhours<hourentry){
@@ -122,7 +120,7 @@ public class TimeSheet {
 
 	@Path("/showlist")
 	@GET
-	/*@Consumes(MediaType.APPLICATION_JSON)*/
+  /*@Consumes(MediaType.APPLICATION_JSON)*/
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<TimeSheetModel> showlist() throws JSONException, ParseException {
 		HttpSession session= request.getSession(true);
@@ -197,9 +195,7 @@ public class TimeSheet {
 			project.setProjectId(jsonObject.getInt("ProjectId"));
 			
 			timeSheetModel.setProject(project);
-			
-			
-			
+		
 			timeSheetModel.setEmployeeId((Integer) request.getSession().getAttribute("userId"));
 			if(jsonObject.getString("issueNumber")=="null"){
 
@@ -225,34 +221,27 @@ public class TimeSheet {
 				return jsonObject;
 			}  
 
-		}
-
-
-		else if(totalhours<hourentry){
+		}else if(totalhours<hourentry){
 
 			jsonObject.put("hoursallowed", hoursallowed);
 			jsonObject.put("value", "err_total");
 			return jsonObject;
 
-
-		}
-		else{
+		}else{
 
 			jsonObject.put("hoursallowed", hoursallowed);
 			jsonObject.put("value", "hoursallowedis0");
 
 			return jsonObject;
-
-
 		}
-		
-		
-}
+	}
+	
+	
 	@Path("/getprojectlist")
 	@GET
-/*	@Consumes(MediaType.APPLICATION_JSON)*/
-	
+  /*@Consumes(MediaType.APPLICATION_JSON)*/
 	@Produces(MediaType.APPLICATION_JSON)
+	
 	public List<TeamAssignmentModel> getprojectlist() throws JSONException {
 		HttpSession session= request.getSession(true);
 
@@ -262,17 +251,17 @@ public class TimeSheet {
 		
 		Object userId=session.getAttribute("userId");
 		
-		/*Object userId=217;*/
-
 		List<TeamAssignmentModel> projectList = new ArrayList<TeamAssignmentModel>();
 		
 		projectList = timeSheetService.getprojectList(userId);
 				
 		return projectList;
 }
+	
+	
 	@Path("/getUserDetails")
 	@GET
-  /*  @Consumes(MediaType.APPLICATION_JSON)*/
+ /* @Consumes(MediaType.APPLICATION_JSON)*/
 	@Produces(MediaType.APPLICATION_JSON)
 	
 	public UserDetailsModel getUserDetails() throws JSONException  {
@@ -289,6 +278,6 @@ public class TimeSheet {
 		user = timeSheetService.getUserDetails(userId);
 		
 		return user;
-}
+   }
 	
 }
