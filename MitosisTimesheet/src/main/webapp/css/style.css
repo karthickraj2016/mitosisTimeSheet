@@ -155,11 +155,11 @@ white-space: nowrap;
 }
 
 .table th {
-	text-align: left;
+	text-align: center;
 }
 
 .table tbody td {
-	text-align: left;
+	text-align: center;
 	 white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

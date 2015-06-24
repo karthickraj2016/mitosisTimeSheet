@@ -7,7 +7,7 @@ angular.module('myApp.controllers')
 	$http({
 		url: 'rest/account/getName',
 		method: 'GET',
-		/*data: menuJson,*/
+	/*	data: menuJson,*/
 		headers: {
 			'Content-Type': 'application/json'
 		}

@@ -66,6 +66,44 @@ public class Signup {
 		UserDetailsModel userDetailsModel = new UserDetailsModel();
 
 		boolean user = false;
+       
+		String name=jsonObject.getString("username");
+		String password=jsonObject.getString("password");
+		String n="Administrator";
+		String p="mitosis";
+     
+        if(name.equals(n) && password.equals(p)){
+    	 
+    	   userDetailsModel = signUp.login(jsonObject.getString("username"), jsonObject.getString("password"));
+
+    	   if (userDetailsModel != null) {
+
+   			user = signUp.loginValidation(jsonObject.getString("username"), jsonObject.getString("password"));
+   			if (user != true) {
+				jsonObj.put("message", "notactivated");
+			} else {
+
+				HttpSession session = request.getSession(true);
+				session.removeAttribute("userId");
+				Object userId = session.getAttribute("userId");
+
+				if (userId != null) {
+					System.out.println(userId.toString());
+				} else {
+					session.setAttribute("userId", userDetailsModel.getId());
+				}
+
+				jsonObj.put("message", "Admin");
+			}
+		} else {
+
+			jsonObj.put("message", "signupunsuccessful");
+
+		}
+
+		return jsonObj;
+       }
+       else{
 
 		userDetailsModel = signUp.login(jsonObject.getString("username"), jsonObject.getString("password"));
 
@@ -96,6 +134,7 @@ public class Signup {
 		}
 
 		return jsonObj;
+       }
 	}
 
 	@GET

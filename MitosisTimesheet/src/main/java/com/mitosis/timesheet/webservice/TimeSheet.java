@@ -1,7 +1,6 @@
 package com.mitosis.timesheet.webservice;
 
 
-import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -58,11 +57,7 @@ public class TimeSheet {
 				
 				String dateInString = jsonobject.getString("date");
 				Date frmDate = sdf.parse(dateInString); 
-				DateFormat sdff = new SimpleDateFormat("dd-MM-yyyy");
-				String date = sdff.format(frmDate);		
-				Date d = sdff.parse(date);
-			    Timestamp timeStampDate = new Timestamp(d.getDate());
-		
+						
 
 		double totalhours = 16.0;
 
@@ -91,11 +86,8 @@ public class TimeSheet {
 			jsonObject.put("value", "err_total");
 
 			return jsonObject;
-		}
-
-
-
-		else{
+	
+		}else{
 
 			boolean flag = false;
 			ProjectModel project = new ProjectModel();
@@ -112,9 +104,7 @@ public class TimeSheet {
 			if (jsonobject.has("id")) {
 				timeSheetModel.setId(jsonobject.getInt("id"));
 			}	
-			
-
-
+	
 			flag = timeSheetService.create(timeSheetModel);
 
 			if(flag){
@@ -126,9 +116,6 @@ public class TimeSheet {
 				jsonObject.put("value", "error");
 				return jsonObject;
 			}
-
-
-
 
 		}
 	}
@@ -176,10 +163,7 @@ public class TimeSheet {
 		
 		String dateInString = jsonObject.getString("date");
 		Date frmDate = sdf.parse(dateInString); 
-		DateFormat sdff = new SimpleDateFormat("dd-MM-yyyy");
-		String date = sdff.format(frmDate);		
-		Date d = sdff.parse(date);
-	    Timestamp timeStampDate = new Timestamp(d.getDate());
+		
 
 		HttpSession session= request.getSession(true);
 
