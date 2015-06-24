@@ -20,7 +20,6 @@ public class UserRightsDaoImpl extends BaseService implements UserRightsDao {
 			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 			CriteriaQuery<UserDetailsModel> cq = qb.createQuery(UserDetailsModel.class);
 			Root<UserDetailsModel> root = cq.from(UserDetailsModel.class);
-			cq.where(qb.equal(root.get("active"),true));
 			cq.select(root);
 			cq.orderBy(qb.desc(root.get("id")));
 			userlist = entityManager.createQuery(cq).getResultList();

@@ -1,9 +1,12 @@
 package com.mitosis.timesheet.webservice;
 
-import java.sql.Date;
+
+import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,28 +54,21 @@ public class TimeSheet {
 
 		JSONObject jsonObject = new JSONObject();
 		
-		/*SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-		String dateInString = "07/06/2013";
-	 
-		try {
-	 
-			Date date = formatter.parse(dateInString);
-			System.out.println(date);
-			System.out.println(formatter.format(date));
-	 
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}*/
-
-		Date date = Date.valueOf(jsonobject.getString("date"));
+				DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+				
+				String dateInString = jsonobject.getString("date");
+				Date frmDate = sdf.parse(dateInString); 
+				DateFormat sdff = new SimpleDateFormat("dd-MM-yyyy");
+				String date = sdff.format(frmDate);		
+				Date d = sdff.parse(date);
+			    Timestamp timeStampDate = new Timestamp(d.getDate());
 		
-		System.out.println(date);
 
 		double totalhours = 16.0;
 
 		int userId =  (Integer) request.getSession().getAttribute("userId");
 
-		double hoursentered= timeSheetService.gethourslist(date,userId);
+		double hoursentered= timeSheetService.gethourslist(frmDate,userId);
 
 		double hoursallowed=totalhours-hoursentered;
 
@@ -104,7 +100,7 @@ public class TimeSheet {
 			boolean flag = false;
 			ProjectModel project = new ProjectModel();
 
-			timeSheetModel.setDate(Date.valueOf(jsonobject.getString("date")));
+			timeSheetModel.setDate(frmDate);
 			timeSheetModel.setHours(jsonobject.getDouble("hours"));
 			timeSheetModel.setDescription(jsonobject.getString("description"));
 			project.setProjectId(jsonobject.getInt("projectId"));
@@ -138,7 +134,7 @@ public class TimeSheet {
 	}
 
 	@Path("/showlist")
-	@POST
+	@GET
 	/*@Consumes(MediaType.APPLICATION_JSON)*/
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<TimeSheetModel> showlist() throws JSONException, ParseException {
@@ -152,7 +148,7 @@ public class TimeSheet {
 		List<TimeSheetModel> timesheetlist = new ArrayList<TimeSheetModel>();
 
 		timesheetlist = timeSheetService.showlist(userId);
-
+		
 		return timesheetlist;
 
 	}
@@ -174,9 +170,16 @@ public class TimeSheet {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public JSONObject hourslist(JSONObject jsonObject) throws JSONException {
+	public JSONObject hourslist(JSONObject jsonObject) throws JSONException, ParseException {
 		
-		Date date = Date.valueOf(jsonObject.getString("date"));
+		DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		
+		String dateInString = jsonObject.getString("date");
+		Date frmDate = sdf.parse(dateInString); 
+		DateFormat sdff = new SimpleDateFormat("dd-MM-yyyy");
+		String date = sdff.format(frmDate);		
+		Date d = sdff.parse(date);
+	    Timestamp timeStampDate = new Timestamp(d.getDate());
 
 		HttpSession session= request.getSession(true);
 
@@ -188,7 +191,7 @@ public class TimeSheet {
 
 		double previoushour = timeSheetService.getprevioushours(jsonObject.getInt("id"));
 
-		double hoursentered= timeSheetService.gethourslist(date,userId);
+		double hoursentered= timeSheetService.gethourslist(frmDate,userId);
 
 		hoursentered =hoursentered -previoushour;
 
@@ -203,7 +206,7 @@ public class TimeSheet {
 
 			boolean flag = false;
 
-			timeSheetModel.setDate(Date.valueOf(jsonObject.getString("date")));
+			timeSheetModel.setDate(frmDate);
 			timeSheetModel.setHours(jsonObject.getDouble("hours"));
 			timeSheetModel.setDescription(jsonObject.getString("description"));
 			

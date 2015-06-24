@@ -1,7 +1,9 @@
 package com.mitosis.timesheet.model;
 
 
-import java.sql.Date;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
@@ -47,6 +50,18 @@ public class TimeSheetModel {
 
 	@Column(name="status")
 	private String status;
+	@Transient
+	private String entryDate;
+
+	public String getEntryDate() {
+		Date d= getDate();
+		entryDate = new SimpleDateFormat("dd-MM-yyyy").format(d);
+		return entryDate;
+	}
+
+	public void setEntryDate(String entryDate) {
+		this.entryDate = entryDate;
+	}
 
 	public Integer getId() {
 		return id;
@@ -73,6 +88,7 @@ public class TimeSheetModel {
 	}
 
 	public Date getDate() {
+		
 		return date;
 	}
 

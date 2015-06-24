@@ -43,7 +43,7 @@
 
 <form   class="form-inline form-ts" role="form" id="addEntry" ng-submit="addtimesheet(date,hours,issueNumber,description)">
     <div ng-init="dates()" class="form-group">
-       <input type="text" required class="form-control" ui-date="dateOptions" ui-date-format="yy-mm-dd" ng-model="timesheet.date">
+       <input type="text" required class="form-control" ui-date="dateOptions" ui-date-format="dd-mm-yy" ng-model="timesheet.date">
     </div>
     <!-- <div class="form-group">
    <select required class="form-control" style="color: #B0B0B0;">
@@ -90,13 +90,13 @@
 	<tbody>
 		<tr ng-repeat="sheet in filteredParticipantsResults ">
 			<td>
-				<span ng-show="!showEdit">{{sheet.date}}</span>
-				<span ng-show="showEdit"><input class="form-control" ui-date="dateOptions" ui-date-format="yy-mm-dd" type="text" ng-model="sheet.date"></span>
-				<span style="color:red" ng-show="sheet.date == '' || sheet.date == undefined">Required</span>
+				<span ng-show="!showEdit">{{sheet.entryDate}}</span>
+				<span ng-show="showEdit"><input class="form-control" ui-date="dateOptions" ui-date-format="dd-mm-yy" type="text" ng-model="sheet.entryDate"></span>
+				<span style="color:red" ng-show="sheet.entryDate == '' || sheet.entryDate == undefined">Required</span>
 			</td>
 			<td>
 				<span ng-show="!showEdit">{{sheet.project.projectName}}</span>
-				<span id="{{sheet.project.id}}" ng-show="showEdit"><select class="form-control" ng-model="sheet.project" ng-options="item as item.projectName for item in units" style="color: #777777;">
+				<span id="{{sheet.project.id}}" ng-show="showEdit"><select class="form-control" ng-model="sheet.project" ng-options="item as item.project.projectName for item in units" style="color: #777777;">
 				<option value="">{{sheet.project.projectName}}</option>
 				</select> 
 				</span>
