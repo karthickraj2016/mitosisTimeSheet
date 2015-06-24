@@ -267,7 +267,7 @@ public class TimeSheet {
 		List<TeamAssignmentModel> projectList = new ArrayList<TeamAssignmentModel>();
 		
 		projectList = timeSheetService.getprojectList(userId);
-		
+				
 		return projectList;
 }
 	@Path("/getUserDetails")

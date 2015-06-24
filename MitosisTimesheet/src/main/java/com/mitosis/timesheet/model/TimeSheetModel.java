@@ -29,8 +29,8 @@ public class TimeSheetModel {
 	@Column(name="employee_id")
 	private Integer employeeId;
 
-	@ManyToOne(targetEntity = ProjectModel.class)
-	@JoinColumn(name = "project_id", nullable = false, referencedColumnName = "id")
+	@ManyToOne(targetEntity = TeamAssignmentModel.class)
+	@JoinColumn(name = "project_id", nullable = false, referencedColumnName = "project")
 	private ProjectModel project;
 
 	@Column(name="date")
