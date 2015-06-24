@@ -2,7 +2,7 @@
 
 angular.module('myApp.controllers')
 
-.controller('reportsController', ['$scope', '$http', '$state','$rootScope', function($scope, $http, $state, $rootScope) {
+.controller('individualreportController', ['$scope', '$http', '$state','$rootScope', function($scope, $http, $state, $rootScope) {
 
 	    
    
@@ -42,7 +42,7 @@ angular.module('myApp.controllers')
 		
 		
 		$http({
-			url: 'rest/timesheetreport/gettimesheetdetailreport',
+			url: 'rest/individualreport/detailreport',
 			method: 'POST',
 			data: menuJson,
 			headers: {
@@ -53,7 +53,7 @@ angular.module('myApp.controllers')
 			var a = document.createElement('a');
 			 a.href = "/MitosisTimesheet/reports/"+result.pdfFileName;
 			console.log(a);
-				 a.download = "recordedDetails.pdf";
+				 a.download = "individualDetailReport.pdf";
 			 document.body.appendChild(a);
 		        a.click();
 		        document.body.removeChild(a);
@@ -72,9 +72,10 @@ angular.module('myApp.controllers')
 	
 	$scope.summaryreport = function(){
 		
+		var menuJson = angular.toJson({"fromdate":$scope.timesheet.fromdate,"todate":$scope.timesheet.todate,"name":$rootScope.name});
 		
 		$http({
-			url: 'rest/timesheetlist/gettimesheetlist',
+			url: 'rest/individualreport/summaryreport',
 			method: 'POST',
 			data: menuJson,
 			headers: {
@@ -85,7 +86,7 @@ angular.module('myApp.controllers')
 			var a = document.createElement('a');
 			 a.href = "/MitosisTimesheet/reports/"+result.pdfFileName;
 			console.log(a);
-				 a.download = "recordedDetails.pdf";
+				 a.download = "individualSummaryReport.pdf";
 			 document.body.appendChild(a);
 		        a.click();
 		        document.body.removeChild(a);
@@ -102,7 +103,7 @@ angular.module('myApp.controllers')
 		var menuJson = angular.toJson({"filepath":pdfPath});
 		
 		$http({
-			url: 'rest/timesheetlist/deletepdffile',
+			url: 'rest/individualreport/deletepdffile',
 			method: 'POST',
 			data: menuJson,
 			headers: {

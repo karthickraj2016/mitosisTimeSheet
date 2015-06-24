@@ -70,9 +70,9 @@ angular.module('myApp', ['ui.router','myApp.controllers','ngStorage','ui.bootstr
 						 templateUrl: 'html/reset_pwd.html',
 						 controller : 'forgotpasswordController'
 					 })
-					 .state('reports', {
-						 url: '/reports',
-						 templateUrl: 'html/report.html',
+					 .state('individualreport', {
+						 url: '/individualreport',
+						 templateUrl: 'html/individualreport.html',
 					 });
 				 }
 				 ]);

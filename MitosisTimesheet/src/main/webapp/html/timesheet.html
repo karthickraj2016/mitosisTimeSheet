@@ -23,7 +23,12 @@
         <li ng-class="{ active: isActive('/timesheet')}"><a ui-sref="timesheet">Home</a></li>
        <!--  <li ng-class="{ active: isActive('/project')}"><a ui-sref="project">Project Details</a></li>
         <li ng-class="{ active: isActive('/projectmapping')}"><a ui-sref="projectmapping">Team Assignment</a></li> -->
-        <li ng-class="{ active: isActive('/project')}"><a ui-sref="reports">Reports</a></li>
+        <li ng-class="{ active: isActive('/reports')}"><a class="dropdown-toggle" data-toggle="dropdown"> Reports<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li><a ui-sref="individualreport" href="#">Individual Reports</a></li>
+            <li><a href="#">Team Reports</a></li>
+          </ul>
+        </li>
         </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="lb-username"><lable ng-model="name">Welcome {{name}}</lable></li>

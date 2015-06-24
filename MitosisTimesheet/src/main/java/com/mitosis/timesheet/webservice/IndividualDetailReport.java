@@ -37,24 +37,28 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import com.mitosis.timesheet.model.TimeSheetModel;
-import com.mitosis.timesheet.service.TimeSheetReportService;
-import com.mitosis.timesheet.service.impl.TimeSheetReportServiceImpl;
+import com.mitosis.timesheet.service.IndividualReportService;
+
+import com.mitosis.timesheet.service.impl.IndividualReportServiceImpl;
 
 
-@Path("timesheetreport")
-public class TimeSheetReport {
+
+@Path("individualreport")
+public class IndividualDetailReport {
 	
-	TimeSheetReportService timeSheetReportService  = new TimeSheetReportServiceImpl();
+	IndividualReportService individualReportService  = new IndividualReportServiceImpl(); 
+		
+		
 	
 	
 	@Context private HttpServletRequest request;
 	
 	
-	@Path("/gettimesheetdetailreport")
+	@Path("/detailreport")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public JSONObject getTimeSheetDetailReport(JSONObject jsonObject) throws JSONException, JRException, IOException{
+	public JSONObject getIndividualDetailReport(JSONObject jsonObject) throws JSONException, JRException, IOException{
 		
 		
 		JSONObject jsonObj = new JSONObject();
@@ -76,12 +80,12 @@ public class TimeSheetReport {
 		Date todate = Date.valueOf(jsonObject.getString("todate"));
 		
 		
-		timeSheetDetailReport = timeSheetReportService.getTimeSheetDetailReport(fromdate, todate, employeeId);
+		timeSheetDetailReport = individualReportService.getIndividualReport(fromdate, todate, employeeId);
 		
 		
 		JasperDesign jasperDesign = JRXmlLoader.load(request.getSession().getServletContext()
 		          .getRealPath("/")
-		          + "reports/recordedDetails.jrxml");
+		          + "reports/individualDetailReport.jrxml");
 
 		      JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
 		     // JREmptyDataSource jrEmptyDatasource = new JREmptyDataSource();
@@ -98,15 +102,94 @@ public class TimeSheetReport {
 		      String pdfPath = path.replaceAll("WEB-INF/classes/", "");
 
 		      JasperExportManager.exportReportToPdfFile(jasperPrint, pdfPath
-		          + "reports/recordedDetails" + employeeId + ".pdf");
+		          + "reports/individualDetailReport" + employeeId + ".pdf");
 
 		      
-		      jsonObj.put("pdfFileName","recordedDetails"+employeeId+".pdf");
-		      jsonObj.put("pdfPath",pdfPath+ "reports/recordedDetails" + employeeId + ".pdf");
+		      jsonObj.put("pdfFileName","individualDetailReport"+employeeId+".pdf");
+		      jsonObj.put("pdfPath",pdfPath+ "reports/individualDetailReport.jrxml" + employeeId + ".pdf");
 		   
 		
 		return jsonObj;
 
+	}
+	
+	
+	@Path("/summaryreport")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public JSONObject getIndividualSummaryReport(JSONObject jsonObject) throws JSONException, JRException{
+		
+		
+		
+		JSONObject jsonObj = new JSONObject();
+		HttpSession session= request.getSession(true);
+
+		if(session.getAttribute("userId")==null){
+			return null;
+		}
+		
+		Object userId = session.getAttribute("userId");
+		
+		int employeeId =(Integer) request.getSession().getAttribute("userId");
+				
+		String name = jsonObject.getString("name");
+		
+		List<TimeSheetModel> timeSheetSummaryReport = new ArrayList<TimeSheetModel>();
+		
+		Date fromdate = Date.valueOf(jsonObject.getString("fromdate"));
+		
+		Date todate = Date.valueOf(jsonObject.getString("todate"));
+		
+		double totalhours;
+		
+
+		timeSheetSummaryReport = individualReportService.getIndividualReport(fromdate, todate, employeeId);
+		
+		
+		
+		totalhours = individualReportService.getTotalHours(fromdate, todate, employeeId);
+		 
+		
+		
+		
+		
+		JasperDesign jasperDesign = JRXmlLoader.load(request.getSession().getServletContext()
+		          .getRealPath("/")
+		          + "reports/individualSummaryReport.jrxml");
+
+		      JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+		     // JREmptyDataSource jrEmptyDatasource = new JREmptyDataSource();
+		      Map<String, Object> parameters = new HashMap<String, Object>();
+		      
+		      parameters.put("fromDate", fromdate);
+		      parameters.put("ToDate", todate);
+		      parameters.put("name",name);
+		      parameters.put("totalhours",totalhours);
+		      
+		      JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(timeSheetSummaryReport);
+		      JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, ds);
+
+		      String path = this.getClass().getClassLoader().getResource("/").getPath();
+		      String pdfPath = path.replaceAll("WEB-INF/classes/", "");
+
+		      JasperExportManager.exportReportToPdfFile(jasperPrint, pdfPath
+		          + "reports/individualSummaryReport" + employeeId + ".pdf");
+
+		      
+		      jsonObj.put("pdfFileName","individualSummaryReport"+employeeId+".pdf");
+		      jsonObj.put("pdfPath",pdfPath+ "reports/individualSummaryReport.jrxml" + employeeId + ".pdf");
+		   
+		   
+		
+		return jsonObj;
+		
+		
+		
+		
+		
+		
+		
 	}
 	
 	
