@@ -44,7 +44,7 @@ import com.mitosis.timesheet.service.impl.IndividualReportServiceImpl;
 
 
 @Path("individualreport")
-public class IndividualDetailReport {
+public class IndividualReport {
 	
 	IndividualReportService individualReportService  = new IndividualReportServiceImpl(); 
 		
@@ -149,11 +149,7 @@ public class IndividualDetailReport {
 		
 		
 		totalhours = individualReportService.getTotalHours(fromdate, todate, employeeId);
-		 
-		
-		
-		
-		
+
 		JasperDesign jasperDesign = JRXmlLoader.load(request.getSession().getServletContext()
 		          .getRealPath("/")
 		          + "reports/individualSummaryReport.jrxml");
