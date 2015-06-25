@@ -1,17 +1,15 @@
 package com.mitosis.timesheet.webservice;
 
-import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -22,7 +20,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
-import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -38,7 +35,6 @@ import org.codehaus.jettison.json.JSONObject;
 
 import com.mitosis.timesheet.model.TimeSheetModel;
 import com.mitosis.timesheet.service.IndividualReportService;
-
 import com.mitosis.timesheet.service.impl.IndividualReportServiceImpl;
 
 
@@ -58,7 +54,7 @@ public class IndividualReport {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public JSONObject getIndividualDetailReport(JSONObject jsonObject) throws JSONException, JRException, IOException{
+	public JSONObject getIndividualDetailReport(JSONObject jsonObject) throws JSONException, JRException, IOException, ParseException{
 		
 		
 		JSONObject jsonObj = new JSONObject();
@@ -75,12 +71,17 @@ public class IndividualReport {
 		
 		List<TimeSheetModel> timeSheetDetailReport = new ArrayList<TimeSheetModel>();
 		
-		Date fromdate = Date.valueOf(jsonObject.getString("fromdate"));
+		DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		
-		Date todate = Date.valueOf(jsonObject.getString("todate"));
+		String frmdateInString = jsonObject.getString("fromdate");
+		Date fromDate = sdf.parse(frmdateInString);
+		
+		String todateInString = jsonObject.getString("todate");
+		
+		Date toDate = sdf.parse(todateInString);
 		
 		
-		timeSheetDetailReport = individualReportService.getIndividualReport(fromdate, todate, employeeId);
+		timeSheetDetailReport = individualReportService.getIndividualReport(fromDate, toDate, employeeId);
 		
 		
 		JasperDesign jasperDesign = JRXmlLoader.load(request.getSession().getServletContext()
@@ -91,8 +92,8 @@ public class IndividualReport {
 		     // JREmptyDataSource jrEmptyDatasource = new JREmptyDataSource();
 		      Map<String, Object> parameters = new HashMap<String, Object>();
 		      
-		      parameters.put("fromDate", fromdate);
-		      parameters.put("ToDate", todate);
+		      parameters.put("fromDate", frmdateInString);
+		      parameters.put("toDate", todateInString);
 		      parameters.put("name",name);
 		      
 		      JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(timeSheetDetailReport);
@@ -118,7 +119,7 @@ public class IndividualReport {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public JSONObject getIndividualSummaryReport(JSONObject jsonObject) throws JSONException, JRException{
+	public JSONObject getIndividualSummaryReport(JSONObject jsonObject) throws JSONException, JRException, ParseException{
 		
 		
 		
@@ -137,18 +138,32 @@ public class IndividualReport {
 		
 		List<TimeSheetModel> timeSheetSummaryReport = new ArrayList<TimeSheetModel>();
 		
-		Date fromdate = Date.valueOf(jsonObject.getString("fromdate"));
+
+		DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		
-		Date todate = Date.valueOf(jsonObject.getString("todate"));
+		System.out.println(sdf);
+
+		
+		String frmdateInString = jsonObject.getString("fromdate");
+		Date frmDate = sdf.parse(frmdateInString); 
+		
+		String todateInString = jsonObject.getString("todate");
+		Date toDate = sdf.parse(todateInString); 
+		
+		
+		Date fromdate = frmDate;
+		
+		Date todate = toDate;
+
 		
 		double totalhours;
 		
 
-		timeSheetSummaryReport = individualReportService.getIndividualReport(fromdate, todate, employeeId);
+		timeSheetSummaryReport = individualReportService.getIndividualReport(fromdate, toDate, employeeId);
 		
 		
 		
-		totalhours = individualReportService.getTotalHours(fromdate, todate, employeeId);
+		totalhours = individualReportService.getTotalHours(fromdate, toDate, employeeId);
 
 		JasperDesign jasperDesign = JRXmlLoader.load(request.getSession().getServletContext()
 		          .getRealPath("/")
@@ -158,8 +173,8 @@ public class IndividualReport {
 		     // JREmptyDataSource jrEmptyDatasource = new JREmptyDataSource();
 		      Map<String, Object> parameters = new HashMap<String, Object>();
 		      
-		      parameters.put("fromDate", fromdate);
-		      parameters.put("ToDate", todate);
+		      parameters.put("fromDate", frmdateInString);
+		      parameters.put("toDate", todateInString);
 		      parameters.put("name",name);
 		      parameters.put("totalhours",totalhours);
 		      

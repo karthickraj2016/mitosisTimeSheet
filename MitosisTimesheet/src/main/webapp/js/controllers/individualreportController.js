@@ -14,12 +14,12 @@ angular.module('myApp.controllers')
 		    var dd = dt.getDate();
 		    var mm = dt.getMonth()+1; 
 		    var yyyy = dt.getFullYear();
-		    dt=yyyy+"-"+mm+"-"+dd;
+		    dt=dd+"-"+mm+"-"+yyyy;
 		    var dt1= new Date();
 		    var dd1 = dt1.getDate();
 		    var mm1 = dt1.getMonth()+1;
 		    var yyyy1 = dt1.getFullYear();
-		    dt1 = yyyy1+"-"+mm1+"-"+dd1;
+		    dt1=dd1+"-"+mm1+"-"+yyyy1;
 		 $scope.timesheet.fromdate=dt;	
 		 $scope.timesheet.todate=dt1;
 	};
@@ -30,7 +30,7 @@ angular.module('myApp.controllers')
 			changeMonth: true,
 			maxDate:'0d',
 			minDate:-30,
-			dateFormat: 'yy-mm-dd',
+			dateFormat:'dd-mm-yy'
 
 			/* yearRange: '1900:-0'*/
 	};
