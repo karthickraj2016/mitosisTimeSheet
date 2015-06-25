@@ -55,10 +55,10 @@ angular.module('myApp', ['ui.router','myApp.controllers','ngStorage','ui.bootstr
                   templateUrl: 'html/project.html',
                   controller : 'projectController'
           	 })
-          .state('projectmapping', {
-                  url: '/projectmapping',
-                  templateUrl: 'html/projectmapping.html',
-                  controller : 'teamController'
+          .state('teamAssignment', {
+                  url: '/teamAssignment',
+                  templateUrl: 'html/teamAssignment.html',
+                  controller : 'teamAssignmentController'
           	 })
           .state('account', {
                   url: '/account',

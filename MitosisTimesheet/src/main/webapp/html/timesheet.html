@@ -22,7 +22,7 @@
       <ul class="nav navbar-nav" style="margin-left: 30px; margin-top: 8px;">
         <li ng-class="{ active: isActive('/timesheet')}"><a ui-sref="timesheet">Home</a></li>
         <li ng-show="manageProject" ng-class="{ active: isActive('/project')}"><a ui-sref="project">Project Details</a></li>
-        <li ng-show="manageTeam" ng-class="{ active: isActive('/projectmapping')}"><a ui-sref="projectmapping">Team Assignment</a></li> 
+        <li ng-show="manageTeam" ng-class="{ active: isActive('/teamAssignment')}"><a ui-sref="teamAssignment">Team Assignment</a></li> 
         </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="lb-username"><lable ng-model="name">Welcome {{name}}</lable></li>
@@ -56,7 +56,7 @@
 	</div> -->
    
     <div class="form-group">
-    <select  class="form-control" required ng-model="unit" ng-options="item as item.project.projectName for item in units" style="color: #777777;">
+    <select  class="form-control" required ng-model="projects" ng-options="item as item.projectName for item in projectList" style="color: #777777;">
     <option value="">Project</option>
 	</select> 
     </div>
@@ -96,7 +96,7 @@
 			</td>
 			<td>
 				<span ng-show="!showEdit">{{sheet.project.projectName}}</span>
-				<span id="{{sheet.project.id}}" ng-show="showEdit"><select class="form-control" ng-model="sheet.project" ng-options="item as item.project.projectName for item in units" style="color: #777777;">
+				<span id="{{sheet.project.id}}" ng-show="showEdit"><select class="form-control" ng-model="project" ng-options="item as item.projectName for item in projectList" style="color: #777777;">
 				<option value="">{{sheet.project.projectName}}</option>
 				</select> 
 				</span>
@@ -119,7 +119,7 @@
 			<td style="word-spacing: 15px;">
 				<image src="images/pencil.png" ng-click="showEdit = !showEdit" ng-show="!showEdit"></image>
 				<image src="images/delete.png" ng-click="confirmDelete(sheet.id)" ng-show="!showEdit"></image>
-				<image src="images/save-icon.png" ng-click="showEdit = !showEdit;updatetimesheet(sheet)" ng-show="showEdit" ng-disabled="checkRequired(sheet);"></image>
+				<image src="images/save-icon.png" ng-click="showEdit = !showEdit;updatetimesheet(sheet,project)" ng-show="showEdit" ng-disabled="checkRequired(sheet);"></image>
 				<image src="images/cancel.jpg"  ng-click="showEdit = !showEdit;list()" ng-show="showEdit"></image>
 			</td>
 		</tr>

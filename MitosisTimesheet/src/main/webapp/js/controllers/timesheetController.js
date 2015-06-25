@@ -94,7 +94,7 @@ angular.module('myApp.controllers')
 				
 				console.log(result);
 				
-				$scope.units=result;
+				$scope.projectList=result;
 			});
 
 	$scope.list = function() {
@@ -143,7 +143,7 @@ angular.module('myApp.controllers')
 							}	
 
 			var menuJson = angular.toJson({
-				"date": $scope.timesheet.date,"hours":$scope.timesheet.hours,"issueNumber":$scope.timesheet.issueNumber,"description":$scope.timesheet.description,"projectId":$scope.unit.project.projectId
+				"date": $scope.timesheet.date,"hours":$scope.timesheet.hours,"issueNumber":$scope.timesheet.issueNumber,"description":$scope.timesheet.description,"projectId":$scope.projects.projectId
  			});
 
 
@@ -198,7 +198,7 @@ angular.module('myApp.controllers')
 		}
 	},
 
-	$scope.updatetimesheet = function(reqParam){
+	$scope.updatetimesheet = function(reqParam,project){
 
 		var hour= parseFloat(reqParam.hours);
 
@@ -219,7 +219,7 @@ angular.module('myApp.controllers')
 					reqParam.hours=hour;
 				}	
 			var menuJson = angular.toJson({
-				"date": reqParam.entryDate,"hours":reqParam.hours,"issueNumber":reqParam.issueNumber,"description":reqParam.description,"id":reqParam.id,"ProjectId":reqParam.project.projectId
+				"date": reqParam.entryDate,"hours":reqParam.hours,"issueNumber":reqParam.issueNumber,"description":reqParam.description,"id":reqParam.id,"ProjectId":project.projectId
 	 
 		
 			});

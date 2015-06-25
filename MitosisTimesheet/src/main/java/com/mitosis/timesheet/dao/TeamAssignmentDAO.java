@@ -20,4 +20,6 @@ public interface TeamAssignmentDAO {
     public boolean insertTeamDetails(TeamAssignmentModel teamAssignModel);
     
     public boolean deleteAssignment(int id);
+    
+    public boolean validateAssignment(int projectId,int memberId);
 }

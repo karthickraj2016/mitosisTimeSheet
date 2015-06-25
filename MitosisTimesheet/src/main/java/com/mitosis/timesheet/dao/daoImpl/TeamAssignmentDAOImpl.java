@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import com.mitosis.timesheet.dao.TeamAssignmentDAO;
@@ -135,6 +136,36 @@ public class TeamAssignmentDAOImpl extends BaseService implements TeamAssignment
 			remove(teamAssignmentModel);
 			commit();
 			flag=true;
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close();
+		}
+		return flag;
+	}
+	
+	@Override
+	public boolean validateAssignment(int projectId,int memberId){
+	
+		boolean flag=false;
+		TeamAssignmentModel teamAssignModel=null;
+	
+		try{
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<TeamAssignmentModel> cq = qb.createQuery(TeamAssignmentModel.class);
+			Root<TeamAssignmentModel> root = cq.from(TeamAssignmentModel.class);
+			Predicate condition = qb.equal(root.get("project"), projectId);
+			Predicate condition2 = qb.equal(root.get("member"), memberId);
+			Predicate conditions = qb.and(condition, condition2);
+			cq.where(conditions);
+			cq.select(root);
+			teamAssignModel= entityManager.createQuery(cq).getSingleResult();
+			commit(); 
+		    flag=true;
+		}catch(Exception e){
+			return flag;
 		}finally{
 			close();
 		}

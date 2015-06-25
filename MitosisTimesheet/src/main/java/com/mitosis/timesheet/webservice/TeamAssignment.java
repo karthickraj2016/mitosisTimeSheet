@@ -180,5 +180,26 @@ public class TeamAssignment {
 		}
 		return "failed";
 	}
+	
+	@Path("/validateAssignment")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public boolean validateAssignment(JSONObject jsonobject) throws JSONException {
+		
+		boolean flag=false;
+				
+		int projectId=jsonobject.getInt("projectId");
+		int memberId=jsonobject.getInt("memberId");
+				
+		flag=teamService.validateAssignment(projectId,memberId);
+		
+		if(flag){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
 
 }

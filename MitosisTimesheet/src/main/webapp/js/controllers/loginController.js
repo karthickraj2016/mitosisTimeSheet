@@ -24,6 +24,14 @@ angular.module('myApp.controllers')
 	
 	$scope.login = function() {
 		
+	  var name="Administrator";
+	  var password="mitosis";
+		
+	  if($scope.username==name && $scope.password==password){
+		
+			 $state.go('userRights')
+			 
+		 }else{
 		
 		var menuJson = angular.toJson({
 			"username": $scope.username,"password":$scope.password
@@ -49,9 +57,7 @@ angular.module('myApp.controllers')
 			}else if(result.message == "success"){
 
 				$state.go('timesheet')
-			}else if(result.message == "Admin"){
-
-				$state.go('userRights')
+					
 			}else if(result.message =="signupunsuccessful"){
 				$(".alert-msg1").show().delay(1000).fadeOut(); 
 				$(".alert-danger").html("UserName or password is incorrect !!!");
@@ -59,5 +65,5 @@ angular.module('myApp.controllers')
 
 		})
 	}
-
+	}
 }])

@@ -73,5 +73,15 @@ public class TeamAssignmentServiceImpl implements TeamAssignmentService  {
 	  flag= teamDAO.deleteAssignment(id);
 	    return flag;
 	  }
+	 
+	 @Override
+	 public boolean validateAssignment(int projectId,int memberId){
+		 
+		 boolean flag=false;
+		 
+		 flag=teamDAO.validateAssignment(projectId,memberId);
+		 
+		 return flag;
+	 }
 
 }

@@ -21,4 +21,6 @@ public interface TeamAssignmentService {
 	
 	public boolean deleteAssignment(int id);
 	
+	public boolean validateAssignment(int projectId,int memberId);
+	
 }

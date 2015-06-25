@@ -4,10 +4,10 @@ angular.module('myApp.controllers')
 
 .controller('userRightsController', ['$scope', '$http', '$state','$rootScope', function($scope, $http, $state, $rootScope) {
 
-	$http({
+	/*$http({
 		url: 'rest/account/getName',
 		method: 'GET',
-	/*	data: menuJson,*/
+		data: menuJson,
 		headers: {
 			'Content-Type': 'application/json'
 		}
@@ -17,7 +17,7 @@ angular.module('myApp.controllers')
 		}else{
 			$scope.name=result;
 		}
-	});
+	});*/
 		
 	$scope.filteredParticipantsResults = []
 	,$scope.currentPage = 1

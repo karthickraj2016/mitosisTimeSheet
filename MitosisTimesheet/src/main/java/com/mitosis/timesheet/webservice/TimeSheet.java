@@ -22,7 +22,6 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import com.mitosis.timesheet.model.ProjectModel;
-import com.mitosis.timesheet.model.TeamAssignmentModel;
 import com.mitosis.timesheet.model.TimeSheetModel;
 import com.mitosis.timesheet.model.UserDetailsModel;
 import com.mitosis.timesheet.pojo.TimeSheetVo;
@@ -88,14 +87,15 @@ public class TimeSheet {
 		}else{
 
 			boolean flag = false;
-			ProjectModel project = new ProjectModel();
+			ProjectModel projectModel = new ProjectModel();
 
 			timeSheetModel.setDate(frmDate);
 			timeSheetModel.setHours(jsonobject.getDouble("hours"));
 			timeSheetModel.setDescription(jsonobject.getString("description"));
-			project.setProjectId(jsonobject.getInt("projectId"));
-			timeSheetModel.setProject(project);
+			projectModel.setProjectId(jsonobject.getInt("projectId"));
+			timeSheetModel.setProject(projectModel);
 			timeSheetModel.setEmployeeId((Integer) request.getSession().getAttribute("userId"));
+			
 			if (jsonobject.has("issueNumber")) {
 				timeSheetModel.setIssueNumber(jsonobject.getString("issueNumber"));
 			}
@@ -192,9 +192,9 @@ public class TimeSheet {
 			timeSheetModel.setHours(jsonObject.getDouble("hours"));
 			timeSheetModel.setDescription(jsonObject.getString("description"));
 			
-			project.setProjectId(jsonObject.getInt("ProjectId"));
-			
-			timeSheetModel.setProject(project);
+			ProjectModel projectModel = new ProjectModel();
+			projectModel.setProjectId(jsonObject.getInt("projectId"));
+			timeSheetModel.setProject(projectModel);
 		
 			timeSheetModel.setEmployeeId((Integer) request.getSession().getAttribute("userId"));
 			if(jsonObject.getString("issueNumber")=="null"){
@@ -242,7 +242,7 @@ public class TimeSheet {
   /*@Consumes(MediaType.APPLICATION_JSON)*/
 	@Produces(MediaType.APPLICATION_JSON)
 	
-	public List<TeamAssignmentModel> getprojectlist() throws JSONException {
+	public List<ProjectModel> getprojectlist() throws JSONException {
 		HttpSession session= request.getSession(true);
 
 		if(session.getAttribute("userId")==null){
@@ -251,11 +251,11 @@ public class TimeSheet {
 		
 		Object userId=session.getAttribute("userId");
 		
-		List<TeamAssignmentModel> projectList = new ArrayList<TeamAssignmentModel>();
+		List<ProjectModel> projectModel = new ArrayList<ProjectModel>();
 		
-		projectList = timeSheetService.getprojectList(userId);
+		projectModel = timeSheetService.getprojectList(userId);
 				
-		return projectList;
+		return projectModel;
 }
 	
 	

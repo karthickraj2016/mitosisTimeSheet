@@ -68,13 +68,13 @@ public double getprevioushours(int id) {
 }
 
 @Override
-public List<TeamAssignmentModel> getprojectList(Object userId) {
+public List<ProjectModel> getprojectList(Object userId) {
 	// TODO Auto-generated method stub
-	List<TeamAssignmentModel> projectList = new ArrayList<TeamAssignmentModel>();
+	List<ProjectModel> projectModel = new ArrayList<ProjectModel>();
 	
-	projectList=timeSheetDAO.getprojectList(userId);
-	System.out.println(projectList);
-	return projectList;
+	projectModel=timeSheetDAO.getprojectList(userId);
+	
+	return projectModel;
 }
 @Override
 public UserDetailsModel getUserDetails(Object userId){

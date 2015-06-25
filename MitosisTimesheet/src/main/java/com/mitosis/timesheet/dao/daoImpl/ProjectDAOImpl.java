@@ -1,6 +1,5 @@
 package com.mitosis.timesheet.dao.daoImpl;
 
-
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -10,61 +9,68 @@ import javax.persistence.criteria.Root;
 
 import com.mitosis.timesheet.dao.ProjectDAO;
 import com.mitosis.timesheet.model.ProjectModel;
+import com.mitosis.timesheet.model.TimeSheetModel;
 import com.mitosis.timesheet.util.*;
 
-
-public class ProjectDAOImpl extends BaseService implements ProjectDAO  {
+public class ProjectDAOImpl extends BaseService implements ProjectDAO {
 	boolean flag = false;
+
 	public boolean save(ProjectModel project) {
-		try{
+		try {
 			begin();
 			persist(project);
 			commit();
 			flag = true;
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally{
+		} finally {
 			close();
 		}
 		return flag;
 	}
 
-
 	public boolean update(ProjectModel project) {
-		try{
+		try {
 			begin();
 			merge(project);
 			commit();
 			flag = true;
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally{
+		} finally {
 			close();
 		}
 		return flag;
 	}
 
-	public boolean removeProjectById(int projectId){
-		try{
+	public boolean removeProjectById(int projectId) {
+
+		ProjectModel projectModel = null;
+		try {
 			begin();
 			entityManager.getEntityManagerFactory().getCache().evictAll();
 			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
-			CriteriaDelete<ProjectModel> delete = qb.createCriteriaDelete(ProjectModel.class);
-			Root<ProjectModel> root = delete.from(ProjectModel.class);
-			delete.where(qb.equal(root.get("projectId"), projectId));
-			entityManager.createQuery(delete).executeUpdate();
+			CriteriaQuery<ProjectModel> cq = qb.createQuery(ProjectModel.class);
+			Root<ProjectModel> root = cq.from(ProjectModel.class);
+			cq.where(qb.equal(root.get("projectId"), projectId));
+			cq.select(root);
+			projectModel = entityManager.createQuery(cq).getSingleResult();
+			remove(projectModel);
 			commit();
-			flag=true;
-		}finally{
+			flag = true;
+		} catch (Exception e) {
+			return flag;
+		} finally {
 			close();
 		}
 		return flag;
 
 	}
+
 	@Override
 	public List<ProjectModel> showlist() {
 		List<ProjectModel> projectlist = null;
-		try{
+		try {
 			begin();
 			entityManager.getEntityManagerFactory().getCache().evictAll();
 			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
@@ -73,18 +79,19 @@ public class ProjectDAOImpl extends BaseService implements ProjectDAO  {
 			cq.select(root);
 			cq.orderBy(qb.desc(root.get("projectId")));
 			projectlist = entityManager.createQuery(cq).getResultList();
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally{
+		} finally {
 			close();
 		}
 		return projectlist;
 	}
-	@Override
-	public boolean checkProjectName(String projectName){
 
-		ProjectModel project=new ProjectModel();
-		try{
+	@Override
+	public boolean checkProjectName(String projectName) {
+
+		ProjectModel project = new ProjectModel();
+		try {
 			begin();
 			entityManager.getEntityManagerFactory().getCache().evictAll();
 			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
@@ -92,20 +99,21 @@ public class ProjectDAOImpl extends BaseService implements ProjectDAO  {
 			Root<ProjectModel> root = cq.from(ProjectModel.class);
 			cq.where(qb.equal(root.get("projectName"), projectName));
 			cq.select(root);
-			project=entityManager.createQuery(cq).getSingleResult();
+			project = entityManager.createQuery(cq).getSingleResult();
 
-		}catch(Exception e){
+		} catch (Exception e) {
 			return flag;
-		}finally{
+		} finally {
 			close();
 		}
 		return true;
 	}
+
 	@Override
-	public String getProjectName(int projectId){
-		String name="";
-		ProjectModel project=new ProjectModel();
-		try{
+	public String getProjectName(int projectId) {
+		String name = "";
+		ProjectModel project = new ProjectModel();
+		try {
 			begin();
 			entityManager.getEntityManagerFactory().getCache().evictAll();
 			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
@@ -113,15 +121,13 @@ public class ProjectDAOImpl extends BaseService implements ProjectDAO  {
 			Root<ProjectModel> root = cq.from(ProjectModel.class);
 			cq.where(qb.equal(root.get("projectId"), projectId));
 			cq.select(root);
-			project=entityManager.createQuery(cq).getSingleResult();
-			name=project.getProjectName();
-		}catch(Exception e){
+			project = entityManager.createQuery(cq).getSingleResult();
+			name = project.getProjectName();
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally{
+		} finally {
 			close();
 		}
 		return name;
 	}
 }
-
-

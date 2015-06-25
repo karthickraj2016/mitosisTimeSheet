@@ -2,7 +2,7 @@
 
 angular.module('myApp.controllers')
 
-.controller('teamController', ['$scope', '$http', '$state','$rootScope', function($scope, $http, $state, $rootScope) {
+.controller('teamAssignmentController', ['$scope', '$http', '$state','$rootScope', function($scope, $http, $state, $rootScope) {
 
 
 	$http({
@@ -32,7 +32,7 @@ angular.module('myApp.controllers')
 
 		console.log(result);
 
-		$scope.projectUnits=result;
+		$scope.projectlist=result;
 	});
 
 
@@ -48,7 +48,7 @@ angular.module('myApp.controllers')
 
 		console.log(result);
 
-		$scope.memberUnits=result;
+		$scope.memberlist=result;
 	});
 
 	$http({
@@ -63,7 +63,7 @@ angular.module('myApp.controllers')
 
 		console.log(result);
 
-		$scope.roleUnits=result;
+		$scope.rolelist=result;
 	});
 	
 	$http({
@@ -124,14 +124,43 @@ angular.module('myApp.controllers')
 		})
 	},
 
-
-	$scope.assignTeam = function(){
+	
+	$scope.validateAssignment = function(){
 
 		var menuJson = angular.toJson({
-			"projectId":$scope.projectunit.projectId,"memberId":$scope.memberunit.id,"roleId":$scope.roleunit.id
+			"projectId":$scope.project.projectId,"memberId":$scope.member.id,"roleId":$scope.role.id
 		});
+		
+		$http({
+			url: 'rest/teamAssignment/validateAssignment',
+			method: 'POST',
+			data: menuJson,
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).success(function(result, status, headers) {
+			
+			if(result=="false"){
+				
+				$scope.assignTeam();
+													
+			}else{
+				
+				$(".alert-msg").show().delay(1000).fadeOut(); 
+				$(".alert-danger").html("This Member is Already Assigned to this Project");
+				$scope.teamList();
+			}
+		
+		})
 
+	};
 
+	$scope.assignTeam = function(){
+		
+		var menuJson = angular.toJson({
+			"projectId":$scope.project.projectId,"memberId":$scope.member.id,"roleId":$scope.role.id
+		});
+		
 		$http({
 			url: 'rest/teamAssignment/insertTeamDetails',
 			method: 'POST',
@@ -143,9 +172,9 @@ angular.module('myApp.controllers')
 			if(result.value=="inserted"){
 				$(".alert-msg").show().delay(1000).fadeOut(); 
 				$(".alert-success").html("Team Assignment Entry Added Successfully.");
-				$scope.projectunit="";
-				$scope.memberunit="";
-				$scope.roleunit="";
+				$scope.project="";
+				$scope.member="";
+				$scope.role="";
 				$scope.teamList();
 			}else if(result.value=="error"){
 				$(".alert-msg").show().delay(1000).fadeOut(); 
@@ -154,7 +183,50 @@ angular.module('myApp.controllers')
 
 		})
 	},
+	
+	$scope.roleChange=function(){
+		
+		$scope.change="true";
+		
+	},
 
+	$scope.validateUpdate = function(reqParam){
+		
+		var roleChange=$scope.change;
+		
+		if(roleChange=="true"){
+		
+			$scope.updateTeamAssignment(reqParam);
+			
+		}else{
+
+		var menuJson = angular.toJson({
+			"projectId":reqParam.project.projectId,"memberId":reqParam.member.id,"roleId":reqParam.role.id
+		});
+		
+		$http({
+			url: 'rest/teamAssignment/validateAssignment',
+			method: 'POST',
+			data: menuJson,
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).success(function(result, status, headers) {
+			
+			if(result=="false"){
+				
+				$scope.updateTeamAssignment(reqParam);
+													
+			}else{
+				
+				$(".alert-msg").show().delay(1000).fadeOut(); 
+				$(".alert-danger").html("This Member is Already Assigned to this Project");
+				$scope.teamList();
+			}
+		
+		})
+	}
+};
 
 	$scope.updateTeamAssignment = function(reqParam){
 

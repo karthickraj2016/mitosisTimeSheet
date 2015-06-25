@@ -21,7 +21,7 @@
       <ul class="nav navbar-nav" style="margin-left: 30px; margin-top: 8px;">
         <li ng-class="{ active: isActive('/timesheet')}"><a ui-sref="timesheet">Home</a></li>
         <li ng-show="manageProject" ng-class="{ active: isActive('/project')}"><a ui-sref="project">Project Details</a></li>
-        <li ng-show="manageTeam" ng-class="{ active: isActive('/projectmapping')}"><a ui-sref="projectmapping">Team Assignment</a></li>
+        <li ng-show="manageTeam" ng-class="{ active: isActive('/teamAssignment')}"><a ui-sref="teamAssignment">Team Assignment</a></li>
         </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="lb-username"><lable ng-model="name">Welcome {{name}}</lable></li>
@@ -35,22 +35,22 @@
 <div class="container" style="margin-top: 8%;"><div class="row"><div class="col-xs-12 col-md-12"><h2>Team Assignment</h2></div></div></div>
 <div class="container" style="width: 100%;">
 <div class="teamassgn-form-div">
-<form class="form-inline project-form" role="form" id="addEntry" ng-submit="assignTeam()">		
+<form class="form-inline project-form" role="form" id="addEntry" ng-submit="validateAssignment()">		
 
 	<div class="form-group">
-    <select  class="form-control" required ng-model="projectunit" ng-options="item as item.projectName for item in projectUnits" style="color: #777777;">
+    <select id="project" class="form-control" required ng-model="project" ng-options="item as item.projectName for item in projectlist" style="color: #777777;">
     <option value="">Project</option>
     </select> 
     </div>
 	
     <div class="form-group">
-    <select  class="form-control" required ng-model="memberunit" ng-options="item as item.name for item in memberUnits" style="color: #777777;">
+    <select id="member" class="form-control" required ng-model="member" ng-options="item as item.name for item in memberlist"  style="color: #777777;">
     <option value="">Members</option>
     </select> 
     </div>
     
     <div class="form-group">
-    <select  class="form-control" required ng-model="roleunit" ng-options="item as item.roleName for item in roleUnits" style="color: #777777;">
+    <select id="role" class="form-control" required ng-model="role" ng-options="item as item.roleName for item in rolelist" style="color: #777777;">
     <option value="">Role</option>
     </select> 
     </div>
@@ -76,7 +76,7 @@
 			<td >
 				<span ng-show="!showEdit">{{sheet.project.projectName}}</span>
 				<span ng-show="showEdit" >
-				<select  class="form-control" required ng-model="sheet.project" ng-options="item as item.projectName for item in projectUnits" style="color: #777777;">
+				<select  class="form-control" required ng-model="sheet.project" ng-options="item as item.projectName for item in projectlist" style="color: #777777;">
     			<option value="">{{sheet.project.projectName}}</option>
     			</select> 
 				</span>
@@ -85,7 +85,7 @@
 			<td>
 				<span ng-show="!showEdit">{{sheet.member.name}}</span>
 				<span ng-show="showEdit">
-				<select  class="form-control" required ng-model="sheet.member" ng-options="item as item.name for item in memberUnits" style="color: #777777;">
+				<select  class="form-control" required ng-model="sheet.member" ng-options="item as item.name for item in memberlist" style="color: #777777;">
     			<option value="">{{sheet.member.name}}</option>
     			</select> 
 				</span>
@@ -94,7 +94,7 @@
 			<td>
 				<span ng-show="!showEdit">{{sheet.role.roleName}}</span>
 				<span ng-show="showEdit">
-				<select  class="form-control" required ng-model="sheet.role" ng-options="item as item.roleName for item in roleUnits" style="color: #777777;">
+				<select  class="form-control" required ng-model="sheet.role" ng-options="item as item.roleName for item in rolelist" ng-change="roleChange()" style="color: #777777;">
     			<option value="">{{sheet.role.roleName}}</option>
 				</select> 
 				</span>
@@ -104,7 +104,7 @@
 			    
 			    <image src="images/pencil.png" ng-click="showEdit = !showEdit" ng-show="!showEdit"></image>
 				<image src="images/delete.png" ng-click="confirmDelete(sheet.id)" ng-show="!showEdit"></image>
-				<image src="images/save-icon.png" ng-click="showEdit = !showEdit;updateTeamAssignment(sheet)" ng-show="showEdit" ng-disabled="checkRequired(sheet);"></image>
+				<image src="images/save-icon.png" ng-click="showEdit = !showEdit;validateUpdate(sheet)" ng-show="showEdit" ng-disabled="checkRequired(sheet);"></image>
 				<image src="images/cancel.jpg"  ng-click="showEdit = !showEdit;" ng-show="showEdit"></image>
 				
 				<!-- <a><span class="glyphicon glyphicon-pencil" ng-click="showEdit = !showEdit" ng-show="!showEdit"></span></a>
