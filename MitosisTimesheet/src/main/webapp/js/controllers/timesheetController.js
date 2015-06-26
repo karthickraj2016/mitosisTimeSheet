@@ -180,7 +180,7 @@ angular.module('myApp.controllers')
 					$(".alert-success").html("Timesheet Entry Added Successfully.");
 					$scope.unit="";
 					$scope.list();
-					 console.log($scope.timesheet.description);			
+					
 				}
 				else{
 					 
@@ -198,7 +198,7 @@ angular.module('myApp.controllers')
 		}
 	},
 
-	$scope.updatetimesheet = function(reqParam,project){
+	$scope.updatetimesheet = function(reqParam){
 
 		var hour= parseFloat(reqParam.hours);
 
@@ -219,7 +219,7 @@ angular.module('myApp.controllers')
 					reqParam.hours=hour;
 				}	
 			var menuJson = angular.toJson({
-				"date": reqParam.entryDate,"hours":reqParam.hours,"issueNumber":reqParam.issueNumber,"description":reqParam.description,"id":reqParam.id,"ProjectId":project.projectId
+				"date": reqParam.entryDate,"hours":reqParam.hours,"issueNumber":reqParam.issueNumber,"description":reqParam.description,"id":reqParam.id,"ProjectId":reqParam.project.projectId
 	 
 		
 			});

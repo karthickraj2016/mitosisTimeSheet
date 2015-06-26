@@ -33,7 +33,7 @@ angular.module('myApp.controllers')
 		$scope.manageProject=result.manageProject;
 		$scope.manageTeam=result.manageTeam;
 		/*$scope.manageCustomer=result.manageCustomer;*/
-		$scope.getproject();
+		$scope.teamList();
 	});
 	
 	
@@ -68,46 +68,6 @@ angular.module('myApp.controllers')
 
 		$scope.rolelist=result;
 	});
-		
-	$scope.getproject = function() {
-		
-		if($scope.manageProject && $scope.manageTeam ){
-
-			$http({
-
-				url: 'rest/teamAssignment/getProjectList',
-				method: 'GET',
-				/*data: menuJson,*/
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			}).success(function(result, status, headers) {
-
-				console.log(result);
-
-				$scope.projectlist=result;
-			});
-		  
-			}else{
-			   
-				$http({
-					
-					url: 'rest/timesheet/getprojectlist',
-					method: 'GET',
-					/*data: menuJson,*/
-					headers: {
-						'Content-Type': 'application/json'
-					}
-				}).success(function(result, status, headers) {
-					
-					console.log(result);
-					
-					$scope.projectlist=result;
-				});
-			   
-		   }
-		}
-	
 	
 	
 	$scope.filteredParticipantsResults = []
@@ -130,12 +90,81 @@ angular.module('myApp.controllers')
 
 	}
 
+		
 	$scope.teamList = function() {
+		
+		if($scope.manageProject && $scope.manageTeam ){
 
-		$http({
-			url: 'rest/teamAssignment/showAssignedTeamList',
-			method: 'GET',
-			/* data: menuJson,*/
+			$http({
+
+				url: 'rest/teamAssignment/getProjectList',
+				method: 'GET',
+				/*data: menuJson,*/
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).success(function(result, status, headers) {
+
+				console.log(result);
+
+				$scope.projectlist=result;
+			});
+			
+		
+			$http({
+					url: 'rest/teamAssignment/showAssignedTeamList',
+					method: 'GET',
+					/* data: menuJson,*/
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				}).success(function(result, status, headers) {
+
+					$scope.teamLists=result; 
+
+					$scope.$watch('currentPage + numPerPage', function() {
+						var begin = (($scope.currentPage - 1) * $scope.numPerPage)
+						, end = begin + $scope.numPerPage;
+						$scope.filteredParticipantsResults = $scope.teamLists.slice(begin, end);
+						$scope.totalItems =	$scope.teamLists.length;
+
+					});
+
+				})
+			  
+			}else{
+			   
+				$http({
+					
+					url: 'rest/timesheet/getprojectlist',
+					method: 'GET',
+					/*data: menuJson,*/
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				}).success(function(result, status, headers) {
+					
+					console.log(result);
+					
+					$scope.projectlist=result;
+					
+					$scope.projectIds=[];
+				
+					for(var i=0;i<($scope.projectlist).length;i++){
+						
+						$scope.projectIds.push($scope.projectlist[i].projectId);
+					
+					}
+								
+         	var menuJson = angular.toJson({"projectIds":$scope.projectIds
+	          });
+	        console.log(menuJson);
+	
+	
+	  $http({
+			url: 'rest/teamAssignment/showAssignedTeamListByUserProjects',
+			method: 'POST',
+			 data: menuJson,
 			headers: {
 				'Content-Type': 'application/json'
 			}
@@ -153,8 +182,9 @@ angular.module('myApp.controllers')
 
 		})
 		
-	}
-
+	});
+  }
+}
 	
 	$scope.validateAssignment = function(){
 

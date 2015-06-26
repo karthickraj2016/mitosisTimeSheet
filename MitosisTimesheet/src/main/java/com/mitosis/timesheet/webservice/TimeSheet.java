@@ -187,13 +187,13 @@ public class TimeSheet {
 		if(totalhours>=hourentry){
 
 			boolean flag = false;
+			ProjectModel projectModel = new ProjectModel();
 
 			timeSheetModel.setDate(frmDate);
 			timeSheetModel.setHours(jsonObject.getDouble("hours"));
 			timeSheetModel.setDescription(jsonObject.getString("description"));
-			
-			ProjectModel projectModel = new ProjectModel();
-			projectModel.setProjectId(jsonObject.getInt("projectId"));
+						
+			projectModel.setProjectId(jsonObject.getInt("ProjectId"));
 			timeSheetModel.setProject(projectModel);
 		
 			timeSheetModel.setEmployeeId((Integer) request.getSession().getAttribute("userId"));

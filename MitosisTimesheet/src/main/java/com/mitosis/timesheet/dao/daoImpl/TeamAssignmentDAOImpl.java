@@ -37,6 +37,27 @@ public class TeamAssignmentDAOImpl extends BaseService implements TeamAssignment
 	}
 
 	@Override
+	public List<TeamAssignmentModel> showTeamListById(int projectId){
+		List<TeamAssignmentModel> teamlist = null;
+		try{
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<TeamAssignmentModel> cq = qb.createQuery(TeamAssignmentModel.class);
+			Root<TeamAssignmentModel> root = cq.from(TeamAssignmentModel.class);
+			cq.where(qb.equal(root.get("project"),projectId));
+			cq.select(root);
+			cq.orderBy(qb.desc(root.get("id")));
+			teamlist = entityManager.createQuery(cq).getResultList();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close();
+		}
+		return teamlist;
+	}
+
+	@Override
 	public List<ProjectModel> getProjectList() {
 		List<ProjectModel> projectlist = new ArrayList<ProjectModel>();
 		try{

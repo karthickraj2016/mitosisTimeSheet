@@ -11,6 +11,8 @@ public interface TeamAssignmentDAO {
 	
 	public List<TeamAssignmentModel> showTeamList();
 	
+	public List<TeamAssignmentModel> showTeamListById(int projectId);
+	
     public List<ProjectModel> getProjectList();
 	
 	public List<UserDetailsModel> getMemberList();

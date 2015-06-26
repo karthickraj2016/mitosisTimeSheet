@@ -26,6 +26,16 @@ public class TeamAssignmentServiceImpl implements TeamAssignmentService  {
 	}
 
 	@Override
+	public List<TeamAssignmentModel>  showTeamListById(int projectId) {
+		
+		List<TeamAssignmentModel> teamList = new ArrayList<TeamAssignmentModel>();
+
+		teamList = teamDAO.showTeamListById(projectId);
+		
+		return teamList;
+	}
+	
+	@Override
 	public List<ProjectModel> getProjectList() {
 
 		List<ProjectModel> projectList = new ArrayList<ProjectModel>();

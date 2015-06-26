@@ -11,6 +11,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
@@ -42,6 +43,40 @@ public class TeamAssignment {
 		return teamList;
 
 	}
+	
+	@Path("/showAssignedTeamListByUserProjects")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<TeamAssignmentModel> showTeamListByUserProjects(JSONObject jsonobject) throws JSONException, ParseException {
+
+		JSONArray jsonArray = jsonobject.getJSONArray("projectIds");
+		
+    	List<TeamAssignmentModel> teamList1= new ArrayList<TeamAssignmentModel>();
+	
+	    List<TeamAssignmentModel> assinedTeamList= new ArrayList<TeamAssignmentModel>();
+        
+	   	
+		for(int i=0; i<jsonArray.length(); i++) {
+
+			JSONObject jsonObject1 = new JSONObject();
+
+			jsonObject1.put("projectId", jsonArray.get(i));
+				
+		int	projectId=(int)jsonObject1.optInt("projectId");
+		
+		teamList1= teamService.showTeamListById(projectId);
+		
+		for(TeamAssignmentModel teamList : teamList1 ){
+			
+		assinedTeamList.add(teamList);
+			
+	}
+}
+  
+		return assinedTeamList;
+
+}
 
 	@Path("/getProjectList")
 	@GET
