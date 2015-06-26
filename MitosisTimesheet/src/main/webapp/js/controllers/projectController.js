@@ -174,6 +174,7 @@ angular.module('myApp.controllers')
 						$('#'+projectId).focus();
 						$(".alert-msg1").show().delay(1000).fadeOut(); 
 						$(".alert-danger").html("Project Name already exists");
+						$scope.list();
 					}
 				})
 			}
@@ -195,15 +196,15 @@ angular.module('myApp.controllers')
 			}
 		}
 	}
-
+	
 	$scope.updateproject = function(reqParam){
 
 		var customer=reqParam.customerName;
 		if(customer.length>100){
 			$(".alert-msg1").show().delay(1500).fadeOut(); 
 			$(".alert-danger").html("Only 100 letters are Allowed in Customer Field...");
-		$scope.list();
-		return;
+		    $scope.list();
+		    return;
 		}else{
 		$http({
 			url: 'rest/project/updateproject',

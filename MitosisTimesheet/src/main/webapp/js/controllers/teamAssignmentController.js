@@ -19,23 +19,25 @@ angular.module('myApp.controllers')
 			$scope.name=result;
 		}
 	});
+	
 
 	$http({
-
-		url: 'rest/teamAssignment/getProjectList',
+		url: 'rest/timesheet/getUserDetails',
 		method: 'GET',
 		/*data: menuJson,*/
 		headers: {
 			'Content-Type': 'application/json'
 		}
 	}).success(function(result, status, headers) {
-
-		console.log(result);
-
-		$scope.projectlist=result;
+		
+		$scope.manageProject=result.manageProject;
+		$scope.manageTeam=result.manageTeam;
+		/*$scope.manageCustomer=result.manageCustomer;*/
+		$scope.getproject();
 	});
-
-
+	
+	
+	
 	$http({
 
 		url: 'rest/teamAssignment/getMemberList',
@@ -51,6 +53,7 @@ angular.module('myApp.controllers')
 		$scope.memberlist=result;
 	});
 
+   
 	$http({
 
 		url: 'rest/teamAssignment/getRoleList',
@@ -65,21 +68,48 @@ angular.module('myApp.controllers')
 
 		$scope.rolelist=result;
 	});
-	
-	$http({
-		url: 'rest/timesheet/getUserDetails',
-		method: 'GET',
-		/*data: menuJson,*/
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	}).success(function(result, status, headers) {
 		
-		$scope.manageProject=result.manageProject;
-		$scope.manageTeam=result.manageTeam;
-		/*$scope.manageCustomer=result.manageCustomer;*/
-	});
+	$scope.getproject = function() {
+		
+		if($scope.manageProject && $scope.manageTeam ){
 
+			$http({
+
+				url: 'rest/teamAssignment/getProjectList',
+				method: 'GET',
+				/*data: menuJson,*/
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).success(function(result, status, headers) {
+
+				console.log(result);
+
+				$scope.projectlist=result;
+			});
+		  
+			}else{
+			   
+				$http({
+					
+					url: 'rest/timesheet/getprojectlist',
+					method: 'GET',
+					/*data: menuJson,*/
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				}).success(function(result, status, headers) {
+					
+					console.log(result);
+					
+					$scope.projectlist=result;
+				});
+			   
+		   }
+		}
+	
+	
+	
 	$scope.filteredParticipantsResults = []
 	,$scope.currentPage = 1
 	,$scope.numPerPage = 5
@@ -122,7 +152,8 @@ angular.module('myApp.controllers')
 			});
 
 		})
-	},
+		
+	}
 
 	
 	$scope.validateAssignment = function(){
@@ -308,6 +339,8 @@ angular.module('myApp.controllers')
 			$scope.teamList();	
 		})
 	},
+	
+	
 
 	$scope.logout = function(){
 
