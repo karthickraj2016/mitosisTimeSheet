@@ -146,7 +146,7 @@ angular.module('myApp.controllers')
 													
 			}else{
 				
-				$(".alert-msg").show().delay(1000).fadeOut(); 
+				$(".alert-msg1").show().delay(1000).fadeOut(); 
 				$(".alert-danger").html("This Member is Already Assigned to this Project");
 				$scope.teamList();
 			}
@@ -177,26 +177,46 @@ angular.module('myApp.controllers')
 				$scope.role="";
 				$scope.teamList();
 			}else if(result.value=="error"){
-				$(".alert-msg").show().delay(1000).fadeOut(); 
+				$(".alert-msg1").show().delay(1000).fadeOut(); 
 				$(".alert-danger").html("Error in Inserting");
 			}
 
 		})
 	},
 	
-	$scope.roleChange=function(){
+	$scope.projectChange=function(){
 		
-		$scope.change="true";
+		$scope.projectchange="true";
 		
 	},
 
+	$scope.memberChange=function(){
+		
+		$scope.memberchange="true";
+		
+	},
+
+
+	$scope.roleChange=function(){
+		
+		$scope.rolechange="true";
+		
+	},
+
+
 	$scope.validateUpdate = function(reqParam){
 		
-		var roleChange=$scope.change;
+		var projectChange=$scope.projectchange;
+		var memberChange=$scope.memberchange;
+		var roleChange=$scope.rolechange;
+	
 		
-		if(roleChange=="true"){
+		if(projectChange == undefined && memberChange == undefined && roleChange=="true"){
 		
 			$scope.updateTeamAssignment(reqParam);
+			$scope.projectchange=undefined;
+			$scope.memberchange=undefined;
+			$scope.rolechange=undefined;
 			
 		}else{
 
@@ -216,12 +236,18 @@ angular.module('myApp.controllers')
 			if(result=="false"){
 				
 				$scope.updateTeamAssignment(reqParam);
+				$scope.projectchange=undefined;
+				$scope.memberchange=undefined;
+				$scope.rolechange=undefined;
 													
 			}else{
 				
-				$(".alert-msg").show().delay(1000).fadeOut(); 
+				$(".alert-msg1").show().delay(1000).fadeOut(); 
 				$(".alert-danger").html("This Member is Already Assigned to this Project");
 				$scope.teamList();
+				$scope.projectchange=undefined;
+				$scope.memberchange=undefined;
+				$scope.rolechange=undefined;
 			}
 		
 		})

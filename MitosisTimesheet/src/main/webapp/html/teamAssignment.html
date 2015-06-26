@@ -76,7 +76,7 @@
 			<td >
 				<span ng-show="!showEdit">{{sheet.project.projectName}}</span>
 				<span ng-show="showEdit" >
-				<select  class="form-control" required ng-model="sheet.project" ng-options="item as item.projectName for item in projectlist" style="color: #777777;">
+				<select  class="form-control" required ng-model="sheet.project" ng-options="item as item.projectName for item in projectlist" ng-change="projectChange()" style="color: #777777;">
     			<option value="">{{sheet.project.projectName}}</option>
     			</select> 
 				</span>
@@ -85,7 +85,7 @@
 			<td>
 				<span ng-show="!showEdit">{{sheet.member.name}}</span>
 				<span ng-show="showEdit">
-				<select  class="form-control" required ng-model="sheet.member" ng-options="item as item.name for item in memberlist" style="color: #777777;">
+				<select  class="form-control" required ng-model="sheet.member" ng-options="item as item.name for item in memberlist" ng-change="memberChange()" style="color: #777777;">
     			<option value="">{{sheet.member.name}}</option>
     			</select> 
 				</span>
@@ -119,5 +119,5 @@
 <pagination  total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="numPerPage" class="pagination-sm" boundary-links="true"></pagination>
 </div>
 <div class="alert-msg col-xs-12 col-sm-6"><p class="alert-success"></p></div>
- <div class="alert-msg1 col-xs-12 col-sm-6"><p class="alert-danger"></p></div>
+<div class="alert-msg1 col-xs-12 col-sm-6"><p class="alert-danger"></p></div>
  </div>
