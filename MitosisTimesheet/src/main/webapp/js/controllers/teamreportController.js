@@ -2,7 +2,7 @@
 
 angular.module('myApp.controllers')
 
-.controller('individualreportController', ['$scope', '$http', '$state','$rootScope', function($scope, $http, $state, $rootScope) {
+.controller('teamreportController', ['$scope', '$http', '$state','$rootScope', function($scope, $http, $state, $rootScope) {
 
 	    
    
@@ -36,13 +36,27 @@ angular.module('myApp.controllers')
 	};
 	
 	
+	$http({
+		url: 'rest/teamreport/getprojectlist',
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	}).success(function(result, status, headers) {
+		$scope.projectlist = result;
+		
+	});
+	
+	
+	
+	
 	$scope.detailreport = function(){
 	
-		var menuJson = angular.toJson({"fromdate":$scope.timesheet.fromdate,"todate":$scope.timesheet.todate,"name":$rootScope.name});
+		var menuJson = angular.toJson({"fromdate":$scope.timesheet.fromdate,"todate":$scope.timesheet.todate,"name":$rootScope.name,"projectId":$scope.project.projectId});
 		
 		
 		$http({
-			url: 'rest/individualreport/detailreport',
+			url: 'rest/teamreport/detailreport',
 			method: 'POST',
 			data: menuJson,
 			headers: {
@@ -75,7 +89,7 @@ angular.module('myApp.controllers')
 		var menuJson = angular.toJson({"fromdate":$scope.timesheet.fromdate,"todate":$scope.timesheet.todate,"name":$rootScope.name});
 		
 		$http({
-			url: 'rest/individualreport/summaryreport',
+			url: 'rest/teamreport/summaryreport',
 			method: 'POST',
 			data: menuJson,
 			headers: {
@@ -103,7 +117,7 @@ angular.module('myApp.controllers')
 		var menuJson = angular.toJson({"filepath":pdfPath});
 		
 		$http({
-			url: 'rest/individualreport/deletepdffile',
+			url: 'rest/teamreport/deletepdffile',
 			method: 'POST',
 			data: menuJson,
 			headers: {
