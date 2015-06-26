@@ -56,7 +56,7 @@ angular.module('myApp.controllers')
 		
 		
 		$http({
-			url: 'rest/teamreport/detailreport',
+			url: 'rest/teamreport/detailReport',
 			method: 'POST',
 			data: menuJson,
 			headers: {

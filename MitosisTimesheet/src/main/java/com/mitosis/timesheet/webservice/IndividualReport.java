@@ -140,8 +140,6 @@ public class IndividualReport {
 		
 
 		DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-		
-		System.out.println(sdf);
 
 		
 		String frmdateInString = jsonObject.getString("fromdate");
