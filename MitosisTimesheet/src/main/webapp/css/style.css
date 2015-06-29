@@ -154,16 +154,6 @@ margin: 2px 40px;
 white-space: nowrap;
 }
 
-.table th {
-	text-align: left;
-}
-
-.table tbody td {
-	text-align: left;
-	 white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
 .row-date{
 width:10%;	
 }
@@ -251,12 +241,6 @@ width:30%;
  .profile-value{
  	 padding-top: 7px;		
  }
- .btn-profile-edit{
- 	
- }
- .btn-profile-cancel{
- 	display: none;	
- }
  a .glyphicon{
  	padding-left: 10px;
  }
@@ -324,10 +308,7 @@ h2 {
 	.form-inline .hour{
 			width: 115px; 
 	}
-	.form-inline .projectdet-form{
-			width: 312px;
-	}
-	
+		
 	}
 
 @media ( min-width : 800px) {	
