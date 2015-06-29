@@ -1,7 +1,6 @@
 package com.mitosis.timesheet.webservice;
 
 
-import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -43,8 +42,6 @@ public class TimeSheet {
 	@Produces(MediaType.APPLICATION_JSON)
 	public JSONObject insertDetails(JSONObject jsonobject) throws JSONException, ParseException{
 
-
-
 		TimeSheetModel timeSheetModel = new TimeSheetModel();
 		
 		TimeSheetVo timesheetVo = new TimeSheetVo();
@@ -55,11 +52,7 @@ public class TimeSheet {
 		
 		String dateInString = jsonobject.getString("date");
 		Date frmDate = sdf.parse(dateInString); 
-		/*DateFormat sdff = new SimpleDateFormat("dd-MM-yyyy");
-		String date = sdff.format(frmDate);		
-		Date d = sdff.parse(date);
-	    Timestamp timeStampDate = new Timestamp(d.getDate());*/
-
+		
 		double totalhours = 16.0;
 
 		int userId =  (Integer) request.getSession().getAttribute("userId");
@@ -70,14 +63,11 @@ public class TimeSheet {
 
 		double hourentry = hoursentered + jsonobject.getDouble("hours");
 
-
-
 		if(hoursallowed==0){
 
 			jsonObject.put("value","done");
 
 			return jsonObject;
-
 		}
 
 		if(totalhours<hourentry){
@@ -88,8 +78,6 @@ public class TimeSheet {
 
 			return jsonObject;
 		}
-
-
 
 		else{
 
@@ -108,9 +96,7 @@ public class TimeSheet {
 			if (jsonobject.has("id")) {
 				timeSheetModel.setId(jsonobject.getInt("id"));
 			}	
-			
-
-
+	
 			flag = timeSheetService.create(timeSheetModel);
 
 			if(flag){
@@ -122,10 +108,6 @@ public class TimeSheet {
 				jsonObject.put("value", "error");
 				return jsonObject;
 			}
-
-
-
-
 		}
 	}
 
@@ -146,7 +128,6 @@ public class TimeSheet {
 		timesheetlist = timeSheetService.showlist(userId);
 
 		return timesheetlist;
-
 	}
 
 
@@ -206,8 +187,6 @@ public class TimeSheet {
 			
 			timeSheetModel.setProject(project);
 			
-			
-			
 			timeSheetModel.setEmployeeId((Integer) request.getSession().getAttribute("userId"));
 			if(jsonObject.getString("issueNumber")=="null"){
 
@@ -233,18 +212,12 @@ public class TimeSheet {
 				return jsonObject;
 			}  
 
-		}
-
-
-		else if(totalhours<hourentry){
+		}else if(totalhours<hourentry){
 
 			jsonObject.put("hoursallowed", hoursallowed);
 			jsonObject.put("value", "err_total");
 			return jsonObject;
-
-
-		}
-		else{
+		}else{
 
 			jsonObject.put("hoursallowed", hoursallowed);
 			jsonObject.put("value", "hoursallowedis0");
