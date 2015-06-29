@@ -87,6 +87,7 @@ public class TimeSheetModel {
 	}
 
 	public Date getDate() {
+		
 		return date;
 	}
 

@@ -68,7 +68,7 @@ public class ProjectServices {
 		 boolean delete;
 		  int projectId=jsonObject.getInt("projectId");
 		   delete = projectservice.removeProjectById(projectId);
-		    if (delete==true) {
+		    if (delete) {
 		      return true;
 		    } else {
 		      return false;

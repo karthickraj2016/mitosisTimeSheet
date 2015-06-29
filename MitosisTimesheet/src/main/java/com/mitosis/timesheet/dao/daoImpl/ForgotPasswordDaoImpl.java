@@ -79,7 +79,7 @@ public class ForgotPasswordDaoImpl extends BaseService implements ForgotPassword
 			cq.where(qb.equal(root.get("eMail"),userdetailsModel.geteMail()));
 			cq.select(root);
 			userDetailsModel = entityManager.createQuery(cq).getSingleResult();
-			userDetailsModel.setIsReset(userdetailsModel.getIsReset());
+			userDetailsModel.setReset(userdetailsModel.IsReset());
 			merge(userDetailsModel);
 			commit();
 			return true;

@@ -66,6 +66,7 @@ public class Signup {
 		UserDetailsModel userDetailsModel = new UserDetailsModel();
 
 		boolean user = false;
+          
 
 		userDetailsModel = signUp.login(jsonObject.getString("username"), jsonObject.getString("password"));
 
@@ -96,6 +97,7 @@ public class Signup {
 		}
 
 		return jsonObj;
+       
 	}
 
 	@GET
@@ -251,8 +253,7 @@ public class Signup {
 			return null;
 		}
 		Object userId = session.getAttribute("userId");
-		/* Object userId=137; */
-
+		
 		UserDetailsModel name = null;
 		String empname = null;
 

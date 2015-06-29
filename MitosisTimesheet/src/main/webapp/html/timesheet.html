@@ -56,7 +56,7 @@
 	</div> -->
    
     <div class="form-group">
-    <select  class="form-control" required ng-model="unit" ng-options="item as item.projectName for item in units" style="color: #777777;">
+    <select  class="form-control" required ng-model="projects" ng-options="item as item.projectName for item in projectList" style="color: #777777;">
     <option value="">Project</option>
 	</select> 
     </div>
@@ -96,7 +96,7 @@
 			</td>
 			<td>
 				<span ng-show="!showEdit">{{sheet.project.projectName}}</span>
-				<span id="{{sheet.project.id}}" ng-show="showEdit"><select class="form-control" ng-model="sheet.project" ng-options="item as item.projectName for item in units" style="color: #777777;">
+				<span id="{{sheet.project.id}}" ng-show="showEdit"><select class="form-control" ng-model="sheet.project" ng-options="item as item.projectName for item in projectList" style="color: #777777;">
 				<option value="">{{sheet.project.projectName}}</option>
 				</select> 
 				</span>

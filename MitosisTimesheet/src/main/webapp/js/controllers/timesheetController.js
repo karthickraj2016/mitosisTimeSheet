@@ -63,9 +63,25 @@ angular.module('myApp.controllers')
 			$scope.name=result;
 			
 		}
+	})
+	
+	
+		
+	$http({
+		url: 'rest/timesheet/getUserDetails',
+		method: 'GET',
+		/*data: menuJson,*/
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	}).success(function(result, status, headers) {
+		
+		$scope.manageProject=result.manageProject;
+		$scope.manageTeam=result.manageTeam;
+		/*$scope.manageCustomer=result.manageCustomer;*/
 	});
-	
-	
+
+		
 	$http({
 		
 				url: 'rest/timesheet/getprojectlist',
@@ -78,14 +94,14 @@ angular.module('myApp.controllers')
 				
 				console.log(result);
 				
-				$scope.units=result;
+				$scope.projectList=result;
 			});
-			
+
 	$scope.list = function() {
 		
 		$http({
 			url: 'rest/timesheet/showlist',
-			method: 'POST',
+			method: 'GET',
 			/* data: menuJson,*/
 			headers: {
 				'Content-Type': 'application/json'
@@ -93,7 +109,7 @@ angular.module('myApp.controllers')
 		}).success(function(result, status, headers) {
 
 			$scope.timesheetList=result; 
-
+				console.log("result",result);
 			$scope.$watch('currentPage + numPerPage', function() {
 				var begin = (($scope.currentPage - 1) * $scope.numPerPage)
 				, end = begin + $scope.numPerPage;
@@ -127,7 +143,7 @@ angular.module('myApp.controllers')
 							}	
 
 			var menuJson = angular.toJson({
-				"date": $scope.timesheet.date,"hours":$scope.timesheet.hours,"issueNumber":$scope.timesheet.issueNumber,"description":$scope.timesheet.description,"projectId":$scope.unit.projectId
+				"date": $scope.timesheet.date,"hours":$scope.timesheet.hours,"issueNumber":$scope.timesheet.issueNumber,"description":$scope.timesheet.description,"projectId":$scope.projects.projectId
  			});
 
 
@@ -164,7 +180,7 @@ angular.module('myApp.controllers')
 					$(".alert-success").html("Timesheet Entry Added Successfully.");
 					$scope.unit="";
 					$scope.list();
-					 console.log($scope.timesheet.description);			
+					
 				}
 				else{
 					 
@@ -172,9 +188,7 @@ angular.module('myApp.controllers')
 					 $(".alert-danger").html("insertion failed");
 					 $scope.dates();
 				}
-				
 			
-
 			})
 		}else{
 			 $(".alert-msg1").show().delay(1000).fadeOut(); 
