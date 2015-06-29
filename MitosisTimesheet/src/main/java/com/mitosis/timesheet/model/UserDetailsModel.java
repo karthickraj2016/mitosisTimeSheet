@@ -38,6 +38,15 @@ public class UserDetailsModel {
 
 	@Column(name="isReset")
 	private boolean isReset;
+	
+	@Column(name="manage_project")
+	private boolean manageProject;
+
+	@Column(name="manage_team")
+	private boolean manageTeam;
+	
+	@Column(name="manage_customer")
+	private boolean manageCustomer;
 
 
 	public Integer getId() {
@@ -87,7 +96,7 @@ public class UserDetailsModel {
 		this.active = active;
 	}
 
-	public boolean getIsReset() {
+	public boolean IsReset() {
 		return isReset;
 	}
 
@@ -95,5 +104,28 @@ public class UserDetailsModel {
 		this.isReset = isReset;
 	}
 	
+	public boolean isManageProject() {
+		return manageProject;
+	}
+
+	public void setManageProject(boolean manageProject) {
+		this.manageProject = manageProject;
+	}
+
+	public boolean isManageTeam() {
+		return manageTeam;
+	}
+
+	public void setManageTeam(boolean manageTeam) {
+		this.manageTeam = manageTeam;
+	}
+
+	public boolean isManageCustomer() {
+		return manageCustomer;
+	}
+
+	public void setManageCustomer(boolean manageCustomer) {
+		this.manageCustomer = manageCustomer;
+	}
 
 }
