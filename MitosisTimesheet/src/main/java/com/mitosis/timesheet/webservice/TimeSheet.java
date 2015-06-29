@@ -20,7 +20,6 @@ import javax.ws.rs.core.MediaType;
 
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
-
 import com.mitosis.timesheet.model.ProjectModel;
 import com.mitosis.timesheet.model.TimeSheetModel;
 import com.mitosis.timesheet.model.UserDetailsModel;
@@ -53,12 +52,11 @@ public class TimeSheet {
 
 		JSONObject jsonObject = new JSONObject();
 		
-				DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 				
-				String dateInString = jsonobject.getString("date");
-				Date frmDate = sdf.parse(dateInString); 
+		String dateInString = jsonobject.getString("date");
+		Date frmDate = sdf.parse(dateInString); 
 						
-
 		double totalhours = 16.0;
 
 		int userId =  (Integer) request.getSession().getAttribute("userId");
