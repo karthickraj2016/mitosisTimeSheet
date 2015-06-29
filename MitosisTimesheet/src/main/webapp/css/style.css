@@ -154,6 +154,16 @@ margin: 2px 40px;
 white-space: nowrap;
 }
 
+.table th {
+	text-align: left;
+}
+
+.table tbody td {
+	text-align: left;
+	 white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .row-date{
 width:10%;	
 }
@@ -241,6 +251,16 @@ width:30%;
  .profile-value{
  	 padding-top: 7px;		
  }
+ .btn-profile-edit{
+ 	
+ }
+ .btn-profile-cancel{
+ 	display: none;	
+ }
+.btn-profile-edit{
+ 	
+ }
+
  a .glyphicon{
  	padding-left: 10px;
  }
@@ -301,14 +321,19 @@ h2 {
 	.btn-formproject{
 			float: right;
 	}
-	
+	/* .form-ts .form-control{
+			width: 150px;
+	} */
 	.form-inline .date{
 			width: 115px; 
 	}
 	.form-inline .hour{
 			width: 115px; 
 	}
-		
+	.form-inline .projectdet-form{
+			width: 312px;
+	}
+	
 	}
 
 @media ( min-width : 800px) {	
@@ -549,6 +574,14 @@ h2 {
 	}	
 	
 }
+@media ( min-width : 1040px) {
+	.btn-formproject{
+			float: right;
+	}
+	.form-ts .form-control{
+			width: 150px;
+	}
+	}
 
 @media ( min-width : 800px) {	
 	.project-form .form-group .form-control{
