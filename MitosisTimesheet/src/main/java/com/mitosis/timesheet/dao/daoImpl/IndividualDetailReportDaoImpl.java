@@ -33,9 +33,9 @@ public class IndividualDetailReportDaoImpl extends BaseService implements Indivi
 			CriteriaQuery<TimeSheetModel> cq = qb.createQuery(TimeSheetModel.class);
 			Root<TimeSheetModel> root = cq.from(TimeSheetModel.class);
 			Path<Date> fromDatePath =  root.get("date");
-			Predicate condition = qb.equal(root.get("employeeId"), employeeId);
-			Predicate condition2 = qb.greaterThan(fromDatePath, fromdate);
-			Predicate condition3 = qb.lessThan(fromDatePath, todate);
+			Predicate condition = qb.equal(root.get("userDetails"), employeeId);
+			Predicate condition2 = qb.greaterThanOrEqualTo(fromDatePath, fromdate);
+			Predicate condition3 = qb.lessThanOrEqualTo(fromDatePath, todate);
 			Predicate conditions = qb.and(condition, condition2, condition3);
 			cq.where(conditions);
 			cq.select(root);
@@ -62,9 +62,9 @@ public class IndividualDetailReportDaoImpl extends BaseService implements Indivi
 		    CriteriaQuery<Number> cq = qb.createQuery(Number.class);
 			Root<TimeSheetModel> root = cq.from(TimeSheetModel.class);
 			Path<Date> fromDatePath =  root.get("date");
-			Predicate condition = qb.equal(root.get("employeeId"), employeeId);
-			Predicate condition2 = qb.greaterThan(fromDatePath, fromdate);
-			Predicate condition3 = qb.lessThan(fromDatePath, todate);
+			Predicate condition = qb.equal(root.get("userDetails"), employeeId);
+			Predicate condition2 = qb.greaterThanOrEqualTo(fromDatePath, fromdate);
+			Predicate condition3 = qb.lessThanOrEqualTo(fromDatePath, todate);
 			Predicate conditions = qb.and(condition, condition2, condition3);
 			cq.where(conditions);
 			cq.select(qb.sum(root.<Integer>get("hours")));

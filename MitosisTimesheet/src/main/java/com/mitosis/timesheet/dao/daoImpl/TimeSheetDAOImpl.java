@@ -46,7 +46,7 @@ public class TimeSheetDAOImpl extends BaseService implements TimeSheetDAO{
 			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 			CriteriaQuery<TimeSheetModel> cq = qb.createQuery(TimeSheetModel.class);
 			Root<TimeSheetModel> root = cq.from(TimeSheetModel.class);
-			cq.where(qb.equal(root.get("employeeId"),userId));
+			cq.where(qb.equal(root.get("userDetails"),userId));
 			cq.select(root);
 			cq.orderBy(qb.desc(root.get("date")), qb.desc(root.get("id")));
 			timesheetlist = entityManager.createQuery(cq).getResultList();

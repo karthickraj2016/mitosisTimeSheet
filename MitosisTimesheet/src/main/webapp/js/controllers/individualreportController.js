@@ -53,7 +53,8 @@ angular.module('myApp.controllers')
 			var a = document.createElement('a');
 			 a.href = "/jasper-report/reports/"+result.pdfFileName;
 			console.log(a);
-				 a.download = "individualDetailReport.pdf";
+				 //a.download = "individualDetailReport.pdf";
+			a.target="_blank";
 			 document.body.appendChild(a);
 		        a.click();
 		        document.body.removeChild(a);
@@ -86,7 +87,8 @@ angular.module('myApp.controllers')
 			var a = document.createElement('a');
 			 a.href = "/jasper-report/reports/"+result.pdfFileName;
 			console.log(a);
-				 a.download = "individualSummaryReport.pdf";
+				 //a.download = "individualSummaryReport.pdf";
+			a.target="_blank";
 			 document.body.appendChild(a);
 		        a.click();
 		        document.body.removeChild(a);
@@ -124,6 +126,17 @@ angular.module('myApp.controllers')
 	    $scope.isActive = function (viewLocation) { 
 	        return viewLocation === $location.path();
 	    };
+	}
+	
+	$scope.logout = function(){
+
+		$http({
+			url: 'rest/individualreport/logout',
+			method: 'GET',
+		}).success(function(result, status, headers) {
+
+			$state.go('login')
+		})
 	}
 
 

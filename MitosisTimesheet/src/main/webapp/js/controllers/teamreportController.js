@@ -67,8 +67,9 @@ angular.module('myApp.controllers')
 			var a = document.createElement('a');
 			 a.href = "/jasper-report/reports/"+result.pdfFileName;
 			console.log(a);
-				 a.download = "individualDetailReport.pdf";
-			 document.body.appendChild(a);
+				// a.download = "teamDetailReport.pdf";
+			a.target="_blank"; 
+			document.body.appendChild(a);
 		        a.click();
 		        document.body.removeChild(a);
 		    $scope.filepath = a.href;
@@ -86,10 +87,10 @@ angular.module('myApp.controllers')
 	
 	$scope.summaryreport = function(){
 		
-		var menuJson = angular.toJson({"fromdate":$scope.timesheet.fromdate,"todate":$scope.timesheet.todate,"name":$rootScope.name});
+		var menuJson = angular.toJson({"fromdate":$scope.timesheet.fromdate,"todate":$scope.timesheet.todate,"name":$rootScope.name,"projectId":$scope.project.projectId});
 		
 		$http({
-			url: 'rest/teamreport/summaryreport',
+			url: 'rest/teamreport/summaryReport',
 			method: 'POST',
 			data: menuJson,
 			headers: {
@@ -100,7 +101,8 @@ angular.module('myApp.controllers')
 			var a = document.createElement('a');
 			 a.href = "/jasper-report/reports/"+result.pdfFileName;
 			console.log(a);
-				 a.download = "individualSummaryReport.pdf";
+				// a.download = "teamSummaryReport.pdf";
+			a.target="_blank";
 			 document.body.appendChild(a);
 		        a.click();
 		        document.body.removeChild(a);
@@ -140,6 +142,16 @@ angular.module('myApp.controllers')
 	    };
 	}
 
+	$scope.logout = function(){
+
+		$http({
+			url: 'rest/teamreport/logout',
+			method: 'GET',
+		}).success(function(result, status, headers) {
+
+			$state.go('login')
+		})
+	}
 
 }])
 

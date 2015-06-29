@@ -25,8 +25,9 @@ public class TimeSheetModel {
 	@Column(name="id")
 	private Integer id;
 
-	@Column(name="employee_id")
-	private Integer employeeId;
+	@ManyToOne(targetEntity = UserDetailsModel.class)
+	@JoinColumn(name = "employee_id", nullable = false, referencedColumnName = "id")
+	private UserDetailsModel userDetails;
 
 	@ManyToOne(targetEntity = ProjectModel.class)
 	@JoinColumn(name = "project_id", nullable = false, referencedColumnName = "id")
@@ -50,8 +51,18 @@ public class TimeSheetModel {
 	@Column(name="status")
 	private String status;
 	
+	
+	
 	@Transient
 	private String entryDate;
+	
+	
+	public UserDetailsModel getUserDetails() {
+		return userDetails;
+	}
+	public void setUserDetails(UserDetailsModel userDetails) {
+		this.userDetails = userDetails;
+	}
 
 	public String getEntryDate() {
 		Date d= getDate();
@@ -69,13 +80,7 @@ public class TimeSheetModel {
 		this.id = id;
 	}
 
-	public Integer getEmployeeId() {
-		return employeeId;
-	}
-
-	public void setEmployeeId(Integer employeeId) {
-		this.employeeId = employeeId;
-	}
+	
 
 	public ProjectModel getProject() {
 		return project;

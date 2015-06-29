@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report3" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.x" value="147"/>
+	<property name="ireport.y" value="80"/>
 	<parameter name="fromDate" class="java.lang.String"/>
 	<parameter name="toDate" class="java.lang.String"/>
 	<parameter name="name" class="java.lang.String"/>
@@ -39,7 +39,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{toDate}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="213" y="39" width="156" height="15"/>
+				<reportElement x="224" y="39" width="151" height="15"/>
 				<textElement textAlignment="Center">
 					<font size="10"/>
 				</textElement>
@@ -72,7 +72,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA["Hours"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="322" y="16" width="92" height="18"/>
+				<reportElement x="327" y="16" width="74" height="18"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA["Issue Number"]]></textFieldExpression>
 			</textField>
@@ -132,12 +132,21 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{issueNumber}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="425" y="4" width="100" height="20"/>
+				<reportElement x="420" y="2" width="135" height="33"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
+	<pageFooter>
+		<band height="50">
+			<textField>
+				<reportElement x="418" y="12" width="137" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
 	<summary>
 		<band height="42" splitType="Stretch"/>
 	</summary>

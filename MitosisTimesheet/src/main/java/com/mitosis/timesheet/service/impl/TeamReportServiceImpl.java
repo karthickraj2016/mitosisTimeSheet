@@ -46,14 +46,34 @@ public class TeamReportServiceImpl implements TeamReportService {
 
 	@Override
 	public List<TimeSheetModel> getTeamReportList(Date fromDate, Date toDate,
-			int employeeId) {
+			int employeeId, int projectId) {
 		
 		List<TimeSheetModel> timeSheetList = new ArrayList<TimeSheetModel>();
 		
-		timeSheetList = teamReportDao.getTeamReportList(fromDate,toDate, employeeId);
+		timeSheetList = teamReportDao.getTeamReportList(fromDate,toDate, employeeId, projectId);
 		// TODO Auto-generated method stub
 		
 		return timeSheetList;
+	}
+
+	@Override
+	public List<TimeSheetModel> getteamReportIndividual(Date fromDate,
+			Date toDate, int employeeId) {
+List<TimeSheetModel> timeSheetList = new ArrayList<TimeSheetModel>();
+		
+		timeSheetList = teamReportDao.getteamReportIndividual(fromDate,toDate, employeeId);
+		// TODO Auto-generated method stub
+		
+		return timeSheetList;
+	
+	}
+
+	@Override
+	public double getTotalHours(Date fromDate, Date toDate, int memberId,
+			int projectId) {
+		// TODO Auto-generated method stub
+		double hours = teamReportDao.getTotalHours(fromDate,toDate,memberId, projectId);
+		return hours;
 	}
 
 }

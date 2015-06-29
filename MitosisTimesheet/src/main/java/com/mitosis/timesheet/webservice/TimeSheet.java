@@ -22,6 +22,7 @@ import org.springframework.context.annotation.Bean;
 
 import com.mitosis.timesheet.model.ProjectModel;
 import com.mitosis.timesheet.model.TimeSheetModel;
+import com.mitosis.timesheet.model.UserDetailsModel;
 import com.mitosis.timesheet.pojo.TimeSheetVo;
 import com.mitosis.timesheet.service.ProjectService;
 import com.mitosis.timesheet.service.TimeSheetService;
@@ -91,13 +92,15 @@ public class TimeSheet {
 
 			boolean flag = false;
 			ProjectModel project = new ProjectModel();
+			UserDetailsModel userDetailsModel = new UserDetailsModel();
 
 			timeSheetModel.setDate(Date.valueOf(jsonobject.getString("date")));
 			timeSheetModel.setHours(jsonobject.getDouble("hours"));
 			timeSheetModel.setDescription(jsonobject.getString("description"));
 			project.setProjectId(jsonobject.getInt("projectId"));
 			timeSheetModel.setProject(project);
-			timeSheetModel.setEmployeeId((Integer) request.getSession().getAttribute("userId"));
+			userDetailsModel.setId((Integer)request.getSession().getAttribute("userId"));
+			timeSheetModel.setUserDetails(userDetailsModel);
 			if (jsonobject.has("issueNumber")) {
 				timeSheetModel.setIssueNumber(jsonobject.getString("issueNumber"));
 			}
@@ -199,9 +202,12 @@ public class TimeSheet {
 			
 			timeSheetModel.setProject(project);
 			
+			UserDetailsModel userDetailsModel = new UserDetailsModel();
 			
 			
-			timeSheetModel.setEmployeeId((Integer) request.getSession().getAttribute("userId"));
+			
+			userDetailsModel.setId((Integer)request.getSession().getAttribute("userId"));
+			timeSheetModel.setUserDetails(userDetailsModel);
 			if(jsonObject.getString("issueNumber")=="null"){
 
 			}
