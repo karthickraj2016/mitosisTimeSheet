@@ -160,7 +160,6 @@ public class TimeSheet {
 		String dateInString = jsonObject.getString("date");
 		Date frmDate = sdf.parse(dateInString); 
 		
-
 		HttpSession session= request.getSession(true);
 
 		int userId =  (Integer) request.getSession().getAttribute("userId");
