@@ -42,7 +42,7 @@ angular.module('myApp.controllers')
 
 		if(!$scope.manageProject){
 
-			$state.go('login')
+			$state.go('timesheet')
 		}
 
 	}

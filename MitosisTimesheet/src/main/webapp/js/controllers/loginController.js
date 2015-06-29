@@ -30,6 +30,7 @@ angular.module('myApp.controllers')
 	  if($scope.username==name && $scope.password==password){
 		
 			 $state.go('userRights')
+			/* $scope.loginRole="Admin";*/
 			 
 		 }else{
 		

@@ -40,7 +40,7 @@ angular.module('myApp.controllers')
 		
    if(!$scope.manageTeam){
 			
-			$state.go('login')
+			$state.go('timesheet')
 		
 		}else{
 			$scope.teamList();

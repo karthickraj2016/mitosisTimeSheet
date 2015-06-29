@@ -18,7 +18,8 @@ angular.module('myApp.controllers')
 			$scope.name=result;
 		}
 	});*/
-		
+	
+			
 	$scope.filteredParticipantsResults = []
 	,$scope.currentPage = 1
 	,$scope.numPerPage = 5
