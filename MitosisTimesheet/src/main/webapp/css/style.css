@@ -155,11 +155,11 @@ white-space: nowrap;
 }
 
 .table th {
-	text-align: center;
+	text-align: left;
 }
 
 .table tbody td {
-	text-align: center;
+	text-align: left;
 	 white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -251,7 +251,16 @@ width:30%;
  .profile-value{
  	 padding-top: 7px;		
  }
- 
+ .btn-profile-edit{
+ 	
+ }
+ .btn-profile-cancel{
+ 	display: none;	
+ }
+.btn-profile-edit{
+ 	
+ }
+
  a .glyphicon{
  	padding-left: 10px;
  }
@@ -432,11 +441,11 @@ white-space: nowrap;
 }
 
 .table th {
-	text-align: left;
+	text-align: center;
 }
 
 .table tbody td {
-	text-align: left;
+	text-align: center;
 	 white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
