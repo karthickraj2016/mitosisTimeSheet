@@ -10,8 +10,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.springframework.context.annotation.Bean;
-
 import com.mitosis.timesheet.dao.TimeSheetDAO;
 import com.mitosis.timesheet.model.ProjectModel;
 import com.mitosis.timesheet.model.TeamAssignmentModel;
