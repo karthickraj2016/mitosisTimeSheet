@@ -33,10 +33,20 @@ angular.module('myApp.controllers')
 		$scope.manageProject=result.manageProject;
 		$scope.manageTeam=result.manageTeam;
 		/*$scope.manageCustomer=result.manageCustomer;*/
-		$scope.teamList();
+		$scope.accessRights();
 	});
 	
-	
+	$scope.accessRights=function(){
+		
+   if(!$scope.manageTeam){
+			
+			$state.go('login')
+		
+		}else{
+			$scope.teamList();
+		}
+		
+	}
 	
 	$http({
 
@@ -92,6 +102,7 @@ angular.module('myApp.controllers')
 
 		
 	$scope.teamList = function() {
+		
 		
 		if($scope.manageProject && $scope.manageTeam ){
 
