@@ -20,9 +20,9 @@ import javax.ws.rs.core.MediaType;
 
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
-
 import com.mitosis.timesheet.model.ProjectModel;
 import com.mitosis.timesheet.model.TimeSheetModel;
+import com.mitosis.timesheet.model.UserDetailsModel;
 import com.mitosis.timesheet.pojo.TimeSheetVo;
 import com.mitosis.timesheet.service.ProjectService;
 import com.mitosis.timesheet.service.TimeSheetService;
@@ -30,7 +30,9 @@ import com.mitosis.timesheet.service.impl.ProjectServiceImpl;
 import com.mitosis.timesheet.service.impl.TimeSheetServiceImpl;
 
 @Path("timesheet")
+
 public class TimeSheet {
+
 	JSONObject jsonobject = new JSONObject();
 	TimeSheetService timeSheetService = new TimeSheetServiceImpl();
 	@Context private HttpServletRequest request;
@@ -41,6 +43,7 @@ public class TimeSheet {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
+	
 	public JSONObject insertDetails(JSONObject jsonobject) throws JSONException, ParseException{
 
 		TimeSheetModel timeSheetModel = new TimeSheetModel();
@@ -48,12 +51,12 @@ public class TimeSheet {
 		TimeSheetVo timesheetVo = new TimeSheetVo();
 
 		JSONObject jsonObject = new JSONObject();
-
-		DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		
+		DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+				
 		String dateInString = jsonobject.getString("date");
 		Date frmDate = sdf.parse(dateInString); 
-		
+						
 		double totalhours = 16.0;
 
 		int userId =  (Integer) request.getSession().getAttribute("userId");
@@ -78,19 +81,19 @@ public class TimeSheet {
 			jsonObject.put("value", "err_total");
 
 			return jsonObject;
-		}
-
-		else{
+	
+		}else{
 
 			boolean flag = false;
-			ProjectModel project = new ProjectModel();
+			ProjectModel projectModel = new ProjectModel();
 
 			timeSheetModel.setDate(frmDate);
 			timeSheetModel.setHours(jsonobject.getDouble("hours"));
 			timeSheetModel.setDescription(jsonobject.getString("description"));
-			project.setProjectId(jsonobject.getInt("projectId"));
-			timeSheetModel.setProject(project);
+			projectModel.setProjectId(jsonobject.getInt("projectId"));
+			timeSheetModel.setProject(projectModel);
 			timeSheetModel.setEmployeeId((Integer) request.getSession().getAttribute("userId"));
+			
 			if (jsonobject.has("issueNumber")) {
 				timeSheetModel.setIssueNumber(jsonobject.getString("issueNumber"));
 			}
@@ -109,12 +112,13 @@ public class TimeSheet {
 				jsonObject.put("value", "error");
 				return jsonObject;
 			}
+
 		}
 	}
 
 	@Path("/showlist")
-	@POST
-	/*@Consumes(MediaType.APPLICATION_JSON)*/
+	@GET
+  /*@Consumes(MediaType.APPLICATION_JSON)*/
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<TimeSheetModel> showlist() throws JSONException, ParseException {
 		HttpSession session= request.getSession(true);
@@ -127,8 +131,9 @@ public class TimeSheet {
 		List<TimeSheetModel> timesheetlist = new ArrayList<TimeSheetModel>();
 
 		timesheetlist = timeSheetService.showlist(userId);
-
+		
 		return timesheetlist;
+
 	}
 
 
@@ -150,7 +155,7 @@ public class TimeSheet {
 	@Produces(MediaType.APPLICATION_JSON)
 	public JSONObject hourslist(JSONObject jsonObject) throws JSONException, ParseException {
 		
-        DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		
 		String dateInString = jsonObject.getString("date");
 		Date frmDate = sdf.parse(dateInString); 
@@ -228,22 +233,48 @@ public class TimeSheet {
 		}
 	}
 	
+	
 	@Path("/getprojectlist")
 	@GET
-/*	@Consumes(MediaType.APPLICATION_JSON)*/
-	
+  /*@Consumes(MediaType.APPLICATION_JSON)*/
 	@Produces(MediaType.APPLICATION_JSON)
+	
 	public List<ProjectModel> getprojectlist() throws JSONException {
 		HttpSession session= request.getSession(true);
 
 		if(session.getAttribute("userId")==null){
 			return null;
 		}
-
-		List<ProjectModel> projectList = new ArrayList<ProjectModel>();
 		
-		projectList = timeSheetService.getprojectList();
-	
-		return projectList;
+		Object userId=session.getAttribute("userId");
+		
+		List<ProjectModel> projectModel = new ArrayList<ProjectModel>();
+		
+		projectModel = timeSheetService.getprojectList(userId);
+				
+		return projectModel;
 }
+	
+	
+	@Path("/getUserDetails")
+	@GET
+ /* @Consumes(MediaType.APPLICATION_JSON)*/
+	@Produces(MediaType.APPLICATION_JSON)
+	
+	public UserDetailsModel getUserDetails() throws JSONException  {
+	
+		HttpSession session= request.getSession(true);
+
+		if(session.getAttribute("userId")==null){
+			return null;
+		}
+		Object userId = session.getAttribute("userId");
+		
+		UserDetailsModel user = new UserDetailsModel();
+		
+		user = timeSheetService.getUserDetails(userId);
+		
+		return user;
+   }
+	
 }
