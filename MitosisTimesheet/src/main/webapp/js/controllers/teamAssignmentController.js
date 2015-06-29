@@ -82,7 +82,7 @@ angular.module('myApp.controllers')
 	
 	$scope.filteredParticipantsResults = []
 	,$scope.currentPage = 1
-	,$scope.numPerPage = 5
+	,$scope.numPerPage = 8
 	,$scope.maxSize = 5;
 	$scope.units;
 	var hoursallowed;

@@ -6,7 +6,7 @@ angular.module('myApp.controllers')
 .controller('projectController', ['$scope', '$http', '$state','$localStorage','$rootScope', function($scope, $http, $state,$localStorage, $rootScope) {
 	$scope.filteredParticipantsResults = []
 	,$scope.currentPage = 1
-	,$scope.numPerPage = 5
+	,$scope.numPerPage = 8
 	,$scope.maxSize = 5;
 
 	$scope.check = function(sheet){
