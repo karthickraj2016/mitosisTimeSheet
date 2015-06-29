@@ -154,16 +154,6 @@ margin: 2px 40px;
 white-space: nowrap;
 }
 
-.table th {
-	text-align: center;
-}
-
-.table tbody td {
-	text-align: center;
-	 white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
 .row-date{
 width:10%;	
 }
@@ -319,9 +309,6 @@ h2 {
 	}
 	.form-inline .hour{
 			width: 115px; 
-	}
-	.form-inline .projectdet-form{
-			width: 312px;
 	}
 	
 	}
