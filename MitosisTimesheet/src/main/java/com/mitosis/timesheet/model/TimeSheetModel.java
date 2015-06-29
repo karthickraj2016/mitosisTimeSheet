@@ -7,7 +7,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -50,6 +49,7 @@ public class TimeSheetModel {
 
 	@Column(name="status")
 	private String status;
+	
 	@Transient
 	private String entryDate;
 
@@ -58,7 +58,6 @@ public class TimeSheetModel {
 		entryDate = new SimpleDateFormat("dd-MM-yyyy").format(d);
 		return entryDate;
 	}
-
 	public void setEntryDate(String entryDate) {
 		this.entryDate = entryDate;
 	}
