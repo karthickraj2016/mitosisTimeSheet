@@ -100,7 +100,7 @@ public class UserDetailsModel {
 		return isReset;
 	}
 
-	public void setIsReset(boolean isReset) {
+	public void setReset(boolean isReset) {
 		this.isReset = isReset;
 	}
 	

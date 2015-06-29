@@ -10,7 +10,9 @@ import org.codehaus.jettison.json.JSONObject;
 import com.mitosis.timesheet.dao.TimeSheetDAO;
 import com.mitosis.timesheet.dao.daoImpl.TimeSheetDAOImpl;
 import com.mitosis.timesheet.model.ProjectModel;
+import com.mitosis.timesheet.model.TeamAssignmentModel;
 import com.mitosis.timesheet.model.TimeSheetModel;
+import com.mitosis.timesheet.model.UserDetailsModel;
 import com.mitosis.timesheet.pojo.TimeSheetVo;
 import com.mitosis.timesheet.service.TimeSheetService;
 
@@ -66,13 +68,21 @@ public double getprevioushours(int id) {
 }
 
 @Override
-public List<ProjectModel> getprojectList() {
+public List<ProjectModel> getprojectList(Object userId) {
 	// TODO Auto-generated method stub
-	List<ProjectModel> projectList = new ArrayList<ProjectModel>();
+	List<ProjectModel> projectModel = new ArrayList<ProjectModel>();
 	
-	projectList=timeSheetDAO.getprojectList();
-	System.out.println(projectList);
-	return projectList;
+	projectModel=timeSheetDAO.getprojectList(userId);
+	
+	return projectModel;
 }
-  
+@Override
+public UserDetailsModel getUserDetails(Object userId){
+	
+	UserDetailsModel details = new UserDetailsModel();
+	
+	details=timeSheetDAO.getUserDetails(userId);
+
+	return details;
+	}
 }

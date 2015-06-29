@@ -55,10 +55,10 @@ angular.module('myApp', ['ui.router','myApp.controllers','ngStorage','ui.bootstr
                   templateUrl: 'html/project.html',
                   controller : 'projectController'
           	 })
-          .state('projectmapping', {
-                  url: '/projectmapping',
-                  templateUrl: 'html/projectmapping.html',
-//                  controller : 'listcontroller'
+          .state('teamAssignment', {
+                  url: '/teamAssignment',
+                  templateUrl: 'html/teamAssignment.html',
+                  controller : 'teamAssignmentController'
           	 })
           .state('account', {
                   url: '/account',
@@ -69,7 +69,12 @@ angular.module('myApp', ['ui.router','myApp.controllers','ngStorage','ui.bootstr
 		  	url: '/resetpassword',
 		  	templateUrl: 'html/reset_pwd.html',
 		  	controller : 'forgotpasswordController'
- });
+             })
+          .state('userRights', {
+		  	url: '/userRights',
+		  	templateUrl: 'html/authority.html',
+		  	controller : 'userRightsController'
+             });
     }
   ]);
 

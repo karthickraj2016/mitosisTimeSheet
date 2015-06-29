@@ -1,0 +1,64 @@
+
+<div ng-init="list()">
+
+<nav class="navbar navbar-inverse navbar-fixed-top" style="border-bottom: 1px solid gray; background: none;">
+  <div class="container-fluid" style="max-width: 100%; background: grey; color: white;">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <div class="logo"><img src="images/mit_lg-ts.jpg"></div>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar" ng-controller="HeaderController">
+      <ul class="nav navbar-nav" style="margin-left: 30px; margin-top: 8px;">
+        <li ng-class="{ active: isActive('/userRights')}"><a >Home</a></li>
+        <!-- <li ng-class="{ active: isActive('/project')}"><a ui-sref="project">Project Details</a></li>
+        <li ng-class="{ active: isActive('/teamAssignment')}"><a ui-sref="teamAssignment">Team Assignment</a></li> -->
+<!--         <li ng-class="{ active: isActive('/report')}"><a ui-sref="report">Report</a></li> -->
+        </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="lb-username"><lable>Welcome Administrator</lable></li>
+<!--         <li><a style="padding-left: 0;" ui-sref="account"><button class="btn btn-sm btn-primary">Account</button></a></li> -->
+        <li><button class="btn btn-sm btn-primary btn-logout" ng-click="logout();">Logout</button></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container" style="margin-top: 8%; margin-bottom: 2%;"><div class="row"><div class="col-xs-12 col-md-12"><h2 style="margin-left: 35%;">User Rights</h2></div></div></div>
+
+<div  class="container" style="width: 100%;">
+<table class="table" style="">
+	<thead class="thead-mit-ts" >
+		<tr>
+			<th>FullName</th>
+			<th>EmailId</th>
+			<th>UserName</th>
+			<th>Active</th>
+		    <th>Manage Project</th>
+		    <th>Manage Team</th>
+		    <th>Manage Customer</th>		    
+		    <th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="sheet in filteredParticipantsResults ">
+			<td>{{sheet.name}} </td>
+			<td>{{sheet.eMail}} </td>
+			<td>{{sheet.userName}}</td>
+			<td align="center"><input type="checkbox"  name="myTextEditBox" ng-model="sheet.active"/></td>
+			<td><input type="checkbox"  name="myTextEditBox" ng-model="sheet.manageProject" /></td>
+			<td><input type="checkbox"  name="myTextEditBox" ng-model="sheet.manageTeam"/></td>
+			<td><input type="checkbox"  name="myTextEditBox" ng-model="sheet.manageCustomer"/></td>
+			<td><button  class="btn btn-primary btn-xs" type="button" ng-click="update(sheet)">Save</button></td>
+		</tr>
+	</tbody>
+</table>
+
+<pagination  total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="numPerPage" class="pagination-sm" boundary-links="true"></pagination>
+</div>
+<div class="alert-msg col-xs-12 col-sm-6"><p class="alert-success"></p></div>
+ <div class="alert-msg1 col-xs-12 col-sm-6"><p class="alert-danger"></p></div>
+ </div>
