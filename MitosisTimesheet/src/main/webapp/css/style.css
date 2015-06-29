@@ -265,8 +265,9 @@ width:30%;
  	padding-left: 10px;
  }
 h2 {
+	float: left;
 	color: gray;
-	text-align: center;
+	margin-left: 30%;
 }
 
 @media ( max-width : 450px) {
@@ -579,7 +580,10 @@ h2 {
 			float: right;
 	}
 	.form-ts .form-control{
-			width: 150px;
+			width: 140px;
+	}
+	.form-ts .form-controls{
+			width: 200px;
 	}
 	}
 
