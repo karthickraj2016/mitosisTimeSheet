@@ -39,8 +39,6 @@ public class UserDetailsModel {
 	@Column(name="isReset")
 	private boolean isReset;
 	
-	
-
 	@Column(name="manage_project")
 	private boolean manageProject;
 
@@ -105,7 +103,6 @@ public class UserDetailsModel {
 	public void setReset(boolean isReset) {
 		this.isReset = isReset;
 	}
-	
 	
 	public boolean isManageProject() {
 		return manageProject;
