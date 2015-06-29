@@ -2,7 +2,6 @@ package com.mitosis.timesheet.model;
 
 
 
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
