@@ -313,9 +313,7 @@ h2 {
 	.btn-formproject{
 			float: right;
 	}
-	/* .form-ts .form-control{
-			width: 150px;
-	} */
+	
 	.form-inline .date{
 			width: 115px; 
 	}
@@ -566,17 +564,6 @@ h2 {
 	}	
 	
 }
-@media ( min-width : 1040px) {
-	.btn-formproject{
-			float: right;
-	}
-	.form-ts .form-control{
-			width: 140px;
-	}
-	.form-ts .form-controls{
-			width: 200px;
-	}
-	}
 
 @media ( min-width : 800px) {	
 	.project-form .form-group .form-control{
