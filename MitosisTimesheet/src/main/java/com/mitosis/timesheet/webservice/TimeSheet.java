@@ -20,6 +20,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
+
 import com.mitosis.timesheet.model.ProjectModel;
 import com.mitosis.timesheet.model.TimeSheetModel;
 import com.mitosis.timesheet.pojo.TimeSheetVo;
@@ -178,15 +179,15 @@ public class TimeSheet {
 		if(totalhours>=hourentry){
 
 			boolean flag = false;
+			ProjectModel projectModel = new ProjectModel();
 
 			timeSheetModel.setDate(frmDate);
 			timeSheetModel.setHours(jsonObject.getDouble("hours"));
 			timeSheetModel.setDescription(jsonObject.getString("description"));
-			
-			project.setProjectId(jsonObject.getInt("ProjectId"));
-			
-			timeSheetModel.setProject(project);
-			
+						
+			projectModel.setProjectId(jsonObject.getInt("ProjectId"));
+			timeSheetModel.setProject(projectModel);
+		
 			timeSheetModel.setEmployeeId((Integer) request.getSession().getAttribute("userId"));
 			if(jsonObject.getString("issueNumber")=="null"){
 
@@ -217,18 +218,16 @@ public class TimeSheet {
 			jsonObject.put("hoursallowed", hoursallowed);
 			jsonObject.put("value", "err_total");
 			return jsonObject;
+
 		}else{
 
 			jsonObject.put("hoursallowed", hoursallowed);
 			jsonObject.put("value", "hoursallowedis0");
 
 			return jsonObject;
-
-
 		}
-		
-		
-}
+	}
+	
 	@Path("/getprojectlist")
 	@GET
 /*	@Consumes(MediaType.APPLICATION_JSON)*/
