@@ -251,8 +251,16 @@ width:30%;
  .profile-value{
  	 padding-top: 7px;		
  }
- 
- 
+ .btn-profile-edit{
+ 	
+ }
+ .btn-profile-cancel{
+ 	display: none;	
+ }
+.btn-profile-edit{
+ 	
+ }
+
  a .glyphicon{
  	padding-left: 10px;
  }
