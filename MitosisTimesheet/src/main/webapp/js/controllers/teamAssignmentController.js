@@ -43,7 +43,7 @@ angular.module('myApp.controllers')
 			$state.go('timesheet')
 		
 		}else{
-			$scope.getList();
+			$scope.teamList();
 		}
 		
 	}
@@ -79,6 +79,7 @@ angular.module('myApp.controllers')
 		$scope.rolelist=result;
 	});
 	
+		
 	$scope.filteredParticipantsResults = []
 	,$scope.currentPage = 1
 	,$scope.numPerPage = 8
@@ -99,7 +100,7 @@ angular.module('myApp.controllers')
 
 	}
 	
-	$scope.getList = function(){
+	$scope.teamList = function(){
 			
 		if($scope.manageProject && $scope.manageTeam ){
 			
@@ -112,7 +113,7 @@ angular.module('myApp.controllers')
 	}
 	
 	
-	$scope.teamList = function() {
+	
 			
 		$scope.getListByAllProjects = function(){
 		
@@ -206,7 +207,7 @@ angular.module('myApp.controllers')
 		
 	          });
 		 }
-    }
+    
 	
 	$scope.validateAssignment = function(){
 
