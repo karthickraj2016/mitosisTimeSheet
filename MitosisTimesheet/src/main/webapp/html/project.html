@@ -95,10 +95,15 @@
 				<span style="color: red" ng-show="sheet.billable == '' || sheet.billable == undefined">Required</span>
 			</td>
 			<td style="word-spacing: 15px;">
-				<image src="images/pencil.png" ng-click="showEdit = !showEdit" ng-show="!showEdit"></image>
+			<!-- 	<image src="images/pencil.png" ng-click="showEdit = !showEdit" ng-show="!showEdit"></image>
 				<image src="images/delete.png" ng-click="confirmDelete(sheet.projectId)" ng-show="!showEdit"></image>
 				<image src="images/save-icon.png" ng-click="showEdit = !showEdit;updateproject(sheet)" ng-show="showEdit" ng-disabled="check(sheet);"></image>
 				<image src="images/cancel.jpg" ng-click="showEdit = !showEdit" ng-show="showEdit"></image>
+		 -->
+		        <a><span class="glyphicon glyphicon-pencil" ng-click="showEdit = !showEdit" ng-show="!showEdit"></span></a>
+				<a><span class="glyphicon glyphicon-remove" ng-click="confirmDelete(sheet.projectId)" ng-show="!showEdit"></span></a>
+				<a><span class="glyphicon glyphicon-ok" ng-click="showEdit = !showEdit;updateproject(sheet)" ng-show="showEdit" ng-disabled="check(sheet);"></span></a> 
+				<a><span class="glyphicon glyphicon-ban-circle" ng-click="showEdit = !showEdit" ng-show="showEdit"></span></a> 			
 			</td>
 		</tr>
 	</tbody>
