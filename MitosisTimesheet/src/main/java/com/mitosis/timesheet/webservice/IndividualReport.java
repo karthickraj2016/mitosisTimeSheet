@@ -35,6 +35,7 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import com.mitosis.timesheet.model.TimeSheetModel;
+import com.mitosis.timesheet.pojo.SummaryReport;
 import com.mitosis.timesheet.service.IndividualReportService;
 import com.mitosis.timesheet.service.impl.IndividualReportServiceImpl;
 
@@ -137,7 +138,8 @@ public class IndividualReport {
 				
 		String name = jsonObject.getString("name");
 		
-		List<TimeSheetModel> timeSheetSummaryReport = new ArrayList<TimeSheetModel>();
+		List<SummaryReport> timeSheetSummaryReportList = new ArrayList<SummaryReport>();
+		List<SummaryReport> timeSheetHoursList = new ArrayList<SummaryReport>();
 		
 
 		DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -158,7 +160,25 @@ public class IndividualReport {
 		double totalhours;
 		
 
-		timeSheetSummaryReport = individualReportService.getIndividualReport(fromdate, toDate, employeeId);
+		timeSheetSummaryReportList = individualReportService.getIndividualSummaryReportList(fromdate, toDate, employeeId);
+		
+		if(timeSheetSummaryReportList!=null){
+			
+			timeSheetHoursList = individualReportService.getIndividualSummaryReportHours(fromdate, toDate, employeeId);
+			for(SummaryReport list : timeSheetHoursList){
+				int i =0;
+
+				timeSheetSummaryReportList.get(i).setHourslist(list.getHourslist());
+				
+				i++;
+				
+				
+			}
+			
+		}
+		
+		
+		System.out.println(timeSheetSummaryReportList);
 		
 		
 		
@@ -177,7 +197,7 @@ public class IndividualReport {
 		      parameters.put("name",name);
 		      parameters.put("totalhours",totalhours);
 		      
-		      JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(timeSheetSummaryReport);
+		      JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(timeSheetSummaryReportList);
 		      JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, ds);
 
 		      String path = this.getClass().getClassLoader().getResource("/").getPath();

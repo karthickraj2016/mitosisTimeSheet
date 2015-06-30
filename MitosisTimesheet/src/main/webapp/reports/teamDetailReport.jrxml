@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report3" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="144"/>
 	<parameter name="fromDate" class="java.lang.String"/>
 	<parameter name="toDate" class="java.lang.String"/>
 	<parameter name="name" class="java.lang.String"/>
@@ -64,7 +64,7 @@
 				<reportElement x="1" y="10" width="554" height="26"/>
 			</rectangle>
 			<line>
-				<reportElement x="172" y="10" width="1" height="26"/>
+				<reportElement x="183" y="10" width="1" height="26"/>
 			</line>
 			<line>
 				<reportElement x="271" y="10" width="1" height="26"/>
@@ -75,7 +75,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA["Date"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="192" y="15" width="43" height="16"/>
+				<reportElement x="204" y="15" width="43" height="16"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA["Hours"]]></textFieldExpression>
 			</textField>
@@ -93,10 +93,10 @@
 				<reportElement x="389" y="11" width="1" height="25"/>
 			</line>
 			<line>
-				<reportElement x="49" y="11" width="1" height="25"/>
+				<reportElement x="56" y="11" width="1" height="25"/>
 			</line>
 			<staticText>
-				<reportElement x="83" y="17" width="46" height="15"/>
+				<reportElement x="95" y="17" width="46" height="15"/>
 				<textElement/>
 				<text><![CDATA[Name]]></text>
 			</staticText>
@@ -108,15 +108,15 @@
 				<reportElement x="1" y="0" width="554" height="37"/>
 			</rectangle>
 			<textField isBlankWhenNull="true">
-				<reportElement x="1" y="4" width="49" height="20"/>
+				<reportElement x="1" y="4" width="55" height="20"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression class="java.util.Date"><![CDATA[$F{date}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="172" y="0" width="1" height="37"/>
+				<reportElement x="183" y="0" width="1" height="37"/>
 			</line>
 			<textField isBlankWhenNull="true">
-				<reportElement x="182" y="3" width="60" height="20"/>
+				<reportElement x="193" y="3" width="60" height="20"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression class="java.lang.Double"><![CDATA[$F{hours}]]></textFieldExpression>
 			</textField>
@@ -137,10 +137,10 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="49" y="0" width="1" height="37"/>
+				<reportElement x="56" y="0" width="1" height="37"/>
 			</line>
 			<textField isBlankWhenNull="true">
-				<reportElement x="49" y="4" width="123" height="20" isPrintWhenDetailOverflows="true"/>
+				<reportElement x="58" y="4" width="123" height="20" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{userDetails.name}]]></textFieldExpression>
 			</textField>
