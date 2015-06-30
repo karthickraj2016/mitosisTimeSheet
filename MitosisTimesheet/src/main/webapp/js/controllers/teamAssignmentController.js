@@ -43,7 +43,7 @@ angular.module('myApp.controllers')
 			$state.go('timesheet')
 		
 		}else{
-			$scope.teamList();
+			$scope.getList();
 		}
 		
 	}
@@ -79,7 +79,6 @@ angular.module('myApp.controllers')
 		$scope.rolelist=result;
 	});
 	
-	
 	$scope.filteredParticipantsResults = []
 	,$scope.currentPage = 1
 	,$scope.numPerPage = 8
@@ -99,15 +98,26 @@ angular.module('myApp.controllers')
 		}
 
 	}
-
-		
-	$scope.teamList = function() {
-		
-		
+	
+	$scope.getList = function(){
+			
 		if($scope.manageProject && $scope.manageTeam ){
-
+			
+			$scope.getListByAllProjects();
+			
+		}else{
+			
+			$scope.getListByProject();
+		}
+	}
+	
+	
+	$scope.teamList = function() {
+			
+		$scope.getListByAllProjects = function(){
+		
 			$http({
-
+		
 				url: 'rest/teamAssignment/getProjectList',
 				method: 'GET',
 				/*data: menuJson,*/
@@ -141,10 +151,13 @@ angular.module('myApp.controllers')
 
 					});
 
-				})
-			  
-			}else{
-			   
+				});
+	    	}
+			
+		
+		 $scope.getListByProject = function(){  
+			 
+
 				$http({
 					
 					url: 'rest/timesheet/getprojectlist',
@@ -154,8 +167,6 @@ angular.module('myApp.controllers')
 						'Content-Type': 'application/json'
 					}
 				}).success(function(result, status, headers) {
-					
-					console.log(result);
 					
 					$scope.projectlist=result;
 					
@@ -181,21 +192,21 @@ angular.module('myApp.controllers')
 			}
 		}).success(function(result, status, headers) {
 
-			$scope.teamLists=result; 
+			$scope.teamlists=result; 
 
 			$scope.$watch('currentPage + numPerPage', function() {
 				var begin = (($scope.currentPage - 1) * $scope.numPerPage)
 				, end = begin + $scope.numPerPage;
-				$scope.filteredParticipantsResults = $scope.teamLists.slice(begin, end);
-				$scope.totalItems =	$scope.teamLists.length;
+				$scope.filteredParticipantsResults = $scope.teamlists.slice(begin, end);
+				$scope.totalItems =	$scope.teamlists.length;
 
-			});
+			     });
 
-		})
+	         	})
 		
-	});
-  }
-}
+	          });
+		 }
+    }
 	
 	$scope.validateAssignment = function(){
 

@@ -71,8 +71,8 @@ public class TeamAssignment {
 			
 		assinedTeamList.add(teamList);
 			
-	}
-}
+	    }
+    }
   
 		return assinedTeamList;
 
