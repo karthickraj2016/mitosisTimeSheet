@@ -108,7 +108,7 @@
 				<reportElement x="1" y="0" width="554" height="37"/>
 			</rectangle>
 			<textField isBlankWhenNull="true">
-				<reportElement x="6" y="4" width="38" height="20"/>
+				<reportElement x="1" y="4" width="49" height="20"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression class="java.util.Date"><![CDATA[$F{date}]]></textFieldExpression>
 			</textField>
@@ -147,7 +147,7 @@
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="50">
+		<band height="49">
 			<textField>
 				<reportElement x="445" y="22" width="100" height="20"/>
 				<textElement/>
