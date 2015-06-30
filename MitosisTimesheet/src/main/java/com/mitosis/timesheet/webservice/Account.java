@@ -133,7 +133,8 @@ public class Account {
 		
 		userDetailsVo.seteMail(jsonObject.getString("email"));
 		
-		
+		userDetailsVo.setUserName(jsonObject.getString("username"));
+				
 		updated= accountDetailsService.updateDetails(userDetailsVo);
 		
 		if(updated){

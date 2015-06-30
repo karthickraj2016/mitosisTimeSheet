@@ -91,7 +91,7 @@ angular.module('myApp.controllers')
     $scope.edituserdetails = function(){
     	
     	var menuJson = angular.toJson({
-			"name": $scope.name,"email":$scope.email
+			"name": $scope.name,"email":$scope.email,"username":$scope.username
 
 		});
     	
