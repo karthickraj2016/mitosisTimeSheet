@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" pageWidth="595" pageHeight="993" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="62"/>
 	<parameter name="name" class="java.lang.String"/>
 	<parameter name="fromDate" class="java.lang.String"/>
 	<parameter name="toDate" class="java.lang.String"/>
@@ -11,7 +11,7 @@
 	<field name="hours" class="java.lang.Double"/>
 	<field name="userDetails.name" class="java.lang.String"/>
 	<field name="project.projectName" class="java.lang.String"/>
-	<sortField name="date" order="Ascending"/>
+	<sortField name="date"/>
 	<title>
 		<band height="113" splitType="Stretch">
 			<staticText>
@@ -80,7 +80,7 @@
 			<staticText>
 				<reportElement x="181" y="9" width="73" height="20"/>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA[name]]></text>
+				<text><![CDATA[Name]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -107,7 +107,7 @@
 			</line>
 			<textField isBlankWhenNull="true">
 				<reportElement x="142" y="7" width="151" height="17"/>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Left"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{userDetails.name}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -127,7 +127,7 @@
 				<reportElement x="131" y="6" width="406" height="33"/>
 			</rectangle>
 			<line>
-				<reportElement x="312" y="6" width="1" height="33"/>
+				<reportElement x="310" y="6" width="1" height="33"/>
 			</line>
 			<staticText>
 				<reportElement x="174" y="14" width="92" height="20"/>

@@ -88,6 +88,15 @@ public class IndividualReport {
 		timeSheetDetailReport = individualReportService.getIndividualReport(fromDate, toDate, employeeId);
 		
 		
+		if(timeSheetDetailReport.size()==0){
+			
+			
+			jsonObj.put("pdfPath","norecords");
+			
+			return jsonObj;
+		}
+		
+		
 		JasperDesign jasperDesign = JRXmlLoader.load(request.getSession().getServletContext()
 		          .getRealPath("/")
 		          + "reports/individualDetailReport.jrxml");
@@ -164,6 +173,16 @@ public class IndividualReport {
 		
 
 		timeSheetSummaryReportList = individualReportService.getIndividualSummaryReportList(fromdate, toDate, employeeId);
+		
+		
+if(timeSheetSummaryReportList.size()==0){
+			
+			
+			jsonObj.put("pdfPath","norecords");
+			
+			return jsonObj;
+		}
+		
 		
 		if(timeSheetSummaryReportList!=null){
 			

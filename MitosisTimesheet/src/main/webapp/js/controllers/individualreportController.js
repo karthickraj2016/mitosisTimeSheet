@@ -50,6 +50,15 @@ angular.module('myApp.controllers')
 			}
 		}).success(function(result, status, headers) {
 			
+			if(result.pdfPath=="norecords"){
+				
+				alert("No records availiable");	
+				return;
+					
+				}
+			
+			else{
+			
 			var a = document.createElement('a');
 			 a.href = "/jasper-report/reports/"+result.pdfFileName;
 			console.log(a);
@@ -61,6 +70,7 @@ angular.module('myApp.controllers')
 		    $scope.filepath = a.href;
 		        console.log($scope.filepath);
 		        $scope.deletepdfFile(result.pdfPath);
+			}
 			
 		});
 		
@@ -84,6 +94,16 @@ angular.module('myApp.controllers')
 			}
 		}).success(function(result, status, headers) {
 			
+			
+			if(result.pdfPath=="norecords"){
+				
+				alert("No records availiable");	
+				return;
+					
+				}
+			
+			else{
+			
 			var a = document.createElement('a');
 			 a.href = "/jasper-report/reports/"+result.pdfFileName;
 			console.log(a);
@@ -95,7 +115,7 @@ angular.module('myApp.controllers')
 		    $scope.filepath = a.href;
 		        console.log($scope.filepath);
 		        $scope.deletepdfFile(result.pdfPath);
-			
+			}
 		});
 		
 	}
