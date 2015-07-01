@@ -21,18 +21,12 @@
     <div class="collapse navbar-collapse" id="myNavbar" ng-controller="HeaderController">
       <ul class="nav navbar-nav" style="margin-left: 30px; margin-top: 8px;">
         <li ng-class="{ active: isActive('/timesheet')}"><a ui-sref="timesheet">Home</a></li>
-       <!--  <li ng-class="{ active: isActive('/project')}"><a ui-sref="project">Project Details</a></li>
-        <li ng-class="{ active: isActive('/projectmapping')}"><a ui-sref="projectmapping">Team Assignment</a></li> -->
-        <li ng-class="{ active: isActive('/reports')}"><a class="dropdown-toggle" data-toggle="dropdown"> Reports<span class="caret"></span></a>
-        <ul class="dropdown-menu">
-            <li><a ui-sref="individualreport">Individual Reports</a></li>
-            <li><a ui-sref="teamreport">Team Reports</a></li>
-          </ul>
-        </li>
+        <li ng-show="manageProject" ng-class="{ active: isActive('/project')}"><a ui-sref="project">Project Details</a></li>
+        <li ng-show="manageTeam" ng-class="{ active: isActive('/teamAssignment')}"><a ui-sref="teamAssignment">Team Assignment</a></li> 
         </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="lb-username"><lable ng-model="name">Welcome {{name}}</lable></li>
-       <li><a style="padding-left: 0;" ui-sref="account"><button class="btn btn-sm btn-primary">Account</button></a></li>
+        <li><a style="padding-left: 0;" ui-sref="account"><button class="btn btn-sm btn-primary">Account</button></a></li>
         <li><button class="btn btn-sm btn-primary btn-logout" ng-click="logout();">Logout</button></li>
       </ul>
     </div>
@@ -49,7 +43,7 @@
 
 <form   class="form-inline form-ts" role="form" id="addEntry" ng-submit="addtimesheet(date,hours,issueNumber,description)">
     <div ng-init="dates()" class="form-group">
-       <input type="text" required class="form-control" ui-date="dateOptions" ui-date-format="yy-mm-dd" ng-model="timesheet.date">
+       <input type="text" required class="form-control" ui-date="dateOptions" ui-date-format="dd-mm-yy" ng-model="timesheet.date">
     </div>
     <!-- <div class="form-group">
    <select required class="form-control" style="color: #B0B0B0;">
@@ -62,7 +56,7 @@
 	</div> -->
    
     <div class="form-group">
-    <select  class="form-control" required ng-model="unit" ng-options="item as item.projectName for item in units" style="color: #777777;">
+    <select  class="form-control" required ng-model="projects" ng-options="item as item.projectName for item in projectList" style="color: #777777;">
     <option value="">Project</option>
 	</select> 
     </div>
@@ -78,11 +72,8 @@
     <div class="form-group btn-formproject">
     <button type="submit" class="btn btn-primary">Add</button>
 	<button type="reset" style="margin-left: 8px;"  class="btn btn-primary">Clear</button>
-
-	
 	</div> 
   </form>
- 
 </div>
 <table class="table" style="">
 	<thead class="thead-mit-ts">
@@ -99,13 +90,13 @@
 	<tbody>
 		<tr ng-repeat="sheet in filteredParticipantsResults ">
 			<td>
-				<span ng-show="!showEdit">{{sheet.date}}</span>
-				<span ng-show="showEdit"><input class="form-control" ui-date="dateOptions" ui-date-format="yy-mm-dd" type="text" ng-model="sheet.date"></span>
-				<span style="color:red" ng-show="sheet.date == '' || sheet.date == undefined">Required</span>
+				<span ng-show="!showEdit">{{sheet.entryDate}}</span>
+				<span ng-show="showEdit"><input class="form-control" ui-date="dateOptions" ui-date-format="dd-mm-yy" type="text" ng-model="sheet.entryDate"></span>
+				<span style="color:red" ng-show="sheet.entryDate == '' || sheet.entryDate == undefined">Required</span>
 			</td>
 			<td>
 				<span ng-show="!showEdit">{{sheet.project.projectName}}</span>
-				<span id="{{sheet.project.id}}" ng-show="showEdit"><select class="form-control" ng-model="sheet.project" ng-options="item as item.projectName for item in units" style="color: #777777;">
+				<span id="{{sheet.project.id}}" ng-show="showEdit"><select class="form-control" ng-model="sheet.project" ng-options="item as item.projectName for item in projectList" style="color: #777777;">
 				<option value="">{{sheet.project.projectName}}</option>
 				</select> 
 				</span>
@@ -126,10 +117,15 @@
 				<span style="color:red" ng-show="sheet.description == '' || sheet.description == undefined">Required</span>
 			</td>
 			<td style="word-spacing: 15px;">
-				<image src="images/pencil.png" ng-click="showEdit = !showEdit" ng-show="!showEdit"></image>
+				<!-- <image src="images/pencil.png" ng-click="showEdit = !showEdit" ng-show="!showEdit"></image>
 				<image src="images/delete.png" ng-click="confirmDelete(sheet.id)" ng-show="!showEdit"></image>
 				<image src="images/save-icon.png" ng-click="showEdit = !showEdit;updatetimesheet(sheet)" ng-show="showEdit" ng-disabled="checkRequired(sheet);"></image>
 				<image src="images/cancel.jpg"  ng-click="showEdit = !showEdit;list()" ng-show="showEdit"></image>
+	 -->
+	            <a><span class="glyphicon glyphicon-pencil" ng-click="showEdit = !showEdit" ng-show="!showEdit"></span></a>
+				<a><span class="glyphicon glyphicon-remove" ng-click="confirmDelete(sheet.id)" ng-show="!showEdit"></span></a>
+				<a><span class="glyphicon glyphicon-ok" ng-click="showEdit = !showEdit;updatetimesheet(sheet)" ng-show="showEdit" ng-disabled="checkRequired(sheet);"></span></a> 
+				<a><span class="glyphicon glyphicon-ban-circle" ng-click="showEdit = !showEdit;list()" ng-show="showEdit"></span></a> 			
 			</td>
 		</tr>
 	</tbody>
