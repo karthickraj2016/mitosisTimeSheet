@@ -9,6 +9,7 @@ import com.mitosis.timesheet.dao.daoImpl.TeamReportDaoImpl;
 import com.mitosis.timesheet.model.ProjectModel;
 import com.mitosis.timesheet.model.TeamAssignmentModel;
 import com.mitosis.timesheet.model.TimeSheetModel;
+import com.mitosis.timesheet.pojo.SummaryReport;
 import com.mitosis.timesheet.service.TeamReportService;
 
 public class TeamReportServiceImpl implements TeamReportService {
@@ -74,6 +75,13 @@ List<TimeSheetModel> timeSheetList = new ArrayList<TimeSheetModel>();
 		// TODO Auto-generated method stub
 		double hours = teamReportDao.getTotalHours(fromDate,toDate,memberId, projectId);
 		return hours;
+	}
+
+	@Override
+	public List<SummaryReport> getSumHours(Date fromDate, Date toDate,
+			int memberId, int projectId) {
+		List<SummaryReport> summaryList = teamReportDao.getSumHours(fromDate,toDate,memberId,projectId);
+		return summaryList;
 	}
 
 }

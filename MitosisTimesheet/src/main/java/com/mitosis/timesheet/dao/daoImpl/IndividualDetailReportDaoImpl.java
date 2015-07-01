@@ -100,7 +100,7 @@ public class IndividualDetailReportDaoImpl extends BaseService implements Indivi
 			Predicate conditions = qb.and(condition, condition2, condition3);
 			cq.where(conditions);
 			cq.select(root);	
-			cq.groupBy(root.get("date"),root.get("project"));
+			cq.groupBy(root.get("date"),root.get("project").get("projectName"));
 			timeSheetModel= entityManager.createQuery(cq).getResultList();
 			for(TimeSheetModel timeSheetModel1 : timeSheetModel){
 				
@@ -144,18 +144,16 @@ public class IndividualDetailReportDaoImpl extends BaseService implements Indivi
 			Predicate conditions = qb.and(condition, condition2, condition3);
 			cq.where(conditions);
 			cq.select(qb.sum(root.<Double>get("hours")));	
-			cq.groupBy(root.get("date"),root.get("project"));
+			cq.groupBy(root.get("date"),root.get("project").get("projectName"));
 			hours=entityManager.createQuery(cq).getResultList();
 			for(int i =0;i<hours.size();i++){
 			
 				SummaryReport summaryReport = new SummaryReport();
 				
-				
-				
 				summaryReport.setHourslist(hours.get(i));
 
 				timeSheetList.add(summaryReport);
-				i++;				
+								
 			}
 
 			commit(); 

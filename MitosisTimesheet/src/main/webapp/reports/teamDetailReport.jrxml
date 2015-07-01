@@ -12,6 +12,7 @@
 	<field name="description" class="java.lang.String"/>
 	<field name="project.projectName" class="java.lang.String"/>
 	<field name="userDetails.name" class="java.lang.String"/>
+	<sortField name="date" order="Ascending"/>
 	<title>
 		<band height="97" splitType="Stretch">
 			<staticText>
@@ -75,7 +76,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA["Date"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="204" y="15" width="43" height="16"/>
+				<reportElement x="205" y="15" width="43" height="16"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA["Hours"]]></textFieldExpression>
 			</textField>
@@ -90,10 +91,10 @@
 				<textFieldExpression class="java.lang.String"><![CDATA["Description"]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="389" y="11" width="1" height="25"/>
+				<reportElement x="383" y="11" width="1" height="25"/>
 			</line>
 			<line>
-				<reportElement x="56" y="11" width="1" height="25"/>
+				<reportElement x="61" y="11" width="1" height="25"/>
 			</line>
 			<staticText>
 				<reportElement x="95" y="17" width="46" height="15"/>
@@ -107,47 +108,47 @@
 			<rectangle>
 				<reportElement x="1" y="0" width="554" height="37"/>
 			</rectangle>
-			<textField isBlankWhenNull="true">
-				<reportElement x="1" y="4" width="55" height="20"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.util.Date"><![CDATA[$F{date}]]></textFieldExpression>
-			</textField>
 			<line>
 				<reportElement x="183" y="0" width="1" height="37"/>
 			</line>
 			<textField isBlankWhenNull="true">
 				<reportElement x="193" y="3" width="60" height="20"/>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.Double"><![CDATA[$F{hours}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="271" y="1" width="1" height="37"/>
 			</line>
 			<line>
-				<reportElement x="389" y="0" width="1" height="37"/>
+				<reportElement x="383" y="0" width="1" height="37"/>
 			</line>
 			<textField isBlankWhenNull="true">
 				<reportElement x="276" y="3" width="102" height="20"/>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{issueNumber}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="390" y="1" width="165" height="36"/>
+				<reportElement x="389" y="1" width="165" height="36"/>
 				<textElement textAlignment="Left"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="56" y="0" width="1" height="37"/>
+				<reportElement x="62" y="0" width="1" height="37"/>
 			</line>
 			<textField isBlankWhenNull="true">
-				<reportElement x="58" y="4" width="123" height="20" isPrintWhenDetailOverflows="true"/>
-				<textElement textAlignment="Center"/>
+				<reportElement x="67" y="4" width="113" height="20" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{userDetails.name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="7" y="4" width="54" height="33"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[new SimpleDateFormat("dd-MM-yyyy").format($F{date})]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="49">
+		<band height="50">
 			<textField>
 				<reportElement x="445" y="22" width="100" height="20"/>
 				<textElement/>

@@ -2,6 +2,7 @@ package com.mitosis.timesheet.webservice;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,6 +32,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
@@ -121,7 +123,7 @@ public class IndividualReport {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public JSONObject getIndividualSummaryReport(JSONObject jsonObject) throws JSONException, JRException, ParseException{
+	public JSONObject getIndividualSummaryReport(JSONObject jsonObject) throws JSONException, JRException, ParseException, IllegalAccessException, InvocationTargetException{
 		
 		
 		
@@ -140,6 +142,7 @@ public class IndividualReport {
 		
 		List<SummaryReport> timeSheetSummaryReportList = new ArrayList<SummaryReport>();
 		List<SummaryReport> timeSheetHoursList = new ArrayList<SummaryReport>();
+		List<TimeSheetModel> TimesheetModelList = new ArrayList<TimeSheetModel>();
 		
 
 		DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -165,22 +168,23 @@ public class IndividualReport {
 		if(timeSheetSummaryReportList!=null){
 			
 			timeSheetHoursList = individualReportService.getIndividualSummaryReportHours(fromdate, toDate, employeeId);
+			System.out.println(timeSheetHoursList);
+			int i =0;
 			for(SummaryReport list : timeSheetHoursList){
-				int i =0;
+				
+				TimeSheetModel timesheetmodel = new TimeSheetModel();
+				
+				
+				BeanUtils.copyProperties(timesheetmodel, timeSheetSummaryReportList.get(i).timeSheet);
+				
+				timesheetmodel.setHours(list.getHourslist());
 
-				timeSheetSummaryReportList.get(i).setHourslist(list.getHourslist());
+				TimesheetModelList.add(timesheetmodel);
 				
 				i++;
-				
-				
 			}
 			
 		}
-		
-		
-		System.out.println(timeSheetSummaryReportList);
-		
-		
 		
 		totalhours = individualReportService.getTotalHours(fromdate, toDate, employeeId);
 
@@ -197,7 +201,7 @@ public class IndividualReport {
 		      parameters.put("name",name);
 		      parameters.put("totalhours",totalhours);
 		      
-		      JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(timeSheetSummaryReportList);
+		      JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(TimesheetModelList);
 		      JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, ds);
 
 		      String path = this.getClass().getClassLoader().getResource("/").getPath();

@@ -1,10 +1,12 @@
 package com.mitosis.timesheet.webservice;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -30,12 +32,14 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import com.mitosis.timesheet.model.ProjectModel;
 import com.mitosis.timesheet.model.TeamAssignmentModel;
 import com.mitosis.timesheet.model.TimeSheetModel;
+import com.mitosis.timesheet.pojo.SummaryReport;
 import com.mitosis.timesheet.service.IndividualReportService;
 import com.mitosis.timesheet.service.TeamReportService;
 import com.mitosis.timesheet.service.impl.IndividualReportServiceImpl;
@@ -127,9 +131,13 @@ public class TeamReport {
 				int i=0;
 				int memberId= teamList.getMember().getId();
 				
+				
+				
 				timeSheetList.addAll(i,teamReportService.getTeamReportList(fromDate, toDate, memberId,projectId));
 				i++;
 			}
+			
+			
 			
 			System.out.println(timeSheetList);
 		
@@ -216,7 +224,7 @@ public class TeamReport {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-public JSONObject summaryReport(JSONObject jsonObject) throws JSONException, ParseException, JRException{
+public JSONObject summaryReport(JSONObject jsonObject) throws JSONException, ParseException, JRException, IllegalAccessException, InvocationTargetException{
 		
 		JSONObject jsonobject = new JSONObject();
 		
@@ -256,18 +264,26 @@ public JSONObject summaryReport(JSONObject jsonObject) throws JSONException, Par
 			
 			List<TeamAssignmentModel> TeamList = new ArrayList<TeamAssignmentModel>();
 			List<TimeSheetModel> timeSheetList = new ArrayList<TimeSheetModel>();
+			List<TimeSheetModel> timeSheetSummedList = new ArrayList<TimeSheetModel>();
+			List<SummaryReport> hourslist = new ArrayList<SummaryReport>();
 			
 			TeamList = teamReportService.getTeamList(projectId,role);
 			
 			for(TeamAssignmentModel teamList:TeamList){
-				int i=0;
+	
 				int memberId= teamList.getMember().getId();
-				timeSheetList.addAll(i,teamReportService.getTeamReportList(fromDate, toDate, memberId,projectId));
+				hourslist = teamReportService.getSumHours(fromDate, toDate, memberId,projectId);
+				timeSheetList=teamReportService.getTeamReportList(fromDate, toDate, memberId,projectId);
+				for(int j=0;j<hourslist.size();j++){
+					timeSheetList.get(j).setHours(hourslist.get(j).hourslist);
+				}
+				timeSheetSummedList.addAll(timeSheetList);
+				
 				totalhours = totalhours+teamReportService.getTotalHours(fromDate, toDate, memberId,projectId);
-				System.out.println(totalhours);
-				i++;
+				
 			}
 			
+			totalhours=(double) Math.round(totalhours * 100) / 100;
 			
 			JasperDesign jasperDesign = JRXmlLoader.load(request.getSession().getServletContext()
 			          .getRealPath("/")
@@ -282,7 +298,7 @@ public JSONObject summaryReport(JSONObject jsonObject) throws JSONException, Par
 			      parameters.put("name",name);
 			      parameters.put("totalhours", totalhours);
 			      
-			      JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(timeSheetList);
+			      JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(timeSheetSummedList);
 			      JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, ds);
 
 			      String path = this.getClass().getClassLoader().getResource("/").getPath();

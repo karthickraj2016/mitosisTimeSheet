@@ -10,7 +10,6 @@
 	<field name="date" class="java.util.Date"/>
 	<field name="project.projectName" class="java.lang.String"/>
 	<field name="hours" class="java.lang.Double"/>
-	<field name="sum(hours)" class="java.lang.Double"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -90,11 +89,6 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[new SimpleDateFormat("dd-MM-yyyy").format($F{date})]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="369" y="6" width="120" height="18"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.Double"><![CDATA[$F{sum(hours)}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement x="173" y="5" width="164" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{project.projectName}]]></textFieldExpression>
@@ -102,6 +96,11 @@
 			<line>
 				<reportElement x="354" y="0" width="1" height="27"/>
 			</line>
+			<textField>
+				<reportElement x="369" y="5" width="139" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{hours}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
