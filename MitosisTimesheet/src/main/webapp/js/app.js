@@ -74,7 +74,19 @@ angular.module('myApp', ['ui.router','myApp.controllers','ngStorage','ui.bootstr
 		  	url: '/userRights',
 		  	templateUrl: 'html/authority.html',
 		  	controller : 'userRightsController'
-             });
+             })
+             .state('individualreport', {
+				 url: '/individualreport',
+				 templateUrl: 'html/individualreport.html',
+				 controller:'individualreportController'
+			 })
+			 
+			 .state('teamreport', {
+				 url: '/teamreport',
+				 templateUrl: 'html/teamreport.html',
+				 controller :'teamreportController'
+			 });
+			 
     }
   ]);
 

@@ -86,13 +86,15 @@ public class TimeSheet {
 
 			boolean flag = false;
 			ProjectModel projectModel = new ProjectModel();
+			UserDetailsModel userDetailsModel = new UserDetailsModel();
 
 			timeSheetModel.setDate(frmDate);
 			timeSheetModel.setHours(jsonobject.getDouble("hours"));
 			timeSheetModel.setDescription(jsonobject.getString("description"));
 			projectModel.setProjectId(jsonobject.getInt("projectId"));
 			timeSheetModel.setProject(projectModel);
-			timeSheetModel.setEmployeeId((Integer) request.getSession().getAttribute("userId"));
+			userDetailsModel.setId((Integer)request.getSession().getAttribute("userId"));
+			timeSheetModel.setUserDetails(userDetailsModel);
 			
 			if (jsonobject.has("issueNumber")) {
 				timeSheetModel.setIssueNumber(jsonobject.getString("issueNumber"));
@@ -185,6 +187,7 @@ public class TimeSheet {
 
 			boolean flag = false;
 			ProjectModel projectModel = new ProjectModel();
+			UserDetailsModel userDetailsModel = new UserDetailsModel();
 
 			timeSheetModel.setDate(frmDate);
 			timeSheetModel.setHours(jsonObject.getDouble("hours"));
@@ -193,7 +196,8 @@ public class TimeSheet {
 			projectModel.setProjectId(jsonObject.getInt("ProjectId"));
 			timeSheetModel.setProject(projectModel);
 		
-			timeSheetModel.setEmployeeId((Integer) request.getSession().getAttribute("userId"));
+			userDetailsModel.setId((Integer)request.getSession().getAttribute("userId"));
+			timeSheetModel.setUserDetails(userDetailsModel);
 			if(jsonObject.getString("issueNumber")=="null"){
 
 			}
