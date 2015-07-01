@@ -1,0 +1,215 @@
+package com.mitosis.timesheet.dao.daoImpl;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
+import com.mitosis.timesheet.dao.TeamReportDao;
+import com.mitosis.timesheet.model.ProjectModel;
+import com.mitosis.timesheet.model.TeamAssignmentModel;
+import com.mitosis.timesheet.model.TimeSheetModel;
+import com.mitosis.timesheet.model.UserDetailsModel;
+import com.mitosis.timesheet.pojo.SummaryReport;
+import com.mitosis.timesheet.util.BaseService;
+
+public class TeamReportDaoImpl extends BaseService implements TeamReportDao {
+
+	@Override
+	public List<ProjectModel> getProjectList() {
+		// TODO Auto-generated method stub
+		
+		List<ProjectModel> projectlist = new ArrayList<ProjectModel>();
+		try{
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<ProjectModel> cq = qb.createQuery(ProjectModel.class);
+			Root<ProjectModel> root = cq.from(ProjectModel.class);
+			cq.select(root);
+			cq.orderBy(qb.asc(root.get("projectName")));
+			projectlist = entityManager.createQuery(cq).getResultList();
+			System.out.println(projectlist);
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close();
+		}
+		return projectlist;
+		
+	}
+
+	@Override
+	public List<TeamAssignmentModel> getTeamList(int projectId,int role) {
+		List<TeamAssignmentModel> members = null;
+		try{
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<TeamAssignmentModel> cq = qb.createQuery(TeamAssignmentModel.class);
+			Root<TeamAssignmentModel> root = cq.from(TeamAssignmentModel.class);
+			Path<Integer> rolePath =  root.get("role");
+			cq.where(qb.equal(root.get("project"),projectId),qb.greaterThanOrEqualTo(rolePath, role));
+			cq.select(root);
+			members = entityManager.createQuery(cq).getResultList();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close();
+		}
+		return members;
+	}
+
+	@Override
+	public int getrole(int userId) {
+		
+		int role=0;
+		
+	    Long longrole = null ;
+		
+		TeamAssignmentModel teamAssignmentModel = new TeamAssignmentModel();
+		List<TeamAssignmentModel> teamlist = new ArrayList<TeamAssignmentModel>();
+		
+		try{
+			begin();
+		      entityManager.getEntityManagerFactory().getCache().evictAll();
+		      CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+		      CriteriaQuery<Number> query = qb.createQuery(Number.class);
+		      Root<TeamAssignmentModel> root = query.from(TeamAssignmentModel.class);
+		      Predicate condition = qb.equal(root.get("member"), userId);
+		      Predicate conditions = qb.and(condition);
+		      query.where(conditions);
+		      query.select(qb.sum(root.<Integer>get("role")));
+		      longrole = (Long) entityManager.createQuery(query).getSingleResult();
+		       role = (int) (long)longrole;
+		     
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close();
+		}
+		return role;
+	}
+
+	@Override
+	public List<TimeSheetModel> getTeamReportList(Date fromDate, Date toDate,
+			int employeeId, int projectId) {
+		
+		System.out.println(employeeId);
+		
+		List<TimeSheetModel> timeSheetDetailReport = new ArrayList<TimeSheetModel>();
+		try{
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<TimeSheetModel> cq = qb.createQuery(TimeSheetModel.class);
+			Root<TimeSheetModel> root = cq.from(TimeSheetModel.class);
+			Path<Date> fromDatePath =  root.get("date");
+			Predicate condition = qb.equal(root.get("userDetails"), employeeId);
+			Predicate condition2 = qb.greaterThanOrEqualTo(fromDatePath, fromDate);
+			Predicate condition3 = qb.lessThanOrEqualTo(fromDatePath, toDate);
+			Predicate condition4 = qb.equal(root.get("project"),projectId);
+			Predicate conditions = qb.and(condition, condition2, condition3,condition4);
+			cq.where(conditions);
+			cq.select(root);
+			cq.groupBy(root.get("date"));
+			timeSheetDetailReport = entityManager.createQuery(cq).getResultList();
+			commit(); 
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close();
+		}
+		return timeSheetDetailReport;
+	}
+
+	@Override
+	public List<TimeSheetModel> getteamReportIndividual(Date fromDate,
+			Date toDate, int employeeId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public double getTotalHours(Date fromDate, Date toDate, int memberId,
+			int projectId) {
+		
+		double totalhours=0.0;
+		
+		try{
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+		    CriteriaQuery<Number> cq = qb.createQuery(Number.class);
+			Root<TimeSheetModel> root = cq.from(TimeSheetModel.class);
+			Path<Date> fromDatePath =  root.get("date");
+			Predicate condition = qb.equal(root.get("userDetails"), memberId);
+			Predicate condition2 = qb.greaterThanOrEqualTo(fromDatePath, fromDate);
+			Predicate condition3 = qb.lessThanOrEqualTo(fromDatePath, toDate);
+			Predicate condition4 = qb.equal(root.get("project"),projectId);
+			Predicate conditions = qb.and(condition, condition2, condition3,condition4);
+			cq.where(conditions);
+			cq.select(qb.sum(root.<Integer>get("hours")));
+			totalhours=entityManager.createQuery(cq).getSingleResult().doubleValue();
+			System.out.println(totalhours);
+			commit(); 
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close();
+		}
+		return totalhours;
+	}
+
+	@Override
+	public List<SummaryReport> getSumHours(Date fromDate, Date toDate,
+			int memberId, int projectId) {
+		TimeSheetModel timesheetModel = new TimeSheetModel();
+		List<SummaryReport> timeSheetList = new ArrayList<SummaryReport>();
+		List<Double> hours = new ArrayList<Double>();
+		
+		
+		try{
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<Double> cq = qb.createQuery(Double.class);
+			Root<TimeSheetModel> root = cq.from(TimeSheetModel.class);
+			Path<Date> fromDatePath =  root.get("date");
+			/*Path<Integer> hourspath =root.get("hours");*/
+			Predicate condition = qb.equal(root.get("userDetails").get("id"), memberId);
+			Predicate condition2 = qb.greaterThanOrEqualTo(fromDatePath, fromDate);
+			Predicate condition3 = qb.lessThanOrEqualTo(fromDatePath, toDate);
+			Predicate condition4 = qb.equal(root.get("project"), projectId);
+			Predicate conditions = qb.and(condition, condition2, condition3, condition4);
+			cq.where(conditions);
+			cq.select(qb.sum(root.<Double>get("hours")));
+			cq.groupBy(root.get("date"));
+	
+			hours=entityManager.createQuery(cq).getResultList();
+			for(int i =0;i<hours.size();i++){
+			
+				SummaryReport summaryReport = new SummaryReport();
+				
+				summaryReport.setHourslist(hours.get(i));
+
+				timeSheetList.add(summaryReport);
+								
+			}
+
+			commit(); 
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close();
+		}
+		return timeSheetList;
+	}
+
+	
+}

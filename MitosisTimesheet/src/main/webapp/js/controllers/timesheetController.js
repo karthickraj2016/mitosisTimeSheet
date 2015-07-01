@@ -60,7 +60,7 @@ angular.module('myApp.controllers')
 		if(result==""){
 			$state.go('login')
 			}else{
-			$scope.name=result;
+			$rootScope.name=result;
 			
 		}
 	})
@@ -309,7 +309,8 @@ angular.module('myApp.controllers')
 			$scope.list();	
 		})
 	},
-
+	
+	
 	$scope.logout = function(){
 
 		$http({
@@ -321,6 +322,8 @@ angular.module('myApp.controllers')
 		})
 
 	}
+	
+
 
 }])
 

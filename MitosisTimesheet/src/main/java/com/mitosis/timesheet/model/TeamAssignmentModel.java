@@ -1,4 +1,4 @@
-package com.mitosis.timesheet.model;
+ package com.mitosis.timesheet.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
