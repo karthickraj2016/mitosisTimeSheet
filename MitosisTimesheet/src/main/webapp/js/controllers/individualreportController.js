@@ -35,6 +35,20 @@ angular.module('myApp.controllers')
 			/* yearRange: '1900:-0'*/
 	};
 	
+	$http({
+		url: 'rest/timesheet/getUserDetails',
+		method: 'GET',
+		/*data: menuJson,*/
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	}).success(function(result, status, headers) {
+		
+		$scope.manageProject=result.manageProject;
+		$scope.manageTeam=result.manageTeam;
+		/*$scope.manageCustomer=result.manageCustomer;*/
+		
+	});
 	
 	$scope.detailreport = function(){
 	

@@ -47,6 +47,21 @@ angular.module('myApp.controllers')
 		
 	});
 	
+	
+	$http({
+		url: 'rest/timesheet/getUserDetails',
+		method: 'GET',
+		/*data: menuJson,*/
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	}).success(function(result, status, headers) {
+		
+		$scope.manageProject=result.manageProject;
+		$scope.manageTeam=result.manageTeam;
+		/*$scope.manageCustomer=result.manageCustomer;*/
+	});
+	
 	$scope.checkUserRightsByProjectForDetails = function(){
 		
 		var menuJson=angular.toJson({"projectId":$scope.project.project.projectId})
