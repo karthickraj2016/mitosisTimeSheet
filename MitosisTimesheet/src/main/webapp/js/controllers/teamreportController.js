@@ -52,7 +52,7 @@ angular.module('myApp.controllers')
 	
 	$scope.detailreport = function(){
 	
-		var menuJson = angular.toJson({"fromdate":$scope.timesheet.fromdate,"todate":$scope.timesheet.todate,"name":$rootScope.name,"projectId":$scope.project.projectId});
+		var menuJson = angular.toJson({"fromdate":$scope.timesheet.fromdate,"todate":$scope.timesheet.todate,"name":$rootScope.name,"projectId":$scope.project.project.projectId});
 		
 		
 		$http({
