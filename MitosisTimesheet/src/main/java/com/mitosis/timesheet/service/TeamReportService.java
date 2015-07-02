@@ -10,7 +10,7 @@ import com.mitosis.timesheet.pojo.SummaryReport;
 
 public interface TeamReportService {
 	
-	public List<ProjectModel> getProjectList();
+	public List<TeamAssignmentModel> getProjectList(int employeeId);
 
 	public List<TeamAssignmentModel> getTeamList(int projectId, int role);
 	

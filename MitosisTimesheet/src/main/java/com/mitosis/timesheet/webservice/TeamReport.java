@@ -62,7 +62,7 @@ public class TeamReport {
 	@Path("/getprojectlist")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<ProjectModel> getprojectList() throws JSONException, JRException, IOException, ParseException{
+	public List<TeamAssignmentModel> getprojectList() throws JSONException, JRException, IOException, ParseException{
 		JSONObject jsonobject = new JSONObject();
 
 		HttpSession session= request.getSession(true);
@@ -70,11 +70,13 @@ public class TeamReport {
 		if(session.getAttribute("userId")==null){
 			return null;
 		}
+		
+		int employeeId =(Integer) request.getSession().getAttribute("userId");
 
 
-		List<ProjectModel> projectList = new ArrayList<ProjectModel>();
+		List<TeamAssignmentModel> projectList = new ArrayList<TeamAssignmentModel>();
 
-		projectList = teamReportService.getProjectList();
+		projectList = teamReportService.getProjectList(employeeId);
 
 
 

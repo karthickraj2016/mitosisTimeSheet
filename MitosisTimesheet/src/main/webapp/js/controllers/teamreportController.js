@@ -94,7 +94,9 @@ angular.module('myApp.controllers')
 	
 	$scope.summaryreport = function(){
 		
-		var menuJson = angular.toJson({"fromdate":$scope.timesheet.fromdate,"todate":$scope.timesheet.todate,"name":$rootScope.name,"projectId":$scope.project.projectId});
+		console.log($scope.project);
+		
+		var menuJson = angular.toJson({"fromdate":$scope.timesheet.fromdate,"todate":$scope.timesheet.todate,"name":$rootScope.name,"projectId":$scope.project.project.projectId});
 		
 		$http({
 			url: 'rest/teamreport/summaryReport',

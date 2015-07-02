@@ -40,6 +40,7 @@ public class IndividualDetailReportDaoImpl extends BaseService implements Indivi
 			Predicate conditions = qb.and(condition, condition2, condition3);
 			cq.where(conditions);
 			cq.select(root);
+			cq.orderBy(qb.asc(root.get("date")));
 			timeSheetDetailReport = entityManager.createQuery(cq).getResultList();
 			commit(); 
 		}catch(Exception e){
@@ -93,7 +94,6 @@ public class IndividualDetailReportDaoImpl extends BaseService implements Indivi
 			CriteriaQuery<TimeSheetModel> cq = qb.createQuery(TimeSheetModel.class);
 			Root<TimeSheetModel> root = cq.from(TimeSheetModel.class);
 			Path<Date> fromDatePath =  root.get("date");
-			/*Path<Integer> hourspath =root.get("hours");*/
 			Predicate condition = qb.equal(root.get("userDetails").get("id"), employeeId);
 			Predicate condition2 = qb.greaterThanOrEqualTo(fromDatePath, fromdate);
 			Predicate condition3 = qb.lessThanOrEqualTo(fromDatePath, todate);

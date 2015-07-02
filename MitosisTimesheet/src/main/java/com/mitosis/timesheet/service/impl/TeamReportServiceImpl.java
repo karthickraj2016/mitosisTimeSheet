@@ -17,10 +17,10 @@ public class TeamReportServiceImpl implements TeamReportService {
 	TeamReportDao teamReportDao = new TeamReportDaoImpl();
 
 	@Override
-	public List<ProjectModel> getProjectList() {
-		List<ProjectModel> projectList = new ArrayList<ProjectModel>();
+	public List<TeamAssignmentModel> getProjectList(int employeeId) {
+		List<TeamAssignmentModel> projectList = new ArrayList<TeamAssignmentModel>();
 		
-		projectList = teamReportDao.getProjectList();
+		projectList = teamReportDao.getProjectList(employeeId);
 		
 		
 		

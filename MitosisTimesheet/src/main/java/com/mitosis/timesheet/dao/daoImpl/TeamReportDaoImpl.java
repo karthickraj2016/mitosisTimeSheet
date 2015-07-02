@@ -21,18 +21,19 @@ import com.mitosis.timesheet.util.BaseService;
 public class TeamReportDaoImpl extends BaseService implements TeamReportDao {
 
 	@Override
-	public List<ProjectModel> getProjectList() {
+	public List<TeamAssignmentModel> getProjectList(int employeeId) {
 		// TODO Auto-generated method stub
 		
-		List<ProjectModel> projectlist = new ArrayList<ProjectModel>();
+		List<TeamAssignmentModel> projectlist = new ArrayList<TeamAssignmentModel>();
 		try{
 			begin();
 			entityManager.getEntityManagerFactory().getCache().evictAll();
 			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
-			CriteriaQuery<ProjectModel> cq = qb.createQuery(ProjectModel.class);
-			Root<ProjectModel> root = cq.from(ProjectModel.class);
+			CriteriaQuery<TeamAssignmentModel> cq = qb.createQuery(TeamAssignmentModel.class);
+			Root<TeamAssignmentModel> root = cq.from(TeamAssignmentModel.class);
 			cq.select(root);
-			cq.orderBy(qb.asc(root.get("projectName")));
+			cq.where(qb.equal(root.get("member"),employeeId));
+			cq.orderBy(qb.asc(root.get("project").get("projectName")));
 			projectlist = entityManager.createQuery(cq).getResultList();
 			System.out.println(projectlist);
 		}catch(Exception e){
@@ -69,24 +70,24 @@ public class TeamReportDaoImpl extends BaseService implements TeamReportDao {
 	public int getrole(int userId) {
 		
 		int role=0;
-		
-	    Long longrole = null ;
-		
-		TeamAssignmentModel teamAssignmentModel = new TeamAssignmentModel();
-		List<TeamAssignmentModel> teamlist = new ArrayList<TeamAssignmentModel>();
-		
+		List<TeamAssignmentModel> rolelist = new ArrayList<TeamAssignmentModel>();		
 		try{
 			begin();
 		      entityManager.getEntityManagerFactory().getCache().evictAll();
 		      CriteriaBuilder qb = entityManager.getCriteriaBuilder();
-		      CriteriaQuery<Number> query = qb.createQuery(Number.class);
+		      CriteriaQuery<TeamAssignmentModel> query = qb.createQuery(TeamAssignmentModel.class);
 		      Root<TeamAssignmentModel> root = query.from(TeamAssignmentModel.class);
 		      Predicate condition = qb.equal(root.get("member"), userId);
 		      Predicate conditions = qb.and(condition);
 		      query.where(conditions);
-		      query.select(qb.sum(root.<Integer>get("role")));
-		      longrole = (Long) entityManager.createQuery(query).getSingleResult();
-		       role = (int) (long)longrole;
+		      query.select(root);
+		      rolelist =  entityManager.createQuery(query).getResultList();
+		      role = rolelist.get(0).getRole().getId();
+		      
+		      
+		      /*role =   entityManager.createQuery(query).getSingleResult();*/
+		      /*longrole = (Long) entityManager.createQuery(query).getSingleResult();
+		       role = (int) (long)longrole;*/
 		     
 		}catch(Exception e){
 			e.printStackTrace();
