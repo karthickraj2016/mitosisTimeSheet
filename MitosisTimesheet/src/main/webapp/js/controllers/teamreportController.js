@@ -112,8 +112,8 @@ angular.module('myApp.controllers')
 			var a = document.createElement('a');
 			 a.href = "/MitosisTimesheet/reports/"+result.pdfFileName;
 			console.log(a);
-				// a.download = "teamDetailReport.pdf";
-			a.target="_blank"; 
+			a.download = "teamDetailReport.pdf";
+			//a.target="_blank"; 
 			document.body.appendChild(a);
 		        a.click();
 		        document.body.removeChild(a);
@@ -178,8 +178,8 @@ angular.module('myApp.controllers')
 			var a = document.createElement('a');
 			 a.href = "/MitosisTimesheet/reports/"+result.pdfFileName;
 			console.log(a);
-				// a.download = "teamSummaryReport.pdf";
-			a.target="_blank";
+			a.download = "teamSummaryReport.pdf";
+			//a.target="_blank";
 			 document.body.appendChild(a);
 		        a.click();
 		        document.body.removeChild(a);
