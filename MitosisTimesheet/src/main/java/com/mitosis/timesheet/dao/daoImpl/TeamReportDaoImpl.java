@@ -235,5 +235,36 @@ public class TeamReportDaoImpl extends BaseService implements TeamReportDao {
 		}
  		return level;
 	}
+
+	@Override
+	public List<TimeSheetModel> getTeamReportDetailList(Date date, Date toDate,
+			int memberId, int projectId) {
+
+		
+		List<TimeSheetModel> timeSheetDetailReport = new ArrayList<TimeSheetModel>();
+		try{
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<TimeSheetModel> cq = qb.createQuery(TimeSheetModel.class);
+			Root<TimeSheetModel> root = cq.from(TimeSheetModel.class);
+			Path<Date> fromDatePath =  root.get("date");
+			Predicate condition = qb.equal(root.get("userDetails"), memberId);
+			Predicate condition2 = qb.greaterThanOrEqualTo(fromDatePath, date);
+			Predicate condition3 = qb.lessThanOrEqualTo(fromDatePath, toDate);
+			Predicate condition4 = qb.equal(root.get("project"),projectId);
+			Predicate conditions = qb.and(condition, condition2, condition3,condition4);
+			cq.where(conditions);
+			cq.select(root);
+			cq.orderBy(qb.asc(root.get("date")),qb.asc(root.get("userDetails").get("name")));
+			timeSheetDetailReport = entityManager.createQuery(cq).getResultList();
+			commit(); 
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close();
+		}
+		return timeSheetDetailReport;
+	}
 	
 }

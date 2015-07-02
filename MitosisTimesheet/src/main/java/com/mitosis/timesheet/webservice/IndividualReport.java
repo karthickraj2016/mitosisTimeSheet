@@ -114,13 +114,16 @@ public class IndividualReport {
 
 		      String path = this.getClass().getClassLoader().getResource("/").getPath();
 		      String pdfPath = path.replaceAll("WEB-INF/classes/", "");
+		      String pdfFilePath = pdfPath
+			          + "reports/individualDetailReport" + employeeId + ".pdf";
+		      
+		      new File(pdfFilePath).deleteOnExit();
 
-		      JasperExportManager.exportReportToPdfFile(jasperPrint, pdfPath
-		          + "reports/individualDetailReport" + employeeId + ".pdf");
+		      JasperExportManager.exportReportToPdfFile(jasperPrint,pdfFilePath);
 
 		      
 		      jsonObj.put("pdfFileName","individualDetailReport"+employeeId+".pdf");
-		      jsonObj.put("pdfPath",pdfPath+ "reports/individualDetailReport.jrxml" + employeeId + ".pdf");
+		      jsonObj.put("pdfPath",pdfFilePath);
 		   
 		
 		return jsonObj;
@@ -225,13 +228,14 @@ public class IndividualReport {
 
 		      String path = this.getClass().getClassLoader().getResource("/").getPath();
 		      String pdfPath = path.replaceAll("WEB-INF/classes/", "");
-
-		      JasperExportManager.exportReportToPdfFile(jasperPrint, pdfPath
-		          + "reports/individualSummaryReport" + employeeId + ".pdf");
+		      String pdfFilePath = pdfPath
+			          + "reports/individualSummaryReport" + employeeId + ".pdf";
+		      new File(pdfFilePath).deleteOnExit();
+		      JasperExportManager.exportReportToPdfFile(jasperPrint, pdfFilePath);
 
 		      
 		      jsonObj.put("pdfFileName","individualSummaryReport"+employeeId+".pdf");
-		      jsonObj.put("pdfPath",pdfPath+ "reports/individualSummaryReport" + employeeId + ".pdf");
+		      jsonObj.put("pdfPath",pdfFilePath);
 		   
 		   
 		

@@ -29,4 +29,7 @@ public interface TeamReportService {
 
     public int checkUserRights(int employeeId,int projectId);
 
+	public List<TimeSheetModel> getTeamReportDetailList(Date fromDate,
+			Date toDate, int memberId, int projectId);
+
 }

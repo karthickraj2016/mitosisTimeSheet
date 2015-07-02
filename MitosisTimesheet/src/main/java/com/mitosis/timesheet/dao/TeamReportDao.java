@@ -30,4 +30,7 @@ public interface TeamReportDao {
 
 	public int checkUserRights(int employeeId,int projectId);
 
+	public List<TimeSheetModel> getTeamReportDetailList(Date date, Date toDate,
+			int memberId, int projectId);
+
 }

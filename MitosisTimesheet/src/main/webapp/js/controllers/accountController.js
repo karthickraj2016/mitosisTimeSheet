@@ -27,6 +27,22 @@ angular.module('myApp.controllers')
     	
     },
     
+    $http({
+		url: 'rest/account/getName',
+		method: 'GET',
+		/*data: menuJson,*/
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	}).success(function(result, status, headers) {
+		if(result==""){
+			$state.go('login')
+			}else{
+			$rootScope.name=result;
+			
+		}
+	})
+    
     
     $http({
 		url: 'rest/timesheet/getUserDetails',

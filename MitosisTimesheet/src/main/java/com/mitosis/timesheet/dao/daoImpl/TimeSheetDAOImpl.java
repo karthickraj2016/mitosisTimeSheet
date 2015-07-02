@@ -92,7 +92,7 @@ public class TimeSheetDAOImpl extends BaseService implements TimeSheetDAO{
 			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 			CriteriaQuery<Number> query = qb.createQuery(Number.class);
 			Root<TimeSheetModel> root = query.from(TimeSheetModel.class);
-			Predicate condition = qb.equal(root.get("employeeId"), userId);
+			Predicate condition = qb.equal(root.get("userDetails").get("id"), userId);
 			Predicate condition2 = qb.equal(root.get("date"), date);
 			Predicate conditions = qb.and(condition, condition2);
 			query.where(conditions);

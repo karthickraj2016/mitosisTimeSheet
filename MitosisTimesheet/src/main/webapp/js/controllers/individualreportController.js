@@ -29,11 +29,28 @@ angular.module('myApp.controllers')
 			changeYear: true,
 			changeMonth: true,
 			maxDate:'0d',
-			minDate:-30,
+			/*minDate:-30,*/
 			dateFormat:'dd-mm-yy'
 
 			/* yearRange: '1900:-0'*/
 	};
+	
+	$http({
+		url: 'rest/account/getName',
+		method: 'GET',
+		/*data: menuJson,*/
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	}).success(function(result, status, headers) {
+		if(result==""){
+			$state.go('login')
+			}else{
+			$rootScope.name=result;
+			
+		}
+	})
+	
 	
 	$http({
 		url: 'rest/timesheet/getUserDetails',
@@ -66,7 +83,8 @@ angular.module('myApp.controllers')
 			
 			if(result.pdfPath=="norecords"){
 				
-				alert("No records availiable");	
+				$(".alert-msg1").show().delay(1000).fadeOut(); 
+				$(".alert-danger").html("No records availiable");
 				return;
 					
 				}
@@ -76,14 +94,14 @@ angular.module('myApp.controllers')
 			var a = document.createElement('a');
 			 a.href = "/MitosisTimesheet/reports/"+result.pdfFileName;
 			console.log(a);
-			a.download = "individualDetailReport.pdf";
-			//a.target="_blank";
+			//a.download = "individualDetailReport.pdf";
+			a.target="_blank";
 			 document.body.appendChild(a);
 		        a.click();
 		        document.body.removeChild(a);
 		    $scope.filepath = a.href;
 		        console.log($scope.filepath);
-		        $scope.deletepdfFile(result.pdfPath);
+		        //$scope.deletepdfFile(result.pdfPath);
 			}
 			
 		});
@@ -111,7 +129,8 @@ angular.module('myApp.controllers')
 			
 			if(result.pdfPath=="norecords"){
 				
-				alert("No records availiable");	
+				$(".alert-msg1").show().delay(1000).fadeOut(); 
+				$(".alert-danger").html("No records availiable");
 				return;
 					
 				}
@@ -121,14 +140,14 @@ angular.module('myApp.controllers')
 			var a = document.createElement('a');
 			 a.href = "/MitosisTimesheet/reports/"+result.pdfFileName;
 			console.log(a);
-			a.download = "individualSummaryReport.pdf";
-			//a.target="_blank";
+			//a.download = "individualSummaryReport.pdf";
+			a.target="_blank";
 			 document.body.appendChild(a);
 		        a.click();
 		        document.body.removeChild(a);
 		    $scope.filepath = a.href;
 		        console.log($scope.filepath);
-		        $scope.deletepdfFile(result.pdfPath);
+		        //$scope.deletepdfFile(result.pdfPath);
 			}
 		});
 		

@@ -29,11 +29,28 @@ angular.module('myApp.controllers')
 			changeYear: true,
 			changeMonth: true,
 			maxDate:'0d',
-			minDate:-30,
+			/*minDate:-30,*/
 			dateFormat:'dd-mm-yy'
 
 			/* yearRange: '1900:-0'*/
 	};
+	
+	$http({
+		url: 'rest/account/getName',
+		method: 'GET',
+		/*data: menuJson,*/
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	}).success(function(result, status, headers) {
+		if(result==""){
+			$state.go('login')
+			}else{
+			$rootScope.name=result;
+			
+		}
+	})
+	
 	
 	
 	$http({
@@ -112,14 +129,14 @@ angular.module('myApp.controllers')
 			var a = document.createElement('a');
 			 a.href = "/MitosisTimesheet/reports/"+result.pdfFileName;
 			console.log(a);
-			a.download = "teamDetailReport.pdf";
-			//a.target="_blank"; 
+			//a.download = "teamDetailReport.pdf";
+			a.target="_blank"; 
 			document.body.appendChild(a);
 		        a.click();
 		        document.body.removeChild(a);
 		    $scope.filepath = a.href;
 		        console.log($scope.filepath);
-		        $scope.deletepdfFile(result.pdfPath);
+		        //$scope.deletepdfFile(result.pdfPath);
 		}
 			
 		});
@@ -178,14 +195,14 @@ angular.module('myApp.controllers')
 			var a = document.createElement('a');
 			 a.href = "/MitosisTimesheet/reports/"+result.pdfFileName;
 			console.log(a);
-			a.download = "teamSummaryReport.pdf";
-			//a.target="_blank";
+			//a.download = "teamSummaryReport.pdf";
+			a.target="_blank";
 			 document.body.appendChild(a);
 		        a.click();
 		        document.body.removeChild(a);
 		    $scope.filepath = a.href;
 		        console.log($scope.filepath);
-		        $scope.deletepdfFile(result.pdfPath);
+		        //$scope.deletepdfFile(result.pdfPath);
 			}
 		});
 		

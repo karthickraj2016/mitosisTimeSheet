@@ -92,6 +92,17 @@ List<TimeSheetModel> timeSheetList = new ArrayList<TimeSheetModel>();
  		return level;
 	
 	}
+
+	@Override
+	public List<TimeSheetModel> getTeamReportDetailList(Date fromDate,
+			Date toDate, int memberId, int projectId) {
+	List<TimeSheetModel> timeSheetList = new ArrayList<TimeSheetModel>();
+		
+		timeSheetList = teamReportDao.getTeamReportDetailList(fromDate,toDate, memberId, projectId);
+		// TODO Auto-generated method stub
+		
+		return timeSheetList;
+	}
 	
 
 }

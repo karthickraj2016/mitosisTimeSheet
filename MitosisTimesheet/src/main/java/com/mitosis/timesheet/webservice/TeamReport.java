@@ -1,5 +1,6 @@
 package com.mitosis.timesheet.webservice;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
@@ -135,7 +136,7 @@ public class TeamReport {
 
 				List<TimeSheetModel> timesheetList = new ArrayList<TimeSheetModel>();
 
-				timesheetList = teamReportService.getTeamReportList(fromDate, toDate, memberId,projectId);
+				timesheetList = teamReportService.getTeamReportDetailList(fromDate, toDate, memberId,projectId);
 
 				timeSheetList.addAll(i,timesheetList);
 				i++;
@@ -169,13 +170,16 @@ public class TeamReport {
 
 			String path = this.getClass().getClassLoader().getResource("/").getPath();
 			String pdfPath = path.replaceAll("WEB-INF/classes/", "");
+			String pdfFilePath = pdfPath
+					+ "reports/teamDetailReport" + employeeId + ".pdf";
+			
+			new File(pdfFilePath).deleteOnExit();
 
-			JasperExportManager.exportReportToPdfFile(jasperPrint, pdfPath
-					+ "reports/teamDetailReport" + employeeId + ".pdf");
+			JasperExportManager.exportReportToPdfFile(jasperPrint, pdfFilePath);
 
 
 			jsonobject.put("pdfFileName","teamDetailReport"+employeeId+".pdf");
-			jsonobject.put("pdfPath",pdfPath+ "reports/teamDetailReport.jrxml" + employeeId + ".pdf");
+			jsonobject.put("pdfPath",pdfFilePath);
 
 
 			return jsonobject;
@@ -206,13 +210,15 @@ public class TeamReport {
 
 			String path = this.getClass().getClassLoader().getResource("/").getPath();
 			String pdfPath = path.replaceAll("WEB-INF/classes/", "");
+			String pdfFilePath =pdfPath
+					+ "reports/teamDetailReport" + employeeId + ".pdf";
+			new File(pdfFilePath).deleteOnExit();
 
-			JasperExportManager.exportReportToPdfFile(jasperPrint, pdfPath
-					+ "reports/teamDetailReport" + employeeId + ".pdf");
+			JasperExportManager.exportReportToPdfFile(jasperPrint,pdfFilePath);
 
 
 			jsonobject.put("pdfFileName","teamDetailReport"+employeeId+".pdf");
-			jsonobject.put("pdfPath",pdfPath+ "reports/teamDetailReport.jrxml" + employeeId + ".pdf");
+			jsonobject.put("pdfPath",pdfFilePath);
 
 
 			return jsonobject;
