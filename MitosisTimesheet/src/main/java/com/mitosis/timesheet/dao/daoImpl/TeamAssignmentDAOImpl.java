@@ -26,7 +26,7 @@ public class TeamAssignmentDAOImpl extends BaseService implements TeamAssignment
 			CriteriaQuery<TeamAssignmentModel> cq = qb.createQuery(TeamAssignmentModel.class);
 			Root<TeamAssignmentModel> root = cq.from(TeamAssignmentModel.class);
 			cq.select(root);
-			cq.orderBy(qb.desc(root.get("id")));
+			cq.orderBy(qb.asc(root.get("project").get("projectName")),qb.desc(root.get("role").get("level")));
 			teamlist = entityManager.createQuery(cq).getResultList();
 		}catch(Exception e){
 			e.printStackTrace();
@@ -45,9 +45,9 @@ public class TeamAssignmentDAOImpl extends BaseService implements TeamAssignment
 			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 			CriteriaQuery<TeamAssignmentModel> cq = qb.createQuery(TeamAssignmentModel.class);
 			Root<TeamAssignmentModel> root = cq.from(TeamAssignmentModel.class);
-			cq.where(qb.equal(root.get("project"),projectId));
+			cq.where(qb.equal(root.get("project").get("projectId"),projectId));
 			cq.select(root);
-			cq.orderBy(qb.desc(root.get("id")));
+			cq.orderBy(qb.asc(root.get("project").get("projectName")),qb.desc(root.get("role").get("level")));
 			teamlist = entityManager.createQuery(cq).getResultList();
 		}catch(Exception e){
 			e.printStackTrace();
@@ -169,7 +169,7 @@ public class TeamAssignmentDAOImpl extends BaseService implements TeamAssignment
 	public boolean validateAssignment(int projectId,int memberId){
 	
 		boolean flag=false;
-		TeamAssignmentModel teamAssignModel=null;
+		TeamAssignmentModel teamAssignModel=new TeamAssignmentModel();
 	
 		try{
 			begin();
@@ -177,8 +177,8 @@ public class TeamAssignmentDAOImpl extends BaseService implements TeamAssignment
 			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 			CriteriaQuery<TeamAssignmentModel> cq = qb.createQuery(TeamAssignmentModel.class);
 			Root<TeamAssignmentModel> root = cq.from(TeamAssignmentModel.class);
-			Predicate condition = qb.equal(root.get("project"), projectId);
-			Predicate condition2 = qb.equal(root.get("member"), memberId);
+			Predicate condition = qb.equal(root.get("project").get("projectId"), projectId);
+			Predicate condition2 = qb.equal(root.get("member").get("id"), memberId);
 			Predicate conditions = qb.and(condition, condition2);
 			cq.where(conditions);
 			cq.select(root);

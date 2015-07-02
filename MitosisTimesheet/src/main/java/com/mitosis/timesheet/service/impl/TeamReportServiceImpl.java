@@ -38,9 +38,9 @@ public class TeamReportServiceImpl implements TeamReportService {
 	}
 
 	@Override
-	public int getrole(int userId) {
+	public int getrole(int userId,int projectId) {
 		
-		int role = teamReportDao.getrole(userId);
+		int role = teamReportDao.getrole(userId,projectId);
 		// TODO Auto-generated method stub
 		return role;
 	}
@@ -83,5 +83,15 @@ List<TimeSheetModel> timeSheetList = new ArrayList<TimeSheetModel>();
 		List<SummaryReport> summaryList = teamReportDao.getSumHours(fromDate,toDate,memberId,projectId);
 		return summaryList;
 	}
+	
+	@Override
+	public int checkUserRights(int employeeId,int projectId){
+	
+ 		int level=teamReportDao.checkUserRights(employeeId, projectId);
+		
+ 		return level;
+	
+	}
+	
 
 }

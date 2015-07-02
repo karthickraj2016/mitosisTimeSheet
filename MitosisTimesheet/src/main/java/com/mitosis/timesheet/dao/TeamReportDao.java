@@ -15,7 +15,7 @@ public interface TeamReportDao {
 	
 	public List<TeamAssignmentModel> getTeamList(int projectId,int role);
 	
-	public int getrole(int userId);
+	public int getrole(int userId,int projectId);
 	
 	public List<TimeSheetModel> getTeamReportList(Date fromDate, Date toDate,int memberIds,int projectId);
 
@@ -27,5 +27,7 @@ public interface TeamReportDao {
 
 	public List<SummaryReport> getSumHours(Date fromDate, Date toDate,
 			int memberId, int projectId);
+
+	public int checkUserRights(int employeeId,int projectId);
 
 }

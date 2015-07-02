@@ -93,35 +93,35 @@ public class TeamReport {
 
 		HttpSession session= request.getSession(true);
 
-		if(session.getAttribute("userId")==null){
+ 		if(session.getAttribute("userId")==null){
 			return null;
 		}
 
 
-		Object userId = session.getAttribute("userId");
+ 		Object userId = session.getAttribute("userId");
 
-		int employeeId =(Integer) request.getSession().getAttribute("userId");
+ 		int employeeId =(Integer) request.getSession().getAttribute("userId");
 
-		int projectId= jsonObject.getInt("projectId");
+ 		int projectId= jsonObject.getInt("projectId");
 
-		String name = jsonObject.getString("name");
+ 		String name = jsonObject.getString("name");
 
-		List<TimeSheetModel> timeSheetDetailReport = new ArrayList<TimeSheetModel>();
+ 		List<TimeSheetModel> timeSheetDetailReport = new ArrayList<TimeSheetModel>();
 
 		DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
-		String frmdateInString = jsonObject.getString("fromdate");
-		Date fromDate = sdf.parse(frmdateInString);
+ 		String frmdateInString = jsonObject.getString("fromdate");
+ 		Date fromDate = sdf.parse(frmdateInString);
 
-		String todateInString = jsonObject.getString("todate");
+ 		String todateInString = jsonObject.getString("todate");
 
-		Date toDate = sdf.parse(todateInString);
+ 		Date toDate = sdf.parse(todateInString);
 
 		/*int userId =  (Integer) request.getSession().getAttribute("userId");*/
 
-		int role = teamReportService.getrole(employeeId);
+  		int role = teamReportService.getrole(employeeId,projectId);
 
-		if(role<4){
+ 		if(role<4){
 
 			List<TeamAssignmentModel> TeamList = new ArrayList<TeamAssignmentModel>();
 			List<TimeSheetModel> timeSheetList = new ArrayList<TimeSheetModel>();
@@ -266,7 +266,7 @@ public class TeamReport {
 
 		/*int userId =  (Integer) request.getSession().getAttribute("userId");*/
 
-		int role = teamReportService.getrole(employeeId);
+		int role = teamReportService.getrole(employeeId,projectId);
 
 		if(role<4){
 
@@ -373,12 +373,37 @@ public class TeamReport {
 
 
 		}
-
-
-
-
-
 	}
+		
+		@Path("/checkUserRights")
+		@POST
+		@Consumes(MediaType.APPLICATION_JSON)
+		@Produces(MediaType.APPLICATION_JSON)
+
+        public JSONObject checkUserRights(JSONObject jsonObject) throws JSONException{
+			
+			JSONObject jsonobject=new JSONObject();
+			
+			HttpSession session= request.getSession(true);
+			if(session.getAttribute("userId")==null){
+				return null;
+			}
+			Object userId = session.getAttribute("userId");
+
+			int employeeId =(Integer) request.getSession().getAttribute("userId");
+
+		    int projectId=jsonObject.getInt("projectId");
+		    
+		    int level=teamReportService.checkUserRights(employeeId,projectId);
+		
+		    jsonobject.put("level", level);
+		    
+		    return jsonobject;
+		}
+
+
+
+	
 
 	@GET
 	@Path("/logout")

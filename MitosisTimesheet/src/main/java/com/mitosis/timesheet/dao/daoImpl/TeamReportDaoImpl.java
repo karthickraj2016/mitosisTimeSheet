@@ -67,7 +67,7 @@ public class TeamReportDaoImpl extends BaseService implements TeamReportDao {
 	}
 
 	@Override
-	public int getrole(int userId) {
+	public int getrole(int userId,int projectId) {
 		
 		int role=0;
 		List<TeamAssignmentModel> rolelist = new ArrayList<TeamAssignmentModel>();		
@@ -78,7 +78,8 @@ public class TeamReportDaoImpl extends BaseService implements TeamReportDao {
 		      CriteriaQuery<TeamAssignmentModel> query = qb.createQuery(TeamAssignmentModel.class);
 		      Root<TeamAssignmentModel> root = query.from(TeamAssignmentModel.class);
 		      Predicate condition = qb.equal(root.get("member"), userId);
-		      Predicate conditions = qb.and(condition);
+		      Predicate condition1 = qb.equal(root.get("project").get("projectId"), projectId);
+		      Predicate conditions = qb.and(condition,condition1);
 		      query.where(conditions);
 		      query.select(root);
 		      rolelist =  entityManager.createQuery(query).getResultList();
@@ -212,5 +213,27 @@ public class TeamReportDaoImpl extends BaseService implements TeamReportDao {
 		return timeSheetList;
 	}
 
+	@Override
+	public int checkUserRights(int employeeId,int projectId){
+		
+		String levelstring;
+		int level=0;
+		try{
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<TeamAssignmentModel> cq = qb.createQuery(TeamAssignmentModel.class);
+			Root<TeamAssignmentModel> root = cq.from(TeamAssignmentModel.class);
+ 			cq.where(qb.equal(root.get("member").get("id"), employeeId),qb.equal(root.get("project").get("projectId"), projectId));
+ 			cq.select(root);
+ 			levelstring=entityManager.createQuery(cq).getSingleResult().getRole().getLevel();
+ 			level=Integer.parseInt(levelstring);
+ 		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+ 			close();
+		}
+ 		return level;
+	}
 	
 }

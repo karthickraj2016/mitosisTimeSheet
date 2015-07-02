@@ -47,7 +47,29 @@ angular.module('myApp.controllers')
 		
 	});
 	
+	$scope.checkUserRightsByProjectForDetails = function(){
+		
+		var menuJson=angular.toJson({"projectId":$scope.project.project.projectId})
+
+		$http({
+			url: 'rest/teamreport/checkUserRights',
+			method: 'POST',
+			data: menuJson,
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).success(function(result, status, headers) {
+	    
+			if(result.level>=2){
+				$scope.detailreport();
+			}else{
+				$(".alert-msg1").show().delay(1000).fadeOut(); 
+				$(".alert-danger").html("You have No Rights to View this Report");
+			}
+		
+		});
 	
+	}
 	
 	
 	$scope.detailreport = function(){
@@ -66,7 +88,8 @@ angular.module('myApp.controllers')
 			
 		if(result.pdfPath=="norecords"){
 			
-		alert("No records availiable");	
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("No records availiable");
 		return;
 			
 		}
@@ -85,12 +108,33 @@ angular.module('myApp.controllers')
 		}
 			
 		});
-		
-		
-		
-		
 	},
 	
+	
+
+	$scope.checkUserRightsByProjectForSummary = function(){
+		
+		var menuJson=angular.toJson({"projectId":$scope.project.project.projectId})
+
+		$http({
+			url: 'rest/teamreport/checkUserRights',
+			method: 'POST',
+			data: menuJson,
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).success(function(result, status, headers) {
+	    
+			if(result.level>=2){
+				$scope.summaryreport();
+			}else{
+				$(".alert-msg1").show().delay(1000).fadeOut(); 
+				$(".alert-danger").html("You have No Rights to View this Report");
+			}
+		
+		});
+	
+	}
 	
 	$scope.summaryreport = function(){
 		
@@ -108,11 +152,11 @@ angular.module('myApp.controllers')
 		}).success(function(result, status, headers) {
 			
 			if(result.pdfPath=="norecords"){
-				
-				alert("No records availiable");	
+				$(".alert-msg1").show().delay(1000).fadeOut(); 
+				$(".alert-danger").html("No records availiable");
 				return;
-					
-				}
+			
+			}
 			
 			else{
 			
