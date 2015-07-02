@@ -175,7 +175,7 @@ public class IndividualReport {
 		timeSheetSummaryReportList = individualReportService.getIndividualSummaryReportList(fromdate, toDate, employeeId);
 		
 		
-if(timeSheetSummaryReportList.size()==0){
+		if(timeSheetSummaryReportList.size()==0){
 			
 			
 			jsonObj.put("pdfPath","norecords");
