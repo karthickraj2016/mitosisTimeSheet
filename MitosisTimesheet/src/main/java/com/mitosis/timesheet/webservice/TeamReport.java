@@ -88,6 +88,8 @@ public class TeamReport {
 	public JSONObject detailReport(JSONObject jsonObject) throws JSONException, ParseException, JRException{
 
 		JSONObject jsonobject = new JSONObject();
+		
+		double totalhours=0.0;
 
 		HttpSession session= request.getSession(true);
 
@@ -134,11 +136,14 @@ public class TeamReport {
 				List<TimeSheetModel> timesheetList = new ArrayList<TimeSheetModel>();
 
 				timesheetList = teamReportService.getTeamDetailTimeSheetList(fromDate, toDate, memberId,projectId);
+				
+				totalhours = totalhours+teamReportService.getTotalHours(fromDate, toDate, employeeId,projectId);
 
 				timeSheetList.addAll(i,timesheetList);
 				i++;
 			}
-
+			
+			
 
 
 			if(timeSheetList.size()==0){
@@ -161,6 +166,7 @@ public class TeamReport {
 			parameters.put("fromDate", frmdateInString);
 			parameters.put("toDate", todateInString);
 			parameters.put("name",name);
+			parameters.put("totalhours",totalhours);
 
 			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(timeSheetList);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, ds);
