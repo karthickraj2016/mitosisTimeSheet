@@ -11,10 +11,8 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import com.mitosis.timesheet.dao.TeamReportDao;
-import com.mitosis.timesheet.model.ProjectModel;
 import com.mitosis.timesheet.model.TeamAssignmentModel;
 import com.mitosis.timesheet.model.TimeSheetModel;
-import com.mitosis.timesheet.model.UserDetailsModel;
 import com.mitosis.timesheet.pojo.SummaryReport;
 import com.mitosis.timesheet.util.BaseService;
 
@@ -130,13 +128,7 @@ public class TeamReportDaoImpl extends BaseService implements TeamReportDao {
 		return timeSheetDetailReport;
 	}
 
-	@Override
-	public List<TimeSheetModel> getteamReportIndividual(Date fromDate,
-			Date toDate, int employeeId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	@Override
 	public double getTotalHours(Date fromDate, Date toDate, int memberId,
 			int projectId) {
@@ -266,5 +258,129 @@ public class TeamReportDaoImpl extends BaseService implements TeamReportDao {
 		}
 		return timeSheetDetailReport;
 	}
+	
+	@Override
+	public List<TimeSheetModel> getAllProjectsDetails(Date fromDate, Date toDate){
+		
+
+		List<TimeSheetModel> timeSheetDetailReport = new ArrayList<TimeSheetModel>();
+		try{
+		begin();
+		entityManager.getEntityManagerFactory().getCache().evictAll();
+		CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<TimeSheetModel> cq = qb.createQuery(TimeSheetModel.class);
+		Root<TimeSheetModel> root = cq.from(TimeSheetModel.class);
+		Path<Date> fromDatePath =  root.get("date");
+		Predicate condition = qb.greaterThanOrEqualTo(fromDatePath, fromDate);
+		Predicate condition1 = qb.lessThanOrEqualTo(fromDatePath, toDate);
+		Predicate conditions = qb.and(condition, condition1);
+		cq.where(conditions);
+		cq.select(root);
+		cq.orderBy(qb.asc(root.get("date")),qb.asc(root.get("project").get("projectName")));
+		timeSheetDetailReport = entityManager.createQuery(cq).getResultList();
+		commit(); 
+	}catch(Exception e){
+		e.printStackTrace();
+	}finally{
+		close();
+	}
+	return timeSheetDetailReport;
+ }
+	
+	@Override
+	public List<TimeSheetModel> getAllProjectsSummary(Date fromDate, Date toDate){
+		
+
+		List<TimeSheetModel> timeSheetDetailReport = new ArrayList<TimeSheetModel>();
+		try{
+		begin();
+		entityManager.getEntityManagerFactory().getCache().evictAll();
+		CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<TimeSheetModel> cq = qb.createQuery(TimeSheetModel.class);
+		Root<TimeSheetModel> root = cq.from(TimeSheetModel.class);
+		Path<Date> fromDatePath =  root.get("date");
+		Predicate condition = qb.greaterThanOrEqualTo(fromDatePath, fromDate);
+		Predicate condition1 = qb.lessThanOrEqualTo(fromDatePath, toDate);
+		Predicate conditions = qb.and(condition, condition1);
+		cq.where(conditions);
+		cq.select(root);
+		cq.groupBy(root.get("date"));
+		timeSheetDetailReport = entityManager.createQuery(cq).getResultList();
+		commit(); 
+	}catch(Exception e){
+		e.printStackTrace();
+	}finally{
+		close();
+	}
+	return timeSheetDetailReport;
+ }
+	@Override
+	public List<SummaryReport> getAllUserSumHours(Date fromDate, Date toDate){
+		TimeSheetModel timesheetModel = new TimeSheetModel();
+		List<SummaryReport> timeSheetList = new ArrayList<SummaryReport>();
+		List<Double> hours = new ArrayList<Double>();
+		
+		
+		try{
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<Double> cq = qb.createQuery(Double.class);
+			Root<TimeSheetModel> root = cq.from(TimeSheetModel.class);
+			Path<Date> fromDatePath =  root.get("date");
+			/*Path<Integer> hourspath =root.get("hours");*/
+			Predicate condition = qb.greaterThanOrEqualTo(fromDatePath, fromDate);
+			Predicate condition1 = qb.lessThanOrEqualTo(fromDatePath, toDate);
+			Predicate conditions = qb.and(condition, condition1);
+			cq.where(conditions);
+			cq.select(qb.sum(root.<Double>get("hours")));
+			cq.groupBy(root.get("date"),root.get("employee_id"));
+			hours=entityManager.createQuery(cq).getResultList();
+			for(int i =0;i<hours.size();i++){
+			
+				SummaryReport summaryReport = new SummaryReport();
+				
+				summaryReport.setHourslist(hours.get(i));
+
+				timeSheetList.add(summaryReport);
+								
+			}
+
+			commit(); 
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close();
+		}
+		return timeSheetList;
+	}
+	@Override
+	public double getAllUsersTotalHours(Date fromDate, Date toDate) {
+		
+		double totalhours=0.0;
+		
+		try{
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+		    CriteriaQuery<Number> cq = qb.createQuery(Number.class);
+			Root<TimeSheetModel> root = cq.from(TimeSheetModel.class);
+			Path<Date> fromDatePath =  root.get("date");
+			Predicate condition = qb.greaterThanOrEqualTo(fromDatePath, fromDate);
+			Predicate condition1 = qb.lessThanOrEqualTo(fromDatePath, toDate);
+			Predicate conditions = qb.and(condition, condition1);
+			cq.where(conditions);
+			cq.select(qb.sum(root.<Integer>get("hours")));
+			totalhours=entityManager.createQuery(cq).getSingleResult().doubleValue();
+			System.out.println(totalhours);
+			commit(); 
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close();
+		}
+		return totalhours;
+	}
+
 	
 }

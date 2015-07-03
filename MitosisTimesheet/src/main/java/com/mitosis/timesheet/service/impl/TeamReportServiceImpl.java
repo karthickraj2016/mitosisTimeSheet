@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.mitosis.timesheet.dao.TeamReportDao;
 import com.mitosis.timesheet.dao.daoImpl.TeamReportDaoImpl;
-import com.mitosis.timesheet.model.ProjectModel;
 import com.mitosis.timesheet.model.TeamAssignmentModel;
 import com.mitosis.timesheet.model.TimeSheetModel;
 import com.mitosis.timesheet.pojo.SummaryReport;
@@ -57,18 +56,7 @@ public class TeamReportServiceImpl implements TeamReportService {
 		return timeSheetList;
 	}
 
-	@Override
-	public List<TimeSheetModel> getteamReportIndividual(Date fromDate,
-			Date toDate, int employeeId) {
-List<TimeSheetModel> timeSheetList = new ArrayList<TimeSheetModel>();
-		
-		timeSheetList = teamReportDao.getteamReportIndividual(fromDate,toDate, employeeId);
-		// TODO Auto-generated method stub
-		
-		return timeSheetList;
 	
-	}
-
 	@Override
 	public double getTotalHours(Date fromDate, Date toDate, int memberId,
 			int projectId) {
@@ -104,5 +92,40 @@ List<TimeSheetModel> timeSheetList = new ArrayList<TimeSheetModel>();
 		return timeSheetList;
 	}
 	
+	@Override
+	public List<TimeSheetModel> getAllProjectsDetails(Date fromDate,
+			Date toDate) {
+	List<TimeSheetModel> timeSheetList = new ArrayList<TimeSheetModel>();
+		
+		timeSheetList = teamReportDao.getAllProjectsDetails(fromDate,toDate);
+		// TODO Auto-generated method stub
+		
+		return timeSheetList;
+	}
+	
+	@Override
+	public List<TimeSheetModel> getAllProjectsSummary(Date fromDate,
+			Date toDate) {
+	List<TimeSheetModel> timeSheetList = new ArrayList<TimeSheetModel>();
+		
+		timeSheetList = teamReportDao.getAllProjectsSummary(fromDate,toDate);
+		// TODO Auto-generated method stub
+		
+		return timeSheetList;
+	}
+	
+	@Override
+	public List<SummaryReport> getAllUsersSumHours(Date fromDate, Date toDate) {
+		List<SummaryReport> summaryList = teamReportDao.getAllUserSumHours(fromDate,toDate);
+		return summaryList;
+	}
 
+	@Override
+	public double getAllUsersTotalHours(Date fromDate, Date toDate) {
+		double hours = teamReportDao.getAllUsersTotalHours(fromDate,toDate);
+		return hours;
+	}
+
+
+	
 }

@@ -105,6 +105,47 @@ angular.module('myApp.controllers')
 	
 	
 	$scope.detailreport = function(){
+		
+		var projectName=$scope.project.project.projectName;
+		
+		if(projectName=="All Projects"){
+			
+			var menuJson = angular.toJson({"fromdate":$scope.timesheet.fromdate,"todate":$scope.timesheet.todate,"name":$rootScope.name,"projectId":$scope.project.project.projectId});
+			
+			
+			$http({
+				url: 'rest/teamreport/getAllProjectsDetails',
+				method: 'POST',
+				data: menuJson,
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).success(function(result, status, headers) {
+				
+			if(result.pdfPath=="norecords"){
+				
+				$(".alert-msg1").show().delay(1000).fadeOut(); 
+				$(".alert-danger").html("No records availiable");
+			return;
+				
+			}
+			else{	
+				var a = document.createElement('a');
+				 a.href = "/MitosisTimesheet/reports/"+result.pdfFileName;
+				console.log(a);
+				//a.download = "teamDetailReport.pdf";
+				a.target="_blank"; 
+				document.body.appendChild(a);
+			        a.click();
+			        document.body.removeChild(a);
+			    $scope.filepath = a.href;
+			        console.log($scope.filepath);
+			        //$scope.deletepdfFile(result.pdfPath);
+			}
+				
+			});
+			
+		}else{
 	
 		var menuJson = angular.toJson({"fromdate":$scope.timesheet.fromdate,"todate":$scope.timesheet.todate,"name":$rootScope.name,"projectId":$scope.project.project.projectId});
 		
@@ -140,7 +181,8 @@ angular.module('myApp.controllers')
 		}
 			
 		});
-	},
+	}
+},
 	
 	
 
@@ -169,6 +211,47 @@ angular.module('myApp.controllers')
 	}
 	
 	$scope.summaryreport = function(){
+		
+		var projectName=$scope.project.project.projectName;
+		
+		if(projectName=="All Projects"){
+			
+			var menuJson = angular.toJson({"fromdate":$scope.timesheet.fromdate,"todate":$scope.timesheet.todate,"name":$rootScope.name,"projectId":$scope.project.project.projectId});
+			
+			$http({
+				url: 'rest/teamreport/getAllProjectsSummary',
+				method: 'POST',
+				data: menuJson,
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).success(function(result, status, headers) {
+				
+				if(result.pdfPath=="norecords"){
+					$(".alert-msg1").show().delay(1000).fadeOut(); 
+					$(".alert-danger").html("No records availiable");
+					return;
+				
+				}
+				
+				else{
+				
+				var a = document.createElement('a');
+				 a.href = "/MitosisTimesheet/reports/"+result.pdfFileName;
+				console.log(a);
+				//a.download = "teamSummaryReport.pdf";
+				a.target="_blank";
+				 document.body.appendChild(a);
+			        a.click();
+			        document.body.removeChild(a);
+			    $scope.filepath = a.href;
+			        console.log($scope.filepath);
+			        //$scope.deletepdfFile(result.pdfPath);
+				}
+			});
+			
+			
+		}else{
 		
 		console.log($scope.project);
 		
@@ -205,8 +288,8 @@ angular.module('myApp.controllers')
 		        //$scope.deletepdfFile(result.pdfPath);
 			}
 		});
-		
 	}
+}
 	
 	$scope.deletepdfFile= function(pdfPath){
 		

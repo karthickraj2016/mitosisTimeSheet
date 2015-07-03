@@ -5,18 +5,13 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.persistence.criteria.Selection;
-
 import com.mitosis.timesheet.dao.IndividualReportDao;
 import com.mitosis.timesheet.model.TimeSheetModel;
-import com.mitosis.timesheet.model.UserDetailsModel;
 import com.mitosis.timesheet.pojo.SummaryReport;
 import com.mitosis.timesheet.util.BaseService;
 

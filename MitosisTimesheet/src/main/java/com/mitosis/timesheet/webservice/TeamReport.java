@@ -7,7 +7,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -33,11 +32,9 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import com.mitosis.timesheet.model.ProjectModel;
 import com.mitosis.timesheet.model.TeamAssignmentModel;
 import com.mitosis.timesheet.model.TimeSheetModel;
 import com.mitosis.timesheet.pojo.SummaryReport;
@@ -406,7 +403,159 @@ public class TeamReport {
 		    
 		    return jsonobject;
 		}
+	
+		
+		@Path("/getAllProjectsDetails")
+		@POST
+		@Consumes(MediaType.APPLICATION_JSON)
+		@Produces(MediaType.APPLICATION_JSON)
+		
+		public JSONObject getAllProjectsDetails(JSONObject jsonObject) throws JSONException, ParseException, JRException{
+			
+            JSONObject jsonobject=new JSONObject();
+            
+            double totalhours =0.0;
+			
+			HttpSession session= request.getSession(true);
+			if(session.getAttribute("userId")==null){
+				return null;
+			}
+			Object userId = session.getAttribute("userId");
 
+			DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+	 		String frmdateInString = jsonObject.getString("fromdate");
+	 		Date fromDate = sdf.parse(frmdateInString);
+
+	 		String todateInString = jsonObject.getString("todate");
+
+	 		Date toDate = sdf.parse(todateInString);
+	 		
+	 		String name = jsonObject.getString("name");
+	 		
+	 		List<TimeSheetModel> timeSheetModel=new ArrayList<TimeSheetModel>();
+	 		
+	 		timeSheetModel=teamReportService.getAllProjectsDetails(fromDate,toDate);
+	 		
+	 		JasperDesign jasperDesign = JRXmlLoader.load(request.getSession().getServletContext()
+					.getRealPath("/")
+					+ "reports/teamDetailReport.jrxml");
+
+			JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+			// JREmptyDataSource jrEmptyDatasource = new JREmptyDataSource();
+			Map<String, Object> parameters = new HashMap<String, Object>();
+
+			parameters.put("fromDate", frmdateInString);
+			parameters.put("toDate", todateInString);
+			parameters.put("name",name);
+
+			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(timeSheetModel);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, ds);
+
+			String path = this.getClass().getClassLoader().getResource("/").getPath();
+			String pdfPath = path.replaceAll("WEB-INF/classes/", "");
+			String pdfFilePath =pdfPath
+					+ "reports/teamDetailReport" + userId + ".pdf";
+			new File(pdfFilePath).deleteOnExit();
+
+			JasperExportManager.exportReportToPdfFile(jasperPrint,pdfFilePath);
+
+
+			jsonobject.put("pdfFileName","teamDetailReport"+userId+".pdf");
+			jsonobject.put("pdfPath",pdfFilePath);
+
+
+			return jsonobject;
+
+
+		}
+
+		@Path("/getAllProjectsSummary")
+		@POST
+		@Consumes(MediaType.APPLICATION_JSON)
+		@Produces(MediaType.APPLICATION_JSON)
+		
+		public JSONObject getAllProjectsSummary(JSONObject jsonObject) throws JSONException, ParseException, JRException{
+			
+            JSONObject jsonobject=new JSONObject();
+            
+            double totalhours=0.0;
+			
+			HttpSession session= request.getSession(true);
+			if(session.getAttribute("userId")==null){
+				return null;
+			}
+			Object userId = session.getAttribute("userId");
+
+			DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+	 		String frmdateInString = jsonObject.getString("fromdate");
+	 		Date fromDate = sdf.parse(frmdateInString);
+
+	 		String todateInString = jsonObject.getString("todate");
+
+	 		Date toDate = sdf.parse(todateInString);
+	 		
+	 		String name = jsonObject.getString("name");
+	 		
+	 		List<TimeSheetModel> timeSheetModel=new ArrayList<TimeSheetModel>();
+	 			 			 		
+	 		List<SummaryReport> hourslist = new ArrayList<SummaryReport>();
+	 		
+	 		List<TimeSheetModel> timeSheetSummedList=new ArrayList<TimeSheetModel>();
+	 		
+	 
+
+				hourslist = teamReportService.getAllUsersSumHours(fromDate, toDate);
+				timeSheetModel=teamReportService.getAllProjectsSummary(fromDate,toDate);
+				for(int j=0;j<hourslist.size();j++){
+					timeSheetModel.get(j).setHours(hourslist.get(j).hourslist);
+				}
+				timeSheetSummedList.addAll(timeSheetModel);
+				
+			   totalhours =teamReportService.getAllUsersTotalHours(fromDate, toDate);
+
+				
+           if(timeSheetSummedList.size()==0){
+
+				jsonobject.put("pdfPath","norecords");
+
+				return jsonobject;
+
+
+			}
+
+	 		
+	 		JasperDesign jasperDesign = JRXmlLoader.load(request.getSession().getServletContext()
+					.getRealPath("/")
+					+ "reports/teamSummaryReport.jrxml");
+
+			JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+			// JREmptyDataSource jrEmptyDatasource = new JREmptyDataSource();
+			Map<String, Object> parameters = new HashMap<String, Object>();
+
+			parameters.put("fromDate", frmdateInString);
+			parameters.put("toDate", todateInString);
+			parameters.put("name",name);
+
+			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(timeSheetModel);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, ds);
+
+			String path = this.getClass().getClassLoader().getResource("/").getPath();
+			String pdfPath = path.replaceAll("WEB-INF/classes/", "");
+
+			JasperExportManager.exportReportToPdfFile(jasperPrint, pdfPath
+					+ "reports/teamSummaryReport" + userId + ".pdf");
+
+
+			jsonobject.put("pdfFileName","teamSummaryReport"+userId+".pdf");
+			jsonobject.put("pdfPath",pdfPath+ "reports/teamSummaryReport.jrxml" + userId + ".pdf");
+
+
+			return jsonobject;
+
+
+		}
 
 
 	
