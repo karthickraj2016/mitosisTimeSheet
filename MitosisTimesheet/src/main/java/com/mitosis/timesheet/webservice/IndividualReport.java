@@ -70,6 +70,8 @@ public class IndividualReport {
 		Object userId = session.getAttribute("userId");
 		
 		int employeeId =(Integer) request.getSession().getAttribute("userId");
+		
+		double totalhours;
 				
 		String name = jsonObject.getString("name");
 		
@@ -97,6 +99,8 @@ public class IndividualReport {
 		}
 		
 		
+		totalhours = individualReportService.getTotalHours(fromDate, toDate, employeeId);
+		
 		JasperDesign jasperDesign = JRXmlLoader.load(request.getSession().getServletContext()
 		          .getRealPath("/")
 		          + "reports/individualDetailReport.jrxml");
@@ -108,6 +112,7 @@ public class IndividualReport {
 		      parameters.put("fromDate", frmdateInString);
 		      parameters.put("toDate", todateInString);
 		      parameters.put("name",name);
+		      parameters.put("totalhours", totalhours);
 		      
 		      JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(timeSheetDetailReport);
 		      JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, ds);
@@ -161,21 +166,16 @@ public class IndividualReport {
 
 		
 		String frmdateInString = jsonObject.getString("fromdate");
-		Date frmDate = sdf.parse(frmdateInString); 
+		Date fromDate = sdf.parse(frmdateInString); 
 		
 		String todateInString = jsonObject.getString("todate");
 		Date toDate = sdf.parse(todateInString); 
-		
-		
-		Date fromdate = frmDate;
-		
-		Date todate = toDate;
 
 		
 		double totalhours;
 		
 
-		timeSheetSummaryReportList = individualReportService.getIndividualSummaryReportList(fromdate, toDate, employeeId);
+		timeSheetSummaryReportList = individualReportService.getIndividualSummaryReportList(fromDate, toDate, employeeId);
 		
 		
 		if(timeSheetSummaryReportList.size()==0){
@@ -189,7 +189,7 @@ public class IndividualReport {
 		
 		if(timeSheetSummaryReportList!=null){
 			
-			timeSheetHoursList = individualReportService.getIndividualSummaryReportHours(fromdate, toDate, employeeId);
+			timeSheetHoursList = individualReportService.getIndividualSummaryReportHours(fromDate, toDate, employeeId);
 			System.out.println(timeSheetHoursList);
 			int i =0;
 			for(SummaryReport list : timeSheetHoursList){
@@ -208,7 +208,7 @@ public class IndividualReport {
 			
 		}
 		
-		totalhours = individualReportService.getTotalHours(fromdate, toDate, employeeId);
+		totalhours = individualReportService.getTotalHours(fromDate, toDate, employeeId);
 
 		JasperDesign jasperDesign = JRXmlLoader.load(request.getSession().getServletContext()
 		          .getRealPath("/")
