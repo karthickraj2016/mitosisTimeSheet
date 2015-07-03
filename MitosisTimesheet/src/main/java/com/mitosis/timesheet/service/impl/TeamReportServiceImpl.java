@@ -45,12 +45,12 @@ public class TeamReportServiceImpl implements TeamReportService {
 	}
 
 	@Override
-	public List<TimeSheetModel> getTeamReportList(Date fromDate, Date toDate,
+	public List<TimeSheetModel> getTeamSummaryTimeSheetList(Date fromDate, Date toDate,
 			int employeeId, int projectId) {
 		
 		List<TimeSheetModel> timeSheetList = new ArrayList<TimeSheetModel>();
 		
-		timeSheetList = teamReportDao.getTeamReportList(fromDate,toDate, employeeId, projectId);
+		timeSheetList = teamReportDao.getTeamSummaryTimeSheetList(fromDate,toDate, employeeId, projectId);
 		// TODO Auto-generated method stub
 		
 		return timeSheetList;
@@ -82,11 +82,11 @@ public class TeamReportServiceImpl implements TeamReportService {
 	}
 
 	@Override
-	public List<TimeSheetModel> getTeamReportDetailList(Date fromDate,
+	public List<TimeSheetModel> getTeamDetailTimeSheetList(Date fromDate,
 			Date toDate, int memberId, int projectId) {
 	List<TimeSheetModel> timeSheetList = new ArrayList<TimeSheetModel>();
 		
-		timeSheetList = teamReportDao.getTeamReportDetailList(fromDate,toDate, memberId, projectId);
+		timeSheetList = teamReportDao.getTeamDetailTimeSheetList(fromDate,toDate, memberId, projectId);
 		// TODO Auto-generated method stub
 		
 		return timeSheetList;

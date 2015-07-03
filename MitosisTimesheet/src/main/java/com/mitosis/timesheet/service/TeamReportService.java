@@ -15,7 +15,7 @@ public interface TeamReportService {
 	
 	public int getrole(int userId,int projectId);
 
-	public List<TimeSheetModel> getTeamReportList(Date fromDate, Date toDate,int employeeId,int projectId);
+	public List<TimeSheetModel> getTeamSummaryTimeSheetList(Date fromDate, Date toDate,int employeeId,int projectId);
 
 	
 	public double getTotalHours(Date fromDate, Date toDate, int memberId,
@@ -26,7 +26,7 @@ public interface TeamReportService {
 
     public int checkUserRights(int employeeId,int projectId);
 
-	public List<TimeSheetModel> getTeamReportDetailList(Date fromDate,
+	public List<TimeSheetModel> getTeamDetailTimeSheetList(Date fromDate,
 			Date toDate, int memberId, int projectId);
 
 	public List<TimeSheetModel> getAllProjectsDetails(Date fromDate, Date toDate);

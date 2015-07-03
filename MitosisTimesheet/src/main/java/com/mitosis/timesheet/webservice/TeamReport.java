@@ -133,7 +133,7 @@ public class TeamReport {
 
 				List<TimeSheetModel> timesheetList = new ArrayList<TimeSheetModel>();
 
-				timesheetList = teamReportService.getTeamReportDetailList(fromDate, toDate, memberId,projectId);
+				timesheetList = teamReportService.getTeamDetailTimeSheetList(fromDate, toDate, memberId,projectId);
 
 				timeSheetList.addAll(i,timesheetList);
 				i++;
@@ -187,45 +187,12 @@ public class TeamReport {
 		}
 
 		else{
-
-			timeSheetDetailReport = individualReportService.getIndividualReport(fromDate, toDate, employeeId);
-
-			JasperDesign jasperDesign = JRXmlLoader.load(request.getSession().getServletContext()
-					.getRealPath("/")
-					+ "reports/teamDetailReport.jrxml");
-
-			JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
-			// JREmptyDataSource jrEmptyDatasource = new JREmptyDataSource();
-			Map<String, Object> parameters = new HashMap<String, Object>();
-
-			parameters.put("fromDate", frmdateInString);
-			parameters.put("toDate", todateInString);
-			parameters.put("name",name);
-
-			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(timeSheetDetailReport);
-			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, ds);
-
-			String path = this.getClass().getClassLoader().getResource("/").getPath();
-			String pdfPath = path.replaceAll("WEB-INF/classes/", "");
-			String pdfFilePath =pdfPath
-					+ "reports/teamDetailReport" + employeeId + ".pdf";
-			new File(pdfFilePath).deleteOnExit();
-
-			JasperExportManager.exportReportToPdfFile(jasperPrint,pdfFilePath);
-
-
-			jsonobject.put("pdfFileName","teamDetailReport"+employeeId+".pdf");
-			jsonobject.put("pdfPath",pdfFilePath);
-
-
+			
 			return jsonobject;
 
 
 
 		}
-
-
-
 
 
 	}
@@ -284,7 +251,7 @@ public class TeamReport {
 
 				int memberId= teamList.getMember().getId();
 				hourslist = teamReportService.getSumHours(fromDate, toDate, memberId,projectId);
-				timeSheetList=teamReportService.getTeamReportList(fromDate, toDate, memberId,projectId);
+				timeSheetList=teamReportService.getTeamSummaryTimeSheetList(fromDate, toDate, memberId,projectId);
 				for(int j=0;j<hourslist.size();j++){
 					timeSheetList.get(j).setHours(hourslist.get(j).hourslist);
 				}
@@ -340,35 +307,6 @@ public class TeamReport {
 		}
 
 		else{
-
-			timeSheetDetailReport = individualReportService.getIndividualReport(fromDate, toDate, employeeId);
-
-			totalhours = individualReportService.getTotalHours(fromDate, toDate, employeeId);
-
-			JasperDesign jasperDesign = JRXmlLoader.load(request.getSession().getServletContext()
-					.getRealPath("/")
-					+ "reports/teamSummaryReport.jrxml");
-
-			JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
-			// JREmptyDataSource jrEmptyDatasource = new JREmptyDataSource();
-			Map<String, Object> parameters = new HashMap<String, Object>();
-
-			parameters.put("fromDate", frmdateInString);
-			parameters.put("toDate", todateInString);
-			parameters.put("name",name);
-
-			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(timeSheetDetailReport);
-			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, ds);
-
-			String path = this.getClass().getClassLoader().getResource("/").getPath();
-			String pdfPath = path.replaceAll("WEB-INF/classes/", "");
-
-			JasperExportManager.exportReportToPdfFile(jasperPrint, pdfPath
-					+ "reports/teamSummaryReport" + employeeId + ".pdf");
-
-
-			jsonobject.put("pdfFileName","teamSummaryReport"+employeeId+".pdf");
-			jsonobject.put("pdfPath",pdfPath+ "reports/teamSummaryReport.jrxml" + employeeId + ".pdf");
 
 
 			return jsonobject;
