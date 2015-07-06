@@ -14,8 +14,15 @@ public class TimeSheetVo {
 	private String description;
 	private String taskStatus;
 	private String status;
+	private double sumhours;
 	
 
+	public double getSumhours() {
+		return sumhours;
+	}
+	public void setSumhours(double sumhours) {
+		this.sumhours = sumhours;
+	}
 	public Integer getId() {
 		return id;
 	}

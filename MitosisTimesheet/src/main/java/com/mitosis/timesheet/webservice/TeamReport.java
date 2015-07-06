@@ -32,12 +32,14 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import com.mitosis.timesheet.model.TeamAssignmentModel;
 import com.mitosis.timesheet.model.TimeSheetModel;
 import com.mitosis.timesheet.pojo.SummaryReport;
+import com.mitosis.timesheet.pojo.TimeSheetVo;
 import com.mitosis.timesheet.service.IndividualReportService;
 import com.mitosis.timesheet.service.TeamReportService;
 import com.mitosis.timesheet.service.impl.IndividualReportServiceImpl;
@@ -424,11 +426,13 @@ public class TeamReport {
 		@Consumes(MediaType.APPLICATION_JSON)
 		@Produces(MediaType.APPLICATION_JSON)
 		
-		public JSONObject getAllProjectsSummary(JSONObject jsonObject) throws JSONException, ParseException, JRException{
+		public JSONObject getAllProjectsSummary(JSONObject jsonObject) throws JSONException, ParseException, JRException, IllegalAccessException, InvocationTargetException{
 			
             JSONObject jsonobject=new JSONObject();
             
             double totalhours=0.0;
+            
+            double sumhours = 0.0;
 			
 			HttpSession session= request.getSession(true);
 			if(session.getAttribute("userId")==null){
@@ -452,15 +456,30 @@ public class TeamReport {
 	 		List<SummaryReport> hourslist = new ArrayList<SummaryReport>();
 	 		
 	 		List<TimeSheetModel> timeSheetSummedList=new ArrayList<TimeSheetModel>();
+	 		List<TimeSheetVo> timeSheetVo = new ArrayList<TimeSheetVo>();
+	 		
+	 		TimeSheetVo timesheetVo = new TimeSheetVo();
 	 		
 	 
 
 				hourslist = teamReportService.getAllUsersSumHours(fromDate, toDate);
 				timeSheetModel=teamReportService.getAllProjectsSummary(fromDate,toDate);
-				for(int j=0;j<hourslist.size();j++){
+				
+				int employeeId;
+				int projectId;
+				for(int j=0;j<hourslist.size();j++){		
 					timeSheetModel.get(j).setHours(hourslist.get(j).hourslist);
+					employeeId = timeSheetModel.get(j).getUserDetails().getId();
+					projectId = timeSheetModel.get(j).getProject().getProjectId();
+					sumhours =teamReportService.getTotalHours(fromDate, toDate,employeeId,projectId);
+					timesheetVo.setSumhours(sumhours);
+					timeSheetVo.add(timesheetVo);
+					
 				}
 				timeSheetSummedList.addAll(timeSheetModel);
+				BeanUtils.copyProperties(timeSheetVo, timeSheetSummedList);
+				
+				System.out.println(timeSheetVo);
 				
 			   totalhours =teamReportService.getAllUsersTotalHours(fromDate, toDate);
 
@@ -488,7 +507,7 @@ public class TeamReport {
 			parameters.put("name",name);
 			parameters.put("totalhours",totalhours);
 
-			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(timeSheetModel);
+			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(timeSheetVo);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, ds);
 
 			String path = this.getClass().getClassLoader().getResource("/").getPath();
