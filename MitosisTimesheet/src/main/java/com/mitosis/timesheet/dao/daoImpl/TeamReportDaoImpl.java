@@ -117,7 +117,7 @@ public class TeamReportDaoImpl extends BaseService implements TeamReportDao {
 			Predicate conditions = qb.and(condition, condition2, condition3,condition4);
 			cq.where(conditions);
 			cq.select(root);
-			cq.groupBy(root.get("date"),root.get("userDetails"));
+			cq.groupBy(root.get("date"),root.get("project").get("projectName"),root.get("userDetails").get("name"));
 			timeSheetDetailReport = entityManager.createQuery(cq).getResultList();
 			commit(); 
 		}catch(Exception e){
@@ -247,7 +247,7 @@ public class TeamReportDaoImpl extends BaseService implements TeamReportDao {
 			Predicate conditions = qb.and(condition, condition2, condition3,condition4);
 			cq.where(conditions);
 			cq.select(root);
-			cq.orderBy(qb.asc(root.get("date")),qb.asc(root.get("userDetails").get("name")));
+			cq.orderBy(qb.asc(root.get("date")),qb.asc(root.get("userDetails").get("name")),qb.asc(root.get("project").get("projectId")));
 			timeSheetDetailReport = entityManager.createQuery(cq).getResultList();
 			commit(); 
 		}catch(Exception e){
@@ -303,7 +303,8 @@ public class TeamReportDaoImpl extends BaseService implements TeamReportDao {
 		Predicate conditions = qb.and(condition, condition1);
 		cq.where(conditions);
 		cq.select(root);
-		cq.groupBy(root.get("date"),root.get("userDetails"));
+		cq.groupBy(root.get("project").get("projectId"),root.get("date"),root.get("userDetails").get("id"));
+		cq.orderBy(qb.asc(root.get("project").get("projectId")));
 		timeSheetDetailReport = entityManager.createQuery(cq).getResultList();
 		commit(); 
 	}catch(Exception e){
