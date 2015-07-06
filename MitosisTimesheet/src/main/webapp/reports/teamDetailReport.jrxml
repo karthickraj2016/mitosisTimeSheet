@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report3" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="228"/>
 	<parameter name="fromDate" class="java.lang.String"/>
 	<parameter name="toDate" class="java.lang.String"/>
 	<parameter name="name" class="java.lang.String"/>
@@ -160,7 +160,7 @@
 	<summary>
 		<band height="54" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="10" width="554" height="34"/>
+				<reportElement x="1" y="10" width="554" height="34"/>
 			</rectangle>
 			<line>
 				<reportElement x="183" y="10" width="1" height="34"/>

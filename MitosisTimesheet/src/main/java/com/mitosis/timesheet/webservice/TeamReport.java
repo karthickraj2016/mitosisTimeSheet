@@ -381,6 +381,10 @@ public class TeamReport {
 	 		
 	 		timeSheetModel=teamReportService.getAllProjectsDetails(fromDate,toDate);
 	 		
+	 		totalhours = teamReportService.getAllUsersTotalHours(fromDate, toDate);
+	 		
+	 		
+	 		
 	 		JasperDesign jasperDesign = JRXmlLoader.load(request.getSession().getServletContext()
 					.getRealPath("/")
 					+ "reports/teamDetailReport.jrxml");
@@ -392,6 +396,7 @@ public class TeamReport {
 			parameters.put("fromDate", frmdateInString);
 			parameters.put("toDate", todateInString);
 			parameters.put("name",name);
+			parameters.put("totalhours",totalhours);
 
 			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(timeSheetModel);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, ds);
@@ -481,6 +486,7 @@ public class TeamReport {
 			parameters.put("fromDate", frmdateInString);
 			parameters.put("toDate", todateInString);
 			parameters.put("name",name);
+			parameters.put("totalhours",totalhours);
 
 			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(timeSheetModel);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, ds);

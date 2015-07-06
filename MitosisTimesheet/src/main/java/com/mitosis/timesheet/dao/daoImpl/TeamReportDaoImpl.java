@@ -117,7 +117,7 @@ public class TeamReportDaoImpl extends BaseService implements TeamReportDao {
 			Predicate conditions = qb.and(condition, condition2, condition3,condition4);
 			cq.where(conditions);
 			cq.select(root);
-			cq.groupBy(root.get("date"));
+			cq.groupBy(root.get("date"),root.get("userDetails"));
 			timeSheetDetailReport = entityManager.createQuery(cq).getResultList();
 			commit(); 
 		}catch(Exception e){
@@ -303,7 +303,7 @@ public class TeamReportDaoImpl extends BaseService implements TeamReportDao {
 		Predicate conditions = qb.and(condition, condition1);
 		cq.where(conditions);
 		cq.select(root);
-		cq.groupBy(root.get("date"));
+		cq.groupBy(root.get("date"),root.get("userDetails"));
 		timeSheetDetailReport = entityManager.createQuery(cq).getResultList();
 		commit(); 
 	}catch(Exception e){
@@ -333,7 +333,7 @@ public class TeamReportDaoImpl extends BaseService implements TeamReportDao {
 			Predicate conditions = qb.and(condition, condition1);
 			cq.where(conditions);
 			cq.select(qb.sum(root.<Double>get("hours")));
-			cq.groupBy(root.get("date"),root.get("employee_id"));
+			cq.groupBy(root.get("date"),root.get("userDetails").get("name"));
 			hours=entityManager.createQuery(cq).getResultList();
 			for(int i =0;i<hours.size();i++){
 			
