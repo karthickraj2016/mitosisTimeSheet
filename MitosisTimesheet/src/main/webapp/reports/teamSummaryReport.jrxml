@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" pageWidth="555" pageHeight="953" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="4"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="name" class="java.lang.String"/>
 	<parameter name="fromDate" class="java.lang.String"/>
@@ -13,18 +13,18 @@
 	<field name="date" class="java.util.Date"/>
 	<field name="hours" class="java.lang.Double"/>
 	<field name="userDetails.name" class="java.lang.String"/>
-	<field name="project.projectName" class="java.lang.String"/>
-	<field name="sumhours" class="java.lang.Double"/>
-	<sortField name="project.projectName"/>
+	<field name="project.projectName" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="sumhours" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{hours}]]></variableExpression>
+	</variable>
+	<variable name="hours" class="java.lang.Double" calculation="Sum"/>
+	<variable name="projecttotal" class="java.lang.Double" resetType="Group" resetGroup="projectname" calculation="Sum"/>
 	<group name="projectname">
 		<groupExpression><![CDATA[$F{project.projectName}]]></groupExpression>
 		<groupHeader>
 			<band height="70">
-				<textField>
-					<reportElement x="84" y="15" width="250" height="20"/>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{project.projectName}]]></textFieldExpression>
-				</textField>
 				<staticText>
 					<reportElement x="13" y="14" width="71" height="20"/>
 					<textElement/>
@@ -54,14 +54,19 @@
 				<rectangle>
 					<reportElement mode="Transparent" x="15" y="38" width="522" height="32"/>
 				</rectangle>
+				<textField>
+					<reportElement x="84" y="14" width="208" height="20"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{project.projectName}]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="45" splitType="Stretch">
+			<band height="47" splitType="Stretch">
 				<textField>
-					<reportElement x="395" y="11" width="100" height="20"/>
-					<textElement/>
-					<textFieldExpression class="java.lang.Double"><![CDATA[$F{sumhours}]]></textFieldExpression>
+					<reportElement x="395" y="12" width="103" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression class="java.lang.Double"><![CDATA[$V{projecttotal}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -99,7 +104,7 @@
 		<band height="1"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="5" splitType="Stretch"/>
+		<band height="1" splitType="Stretch"/>
 	</columnHeader>
 	<detail>
 		<band height="28" splitType="Stretch">
@@ -114,17 +119,17 @@
 				<textElement textAlignment="Center"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[new SimpleDateFormat("dd-MM-yyyy").format($F{date})]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="354" y="6" width="175" height="18"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.Double"><![CDATA[$F{hours}]]></textFieldExpression>
-			</textField>
 			<line>
 				<reportElement x="131" y="0" width="1" height="27"/>
 			</line>
-			<textField isBlankWhenNull="true">
-				<reportElement x="141" y="6" width="151" height="17"/>
-				<textElement textAlignment="Left"/>
+			<textField>
+				<reportElement x="386" y="3" width="100" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{hours}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="160" y="6" width="132" height="20"/>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{userDetails.name}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -151,10 +156,10 @@
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[Total Hours]]></text>
 			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="354" y="14" width="175" height="20"/>
+			<textField>
+				<reportElement x="398" y="14" width="100" height="20"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.Double"><![CDATA[$P{totalhours}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{sumhours}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

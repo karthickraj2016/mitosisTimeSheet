@@ -7,6 +7,17 @@ public class SummaryReport {
 	public TimeSheetModel timeSheet;
 	
 	public double hourslist;
+	
+	public double sumHours;
+
+
+	public double getSumHours() {
+		return sumHours;
+	}
+
+	public void setSumHours(double sumHours) {
+		this.sumHours = sumHours;
+	}
 
 	public TimeSheetModel getTimeSheet() {
 		return timeSheet;

@@ -1,5 +1,7 @@
 package com.mitosis.timesheet.pojo;
 
+import java.util.Date;
+
 
 
 public class TimeSheetVo {
@@ -8,15 +10,29 @@ public class TimeSheetVo {
 	private Integer id;
 	private Integer employeeId;
 	private Integer projectId ;
-	private String date;
-	private Integer hours;
-	private Integer issueNumber;
+	private Date date;
+	private double hours;
+	private String issueNumber;
 	private String description;
 	private String taskStatus;
 	private String status;
 	private double sumhours;
+	private String projectName;
+	private String name;
 	
 
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getProjectName() {
+		return projectName;
+	}
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
 	public double getSumhours() {
 		return sumhours;
 	}
@@ -41,22 +57,24 @@ public class TimeSheetVo {
 	public void setProjectId(Integer projectId) {
 		this.projectId = projectId;
 	}
-	public String getDate() {
+	
+	public Date getDate() {
 		return date;
 	}
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
-	public Integer getHours() {
+	
+	public double getHours() {
 		return hours;
 	}
-	public void setHours(Integer hours) {
+	public void setHours(double hours) {
 		this.hours = hours;
 	}
-	public Integer getIssueNumber() {
+	public String getIssueNumber() {
 		return issueNumber;
 	}
-	public void setIssueNumber(Integer issueNumber) {
+	public void setIssueNumber(String issueNumber) {
 		this.issueNumber = issueNumber;
 	}
 	public String getDescription() {

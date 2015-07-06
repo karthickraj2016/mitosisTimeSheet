@@ -457,8 +457,7 @@ public class TeamReport {
 	 		
 	 		List<TimeSheetModel> timeSheetSummedList=new ArrayList<TimeSheetModel>();
 	 		List<TimeSheetVo> timeSheetVo = new ArrayList<TimeSheetVo>();
-	 		
-	 		TimeSheetVo timesheetVo = new TimeSheetVo();
+	 	
 	 		
 	 
 
@@ -472,19 +471,32 @@ public class TeamReport {
 					employeeId = timeSheetModel.get(j).getUserDetails().getId();
 					projectId = timeSheetModel.get(j).getProject().getProjectId();
 					sumhours =teamReportService.getTotalHours(fromDate, toDate,employeeId,projectId);
+					/*
+					TimeSheetVo timesheetVo = new TimeSheetVo();
+					timesheetVo.setDate(timeSheetModel.get(j).getDate());
+					timesheetVo.setDescription(timeSheetModel.get(j).getDescription());
+					timesheetVo.setEmployeeId(timeSheetModel.get(j).getUserDetails().getId());
+					timesheetVo.setHours(timeSheetModel.get(j).getHours());
+					timesheetVo.setIssueNumber(timeSheetModel.get(j).getIssueNumber());
+					timesheetVo.setProjectId(timeSheetModel.get(j).getProject().getProjectId());
+					timesheetVo.setProjectName(timeSheetModel.get(j).getProject().getProjectName());
+					timesheetVo.setName(timeSheetModel.get(j).getUserDetails().getName());
 					timesheetVo.setSumhours(sumhours);
-					timeSheetVo.add(timesheetVo);
+					System.out.println(timesheetVo);
+					timeSheetVo.add(j,timesheetVo);*/
 					
 				}
-				timeSheetSummedList.addAll(timeSheetModel);
-				BeanUtils.copyProperties(timeSheetVo, timeSheetSummedList);
+			/*	timeSheetSummedList.addAll(timeSheetModel);
+				BeanUtils.copyProperties(timeSheetVo, timeSheetSummedList);*/
 				
-				System.out.println(timeSheetVo);
+				System.out.println(timeSheetModel);
+				
+
 				
 			   totalhours =teamReportService.getAllUsersTotalHours(fromDate, toDate);
 
 				
-           if(timeSheetSummedList.size()==0){
+           if(timeSheetModel.size()==0){
 
 				jsonobject.put("pdfPath","norecords");
 
@@ -507,7 +519,7 @@ public class TeamReport {
 			parameters.put("name",name);
 			parameters.put("totalhours",totalhours);
 
-			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(timeSheetVo);
+			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(timeSheetModel);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, ds);
 
 			String path = this.getClass().getClassLoader().getResource("/").getPath();
