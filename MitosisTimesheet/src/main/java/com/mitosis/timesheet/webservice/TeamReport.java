@@ -385,6 +385,15 @@ public class TeamReport {
 	 		
 	 		totalhours = teamReportService.getAllUsersTotalHours(fromDate, toDate);
 	 		
+	 		if(timeSheetModel.size()==0){
+
+				jsonobject.put("pdfPath","norecords");
+
+				return jsonobject;
+
+
+			}
+	 		
 	 		
 	 		
 	 		JasperDesign jasperDesign = JRXmlLoader.load(request.getSession().getServletContext()
