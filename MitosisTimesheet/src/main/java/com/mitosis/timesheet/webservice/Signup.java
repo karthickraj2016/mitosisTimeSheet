@@ -1,6 +1,8 @@
 package com.mitosis.timesheet.webservice;
 
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
@@ -31,6 +33,7 @@ import org.codehaus.jettison.json.JSONObject;
 import com.mitosis.timesheet.dao.SignupDao;
 import com.mitosis.timesheet.dao.daoImpl.SignupDaoImpl;
 import com.mitosis.timesheet.model.UserDetailsModel;
+import com.mitosis.timesheet.commonservice.JavaMD5Hash;
 
 
 
@@ -59,20 +62,27 @@ public class Signup {
 	@Path("/login")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public JSONObject login(JSONObject jsonObject) throws JSONException {
+	public JSONObject login(JSONObject jsonObject) throws Exception {
 
 		JSONObject jsonObj = new JSONObject();
 
 		UserDetailsModel userDetailsModel = new UserDetailsModel();
 
 		boolean user = false;
-          
+	
+		String userName = jsonObject.getString("username");
+		String password = jsonObject.getString("password");
 
-		userDetailsModel = signUp.login(jsonObject.getString("username"), jsonObject.getString("password"));
+		String encryptedPassword =JavaMD5Hash.md5(password);
+
+		userDetailsModel = signUp.login(userName, encryptedPassword);
+	
+		
+
 
 		if (userDetailsModel != null) {
 
-			user = signUp.loginValidation(jsonObject.getString("username"), jsonObject.getString("password"));
+			user = signUp.loginValidation(userName, encryptedPassword);
 
 			if (user != true) {
 				jsonObj.put("message", "notactivated");
@@ -100,6 +110,10 @@ public class Signup {
        
 	}
 
+	
+
+	
+
 	@GET
 	@Path("/logout")
 	public String logout() {
@@ -113,18 +127,16 @@ public class Signup {
 	private String signUpValidation(JSONObject jsonObject) throws Exception {
 
 		UserDetailsModel userList = new UserDetailsModel();
-
-		/*
-		 * DESEncryption encription= new DESEncryption(); String
-		 * encryptedText=encription.encrypt(jsonObject.getString("password"));
-		 */
+		
+		String pass = jsonObject.getString("password");
+	
+		String encryptedText =JavaMD5Hash.md5(pass);
+		System.out.println(encryptedText);
 
 		userModel.setName(jsonObject.getString("name"));
 		userModel.setUserName(jsonObject.getString("username"));
 		userModel.seteMail(jsonObject.getString("email"));
-		userModel.setPassword(jsonObject.getString("password"));
-		// userModel.setActive(jsonObject.getBoolean("active"));
-		// userModel.setRole(jsonObject.getString("role"));
+		userModel.setPassword(encryptedText);
 
 		String empName = jsonObject.getString("username");
 		String empMail = jsonObject.getString("email");
