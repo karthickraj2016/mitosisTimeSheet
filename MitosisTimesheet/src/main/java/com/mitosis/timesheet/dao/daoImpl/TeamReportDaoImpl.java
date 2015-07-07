@@ -334,7 +334,7 @@ public class TeamReportDaoImpl extends BaseService implements TeamReportDao {
 			Predicate conditions = qb.and(condition, condition1);
 			cq.where(conditions);
 			cq.select(qb.sum(root.<Double>get("hours")));
-			cq.groupBy(root.get("date"),root.get("userDetails").get("name"));
+			cq.groupBy(root.get("project").get("projectId"),root.get("date"),root.get("userDetails").get("id"));
 			hours=entityManager.createQuery(cq).getResultList();
 			for(int i =0;i<hours.size();i++){
 			

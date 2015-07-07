@@ -22,7 +22,6 @@ public class TimeSheetDAOImpl extends BaseService implements TimeSheetDAO{
 	@Override
 	public boolean Create(TimeSheetModel timeSheetModel) {
 		boolean flag = false ;
-		TimeSheetModel timesheetModel = new TimeSheetModel();
 		try{
 			begin();
 			merge(timeSheetModel);
