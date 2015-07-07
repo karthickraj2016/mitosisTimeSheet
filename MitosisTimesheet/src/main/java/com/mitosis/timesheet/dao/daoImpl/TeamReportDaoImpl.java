@@ -275,7 +275,7 @@ public class TeamReportDaoImpl extends BaseService implements TeamReportDao {
 		Predicate conditions = qb.and(condition, condition1);
 		cq.where(conditions);
 		cq.select(root);
-		cq.orderBy(qb.asc(root.get("date")),qb.asc(root.get("project").get("projectName")));
+		cq.orderBy(qb.asc(root.get("project").get("projectId")),qb.asc(root.get("date")),qb.asc(root.get("userDetails").get("id")));
 		timeSheetDetailReport = entityManager.createQuery(cq).getResultList();
 		commit(); 
 	}catch(Exception e){
