@@ -127,7 +127,7 @@ public class TeamReportDaoImpl extends BaseService implements TeamReportDao {
 	
 
 	@Override
-	public List<SummaryReport> getSumHours(Date fromDate, Date toDate,
+	public List<SummaryReport> getTeamSummarySumHours(Date fromDate, Date toDate,
 			int memberId, int projectId) {
 		TimeSheetModel timesheetModel = new TimeSheetModel();
 		List<SummaryReport> timeSheetList = new ArrayList<SummaryReport>();

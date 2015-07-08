@@ -26,7 +26,7 @@ angular.module('myApp.controllers')
 		
 	  var name="Administrator";
 	  var password="mitosis";
-		
+			
 	  if($scope.username==name && $scope.password==password){
 		
 			 $state.go('userRights')
