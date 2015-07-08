@@ -1,0 +1,215 @@
+'use strict';
+
+angular.module('myApp.controllers')
+
+
+.controller('leaveDetailsController', ['$scope', '$http', '$state','$localStorage','$rootScope', function($scope, $http, $state,$localStorage, $rootScope) {
+
+	$scope.filteredParticipantsResults = []
+	,$scope.currentPage = 1
+	,$scope.numPerPage = 8
+	,$scope.maxSize = 5;
+	$scope.units;
+	
+	$scope.checkRequired = function(sheet){
+		if(sheet.frmEntryDate == '' || sheet.frmEntryDate == undefined) {
+			return true;
+		} else if(sheet.toEntryDate == '' || sheet.toEntryDate == undefined) {
+			return true;
+		} else if(sheet.reason == '' || sheet.reason == undefined) {
+			return true;
+		}else if(sheet.status == '' || sheet.status == undefined) {
+			return true;
+		}else{
+			return false;
+		}
+
+	}
+	
+	$scope.dates = function() {
+	        var dt = new Date();
+		    var dd = ("0"+ (dt.getDate()-1)).slice(-2);
+		    var mm = ("0"+ (dt.getMonth()+1)).slice(-2); 
+		    var yyyy = dt.getFullYear();
+		    dt=dd+"-"+mm+"-"+yyyy;
+		 $scope.fromDate=dt;
+		 $scope.toDate=dt;
+	};
+	
+	$scope.dateOptions = {
+			changeYear: true,
+			changeMonth: true,
+			dateFormat: 'dd-mm-yy',
+	};
+
+	$scope.fromdatechange = function(fromDate){
+		$scope.toDate = fromDate;
+	};
+	
+	/*$http({
+		url: 'rest/account/getName',
+		method: 'GET',
+		data: menuJson,
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	}).success(function(result, status, headers) {
+		if(result==""){
+			$state.go('login')
+			}else{
+			$rootScope.name=result;
+			
+		}
+	});*/
+	
+	$http({
+
+		url: 'rest/teamAssignment/getMemberList',
+		method: 'GET',
+		/*data: menuJson,*/
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	}).success(function(result, status, headers) {
+
+		console.log(result);
+
+		$scope.employeeNameList=result;
+	});
+	
+   $scope.list = function() {
+		
+		$http({
+			url: 'rest/leaveDetails/showLeaveEntryList',
+			method: 'GET',
+			/* data: menuJson,*/
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).success(function(result, status, headers) {
+
+			$scope.leaveEntryList=result; 
+				
+			$scope.$watch('currentPage + numPerPage', function() {
+				var begin = (($scope.currentPage - 1) * $scope.numPerPage)
+				, end = begin + $scope.numPerPage;
+				$scope.filteredParticipantsResults = $scope.leaveEntryList.slice(begin, end);
+				$scope.totalItems =	$scope.leaveEntryList.length;
+				$scope.dates();
+			});
+
+		})
+	},
+   
+   $scope.insertLeaveEntry = function(){
+		
+		if ($scope.fromDate > $scope.toDate) {
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("FromDate cannot be after ToDate!");
+			return;
+		}else{
+	   
+		var menuJson = angular.toJson({
+			"employeeId": $scope.employee.id,"fromDate":$scope.fromDate,"toDate":$scope.toDate,"reason":$scope.reason
+ 		});
+		
+		$http({
+			url: 'rest/leaveDetails/insertLeaveEntry',
+			method: 'POST',
+			data: menuJson,
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).success(function(result, status, headers) {
+		
+			if(result.value=="inserted"){
+				 $(".alert-msg").show().delay(1000).fadeOut(); 
+				 $(".alert-success").html("Leave Entry Added Successfully");
+			}else{
+				 $(".alert-msg1").show().delay(1000).fadeOut(); 
+				 $(".alert-danger").html("Leave Entry Adding Failed");
+			}
+			$scope.list();	
+			
+		})
+	  }
+   },
+   
+  $scope.updateLeaveEntry = function(reqParam){
+	   
+		if (reqParam.frmEntryDate > reqParam.toEntryDate) {
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("FromDate cannot be after ToDate!");
+			$scope.list();
+			return;
+		}else{
+	   
+	   var menuJson = angular.toJson({
+			"id":reqParam.id,"employeeId": reqParam.employee.id,"fromDate":reqParam.frmEntryDate,"toDate":reqParam.toEntryDate,"reason":reqParam.reason
+		});
+	   
+		$http({
+			url: 'rest/leaveDetails/updateLeaveEntry',
+			method: 'POST',
+			data: menuJson,
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).success(function(result, status, headers) {
+			
+			if(result.value=="updated"){
+				 $(".alert-msg").show().delay(1000).fadeOut(); 
+				 $(".alert-success").html("Leave Entry Updated Successfully");
+			}else{
+				 $(".alert-msg1").show().delay(1000).fadeOut(); 
+				 $(".alert-danger").html("Leave Entry updating Failed");
+			}
+			$scope.list();	
+			
+		})
+	  }
+   },
+   
+   $scope.confirmDelete = function(id){
+
+		if(confirm('Are you sure you want to delete?')){
+			$scope.deleteLeaveEntry(id);
+		}
+	},
+
+	$scope.deleteLeaveEntry = function(id){
+
+
+		$http({
+			url: 'rest/leaveDetails/deleteLeaveEntry',
+			method: 'POST',
+			data: {"id":id},
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).success(function(result, status, headers) {
+			
+			if(result=='success'){
+				 $(".alert-msg").show().delay(1000).fadeOut(); 
+				 $(".alert-success").html("Leave Entry Deleted Successfully");
+			}else{
+				 $(".alert-msg1").show().delay(1000).fadeOut(); 
+				 $(".alert-danger").html("Leave Entry Deletion Failed");
+			}
+			$scope.list();	
+		})
+	},
+	
+   $scope.logout = function(){
+
+		$http({
+			url: 'rest/account/logout',
+			method: 'GET',
+		}).success(function(result, status, headers) {
+
+			$state.go('login')
+		})
+
+	};
+
+}])

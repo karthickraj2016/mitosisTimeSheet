@@ -1,0 +1,107 @@
+
+<div ng-init="list()">
+
+<nav class="navbar navbar-inverse navbar-fixed-top" style="border-bottom: 1px solid gray; background: none;">
+  <div class="container-fluid" style="max-width: 100%; background: grey; color: white;">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <div class="logo"><img src="images/mit_lg-ts.jpg"></div>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar" ng-controller="HeaderController">
+      <ul class="nav navbar-nav" style="margin-left: 30px; margin-top: 8px;">
+        <li ><a ui-sref="leave">Home</a></li>
+        </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="lb-username"><lable ng-model="name">Welcome {{name}}</lable></li>
+        <li><a style="padding-left: 0;" ui-sref="account"><button class="btn btn-sm btn-primary">Account</button></a></li>
+        <li><button class="btn btn-sm btn-primary btn-logout" ng-click="logout();">Logout</button></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container" style="margin-top: 5%;"><div class="row"><div class="col-xs-12 col-md-12"><h2>Leave Entry</h2></div></div></div>
+<div class="container" style="width: 100%;">
+<div class="leave-form-div">
+<form class="form-inline" role="form" id="leaveEntry" ng-submit="insertLeaveEntry(fromDate,toDate,reason)">		
+
+	<div class="form-group">
+    <select  class="form-control" required ng-model="employee" ng-options="item as item.name for item in employeeNameList" style="color: #777777; width: 200px;">
+    <option value="">Employee Name</option>
+    </select> 
+    </div>
+	
+    <div ng-init="dates()" class="form-group">
+       <input type="text" id="fromDate" placeholder="From Date" required class="form-control" ui-date="dateOptions" ng-change="fromdatechange(fromDate)" ui-date-format="dd-mm-yy" ng-model="fromDate">
+    </div> 
+    
+    <div ng-init="dates()" class="form-group">
+       <input type="text" placeholder="To Date" required class="form-control" ui-date="dateOptions" ui-date-format="dd-mm-yy" ng-model="toDate">
+    </div> 
+    
+    <div class="form-group">
+      <textarea rows="1" cols="30" class="form-control" ng-model="reason" placeholder="Reason"></textarea>
+    </div>
+        
+	<div class="form-group btn-formproject">
+	<button type="submit" class="btn btn-primary">Add</button>
+	<button type="reset" style="margin-left: 10px;"  class="btn btn-primary">Clear</button>
+	</div>
+	</form>
+</div>
+</div>
+<div  class="container" style="width: 100%;">
+<table class="table" style="">
+	<thead class="thead-mit-ts" >
+		<tr>
+			<th class="">Employee Name</th>
+			<th class="">From Date</th>
+			<th class="">To Date</th>
+		    <th class="">Reason</th>
+		    <th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="sheet in filteredParticipantsResults">
+			<td>
+				<span ng-show="!showEdit">{{sheet.employee.name}}</span>
+				<span ng-show="showEdit">
+				<select  class="form-control" required ng-model="sheet.employee" ng-options="item as item.name for item in employeeNameList" style="color: #777777;">
+    			<option value="">{{sheet.employee.name}}</option>
+    			</select> 
+				</span>
+				<span style="color:red" ng-show="sheet.employee.name == '' || sheet.employee.name == undefined">Required</span>
+			</td>
+			<td>
+				<span ng-show="!showEdit">{{sheet.frmEntryDate}}</span>
+				<span ng-show="showEdit"><input class="form-control" ui-date="dateOptions" ui-date-format="dd-mm-yy" type="text" ng-model="sheet.frmEntryDate"></span>
+				<span style="color:red" ng-show="sheet.frmEntryDate == '' || sheet.frmEntryDate == undefined">Required</span>
+			</td>
+			<td>
+				<span ng-show="!showEdit">{{sheet.toEntryDate}}</span>
+				<span ng-show="showEdit"><input class="form-control" ui-date="dateOptions" ui-date-format="dd-mm-yy" type="text" ng-model="sheet.toEntryDate"></span>
+				<span style="color:red" ng-show="sheet.toEntryDate == '' || sheet.toEntryDate == undefined">Required</span>
+			</td>
+			<td >
+				<span ng-show="!showEdit">{{sheet.reason}}</span>
+				<span ng-show="showEdit"><textarea rows="1" class="form-control" type="text" ng-model="sheet.reason"></textarea></span>
+			</td>
+			<td style="word-spacing: 15px;">
+				<a><span class="glyphicon glyphicon-pencil" ng-click="showEdit = !showEdit" ng-show="!showEdit"></span></a>
+				<a><span class="glyphicon glyphicon-remove" ng-click="confirmDelete(sheet.id)" ng-show="!showEdit"></span></a>
+				<a><span class="glyphicon glyphicon-ok" ng-click="showEdit = !showEdit;updateLeaveEntry(sheet)" ng-show="showEdit" ng-disabled="checkRequired(sheet);"></span></a>
+				<a><span class="glyphicon glyphicon-ban-circle" ng-click="showEdit = !showEdit" ng-show="showEdit"></span></a>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<pagination  total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="numPerPage" class="pagination-sm" boundary-links="true"></pagination>
+</div>
+<div class="alert-msg col-xs-12 col-sm-6"><p class="alert-success"></p></div>
+<div class="alert-msg1 col-xs-12 col-sm-6"><p class="alert-danger"></p></div>
+ </div>

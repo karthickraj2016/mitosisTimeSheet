@@ -9,8 +9,8 @@ angular.module('myApp.controllers')
 	,$scope.currentPage = 1
 	,$scope.numPerPage = 8
 	,$scope.maxSize = 5;
-	$scope.units;
-	var hoursallowed;
+	
+   	var hoursallowed;
 
 	$scope.checkRequired = function(sheet){
 		if(sheet.entryDate == '' || sheet.entryDate == undefined){
@@ -159,7 +159,6 @@ angular.module('myApp.controllers')
 				if(result.value=="done"){
 					$(".alert-msg1").show().delay(1000).fadeOut(); 
 				    $(".alert-danger").html("you have recorded all 16 hours today");
-				    $scope.unit="";
 				    $scope.dates();
 				    console.log($scope.timesheet.description);
 			}

@@ -85,7 +85,13 @@ angular.module('myApp', ['ui.router','myApp.controllers','ngStorage','ui.bootstr
 				 url: '/teamreport',
 				 templateUrl: 'html/teamreport.html',
 				 controller :'teamreportController'
-			 });
+			 })
+      
+             .state('leaveDetails', {
+			     url: '/leaveDetails',
+			     templateUrl: 'html/leaveDetails.html',
+			     controller :'leaveDetailsController'
+		     });
 			 
     }
   ]);
