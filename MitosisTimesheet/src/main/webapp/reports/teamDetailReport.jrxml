@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report3" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="235"/>
-	<property name="ireport.y" value="206"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="82"/>
 	<parameter name="fromDate" class="java.lang.String"/>
 	<parameter name="toDate" class="java.lang.String"/>
 	<parameter name="name" class="java.lang.String"/>
@@ -64,7 +64,7 @@
 					<text><![CDATA[Name]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="190" y="44" width="80" height="20"/>
+					<reportElement x="186" y="44" width="80" height="20"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
 					<text><![CDATA[Hours]]></text>
 				</staticText>
@@ -86,13 +86,10 @@
 					<reportElement x="1" y="-1" width="554" height="23"/>
 				</rectangle>
 				<line>
-					<reportElement x="61" y="0" width="1" height="23"/>
+					<reportElement x="183" y="-2" width="1" height="25"/>
 				</line>
 				<line>
-					<reportElement x="183" y="0" width="1" height="23"/>
-				</line>
-				<line>
-					<reportElement x="271" y="0" width="1" height="23"/>
+					<reportElement x="271" y="-2" width="1" height="25"/>
 				</line>
 				<line>
 					<reportElement x="383" y="0" width="1" height="23"/>
@@ -105,7 +102,7 @@
 				<textField>
 					<reportElement x="184" y="3" width="85" height="20"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression class="java.lang.Double"><![CDATA[$V{projecttotal}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.Double"><![CDATA[(Math.round($V{projecttotal}*100.0))/100.0]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -192,9 +189,6 @@
 				<reportElement x="1" y="0" width="554" height="27"/>
 			</rectangle>
 			<line>
-				<reportElement x="61" y="0" width="1" height="27"/>
-			</line>
-			<line>
 				<reportElement x="183" y="0" width="1" height="27"/>
 			</line>
 			<line>
@@ -209,9 +203,9 @@
 				<text><![CDATA[Total hours]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="188" y="7" width="80" height="17"/>
+				<reportElement x="184" y="7" width="84" height="17"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.Double"><![CDATA[$V{totalhours}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Double"><![CDATA[(Math.round($V{totalhours}*100.0))/100.0]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

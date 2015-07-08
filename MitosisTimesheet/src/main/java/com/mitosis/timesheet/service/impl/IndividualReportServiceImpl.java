@@ -20,19 +20,14 @@ public class IndividualReportServiceImpl implements IndividualReportService {
 	IndividualReportDao individualReportDao = new IndividualDetailReportDaoImpl();
 		
 	@Override
-	public List<TimeSheetModel> getIndividualReport(Date fromdate, Date todate, int employeeId) {
+	public List<TimeSheetModel> getIndividualDetailReportList(Date fromdate, Date todate, int employeeId) {
 		
 		List<TimeSheetModel> timeSheetReport = new ArrayList<TimeSheetModel>();
-		timeSheetReport=individualReportDao.getIndividualReport(fromdate,todate,employeeId);		
+		timeSheetReport=individualReportDao.getIndividualDetailReportList(fromdate,todate,employeeId);		
 		return timeSheetReport;
 	}
 
-	@Override
-	public double getTotalHours(Date fromdate, Date todate, int employeeId) {
-		// TODO Auto-generated method stub
-		double totalhours = individualReportDao.getTotalHours(fromdate,todate,employeeId);
-		return totalhours;
-	}
+	
 
 	@Override
 	public List<SummaryReport> getIndividualSummaryReportList(Date fromdate,

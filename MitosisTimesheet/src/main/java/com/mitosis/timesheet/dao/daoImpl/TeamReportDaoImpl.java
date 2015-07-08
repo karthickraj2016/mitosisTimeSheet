@@ -82,11 +82,6 @@ public class TeamReportDaoImpl extends BaseService implements TeamReportDao {
 		      query.select(root);
 		      rolelist =  entityManager.createQuery(query).getResultList();
 		      role = rolelist.get(0).getRole().getId();
-		      
-		      
-		      /*role =   entityManager.createQuery(query).getSingleResult();*/
-		      /*longrole = (Long) entityManager.createQuery(query).getSingleResult();
-		       role = (int) (long)longrole;*/
 		     
 		}catch(Exception e){
 			e.printStackTrace();
@@ -129,35 +124,7 @@ public class TeamReportDaoImpl extends BaseService implements TeamReportDao {
 	}
 
 	
-	@Override
-	public double getTotalHours(Date fromDate, Date toDate, int memberId,
-			int projectId) {
-		
-		double totalhours=0.0;
-		
-		try{
-			begin();
-			entityManager.getEntityManagerFactory().getCache().evictAll();
-			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
-		    CriteriaQuery<Number> cq = qb.createQuery(Number.class);
-			Root<TimeSheetModel> root = cq.from(TimeSheetModel.class);
-			Path<Date> fromDatePath =  root.get("date");
-			Predicate condition = qb.equal(root.get("userDetails"), memberId);
-			Predicate condition2 = qb.greaterThanOrEqualTo(fromDatePath, fromDate);
-			Predicate condition3 = qb.lessThanOrEqualTo(fromDatePath, toDate);
-			Predicate condition4 = qb.equal(root.get("project"),projectId);
-			Predicate conditions = qb.and(condition, condition2, condition3,condition4);
-			cq.where(conditions);
-			cq.select(qb.sum(root.<Integer>get("hours")));
-			totalhours=entityManager.createQuery(cq).getSingleResult().doubleValue();
-			commit(); 
-		}catch(Exception e){
-			e.printStackTrace();
-		}finally{
-			close();
-		}
-		return totalhours;
-	}
+	
 
 	@Override
 	public List<SummaryReport> getSumHours(Date fromDate, Date toDate,
@@ -315,7 +282,7 @@ public class TeamReportDaoImpl extends BaseService implements TeamReportDao {
 	return timeSheetDetailReport;
  }
 	@Override
-	public List<SummaryReport> getAllUserSumHours(Date fromDate, Date toDate){
+	public List<SummaryReport> getAllProjectsSumHours(Date fromDate, Date toDate){
 		TimeSheetModel timesheetModel = new TimeSheetModel();
 		List<SummaryReport> timeSheetList = new ArrayList<SummaryReport>();
 		List<Double> hours = new ArrayList<Double>();
@@ -354,33 +321,5 @@ public class TeamReportDaoImpl extends BaseService implements TeamReportDao {
 		}
 		return timeSheetList;
 	}
-	@Override
-	public double getAllUsersTotalHours(Date fromDate, Date toDate) {
-		
-		double totalhours=0.0;
-		
-		try{
-			begin();
-			entityManager.getEntityManagerFactory().getCache().evictAll();
-			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
-		    CriteriaQuery<Number> cq = qb.createQuery(Number.class);
-			Root<TimeSheetModel> root = cq.from(TimeSheetModel.class);
-			Path<Date> fromDatePath =  root.get("date");
-			Predicate condition = qb.greaterThanOrEqualTo(fromDatePath, fromDate);
-			Predicate condition1 = qb.lessThanOrEqualTo(fromDatePath, toDate);
-			Predicate conditions = qb.and(condition, condition1);
-			cq.where(conditions);
-			cq.select(qb.sum(root.<Integer>get("hours")));
-			totalhours=entityManager.createQuery(cq).getSingleResult().doubleValue();
-			System.out.println(totalhours);
-			commit(); 
-		}catch(Exception e){
-			e.printStackTrace();
-		}finally{
-			close();
-		}
-		return totalhours;
-	}
-
 	
 }

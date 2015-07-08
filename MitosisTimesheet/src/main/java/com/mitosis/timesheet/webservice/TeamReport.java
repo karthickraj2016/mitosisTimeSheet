@@ -90,8 +90,6 @@ public class TeamReport {
 	public JSONObject detailReport(JSONObject jsonObject) throws JSONException, ParseException, JRException{
 
 		JSONObject jsonobject = new JSONObject();
-		
-		double totalhours=0.0;
 
 		HttpSession session= request.getSession(true);
 
@@ -108,8 +106,6 @@ public class TeamReport {
 
  		String name = jsonObject.getString("name");
 
- 		List<TimeSheetModel> timeSheetDetailReport = new ArrayList<TimeSheetModel>();
-
 		DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
  		String frmdateInString = jsonObject.getString("fromdate");
@@ -119,8 +115,6 @@ public class TeamReport {
 
  		Date toDate = sdf.parse(todateInString);
 
-		/*int userId =  (Integer) request.getSession().getAttribute("userId");*/
-
   		int role = teamReportService.getrole(employeeId,projectId);
 
  		if(role<4){
@@ -129,7 +123,6 @@ public class TeamReport {
 			List<TimeSheetModel> timeSheetList = new ArrayList<TimeSheetModel>();
 
 			TeamList = teamReportService.getTeamList(projectId,role);
-			System.out.println(TeamList);
 
 			for(TeamAssignmentModel teamList:TeamList){
 				int i=0;
@@ -139,7 +132,6 @@ public class TeamReport {
 
 				timesheetList = teamReportService.getTeamDetailTimeSheetList(fromDate, toDate, memberId,projectId);
 				
-				totalhours = totalhours+teamReportService.getTotalHours(fromDate, toDate, employeeId,projectId);
 
 				timeSheetList.addAll(i,timesheetList);
 				i++;
@@ -168,7 +160,6 @@ public class TeamReport {
 			parameters.put("fromDate", frmdateInString);
 			parameters.put("toDate", todateInString);
 			parameters.put("name",name);
-			parameters.put("totalhours",totalhours);
 
 			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(timeSheetList);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, ds);
@@ -229,8 +220,6 @@ public class TeamReport {
 
 		String name = jsonObject.getString("name");
 
-		List<TimeSheetModel> timeSheetDetailReport = new ArrayList<TimeSheetModel>();
-
 		DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
 		String frmdateInString = jsonObject.getString("fromdate");
@@ -239,10 +228,7 @@ public class TeamReport {
 		String todateInString = jsonObject.getString("todate");
 
 		Date toDate = sdf.parse(todateInString);
-		double totalhours=0.0;
 
-
-		/*int userId =  (Integer) request.getSession().getAttribute("userId");*/
 
 		int role = teamReportService.getrole(employeeId,projectId);
 
@@ -265,7 +251,6 @@ public class TeamReport {
 				}
 				timeSheetSummedList.addAll(timeSheetList);
 
-				totalhours = totalhours+teamReportService.getTotalHours(fromDate, toDate, memberId,projectId);
 
 			}
 
@@ -278,8 +263,6 @@ public class TeamReport {
 
 			}
 
-			totalhours=(double) Math.round(totalhours * 100) / 100;
-
 			JasperDesign jasperDesign = JRXmlLoader.load(request.getSession().getServletContext()
 					.getRealPath("/")
 					+ "reports/teamSummaryReport.jrxml");
@@ -291,7 +274,6 @@ public class TeamReport {
 			parameters.put("fromDate", frmdateInString);
 			parameters.put("toDate", todateInString);
 			parameters.put("name",name);
-			parameters.put("totalhours", totalhours);
 
 			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(timeSheetSummedList);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, ds);
@@ -383,8 +365,6 @@ public class TeamReport {
 	 		
 	 		timeSheetModel=teamReportService.getAllProjectsDetails(fromDate,toDate);
 	 		
-	 		totalhours = teamReportService.getAllUsersTotalHours(fromDate, toDate);
-	 		
 	 		if(timeSheetModel.size()==0){
 
 				jsonobject.put("pdfPath","norecords");
@@ -407,7 +387,6 @@ public class TeamReport {
 			parameters.put("fromDate", frmdateInString);
 			parameters.put("toDate", todateInString);
 			parameters.put("name",name);
-			parameters.put("totalhours",totalhours);
 
 			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(timeSheetModel);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, ds);
@@ -438,10 +417,7 @@ public class TeamReport {
 		public JSONObject getAllProjectsSummary(JSONObject jsonObject) throws JSONException, ParseException, JRException, IllegalAccessException, InvocationTargetException{
 			
             JSONObject jsonobject=new JSONObject();
-            
-            double totalhours=0.0;
-            
-            double sumhours = 0.0;
+           
 			
 			HttpSession session= request.getSession(true);
 			if(session.getAttribute("userId")==null){
@@ -463,46 +439,14 @@ public class TeamReport {
 	 		List<TimeSheetModel> timeSheetModel=new ArrayList<TimeSheetModel>();
 	 			 			 		
 	 		List<SummaryReport> hourslist = new ArrayList<SummaryReport>();
-	 		
-	 		List<TimeSheetModel> timeSheetSummedList=new ArrayList<TimeSheetModel>();
-	 		List<TimeSheetVo> timeSheetVo = new ArrayList<TimeSheetVo>();
-	 	
-	 		
-	 
 
-				hourslist = teamReportService.getAllUsersSumHours(fromDate, toDate);
+				hourslist = teamReportService.getAllProjectsSumHours(fromDate, toDate);
 				timeSheetModel=teamReportService.getAllProjectsSummary(fromDate,toDate);
-				
-				int employeeId;
-				int projectId;
+	
 				for(int j=0;j<hourslist.size();j++){		
 					timeSheetModel.get(j).setHours(hourslist.get(j).hourslist);
-					employeeId = timeSheetModel.get(j).getUserDetails().getId();
-					projectId = timeSheetModel.get(j).getProject().getProjectId();
-					sumhours =teamReportService.getTotalHours(fromDate, toDate,employeeId,projectId);
-					/*
-					TimeSheetVo timesheetVo = new TimeSheetVo();
-					timesheetVo.setDate(timeSheetModel.get(j).getDate());
-					timesheetVo.setDescription(timeSheetModel.get(j).getDescription());
-					timesheetVo.setEmployeeId(timeSheetModel.get(j).getUserDetails().getId());
-					timesheetVo.setHours(timeSheetModel.get(j).getHours());
-					timesheetVo.setIssueNumber(timeSheetModel.get(j).getIssueNumber());
-					timesheetVo.setProjectId(timeSheetModel.get(j).getProject().getProjectId());
-					timesheetVo.setProjectName(timeSheetModel.get(j).getProject().getProjectName());
-					timesheetVo.setName(timeSheetModel.get(j).getUserDetails().getName());
-					timesheetVo.setSumhours(sumhours);
-					System.out.println(timesheetVo);
-					timeSheetVo.add(j,timesheetVo);*/
-					
 				}
-			/*	timeSheetSummedList.addAll(timeSheetModel);
-				BeanUtils.copyProperties(timeSheetVo, timeSheetSummedList);*/
 				
-				System.out.println(timeSheetModel);
-				
-
-				
-			   totalhours =teamReportService.getAllUsersTotalHours(fromDate, toDate);
 
 				
            if(timeSheetModel.size()==0){
@@ -526,7 +470,6 @@ public class TeamReport {
 			parameters.put("fromDate", frmdateInString);
 			parameters.put("toDate", todateInString);
 			parameters.put("name",name);
-			parameters.put("totalhours",totalhours);
 
 			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(timeSheetModel);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, ds);

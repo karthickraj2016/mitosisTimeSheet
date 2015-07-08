@@ -9,10 +9,7 @@ import com.mitosis.timesheet.pojo.SummaryReport;
 
 public interface IndividualReportService {
 
-	public List<TimeSheetModel> getIndividualReport(Date fromdate , Date todate, int employeeId);
-
-	public double getTotalHours(Date fromdate, Date todate, int employeeId);
-	
+	public List<TimeSheetModel> getIndividualDetailReportList(Date fromdate , Date todate, int employeeId);
 	
 	public List<SummaryReport> getIndividualSummaryReportList(Date fromdate , Date todate, int employeeId);
 

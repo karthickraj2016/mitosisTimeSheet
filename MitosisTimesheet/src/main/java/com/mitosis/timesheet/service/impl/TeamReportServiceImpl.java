@@ -56,14 +56,6 @@ public class TeamReportServiceImpl implements TeamReportService {
 		return timeSheetList;
 	}
 
-	
-	@Override
-	public double getTotalHours(Date fromDate, Date toDate, int memberId,
-			int projectId) {
-		// TODO Auto-generated method stub
-		double hours = teamReportDao.getTotalHours(fromDate,toDate,memberId, projectId);
-		return hours;
-	}
 
 	@Override
 	public List<SummaryReport> getSumHours(Date fromDate, Date toDate,
@@ -115,17 +107,10 @@ public class TeamReportServiceImpl implements TeamReportService {
 	}
 	
 	@Override
-	public List<SummaryReport> getAllUsersSumHours(Date fromDate, Date toDate) {
-		List<SummaryReport> summaryList = teamReportDao.getAllUserSumHours(fromDate,toDate);
+	public List<SummaryReport> getAllProjectsSumHours(Date fromDate, Date toDate) {
+		List<SummaryReport> summaryList = teamReportDao.getAllProjectsSumHours(fromDate,toDate);
 		return summaryList;
 	}
-
-	@Override
-	public double getAllUsersTotalHours(Date fromDate, Date toDate) {
-		double hours = teamReportDao.getAllUsersTotalHours(fromDate,toDate);
-		return hours;
-	}
-
 
 	
 }

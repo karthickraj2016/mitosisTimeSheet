@@ -87,7 +87,7 @@ public class IndividualReport {
 		Date toDate = sdf.parse(todateInString);
 		
 		
-		timeSheetDetailReport = individualReportService.getIndividualReport(fromDate, toDate, employeeId);
+		timeSheetDetailReport = individualReportService.getIndividualDetailReportList(fromDate, toDate, employeeId);
 		
 		
 		if(timeSheetDetailReport.size()==0){
@@ -99,7 +99,6 @@ public class IndividualReport {
 		}
 		
 		
-		totalhours = individualReportService.getTotalHours(fromDate, toDate, employeeId);
 		
 		JasperDesign jasperDesign = JRXmlLoader.load(request.getSession().getServletContext()
 		          .getRealPath("/")
@@ -112,7 +111,6 @@ public class IndividualReport {
 		      parameters.put("fromDate", frmdateInString);
 		      parameters.put("toDate", todateInString);
 		      parameters.put("name",name);
-		      parameters.put("totalhours", totalhours);
 		      
 		      JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(timeSheetDetailReport);
 		      JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, ds);
@@ -172,8 +170,6 @@ public class IndividualReport {
 		Date toDate = sdf.parse(todateInString); 
 
 		
-		double totalhours;
-		
 
 		timeSheetSummaryReportList = individualReportService.getIndividualSummaryReportList(fromDate, toDate, employeeId);
 		
@@ -208,7 +204,6 @@ public class IndividualReport {
 			
 		}
 		
-		totalhours = individualReportService.getTotalHours(fromDate, toDate, employeeId);
 
 		JasperDesign jasperDesign = JRXmlLoader.load(request.getSession().getServletContext()
 		          .getRealPath("/")
@@ -221,7 +216,6 @@ public class IndividualReport {
 		      parameters.put("fromDate", frmdateInString);
 		      parameters.put("toDate", todateInString);
 		      parameters.put("name",name);
-		      parameters.put("totalhours",totalhours);
 		      
 		      JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(TimesheetModelList);
 		      JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, ds);

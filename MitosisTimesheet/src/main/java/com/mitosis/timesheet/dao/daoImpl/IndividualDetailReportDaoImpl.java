@@ -18,7 +18,7 @@ import com.mitosis.timesheet.util.BaseService;
 public class IndividualDetailReportDaoImpl extends BaseService implements IndividualReportDao {
 
 	@Override
-	public List<TimeSheetModel> getIndividualReport(Date fromdate, Date todate,int employeeId) {
+	public List<TimeSheetModel> getIndividualDetailReportList(Date fromdate, Date todate,int employeeId) {
 		// TODO Auto-generated method stub
 		
 		List<TimeSheetModel> timeSheetDetailReport = new ArrayList<TimeSheetModel>();
