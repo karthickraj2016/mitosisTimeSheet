@@ -97,7 +97,8 @@ public class Signup {
 				} else {
 					session.setAttribute("userId", userDetailsModel.getId());
 				}
-
+				
+				jsonObj.put("adminflag",userDetailsModel.getAdminFlag() );
 				jsonObj.put("message", "success");
 			}
 		} else {
@@ -137,6 +138,7 @@ public class Signup {
 		userModel.setUserName(jsonObject.getString("username"));
 		userModel.seteMail(jsonObject.getString("email"));
 		userModel.setPassword(encryptedText);
+		userModel.setAdminFlag(0);
 
 		String empName = jsonObject.getString("username");
 		String empMail = jsonObject.getString("email");

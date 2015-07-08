@@ -24,23 +24,25 @@ angular.module('myApp.controllers')
 	
 	$scope.login = function() {
 		
-	  var name="Administrator";
+	 /* var name="Administrator";
 	  var password="mitosis";
 			
 	  if($scope.username==name && $scope.password==password){
 		
 			 $state.go('userRights')
-			/* $scope.loginRole="Admin";*/
+			 $scope.loginRole="Admin";
 			 
 		 }else{
+
+		
+		
+		console.log($scope.username); */
+		
 		
 		var menuJson = angular.toJson({
 			"username": $scope.username,"password":$scope.password
 
 		});
-		
-		
-		console.log($scope.username); 
 		
 		$http({
 			url: 'rest/account/login',
@@ -56,8 +58,21 @@ angular.module('myApp.controllers')
 				$(".alert-msg1").show().delay(1500).fadeOut(); 
 				$(".alert-danger").html("Click Your Activation Link In Your Mail")
 			}else if(result.message == "success"){
+				
+				if(result.adminflag==2){
+					$state.go('leaveDetails');
+				}
+				else if(result.adminflag==1){
+					
+					$state.go('userRights');
+				}
+				else{
+					
+					$state.go('timesheet');
+					
+				}
 
-				$state.go('timesheet')
+				
 					
 			}else if(result.message =="signupunsuccessful"){
 				$(".alert-msg1").show().delay(1000).fadeOut(); 
@@ -65,6 +80,6 @@ angular.module('myApp.controllers')
 			}
 
 		})
-	}
+	
 	}
 }])
