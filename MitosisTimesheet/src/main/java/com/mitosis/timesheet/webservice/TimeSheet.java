@@ -47,8 +47,6 @@ public class TimeSheet {
 	public JSONObject insertDetails(JSONObject jsonobject) throws JSONException, ParseException{
 
 		TimeSheetModel timeSheetModel = new TimeSheetModel();
-		
-		TimeSheetVo timesheetVo = new TimeSheetVo();
 
 		JSONObject jsonObject = new JSONObject();
 		

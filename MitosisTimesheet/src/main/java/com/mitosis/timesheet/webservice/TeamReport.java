@@ -244,7 +244,7 @@ public class TeamReport {
 			for(TeamAssignmentModel teamList:TeamList){
 
 				int memberId= teamList.getMember().getId();
-				hourslist = teamReportService.getSumHours(fromDate, toDate, memberId,projectId);
+				hourslist = teamReportService.getTeamSummarySumHours(fromDate, toDate, memberId,projectId);
 				timeSheetList=teamReportService.getTeamSummaryTimeSheetList(fromDate, toDate, memberId,projectId);
 				for(int j=0;j<hourslist.size();j++){
 					timeSheetList.get(j).setHours(hourslist.get(j).hourslist);

@@ -18,7 +18,7 @@ public interface TeamReportDao {
 	
 	public List<TimeSheetModel> getTeamSummaryTimeSheetList(Date fromDate, Date toDate,int memberIds,int projectId);
 
-	public List<SummaryReport> getSumHours(Date fromDate, Date toDate,
+	public List<SummaryReport> getTeamSummarySumHours(Date fromDate, Date toDate,
 			int memberId, int projectId);
 
 	public int checkUserRights(int employeeId,int projectId);

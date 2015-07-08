@@ -21,6 +21,7 @@ import javax.ws.rs.core.MediaType;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import com.mitosis.timesheet.commonservice.JavaMD5Hash;
 import com.mitosis.timesheet.model.UserDetailsModel;
 import com.mitosis.timesheet.service.ForgotPasswordService;
 import com.mitosis.timesheet.service.impl.ForgotPasswordServiceImpl;
@@ -118,13 +119,15 @@ public class ForgotPassword {
 		
 		String password = jsonObject.getString("password");
 		
+		String encryptedPassword =JavaMD5Hash.md5(password);
+		
 		userDetailsModel = forgotpassword.getIsreset(id);
 	
 		
 		if(userDetailsModel.IsReset()){
 			
 			userDetailsModel.setReset(false);
-			userDetailsModel.setPassword(password);
+			userDetailsModel.setPassword(encryptedPassword);
 			
 			
 			passwordupdated = forgotpassword.updatepassword(userDetailsModel);

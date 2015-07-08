@@ -58,9 +58,9 @@ public class TeamReportServiceImpl implements TeamReportService {
 
 
 	@Override
-	public List<SummaryReport> getSumHours(Date fromDate, Date toDate,
+	public List<SummaryReport> getTeamSummarySumHours(Date fromDate, Date toDate,
 			int memberId, int projectId) {
-		List<SummaryReport> summaryList = teamReportDao.getSumHours(fromDate,toDate,memberId,projectId);
+		List<SummaryReport> summaryList = teamReportDao.getTeamSummarySumHours(fromDate,toDate,memberId,projectId);
 		return summaryList;
 	}
 	

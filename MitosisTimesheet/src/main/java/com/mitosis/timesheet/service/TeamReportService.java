@@ -17,7 +17,7 @@ public interface TeamReportService {
 
 	public List<TimeSheetModel> getTeamSummaryTimeSheetList(Date fromDate, Date toDate,int employeeId,int projectId);
 	
-	public List<SummaryReport> getSumHours(Date fromDate, Date toDate, int memberId,
+	public List<SummaryReport> getTeamSummarySumHours(Date fromDate, Date toDate, int memberId,
 			int projectId);
 
     public int checkUserRights(int employeeId,int projectId);
