@@ -16,6 +16,7 @@
         <li ng-class="{ active: isActive('/timesheet')}"><a ui-sref="timesheet">Home</a></li>
         <li ng-show="manageProject" ng-class="{ active: isActive('/project')}"><a ui-sref="project">Project Details</a></li>
         <li ng-show="manageTeam" ng-class="{ active: isActive('/teamAssignment')}"><a ui-sref="teamAssignment">Team Assignment</a></li>
+        <li ng-show="manageCustomer" ng-class="{ active: isActive('/customerDetails')}"><a ui-sref="customerDetails">Customer Details</a></li>
         <li ng-class="{ active: isActive('/reports')}"><a class="dropdown-toggle" data-toggle="dropdown"> Reports<span class="caret"></span></a>
        <ul class="dropdown-menu">
             <li><a ui-sref="individualreport">Individual Reports</a></li>

@@ -8,7 +8,9 @@
 		<class>com.mitosis.timesheet.model.TimeSheetModel</class>
 		<class>com.mitosis.timesheet.model.ProjectModel</class>	
 		<class>com.mitosis.timesheet.model.TeamAssignmentModel</class>	
-		<class>com.mitosis.timesheet.model.RoleDetailsModel</class>	
+		<class>com.mitosis.timesheet.model.RoleDetailsModel</class>
+		<class>com.mitosis.timesheet.model.LeaveDetailsModel</class>
+		<class>com.mitosis.timesheet.model.CustomerDetailsModel</class>	
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/mitosisTimesheetTest" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />

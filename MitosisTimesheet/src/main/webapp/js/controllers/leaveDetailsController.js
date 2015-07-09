@@ -125,6 +125,7 @@ angular.module('myApp.controllers')
 			if(result.value=="inserted"){
 				 $(".alert-msg").show().delay(1000).fadeOut(); 
 				 $(".alert-success").html("Leave Entry Added Successfully");
+				 $scope.reason='';
 			}else{
 				 $(".alert-msg1").show().delay(1000).fadeOut(); 
 				 $(".alert-danger").html("Leave Entry Adding Failed");

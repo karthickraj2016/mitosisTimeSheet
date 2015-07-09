@@ -3,13 +3,11 @@ package com.mitosis.timesheet.dao.daoImpl;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import com.mitosis.timesheet.dao.ProjectDAO;
 import com.mitosis.timesheet.model.ProjectModel;
-import com.mitosis.timesheet.model.TimeSheetModel;
 import com.mitosis.timesheet.util.*;
 
 public class ProjectDAOImpl extends BaseService implements ProjectDAO {
