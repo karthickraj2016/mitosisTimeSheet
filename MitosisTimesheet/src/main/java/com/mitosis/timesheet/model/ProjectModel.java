@@ -57,7 +57,7 @@ public class ProjectModel{
 		startEntryDate = new SimpleDateFormat("dd-MM-yyyy").format(d);
 		return startEntryDate;
 	}
-	public void setFrmEntryDate(String startEntryDate) {
+	public void setStartEntryDate(String startEntryDate) {
 		this.startEntryDate = startEntryDate;
 	}
 		

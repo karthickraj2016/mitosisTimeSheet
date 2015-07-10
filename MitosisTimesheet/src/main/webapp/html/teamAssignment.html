@@ -63,6 +63,9 @@
 </div>
 </div>
 <div  class="container" style="width: 100%;">
+<div class="search-tab"> 
+	       <input type="text" id="search" required class="form-control"  ng-model="search" placeholder="Search"></input>
+</div>
 <table class="table" style="">
 	<thead class="thead-mit-ts">
 		<tr>
@@ -73,7 +76,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="sheet in filteredParticipantsResults">
+		<tr ng-repeat="sheet in filteredParticipantsResults|filter:search ">
 			<td >
 				<span ng-show="!showEdit">{{sheet.project.projectName}}</span>
 				<span ng-show="showEdit" >

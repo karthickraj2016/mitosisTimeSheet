@@ -166,6 +166,13 @@ white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.search-tab{
+	padding: 15px; float: right; width: 270px;
+}
+.select{
+	color: #9e9e9e;
+}
 /* .row-date{
 width:10%;	
 }

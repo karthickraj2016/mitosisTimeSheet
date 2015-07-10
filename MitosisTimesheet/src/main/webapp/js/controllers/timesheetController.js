@@ -99,11 +99,11 @@ angular.module('myApp.controllers')
 			});
 	
 	
-	$scope.allProjectList = function(){
+/*	$scope.allProjectList = function(){
 				$http({
 					url: 'rest/project/showProjectlist',
 					method: 'GET',
-					/* data: menuJson,*/
+					 data: menuJson,
 					headers: {
 						'Content-Type': 'application/json'
 					}
@@ -113,7 +113,7 @@ angular.module('myApp.controllers')
 		
 				})
 			}
-
+*/
 	$scope.list = function() {
 		
 		$http({

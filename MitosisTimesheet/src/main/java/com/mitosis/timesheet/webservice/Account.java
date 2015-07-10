@@ -13,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import com.mitosis.timesheet.commonservice.JavaMD5Hash;
 import com.mitosis.timesheet.pojo.UserDetailsVo;
 import com.mitosis.timesheet.service.AccountDetailsService;
 import com.mitosis.timesheet.service.impl.AccountDetailsServiceImpl;
@@ -78,7 +79,10 @@ public class Account {
 		
 		 userDetailsVo = accountDetailsService.getAccountDetails(userId);
 		 
-		 if(!currentpassword.equals(userDetailsVo.getPassword())){
+		 String encryptedCurrentPassword =JavaMD5Hash.md5(currentpassword);
+		 String encryptedNewPassword = JavaMD5Hash.md5(newpassword);
+		 
+		 if(!encryptedCurrentPassword.equals(userDetailsVo.getPassword())){
 			 
 			 jsonobject.put("msg","error_currentpassword"); 
 			 
@@ -88,7 +92,7 @@ public class Account {
 		 }
 		 else{
 			 
-			 userDetailsVo.setPassword(newpassword);
+			 userDetailsVo.setPassword(encryptedNewPassword);
 			 
 			boolean updatepassword =  accountDetailsService.updateNewPassword(userDetailsVo);
 			
