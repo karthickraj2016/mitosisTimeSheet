@@ -127,17 +127,25 @@ angular.module('myApp.controllers')
 
 	$scope.list = function() {
 		
-			$scope.projectlist = $localStorage.allProjectList;
-				$scope.projectnames = [];
-				for(var i=0; i < $scope.projectlist.length; i++){
-					$scope.projectnames.push($scope.projectlist[i].projectName);
-				}
-				$scope.$watch('currentPage + numPerPage', function() {
-					var begin = (($scope.currentPage - 1) * $scope.numPerPage)
-					, end = begin + $scope.numPerPage;
-					$scope.filteredParticipantsResults = $scope.projectlist.slice(begin, end);
-					$scope.totalItems =	$scope.projectlist.length;
-				});
+		$http({
+			url: 'rest/project/showProjectlist',
+			method: 'GET',
+			/* data: menuJson,*/
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).success(function(result, status, headers) {
+
+			$scope.projectlist=result; 
+
+			$scope.$watch('currentPage + numPerPage', function() {
+				var begin = (($scope.currentPage - 1) * $scope.numPerPage)
+				, end = begin + $scope.numPerPage;
+				$scope.filteredParticipantsResults = $scope.projectlist.slice(begin, end);
+				$scope.totalItems =	$scope.projectlist.length;
+			});
+
+		})
 	}
 
 	
@@ -156,26 +164,7 @@ angular.module('myApp.controllers')
 		$scope.customerlist=result;
 	});
 	
-		/*$http({
-			url: 'rest/project/showProjectlist',
-			method: 'GET',
-			 data: menuJson,
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		}).success(function(result, status, headers) {
-
-			$scope.projectlist=result; 
-
-			$scope.$watch('currentPage + numPerPage', function() {
-				var begin = (($scope.currentPage - 1) * $scope.numPerPage)
-				, end = begin + $scope.numPerPage;
-				$scope.filteredParticipantsResults = $scope.projectlist.slice(begin, end);
-				$scope.totalItems =	$scope.projectlist.length;
-			});
-
-		})
-	}*/
+		
 
 	$scope.addproject = function(projectname,customer,billable,startDate,endDate,taskstatus){
 				var startdate=$scope.project.startDate;

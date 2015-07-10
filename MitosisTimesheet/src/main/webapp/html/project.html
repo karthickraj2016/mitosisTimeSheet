@@ -67,7 +67,7 @@
     <!-- <span for="dropdown"  style="font-size: 20px;">Project Status</span> -->
     <select class="form-control" required ng-model="project.status">
     <option value="" selected disabled>Status</option>
-	<option>Opened</option>
+	<option>Open</option>
 	<option>Closed</option>
 	</select>
 	</div>
@@ -134,7 +134,7 @@
 				<span ng-show="showEdit">
 				<select style="margin-top: 7px;" ng-model="sheet.status">
     			<option value="" selected disabled>{{sheet.status}}</option>
-	            <option>Opened</option>
+	            <option>Open</option>
 	            <option>Closed</option>
 				</select></span>
 				<span style="color: red" ng-show="sheet.status == '' || sheet.status == undefined">Required</span>

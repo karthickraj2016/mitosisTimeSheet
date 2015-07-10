@@ -124,8 +124,7 @@ margin: 2px 40px;
 .ts-form-div {
 	width: 100%;
 	margin: 35px 0px 35px 0px;
-	word-spacing: 15px;
-	padding-left: 5px;
+	word-spacing: 5px;
 }
 .btn-formproject {
 	word-spacing: 0;
@@ -136,7 +135,7 @@ margin: 2px 40px;
 	/* padding-left: 6%;
 	padding-right: 2%; */
 	margin: 35px 0px 35px 0px;
-	word-spacing: 20px;
+	word-spacing: 10px;
 }
 .teamassgn-form-div {
 	/* padding-left: 6%;
@@ -167,18 +166,16 @@ white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.row-date{
+/* .row-date{
 width:10%;	
 }
-.row-hours{
-width:10%;	
-}
+
 .row-name{
 width:20%;	
 }
 .row-des{
 width:30%;	
-}
+} */
 
 .mitosis_ts {
 	border: 2px solid gray;
@@ -292,6 +289,9 @@ h2 {
 	h3 {
 		float: left;
 		color: gray;
+	}
+	.project-form-div>.form-inline .form-control{
+		width: 134px;
 	}
 }
 @media (max-width: 840px){
