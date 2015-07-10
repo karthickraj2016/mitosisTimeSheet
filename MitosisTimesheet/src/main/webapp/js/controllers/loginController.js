@@ -24,21 +24,6 @@ angular.module('myApp.controllers')
 	
 	$scope.login = function() {
 		
-	 /* var name="Administrator";
-	  var password="mitosis";
-			
-	  if($scope.username==name && $scope.password==password){
-		
-			 $state.go('userRights')
-			 $scope.loginRole="Admin";
-			 
-		 }else{
-
-		
-		
-		console.log($scope.username); */
-		
-		
 		var menuJson = angular.toJson({
 			"username": $scope.username,"password":$scope.password
 

@@ -22,6 +22,28 @@ angular.module('myApp.controllers')
 
 	}
 
+	
+	$scope.dates = function() {
+				var dt = new Date();
+				var dd = ("0"+ (dt.getDate()-1)).slice(-2);
+				var mm = ("0"+ (dt.getMonth()+1)).slice(-2); 
+				var yyyy = dt.getFullYear();
+				dt=dd+"-"+mm+"-"+yyyy;
+				$scope.startDate=dt;
+				$scope.endDate=dt;
+			};
+		
+			$scope.dateOptions = {
+					changeYear: true,
+					changeMonth: true,
+					dateFormat: 'dd-mm-yy',
+			};
+		
+			$scope.startdatechange = function(fromDate){
+				$scope.toDate = fromDate;
+			};
+			
+			
 	$http({
 		url: 'rest/timesheet/getUserDetails',
 		method: 'GET',
@@ -110,11 +132,26 @@ angular.module('myApp.controllers')
 		}
 	});
 	$scope.list = function() {
+		
+		
+		
+		$scope.projectlist = $localStorage.allProjectList;
+				$scope.projectnames = [];
+				for(var i=0; i < $scope.projectlist.length; i++){
+					$scope.projectnames.push($scope.projectlist[i].projectName);
+				}
+				$scope.$watch('currentPage + numPerPage', function() {
+					var begin = (($scope.currentPage - 1) * $scope.numPerPage)
+					, end = begin + $scope.numPerPage;
+					$scope.filteredParticipantsResults = $scope.projectlist.slice(begin, end);
+					$scope.totalItems =	$scope.projectlist.length;
+				});
+	}
 
-		$http({
+		/*$http({
 			url: 'rest/project/showProjectlist',
 			method: 'GET',
-			/* data: menuJson,*/
+			 data: menuJson,
 			headers: {
 				'Content-Type': 'application/json'
 			}
@@ -130,17 +167,24 @@ angular.module('myApp.controllers')
 			});
 
 		})
-	},
+	}*/,
 
-	$scope.addproject = function(projectname,customername,billable){
-		var bill=$scope.project.billable;
-
-		if(bill==undefined){
-			$(".alert-msg1").show().delay(1000).fadeOut(); 
-			$(".alert-danger").html("Please Select Billable Option");
-		}else{
-			var menuJson = angular.toJson({
-				"projectname": $scope.project.projectname,"customername":$scope.project.customername,"billable":$scope.project.billable});
+	$scope.addproject = function(projectname,customername,billable,startDate,endDate,taskstatus){
+				var startdate=$scope.project.startDate;
+				var enddate=$scope.project.endDate;
+				
+				var menuJson = angular.toJson({
+					"projectname": $scope.project.projectname,"customername":$scope.project.customername,"billable":$scope.project.billable,"startdate":$scope.project.startDate,"enddate":$scope.project.endDate,"status":$scope.project.status});
+				
+				
+				
+				if (startdate > enddate) {
+					$(".alert-danger").html("End Date cannot be Before Start Date...!");
+					return;
+							
+		          }
+				
+				else{
 			$http({
 				url: 'rest/project/addproject',
 				method: 'POST',
@@ -270,9 +314,22 @@ angular.module('myApp.controllers')
 			url: 'rest/account/logout',
 			method: 'GET',
 		}).success(function(result, status, headers) {
+			delete $localStorage.projectList;
 
 			$state.go('login')
 		})
 	}
 
 }])
+.directive('autoComplete', function($timeout) {
+	return function(scope, iElement, iAttrs) {
+		iElement.autocomplete({
+			source: scope[iAttrs.uiItems],
+			select: function() {
+				$timeout(function() {
+					iElement.trigger('#hello');
+				}, 0);
+			}
+		});
+	};
+});

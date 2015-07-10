@@ -2,7 +2,7 @@
 
 angular.module('myApp.controllers')
 
-.controller('listcontroller', ['$scope', '$http', '$state','$rootScope', function($scope, $http, $state, $rootScope) {
+.controller('listcontroller', ['$scope', '$http', '$state','$rootScope','$localStorage', function($scope, $http, $state, $rootScope,$localStorage) {
 
 	    
    	$scope.filteredParticipantsResults = []
@@ -95,7 +95,24 @@ angular.module('myApp.controllers')
 				console.log(result);
 				
 				$scope.projectList=result;
+				$localStorage.projectList = result;
 			});
+	
+	
+	$scope.allProjectList = function(){
+				$http({
+					url: 'rest/project/showProjectlist',
+					method: 'GET',
+					/* data: menuJson,*/
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				}).success(function(result, status, headers) {
+		
+					$localStorage.allProjectList = result;
+		
+				})
+			}
 
 	$scope.list = function() {
 		

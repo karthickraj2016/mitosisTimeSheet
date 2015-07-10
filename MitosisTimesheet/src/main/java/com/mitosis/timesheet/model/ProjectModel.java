@@ -1,5 +1,7 @@
 package com.mitosis.timesheet.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,6 +30,15 @@ public class ProjectModel{
 
 	@Column(name="billable")
 	private String billable;
+	
+	@Column(name="start_date")
+	private Date startDate;
+	
+	@Column(name="end_date")
+	private Date endDate;
+	
+	@Column(name="task_status")
+	private String taskStatus;
 
 	public int getProjectId() {
 		return projectId;
@@ -59,6 +70,31 @@ public class ProjectModel{
 	public void setBillable(String billable) {
 		this.billable = billable;
 	}
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+	
+	public String getTaskStatus() {
+		return taskStatus;
+	}
+
+	public void setTaskStatus(String taskStatus) {
+		this.taskStatus = taskStatus;
+	}
+
+
+
 }
 
 

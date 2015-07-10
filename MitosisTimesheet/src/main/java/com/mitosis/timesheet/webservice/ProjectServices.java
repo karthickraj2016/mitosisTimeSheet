@@ -1,7 +1,10 @@
 package com.mitosis.timesheet.webservice;
 
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -23,71 +26,80 @@ import com.mitosis.timesheet.service.impl.ProjectServiceImpl;
 public class ProjectServices {
 	ProjectModel project = new ProjectModel();
 	ProjectService projectservice = new ProjectServiceImpl();
-		
+
 	@Path("/addproject")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public boolean addProject(JSONObject jsonObject) throws JSONException{
-		  boolean add;
-		  project.setProjectName(jsonObject.getString("projectname"));
-		  project.setCustomerName(jsonObject.getString("customername"));
-		  project.setBillable(jsonObject.getString("billable"));
-		    add = projectservice.update(project);
-		    if (add==true) {
-		      return true;
-		    } else {
-		      return false;
-		    }
+	public boolean addProject(JSONObject jsonObject) throws JSONException, ParseException{
+		boolean add;
+		DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+		String startDateInString = jsonObject.getString("startdate");
+		Date startDate = sdf.parse(startDateInString); 
+		String endDateInString = jsonObject.getString("enddate");
+		Date endDate = sdf.parse(endDateInString); 
+		project.setProjectName(jsonObject.getString("projectname"));
+		project.setCustomerName(jsonObject.getString("customername"));
+		project.setBillable(jsonObject.getString("billable"));
+		project.setStartDate(startDate);
+		project.setEndDate(endDate);
+		project.setTaskStatus(jsonObject.getString("status"));
+		add = projectservice.update(project);
+		if (add==true) {
+			return true;
+		} else {
+			return false;
+		}
 	}
-		
+
 	@Path("/updateproject")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public boolean updateProject(JSONObject jsonObject) throws JSONException ,Exception{
-		 boolean update;
-		  project.setProjectId(jsonObject.getInt("projectId"));
-		  project.setProjectName(jsonObject.getString("projectName"));
-		  project.setCustomerName(jsonObject.getString("customerName"));
-		  project.setBillable(jsonObject.getString("billable"));
-		  update = projectservice.update(project);
-		    if (update==true) {
-		      return true;
-		    } else {
-		      return false;
-		    }
-		    
+		boolean update;
+		project.setProjectId(jsonObject.getInt("projectId"));
+		project.setProjectName(jsonObject.getString("projectName"));
+		project.setCustomerName(jsonObject.getString("customerName"));
+		project.setBillable(jsonObject.getString("billable"));
+		update = projectservice.update(project);
+		if (update==true) {
+			return true;
+		} else {
+			return false;
+		}
+
 	}
-	
+
 	@Path("/removeproject")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public boolean removeProject(JSONObject jsonObject) throws JSONException{
-		 boolean delete;
-		  int projectId=jsonObject.getInt("projectId");
-		   delete = projectservice.removeProjectById(projectId);
-		    if (delete) {
-		      return true;
-		    } else {
-		      return false;
-		    }
+		boolean delete;
+		int projectId=jsonObject.getInt("projectId");
+		delete = projectservice.removeProjectById(projectId);
+		if (delete) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	@Path("/showProjectlist")
 	@GET
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-  public List<ProjectModel> showlist() throws JSONException, ParseException {
-		        
-    List<ProjectModel> projectlist = new ArrayList<ProjectModel>();
-    
-    projectlist = projectservice.showlist();
+	public List<ProjectModel> showlist() throws JSONException, ParseException {
 
-    return projectlist;
-    
+		List<ProjectModel> projectlist = new ArrayList<ProjectModel>();
+
+		projectlist = projectservice.showlist();
+
+		return projectlist;
+
 	}
-	
+
 	@POST
 	@Path("/nameValidation")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -101,24 +113,24 @@ public class ProjectServices {
 		if(projectId!=0){
 			name=projectservice.getProjectName(projectId);
 			compare=name.equalsIgnoreCase(projectName);
-		if(!compare){
-			namevalidation = projectservice.checkProjectName(projectName);
-			if (namevalidation != true) {
+			if(!compare){
+				namevalidation = projectservice.checkProjectName(projectName);
+				if (namevalidation != true) {
+					return true;
+				} else {
+					return false;
+				}
+			}else{
 				return true;
-			} else {
-				return false;
 			}
-		}else{
-			return true;
 		}
-	}
 		namevalidation = projectservice.checkProjectName(projectName);
-	    	System.out.println(namevalidation);
+		System.out.println(namevalidation);
 		if (namevalidation != true) {
 			return true;
 		} else {
 			return false;
 		}
 	}
- 
+
 }
