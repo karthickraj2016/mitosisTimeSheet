@@ -130,33 +130,78 @@ angular.module('myApp.controllers')
      	
      	
      },
+     
+     
+     $scope.checkuserdetails = function(){
+    	 
+    	 var menuJson = angular.toJson({
+ 			"name": $scope.name,"email":$scope.email,"username":$scope.username
+
+ 		});
+     	
+     	var emailId = $scope.email;
+ 		
+ 		$scope.validateEmail = function($email) {
+
+ 			var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+ 			return emailReg.test( $email );
+ 		}
+ 		
+ 		var lstIndex = emailId.lastIndexOf('@');
+ 		if( !$scope.validateEmail(emailId)) {
+ 			$(".alert-msg1").show().delay(1000).fadeOut(); 
+ 			$(".alert-danger").html("EmailId is not valid");
+ 			return;
+ 		} else if(emailId.substring(lstIndex + 1)!='mitosistech.com') {
+ 			$(".alert-msg1").show().delay(1500).fadeOut(); 
+ 			$(".alert-danger").html("Invalid domain name, use only mitosistech.com");
+ 			return;
+ 		}
+ 		else{
+
+ 	    	$http({
+ 	    		url: 'rest/accountdetails/checkmailid',
+ 	    		method: 'POST',
+ 	    		data:menuJson,
+ 	    		headers: {
+ 	    			'Content-Type': 'application/json'
+ 	    		}
+ 	    	}).success(function(result, status, headers) {
+ 	    		
+ 	    		if( !result) {
+ 	    			$(".alert-msg1").show().delay(1000).fadeOut(); 
+ 	    			$(".alert-danger").html("Email Id already exists!!!.. Please give a different mail id..!");
+ 	    			return;
+ 	    		} else{
+ 	    			$scope.edituserdetails();
+ 	    			
+ 	    			
+ 	    		}
+ 	    			
+ 	    		
+ 	    		
+
+ 	    	});
+ 	    	
+ 			
+ 			
+ 			
+ 			
+ 		}
+ 		
+    	 
+    	 
+    	 
+     }
    
     $scope.edituserdetails = function(){
     	
-    	var menuJson = angular.toJson({
+    	
+    	 
+   	 var menuJson = angular.toJson({
 			"name": $scope.name,"email":$scope.email,"username":$scope.username
 
 		});
-    	
-    	var emailId = $scope.email;
-		
-		$scope.validateEmail = function($email) {
-
-			var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-			return emailReg.test( $email );
-		}
-		
-		var lstIndex = emailId.lastIndexOf('@');
-		if( !$scope.validateEmail(emailId)) {
-			$(".alert-msg1").show().delay(1000).fadeOut(); 
-			$(".alert-danger").html("EmailId is not valid");
-			return;
-		} else if(emailId.substring(lstIndex + 1)!='mitosistech.com') {
-			$(".alert-msg1").show().delay(1500).fadeOut(); 
-			$(".alert-danger").html("Invalid domain name, use only mitosistech.com");
-			return;
-		}
-		
     	
     	
     	$http({

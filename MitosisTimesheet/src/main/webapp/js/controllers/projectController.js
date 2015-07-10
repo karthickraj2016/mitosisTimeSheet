@@ -3,11 +3,11 @@
 angular.module('myApp.controllers')
 
 
-.controller('projectController', ['$scope', '$http', '$state','$localStorage','$rootScope', function($scope, $http, $state,$localStorage, $rootScope) {
+.controller('projectController', ['$scope', '$http', '$state','$localStorage','$rootScope','filterFilter', function($scope, $http, $state,$localStorage, $rootScope,filterFilter) {
 	$scope.filteredParticipantsResults = []
-	,$scope.currentPage = 1
-	,$scope.numPerPage = 8
-	,$scope.maxSize = 5;
+	,/*$scope.currentPage = 1*/
+	$scope.numPerPage = 8
+	,$scope.maxSize = 8;
 
 	$scope.check = function(sheet){
 		if(sheet.projectName == '' || sheet.projectName == undefined){
@@ -144,8 +144,18 @@ angular.module('myApp.controllers')
 				$scope.filteredParticipantsResults = $scope.projectlist.slice(begin, end);
 				$scope.totalItems =	$scope.projectlist.length;
 			});
+			
+			 $scope.setPage = function(pageNo) {
+			        $scope.currentPage = pageNo;
+			    };
+			$scope.noOfPages = Math.ceil($scope.projectlist.length/$scope.maxSize);
+			 $scope.$watch('search', function(term) {
+				 
+				 $scope.filtered = filterFilter($scope.projectlist, term);
+			        $scope.noOfPages = Math.ceil($scope.filtered.length/$scope.maxSize);
+			    });
 
-		})
+		});
 	}
 
 	
@@ -305,4 +315,13 @@ angular.module('myApp.controllers')
 			}
 		});
 	};
+})
+.filter('startFrom', function() {
+    return function(input, start) {
+        if(input) {
+            start = +start; //parse to int
+            return input.slice(start);
+        }
+        return [];
+    }
 });

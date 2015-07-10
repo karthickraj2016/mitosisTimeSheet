@@ -95,4 +95,29 @@ public class AccountDetailsDaoImpl extends BaseService implements AccountDetails
 		}
 	}
 
+
+	@Override
+	public boolean checkMailId(String MailId) {
+		UserDetailsModel userDetailsModel = new UserDetailsModel();
+		boolean checkMailId = true;
+		try{
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<UserDetailsModel> cq = qb.createQuery(UserDetailsModel.class);
+			Root<UserDetailsModel> root = cq.from(UserDetailsModel.class);
+			cq.where(qb.equal(root.get("email"), MailId));
+			cq.select(root);
+			userDetailsModel = entityManager.createQuery(cq).getSingleResult();	
+			checkMailId = false;
+		}
+		catch(Exception e){
+		e.printStackTrace();
+
+		}finally{
+			close();
+		}
+		return checkMailId;
+	}
+
 }

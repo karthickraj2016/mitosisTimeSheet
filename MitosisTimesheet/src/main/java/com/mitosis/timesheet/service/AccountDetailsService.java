@@ -10,5 +10,7 @@ public interface AccountDetailsService {
 	public boolean updateNewPassword(UserDetailsVo userDetailsVo);
 	
 	public boolean updateDetails(UserDetailsVo userDetailsVo);
+	
+	public boolean checkMailId(String mailId);
 
 }

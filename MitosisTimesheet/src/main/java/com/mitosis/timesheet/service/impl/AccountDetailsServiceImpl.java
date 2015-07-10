@@ -67,6 +67,15 @@ public class AccountDetailsServiceImpl implements AccountDetailsService{
 		return updatepassword;
 	}
 
+
+	@Override
+	public boolean checkMailId(String mailId) {
+		// TODO Auto-generated method stub
+		
+		boolean checkmailid = accountDetailsDao.checkMailId(mailId);
+		return checkmailid;
+	}
+
 	
 
 	

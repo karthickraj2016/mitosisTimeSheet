@@ -13,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import com.google.gson.JsonObject;
 import com.mitosis.timesheet.commonservice.JavaMD5Hash;
 import com.mitosis.timesheet.pojo.UserDetailsVo;
 import com.mitosis.timesheet.service.AccountDetailsService;
@@ -107,6 +108,22 @@ public class Account {
 		 }
 
 		
+	}
+	
+	@POST
+	@Path("/checkmailid")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public boolean checkmailid(JSONObject jsonObject) throws JSONException{
+		
+		String MailId = jsonObject.getString("email");
+		
+		boolean checkmailId = accountDetailsService.checkMailId(MailId);
+		
+		
+		
+		return checkmailId;
+	
 	}
 	
 	

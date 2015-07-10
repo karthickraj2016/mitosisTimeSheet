@@ -10,4 +10,6 @@ public interface AccountDetailsDao {
 	public boolean updateNewPassword(UserDetailsModel userDetailsModel);
 	
 	public boolean updateDetails(UserDetailsModel userDetailsModel);
+	
+	public boolean checkMailId(String MailId);
 }
