@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.mitosis.timesheet.dao.ProjectDAO;
 import com.mitosis.timesheet.dao.daoImpl.ProjectDAOImpl;
+import com.mitosis.timesheet.model.CustomerDetailsModel;
 import com.mitosis.timesheet.model.ProjectModel;
 import com.mitosis.timesheet.service.ProjectService;
 
@@ -68,5 +69,15 @@ public class ProjectServiceImpl implements ProjectService {
 			name = ProjectDAO.getProjectName(projectId);
 				
 			return name;
+		}
+
+		@Override
+		public List<CustomerDetailsModel> getCustomerList() {
+			
+			List<CustomerDetailsModel> customerList = new ArrayList<CustomerDetailsModel>();
+			
+		     customerList = ProjectDAO.getCustomerlist();
+			
+			return customerList;
 		}
 }

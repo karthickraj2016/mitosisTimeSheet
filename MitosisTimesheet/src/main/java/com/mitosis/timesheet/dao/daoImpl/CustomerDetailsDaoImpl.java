@@ -97,6 +97,30 @@ public class CustomerDetailsDaoImpl extends BaseService implements CustomerDetai
 	}
 
 	@Override
+	public boolean nameValidation(String name) {
+		
+		CustomerDetailsModel customerModel=new CustomerDetailsModel();
+		
+		try {
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<CustomerDetailsModel> cq = qb.createQuery(CustomerDetailsModel.class);
+			Root<CustomerDetailsModel> root = cq.from(CustomerDetailsModel.class);
+			cq.where(qb.equal(root.get("customerName"), name));
+			cq.select(root);
+			customerModel = entityManager.createQuery(cq).getSingleResult();
+			commit();
+			flag = true;
+		} catch (Exception e) {
+			return flag;
+		} finally {
+			close();
+		}
+		return flag;
+    }
+	
+	@Override
 	public boolean mailValidation(String mail) {
 		
 		CustomerDetailsModel customerModel=new CustomerDetailsModel();

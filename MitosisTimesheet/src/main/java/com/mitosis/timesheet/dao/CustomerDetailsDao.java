@@ -14,6 +14,8 @@ public interface CustomerDetailsDao {
 
 	public List<CustomerDetailsModel> showCustomerlist();
 
+	public boolean nameValidation(String name);
+	
 	public boolean mailValidation(String mail);
 
 }

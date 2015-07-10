@@ -59,6 +59,18 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 	}
 
 	@Override
+	public boolean nameValidation(String name) {
+		
+		boolean validation=false;
+		
+		CustomerDetailsDao customerDao=new CustomerDetailsDaoImpl();
+		
+		validation=customerDao.nameValidation(name);
+	
+		return validation;
+	}
+	
+	@Override
 	public boolean mailValidation(String mail) {
 		
 		boolean validation=false;

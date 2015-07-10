@@ -12,11 +12,17 @@ angular.module('myApp.controllers')
 	$scope.check = function(sheet){
 		if(sheet.projectName == '' || sheet.projectName == undefined){
 			return true;
-		} else if(sheet.customerName == '' || sheet.customerName == undefined) {
+		} else if(sheet.customer.customerName == '' || sheet.customer.customerName == undefined) {
 			return true;
 		} else if(sheet.billable == '' || sheet.billable == undefined) {
 			return true;
-		} else{
+		}  else if(sheet.startEntryDate == '' || sheet.startEntryDate == undefined) {
+			return true;
+		} else if(sheet.endEntryDate == '' || sheet.endEntryDate == undefined) {
+			return true;
+		} else if(sheet.status == '' || sheet.status == undefined) {
+			return true;
+		}else{
 			return false;
 		}
 
@@ -119,23 +125,9 @@ angular.module('myApp.controllers')
 		}
 	});
 
-	$('#customer').blur(function(){
-		var customerName=$('#customer').val();
-		if(customerName!=""){
-			if(customerName.length>100){
-
-				$(".alert-msg1").show().delay(1500).fadeOut(); 
-				$(".alert-danger").html("Only 100 letters are Allowed in Customer Field");
-				$('#customer').val(''); 
-				$('#customer').focus();
-			}
-		}
-	});
 	$scope.list = function() {
 		
-		
-		
-		$scope.projectlist = $localStorage.allProjectList;
+			$scope.projectlist = $localStorage.allProjectList;
 				$scope.projectnames = [];
 				for(var i=0; i < $scope.projectlist.length; i++){
 					$scope.projectnames.push($scope.projectlist[i].projectName);
@@ -148,6 +140,22 @@ angular.module('myApp.controllers')
 				});
 	}
 
+	
+	$http({
+
+		url: 'rest/project/getCustomerList',
+		method: 'GET',
+		/*data: menuJson,*/
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	}).success(function(result, status, headers) {
+
+		console.log(result);
+
+		$scope.customerlist=result;
+	});
+	
 		/*$http({
 			url: 'rest/project/showProjectlist',
 			method: 'GET',
@@ -167,16 +175,14 @@ angular.module('myApp.controllers')
 			});
 
 		})
-	}*/,
+	}*/
 
-	$scope.addproject = function(projectname,customername,billable,startDate,endDate,taskstatus){
+	$scope.addproject = function(projectname,customer,billable,startDate,endDate,taskstatus){
 				var startdate=$scope.project.startDate;
 				var enddate=$scope.project.endDate;
 				
 				var menuJson = angular.toJson({
-					"projectname": $scope.project.projectname,"customername":$scope.project.customername,"billable":$scope.project.billable,"startdate":$scope.project.startDate,"enddate":$scope.project.endDate,"status":$scope.project.status});
-				
-				
+					"projectname": $scope.project.projectname,"customerId":$scope.customer.customerId,"billable":$scope.project.billable,"startdate":$scope.project.startDate,"enddate":$scope.project.endDate,"status":$scope.project.status});
 				
 				if (startdate > enddate) {
 					$(".alert-danger").html("End Date cannot be Before Start Date...!");
@@ -237,31 +243,10 @@ angular.module('myApp.controllers')
 		}
 	}
 
-	$scope.onblur = function(e) {
-
-		var name=e;
-
-		var customerName=$('#'+name).val();
-		if(customerName!=""){
-			if(customerName.length>100){
-
-				$(".alert-msg1").show().delay(1500).fadeOut(); 
-				$(".alert-danger").html("Only 100 letters are Allowed in Customer Field");
-				$('#'+name).val(''); 
-				$('#'+name).focus();
-			}
-		}
-	}
-
+	
 	$scope.updateproject = function(reqParam){
 
-		var customer=reqParam.customerName;
-		if(customer.length>100){
-			$(".alert-msg1").show().delay(1500).fadeOut(); 
-			$(".alert-danger").html("Only 100 letters are Allowed in Customer Field...");
-			$scope.list();
-			return;
-		}else{
+	
 			$http({
 				url: 'rest/project/updateproject',
 				method: 'POST',
@@ -276,7 +261,6 @@ angular.module('myApp.controllers')
 					$state.go('project')
 				}
 			})
-		}	
 	},
 
 	$scope.confirmDelete = function(projectId){

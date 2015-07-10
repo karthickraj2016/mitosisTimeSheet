@@ -45,7 +45,9 @@
        <input type="text" auto-complete ui-items="projectnames" id="name" required class="form-control"  ng-model="project.projectname" placeholder="Project Name"></input>
      </div>
 	<div class="form-group">
-       <input type="text" required id="customer" class="form-control" ng-model="project.customername" onkeypress="return ValidateAlpha(event)" placeholder="Customer">
+    <select id="customer" class="form-control" required ng-model="customer" ng-options="item as item.customerName for item in customerlist"  style="color: #777777;">
+    <option value="">Customer</option>
+    </select> 
     </div>
     <div class="form-group" style="word-spacing: 0;">
    <!--  <span for="dropdown"  style="font-size: 20px;">Billable</span> -->
@@ -65,7 +67,7 @@
     <!-- <span for="dropdown"  style="font-size: 20px;">Project Status</span> -->
     <select class="form-control" required ng-model="project.status">
     <option value="" selected disabled>Status</option>
-	<option>Open</option>
+	<option>Opened</option>
 	<option>Closed</option>
 	</select>
 	</div>
@@ -86,6 +88,9 @@
 			<th class="">Project Name</th>
 			<th class="">Customer</th>
 			<th class="">Billable</th>
+			<th class="">Start Date</th>
+			<th class="">End Date</th>
+			<th class="">Status</th>
 		    <th></th>
 		</tr>
 	</thead>
@@ -97,9 +102,13 @@
 				<span style="color:red" ng-show="sheet.projectName == '' || sheet.projectName == undefined">Required</span>
 			</td>
 			<td>
-				<span ng-show="!showEdit">{{sheet.customerName}}</span>
-				<span ng-show="showEdit"><input class="form-control" id={{sheet.projectName}} type="text" ng-model="sheet.customerName" onkeypress="return ValidateAlpha(event)" ng-blur="onblur(sheet.projectName)"></span>
-				<span style="color:red" ng-show="sheet.customerName == '' || sheet.customerName == undefined">Required</span>
+				<span ng-show="!showEdit">{{sheet.customer.customerName}}</span>
+				<span ng-show="showEdit">
+				<select  class="form-control" required ng-model="sheet.customer" ng-options="item as item.customerName for item in customerlist" style="color: #777777;">
+    			<option value="">{{sheet.customer.customerName}}</option>
+    			</select> 
+				</span>
+				<span style="color:red" ng-show="sheet.customer.customerName == '' || sheet.customer.customerName == undefined">Required</span>
 			</td>
 			<td>
 				<span ng-show="!showEdit">{{sheet.billable}}</span>
@@ -109,6 +118,26 @@
 				<option>No</option>
 				</select></span>
 				<span style="color: red" ng-show="sheet.billable == '' || sheet.billable == undefined">Required</span>
+			</td>
+			<td>
+				<span ng-show="!showEdit">{{sheet.startEntryDate}}</span>
+				<span ng-show="showEdit"><input class="form-control" ui-date="dateOptions" ui-date-format="dd-mm-yy" type="text" ng-model="sheet.startEntryDate"></span>
+				<span style="color:red" ng-show="sheet.startEntryDate == '' || sheet.startEntryDate == undefined">Required</span>
+			</td>
+			<td>
+				<span ng-show="!showEdit">{{sheet.endEntryDate}}</span>
+				<span ng-show="showEdit"><input class="form-control" ui-date="dateOptions" ui-date-format="dd-mm-yy" type="text" ng-model="sheet.endEntryDate"></span>
+				<span style="color:red" ng-show="sheet.endEntryDate == '' || sheet.endEntryDate == undefined">Required</span>
+			</td>
+			<td>
+				<span ng-show="!showEdit">{{sheet.status}}</span>
+				<span ng-show="showEdit">
+				<select style="margin-top: 7px;" ng-model="sheet.status">
+    			<option value="" selected disabled>{{sheet.status}}</option>
+	            <option>Opened</option>
+	            <option>Closed</option>
+				</select></span>
+				<span style="color: red" ng-show="sheet.status == '' || sheet.status == undefined">Required</span>
 			</td>
 			<td style="word-spacing: 15px;">
 			

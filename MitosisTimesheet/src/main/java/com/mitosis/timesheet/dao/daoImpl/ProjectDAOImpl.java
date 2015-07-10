@@ -1,5 +1,6 @@
 package com.mitosis.timesheet.dao.daoImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -7,7 +8,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import com.mitosis.timesheet.dao.ProjectDAO;
+import com.mitosis.timesheet.model.CustomerDetailsModel;
 import com.mitosis.timesheet.model.ProjectModel;
+import com.mitosis.timesheet.model.UserDetailsModel;
 import com.mitosis.timesheet.util.*;
 
 public class ProjectDAOImpl extends BaseService implements ProjectDAO {
@@ -127,5 +130,25 @@ public class ProjectDAOImpl extends BaseService implements ProjectDAO {
 			close();
 		}
 		return name;
+	}
+
+	@Override
+	public List<CustomerDetailsModel> getCustomerlist() {
+		List<CustomerDetailsModel> customerlist = new ArrayList<CustomerDetailsModel>();
+		try{
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<CustomerDetailsModel> cq = qb.createQuery(CustomerDetailsModel.class);
+			Root<CustomerDetailsModel> root = cq.from(CustomerDetailsModel.class);
+			cq.select(root);
+			cq.orderBy(qb.asc(root.get("customerName")));
+			customerlist = entityManager.createQuery(cq).getResultList();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close();
+		}
+		return customerlist;
 	}
 }

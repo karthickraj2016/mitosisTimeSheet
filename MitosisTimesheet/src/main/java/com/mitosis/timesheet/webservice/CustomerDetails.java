@@ -147,6 +147,27 @@ public class CustomerDetails {
 		return customerlist;
 
 	}
+	
+	@Path("/nameValidation")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+
+	public JSONObject nameValidation(JSONObject jsonObject) throws JSONException{
+
+		boolean validation=false;
+
+		String name=jsonObject.getString("name");
+
+		validation=customerService.nameValidation(name);
+
+		if(validation){
+			json.put("value", "Already Exist");
+		}else{
+			json.put("value", "Not Exist");
+		}
+		return json;
+	}
 
 	@Path("/mailValidation")
 	@POST
@@ -168,4 +189,5 @@ public class CustomerDetails {
 		}
 		return json;
 	}
+	
 }

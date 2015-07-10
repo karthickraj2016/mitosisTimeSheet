@@ -36,16 +36,23 @@ angular.module('myApp.controllers')
 		 $scope.toDate=dt;
 	};
 	
-	$scope.dateOptions = {
+	$scope.dateOptionsFrom = {
+			changeYear: true,
+			changeMonth: true,
+			dateFormat: 'dd-mm-yy',
+			onSelect: function(selected) {
+				$scope.toDate=selected;
+			  $scope.dateOptionsTo("option","minDate", selected)
+	        }
+
+	};
+	
+	$scope.dateOptionsTo = {
 			changeYear: true,
 			changeMonth: true,
 			dateFormat: 'dd-mm-yy',
 	};
 
-	$scope.fromdatechange = function(fromDate){
-		$scope.toDate = fromDate;
-	};
-	
 	/*$http({
 		url: 'rest/account/getName',
 		method: 'GET',

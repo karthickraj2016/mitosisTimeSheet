@@ -14,12 +14,12 @@
     <div class="collapse navbar-collapse" id="myNavbar" ng-controller="HeaderController">
       <ul class="nav navbar-nav" style="margin-left: 30px; margin-top: 8px;">
         <li ng-class="{ active: isActive('/timesheet')}"><a ui-sref="timesheet">Home</a></li>
-        <li ng-show="manageProject" ng-class="{ active: isActive('/project')}"><a ui-sref="project">Project Details</a></li>
+       <li ng-show="manageProject" ng-class="{ active: isActive('/project')}"><a ui-sref="project">Project Details</a></li>
         <li ng-show="manageTeam" ng-class="{ active: isActive('/teamAssignment')}"><a ui-sref="teamAssignment">Team Assignment</a></li>
-        <li ng-show="manageCustomer" ng-class="{ active: isActive('/customerDetails')}"><a ui-sref="customerDetails">Customer Details</a></li>
-        <li ng-class="{ active: isActive('/reports')}"><a class="dropdown-toggle" data-toggle="dropdown"> Reports<span class="caret"></span></a>
-       <ul class="dropdown-menu">
-            <li><a ui-sref="individualreport">Individual Reports</a></li>
+      <li ng-show="manageCustomer" ng-class="{ active: isActive('/customerDetails')}"><a ui-sref="customerDetails">Customer Details</a></li>
+       <li ng-class="{ active: isActive('/reports')}"><a class="dropdown-toggle" data-toggle="dropdown"> Reports<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li><a ui-sref="individualreport" >Individual Reports</a></li>
             <li><a ui-sref="teamreport">Team Reports</a></li>
           </ul>
         </li>
@@ -27,7 +27,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li class="lb-username"><lable ng-model="name">Welcome {{name}}</lable></li>
         <li><a style="padding-left: 0;" ui-sref="account"><button class="btn btn-sm btn-primary">Account</button></a></li>
-        <li><button class="btn btn-sm btn-primary btn-logout" ng-click="logout();">Logout</button></li>
+        <li><button class="btn btn-sm btn-primary btn-logout" ng-click="logout()">Logout</button></li>
       </ul>
     </div>
   </div>
@@ -42,7 +42,7 @@
 <form class="form-inline project-form" role="form" id="addEntry" ng-submit="addCustomerDetails(customer)">		
 
 	<div class="form-group">
-       <input type="text" id="name"  class="form-control"  ng-model="customer.customerName" placeholder="Customer Name">
+       <input type="text" id="customerName" required class="form-control"  ng-model="customer.customerName" ng-blur="nameValidation()" placeholder="Customer Name">
     </div>
 	<div class="form-group">
        <input type="text"  id="customerMail" class="form-control" ng-model="customer.email" ng-blur="mailValidation()" placeholder="Email">

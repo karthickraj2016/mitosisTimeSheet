@@ -93,6 +93,34 @@ angular.module('myApp.controllers')
 		})
 	},
 
+	$scope.nameValidation = function(){
+
+		var name=$('#customerName').val();
+		
+		if(name!=""){
+
+			var menuJson=angular.toJson({"name":name});
+			console.log(menuJson);
+
+			$http({
+				url: 'rest/customerDetails/nameValidation',
+				method: 'POST',
+				data: menuJson,
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).success(function(result, status, headers) {
+
+				if(result.value=="Already Exist"){
+					$('#customerName').val('');
+					$('#customerName').focus();
+					$(".alert-msg1").show().delay(1000).fadeOut(); 
+					$(".alert-danger").html("Name Already Exists");
+				}
+			})
+		}
+	},
+			
 	$scope.mailValidation = function(){
 
 		var mail=$('#customerMail').val();

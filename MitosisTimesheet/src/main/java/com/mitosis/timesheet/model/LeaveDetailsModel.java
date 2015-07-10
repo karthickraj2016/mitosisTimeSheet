@@ -43,6 +43,9 @@ public class LeaveDetailsModel {
 	
 	@Transient
 	private String frmEntryDate;
+	
+	@Transient
+	private String toEntryDate;
 
 	public String getFrmEntryDate() {
 		Date d= getFromDate();
@@ -52,10 +55,7 @@ public class LeaveDetailsModel {
 	public void setFrmEntryDate(String frmEntryDate) {
 		this.frmEntryDate = frmEntryDate;
 	}
-	
-	@Transient
-	private String toEntryDate;
-
+		
 	public String getToEntryDate() {
 		Date d= getToDate();
 		toEntryDate = new SimpleDateFormat("dd-MM-yyyy").format(d);

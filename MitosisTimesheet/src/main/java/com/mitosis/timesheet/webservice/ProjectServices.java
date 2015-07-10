@@ -17,7 +17,9 @@ import javax.ws.rs.core.MediaType;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import com.mitosis.timesheet.model.CustomerDetailsModel;
 import com.mitosis.timesheet.model.ProjectModel;
+import com.mitosis.timesheet.model.UserDetailsModel;
 import com.mitosis.timesheet.service.ProjectService;
 import com.mitosis.timesheet.service.impl.ProjectServiceImpl;
 
@@ -39,12 +41,15 @@ public class ProjectServices {
 		Date startDate = sdf.parse(startDateInString); 
 		String endDateInString = jsonObject.getString("enddate");
 		Date endDate = sdf.parse(endDateInString); 
+		CustomerDetailsModel customer=new CustomerDetailsModel();
+		
 		project.setProjectName(jsonObject.getString("projectname"));
-		project.setCustomerName(jsonObject.getString("customername"));
+		customer.setCustomerId(jsonObject.getInt("customerId"));
+		project.setCustomer(customer);
 		project.setBillable(jsonObject.getString("billable"));
 		project.setStartDate(startDate);
 		project.setEndDate(endDate);
-		project.setTaskStatus(jsonObject.getString("status"));
+		project.setStatus(jsonObject.getString("status"));
 		add = projectservice.update(project);
 		if (add==true) {
 			return true;
@@ -58,11 +63,24 @@ public class ProjectServices {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public boolean updateProject(JSONObject jsonObject) throws JSONException ,Exception{
+		
 		boolean update;
+		CustomerDetailsModel customer=new CustomerDetailsModel();
+		DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+		String startDateInString = jsonObject.getString("startdate");
+		Date startDate = sdf.parse(startDateInString); 
+		String endDateInString = jsonObject.getString("enddate");
+		Date endDate = sdf.parse(endDateInString); 
+		
 		project.setProjectId(jsonObject.getInt("projectId"));
 		project.setProjectName(jsonObject.getString("projectName"));
-		project.setCustomerName(jsonObject.getString("customerName"));
+		customer.setCustomerId(jsonObject.getInt("customerId"));
+		project.setCustomer(customer);
 		project.setBillable(jsonObject.getString("billable"));
+		project.setStartDate(startDate);
+		project.setEndDate(endDate);
+		project.setStatus(jsonObject.getString("status"));
 		update = projectservice.update(project);
 		if (update==true) {
 			return true;
@@ -131,6 +149,20 @@ public class ProjectServices {
 		} else {
 			return false;
 		}
+	}
+	
+	@Path("/getCustomerList")
+	@GET
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<CustomerDetailsModel> getMemberlist() throws JSONException {
+
+		List<CustomerDetailsModel> customerList = new ArrayList<CustomerDetailsModel>();
+
+		customerList = projectservice.getCustomerList();
+
+		return customerList;
+
 	}
 
 }
