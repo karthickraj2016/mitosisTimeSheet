@@ -1,14 +1,11 @@
 package com.mitosis.timesheet.dao.daoImpl;
 
 import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import com.mitosis.timesheet.dao.AccountDetailsDao;
 import com.mitosis.timesheet.model.UserDetailsModel;
-import com.mitosis.timesheet.pojo.UserDetailsVo;
-import com.mitosis.timesheet.service.AccountDetailsService;
 import com.mitosis.timesheet.util.BaseService;
 
 public class AccountDetailsDaoImpl extends BaseService implements AccountDetailsDao{

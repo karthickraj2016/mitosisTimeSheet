@@ -53,10 +53,10 @@ angular.module('myApp.controllers')
 			dateFormat: 'dd-mm-yy',
 	};
 
-	/*$http({
+	$http({
 		url: 'rest/account/getName',
 		method: 'GET',
-		data: menuJson,
+		/*data: menuJson,*/
 		headers: {
 			'Content-Type': 'application/json'
 		}
@@ -67,7 +67,7 @@ angular.module('myApp.controllers')
 			$rootScope.name=result;
 			
 		}
-	});*/
+	});
 	
 	$http({
 
@@ -85,8 +85,8 @@ angular.module('myApp.controllers')
 		
 		for(var i=0;i<$scope.employeeNameList.length;i++){
 		    if($scope.employeeNameList[i].adminFlag >= 1){
-		     $scope.employeeNameList[i];
-		    }
+		     $scope.employeeNameList.splice(i,1);
+		   }
 		}
 		console.log($scope.employeeNameList);
 	});
