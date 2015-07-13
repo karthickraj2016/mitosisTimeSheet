@@ -18,13 +18,11 @@ angular.module('myApp.controllers')
     		console.log(result);
     		
     		$scope.name=result.name;
-    		$scope.email=result.eMail;
+    		$scope.eMail=result.eMail;
     		$scope.username = result.userName;
-    		
-    		
+    		    		
     	});
-    	
-    	
+    
     },
     
     $http({
@@ -56,6 +54,7 @@ angular.module('myApp.controllers')
 		$scope.manageProject=result.manageProject;
 		$scope.manageTeam=result.manageTeam;
 		$scope.manageCustomer=result.manageCustomer;
+		$scope.mail=result.eMail;
 	});
     
     $scope.changepassword = function(){
@@ -63,10 +62,7 @@ angular.module('myApp.controllers')
     	$scope.currentpassword=$('#password').val();
     	$scope.newpassword=$('#newpassword').val();
     	$scope.confirmpassword =$('#confirmpassword').val();
-    	
-    	
-    	
-    	
+ 
     	var menuJson = angular.toJson({
 			"currentpassword": $scope.currentpassword,"newpassword":$scope.newpassword
 
@@ -78,9 +74,7 @@ angular.module('myApp.controllers')
 			$(".alert-danger").html("New password and Confirm password is not matched!!!!");
 			return;
     		
-    		
-    	}
-    	else{
+    	}else{
     		
     		$http({
     			url: 'rest/accountdetails/changepassword',
@@ -109,13 +103,9 @@ angular.module('myApp.controllers')
 				$('#confirmpassword').empty();
     			}
     		})
-    		
-    		
-    		
-    		
+    
     	}
-    	
-    	
+   
     },
     
     $scope.cancel = function(){
@@ -126,20 +116,17 @@ angular.module('myApp.controllers')
  	 	$('.btn-profile-save').hide();
  	 	$('.btn-profile-cancel').hide();
  	   $scope.accountList();	
-     	
-     	
-     	
+   
      },
-     
-     
+        
      $scope.checkuserdetails = function(){
     	 
     	 var menuJson = angular.toJson({
- 			"name": $scope.name,"email":$scope.email,"username":$scope.username
+ 			"name": $scope.name,"email":$scope.eMail,"username":$scope.username
 
  		});
      	
-     	var emailId = $scope.email;
+     	var emailId = $scope.eMail;
  		
  		$scope.validateEmail = function($email) {
 
@@ -157,8 +144,12 @@ angular.module('myApp.controllers')
  			$(".alert-danger").html("Invalid domain name, use only mitosistech.com");
  			return;
  		}
- 		else{
-
+ 		else if($scope.mail==emailId){
+ 			 
+ 			$scope.edituserdetails();
+ 		
+ 		}else{
+ 			 			
  	    	$http({
  	    		url: 'rest/accountdetails/checkmailid',
  	    		method: 'POST',
@@ -173,39 +164,22 @@ angular.module('myApp.controllers')
  	    			$scope.edituserdetails();
  	    			
  	    		} else{
- 	    		
- 	    			$(".alert-msg1").show().delay(1000).fadeOut(); 
+ 	    			
+ 		   			$(".alert-msg1").show().delay(1000).fadeOut(); 
  	    			$(".alert-danger").html("Email Id already exists!!!.. Please give a different mail id..!");
  	    			return;
- 	    			
- 	    			
+ 	     			
  	    		}
- 	    			
- 	    		
- 	    		
-
- 	    	});
- 	    	
- 			
- 			
- 			
- 			
- 		}
- 		
-    	 
-    	 
-    	 
-     }
+ 	     });
+ 	   	 			
+ 	}
+ }
    
     $scope.edituserdetails = function(){
-    	
-    	
-    	 
+  	 
    	 var menuJson = angular.toJson({
-			"name": $scope.name,"email":$scope.email,"username":$scope.username
-
+			"name": $scope.name,"email":$scope.eMail,"username":$scope.username
 		});
-    	
     	
     	$http({
     		url: 'rest/accountdetails/editdetails',
@@ -216,10 +190,8 @@ angular.module('myApp.controllers')
     		}
     	}).success(function(result, status, headers) {
     		
-
 			 if(result.msg=="updated"){
-
-			 
+		 
 			$(".span-profile").show();
 			$(".edit-profile").hide();
 			$('.btn-profile-edit').show();	
@@ -234,16 +206,8 @@ angular.module('myApp.controllers')
 					$(".alert-msg1").show().delay(1500).fadeOut(); 
 					$(".alert-danger").html("updation Error!!");
 				}
-				
-    		
-    		
-    	});
-    	
-    	
-    	
-    	
-    	
-    	
+	   	});
+     	
     },
     
     
@@ -255,9 +219,7 @@ angular.module('myApp.controllers')
 	 	$('.btn-profile-save').hide();
 	 	$('.btn-profile-cancel').hide();
 	   $scope.accountList();	
-    	
-    	
-    	
+  
     },
     
     $scope.logout = function(){
