@@ -1,4 +1,4 @@
-<div ng-controller="accountController" ng-init="accountList()">
+<div>
 <nav class="navbar navbar-inverse navbar-fixed-top" style="border-bottom: 1px solid gray; background: none;">
   <div class="container-fluid" style="max-width: 100%; background: grey; color: white;">
     <div class="navbar-header">
@@ -9,9 +9,9 @@
       </button>
       <div class="logo"><img src="images/mit_lg-ts.jpg"></div>
     </div>
-    <div class="collapse navbar-collapse" id="myNavbar" ng-controller="HeaderController">
+    <div class="collapse navbar-collapse" id="myNavbar" ng-controller="headerController">
       <ul class="nav navbar-nav" style="margin-left: 30px; margin-top: 8px;">
-        <li ng-class="{ active: isActive('/timesheet')}"><a ui-sref="timesheet">Home</a></li>
+   <li ng-class="{ active: isActive('/timesheet')}"><a ng-click="homebutton()">Home</a></li>
      <li ng-show="manageProject" ng-class="{ active: isActive('/project')}"><a ui-sref="project">Project Details</a></li>
         <li ng-show="manageTeam" ng-class="{ active: isActive('/teamAssignment')}"><a ui-sref="teamAssignment">Team Assignment</a></li>
          <li ng-show="manageCustomer" ng-class="{ active: isActive('/customerDetails')}"><a ui-sref="customerDetails">Customer Details</a></li>
@@ -30,7 +30,7 @@
   </div>
 </nav>
 
-<div class="container" style="margin-top: 7%;">
+<div  ng-controller="accountController" class="container" style="margin-top: 7%;" ng-init="accountList()">
 	<h2 style="margin-left: 0;">My Account</h2>
 	
    <div class="form-profile" style="margin-top: 10%;">
