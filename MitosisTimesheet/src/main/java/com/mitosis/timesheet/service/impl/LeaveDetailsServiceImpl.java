@@ -54,13 +54,11 @@ public class LeaveDetailsServiceImpl implements LeaveDetailsService {
 	}
 
 	@Override
-	public boolean validateEntry(LeaveDetailsModel leaveModel) {
+	public boolean validateEntry(LeaveDetailsModel leaveModel,boolean validation) {
 		
-        boolean flag= false;
-		
-		flag = leaveDao.validateEntry(leaveModel);
+		validation = leaveDao.validateEntry(leaveModel,validation);
 			
-		return flag;
+		return validation;
 	}
 
 

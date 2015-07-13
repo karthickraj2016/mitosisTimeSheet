@@ -92,9 +92,9 @@ public class LeaveDetailsDaoImpl  extends BaseService implements LeaveDetailsDao
 	}
 
 	@Override
-	public boolean validateEntry(LeaveDetailsModel leaveModel) {
+	public boolean validateEntry(LeaveDetailsModel leaveModel,boolean validation) {
 	
-		List<LeaveDetailsModel> leaveDetails=new ArrayList<LeaveDetailsModel>();
+		LeaveDetailsModel leaveDetails=null;
 		try {
 			begin();
 			entityManager.getEntityManagerFactory().getCache().evictAll();
@@ -104,19 +104,21 @@ public class LeaveDetailsDaoImpl  extends BaseService implements LeaveDetailsDao
 			Predicate condition = qb.equal(root.get("employee").get("id"), leaveModel.getEmployee().getId());
 			Predicate condition2 = qb.equal(root.get("fromDate"),leaveModel.getFromDate());
 			Predicate condition3 = qb.equal(root.get("toDate"),leaveModel.getToDate());
-			Predicate condition4 = qb.equal(root.get("reason"),leaveModel.getReason());
-			Predicate conditions = qb.and(condition, condition2, condition3, condition4);
+			//Predicate condition4 = qb.equal(root.get("reason"),leaveModel.getReason());
+			Predicate conditions = qb.and(condition, condition2, condition3);
 			cq.where(conditions);
 			cq.select(root);
-			leaveDetails= entityManager.createQuery(cq).getResultList();
+			leaveDetails= entityManager.createQuery(cq).getSingleResult();
 			commit(); 
-		    flag=true;
+		    if(leaveDetails!=null){
+		    	validation = true;
+		    }
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{
 			close();
 		}
-		return flag;
+		return validation;
 	}
 	
 }

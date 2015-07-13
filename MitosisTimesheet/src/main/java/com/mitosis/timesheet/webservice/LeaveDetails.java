@@ -64,7 +64,8 @@ public class LeaveDetails {
 	leaveModel.setToDate(toDate);
 	/*leaveModel.setStatus(status);*/
 	
-	boolean validation=leaveService.validateEntry(leaveModel);
+	boolean validation = false;
+	validation=leaveService.validateEntry(leaveModel,validation);
 	
 	if(validation){
 		json.put("value", "already exist");

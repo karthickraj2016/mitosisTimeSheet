@@ -14,6 +14,6 @@ public interface LeaveDetailsService {
 
 	public List<LeaveDetailsModel> showLeaveEntryList();
 
-	public boolean validateEntry(LeaveDetailsModel leaveModel);
+	public boolean validateEntry(LeaveDetailsModel leaveModel,boolean validation);
 
 }
