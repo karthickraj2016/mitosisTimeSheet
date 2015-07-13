@@ -19,7 +19,6 @@ import org.codehaus.jettison.json.JSONObject;
 
 import com.mitosis.timesheet.model.CustomerDetailsModel;
 import com.mitosis.timesheet.model.ProjectModel;
-import com.mitosis.timesheet.model.UserDetailsModel;
 import com.mitosis.timesheet.service.ProjectService;
 import com.mitosis.timesheet.service.impl.ProjectServiceImpl;
 

@@ -67,7 +67,7 @@ public class LeaveDetails {
 	boolean validation=leaveService.validateEntry(leaveModel);
 	
 	if(validation){
-		json.put("value", "error");
+		json.put("value", "already exist");
 		return json;
 	}else{
 	

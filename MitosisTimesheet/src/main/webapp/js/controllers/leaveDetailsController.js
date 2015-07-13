@@ -140,9 +140,12 @@ angular.module('myApp.controllers')
 				 $(".alert-msg").show().delay(1000).fadeOut(); 
 				 $(".alert-success").html("Leave Entry Added Successfully");
 				 $scope.reason='';
+			}else if (result.value=="already exist"){
+				 $(".alert-msg1").show().delay(1000).fadeOut(); 
+				 $(".alert-danger").html("Leave Entry Already Entered");
 			}else{
 				 $(".alert-msg1").show().delay(1000).fadeOut(); 
-				 $(".alert-danger").html("Leave Entry Adding Failed");
+				 $(".alert-danger").html("Process Failed");
 			}
 			$scope.list();	
 			

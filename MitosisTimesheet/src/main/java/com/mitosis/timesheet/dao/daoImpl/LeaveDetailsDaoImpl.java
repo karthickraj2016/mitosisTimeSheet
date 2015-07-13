@@ -94,7 +94,7 @@ public class LeaveDetailsDaoImpl  extends BaseService implements LeaveDetailsDao
 	@Override
 	public boolean validateEntry(LeaveDetailsModel leaveModel) {
 	
-		LeaveDetailsModel leaveDetails=new LeaveDetailsModel();
+		List<LeaveDetailsModel> leaveDetails=new ArrayList<LeaveDetailsModel>();
 		try {
 			begin();
 			entityManager.getEntityManagerFactory().getCache().evictAll();
@@ -108,7 +108,7 @@ public class LeaveDetailsDaoImpl  extends BaseService implements LeaveDetailsDao
 			Predicate conditions = qb.and(condition, condition2, condition3, condition4);
 			cq.where(conditions);
 			cq.select(root);
-			leaveDetails= entityManager.createQuery(cq).getSingleResult();
+			leaveDetails= entityManager.createQuery(cq).getResultList();
 			commit(); 
 		    flag=true;
 		}catch(Exception e){
