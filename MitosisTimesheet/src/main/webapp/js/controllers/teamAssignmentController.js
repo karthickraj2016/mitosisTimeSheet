@@ -61,6 +61,13 @@ angular.module('myApp.controllers')
 		console.log(result);
 
 		$scope.memberlist=result;
+
+		for(var i=0;i<$scope.memberlist.length;i++){
+		    if($scope.memberlist[i].adminFlag >= 1){
+		     $scope.memberlist.splice(i,1);
+		   }
+		}
+		console.log($scope.memberlist);
 	});
 
    
