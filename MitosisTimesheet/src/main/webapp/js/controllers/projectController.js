@@ -244,12 +244,14 @@ angular.module('myApp.controllers')
 
 	
 	$scope.updateproject = function(reqParam){
-
-	
+		
+		var menuJson=angular.toJson({"projectId":reqParam.projectId,"projectName":reqParam.projectName,"customerId":reqParam.customer.customerId,
+						"billable":reqParam.billable,"startdate":reqParam.startEntryDate,"enddate":reqParam.endEntryDate,"status":reqParam.status});
+		
 			$http({
 				url: 'rest/project/updateproject',
 				method: 'POST',
-				data: reqParam,
+				data: menuJson,
 				headers: {
 					'Content-Type': 'application/json'
 				}
