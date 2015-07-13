@@ -20,32 +20,23 @@ public class AccountDetailsServiceImpl implements AccountDetailsService{
 	AccountDetailsDao accountDetailsDao = new AccountDetailsDaoImpl();
 
 	@Override
-	public UserDetailsVo getAccountDetails(Object userId) {
+	public UserDetailsModel getAccountDetails(Object userId) {
 		
 		Object Id = userId;		
 		UserDetailsModel userDetailsModel = new UserDetailsModel();
 		
 		userDetailsModel = accountDetailsDao.getAccountDetails(Id);
 		
-		UserDetailsVo userDetailsVo = new UserDetailsVo();
-		
-		BeanUtils.copyProperties(userDetailsModel, userDetailsVo);
-		
 
-		return userDetailsVo;
+		return userDetailsModel;
 	}
 
 
 	@Override
-	public boolean updateNewPassword(UserDetailsVo userDetailsVo) {
+	public boolean updateNewPassword(UserDetailsModel userDetailsModel) {
 		boolean updatepassword;
 		
-		UserDetailsModel userDetailsModel = new UserDetailsModel();
 
-		
-		BeanUtils.copyProperties(userDetailsVo, userDetailsModel);
-		
-		System.out.println(userDetailsModel);
 		updatepassword = accountDetailsDao.updateNewPassword(userDetailsModel);
 		
 		
@@ -54,12 +45,10 @@ public class AccountDetailsServiceImpl implements AccountDetailsService{
 
 
 	@Override
-	public boolean updateDetails(UserDetailsVo userDetailsVo) {
+	public boolean updateDetails(UserDetailsModel userDetailsModel) {
 		boolean updatepassword;
 		
-		UserDetailsModel userDetailsModel = new UserDetailsModel();
 		
-		BeanUtils.copyProperties(userDetailsVo, userDetailsModel);
 		
 		updatepassword = accountDetailsDao.updateDetails(userDetailsModel);
 		

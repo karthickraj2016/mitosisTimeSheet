@@ -15,6 +15,7 @@ import org.codehaus.jettison.json.JSONObject;
 
 import com.google.gson.JsonObject;
 import com.mitosis.timesheet.commonservice.JavaMD5Hash;
+import com.mitosis.timesheet.model.UserDetailsModel;
 import com.mitosis.timesheet.pojo.UserDetailsVo;
 import com.mitosis.timesheet.service.AccountDetailsService;
 import com.mitosis.timesheet.service.impl.AccountDetailsServiceImpl;
@@ -32,22 +33,22 @@ public class Account {
 	@GET
 	@Path("/getaccountdetails")
 	@Produces(MediaType.APPLICATION_JSON)
-	public UserDetailsVo getAccountDetails(){
+	public UserDetailsModel getAccountDetails(){
 		
 		JSONObject jsonObject = new JSONObject();
 		
-		UserDetailsVo userDetailsVo = new UserDetailsVo();
+		UserDetailsModel userDetailsModel = new UserDetailsModel();
 		
 		HttpSession session = request.getSession(true);
 
 		if (session.getAttribute("userId") == null) {
-			return userDetailsVo;
+			return userDetailsModel;
 		}
 		Object userId = session.getAttribute("userId");
 		
-		userDetailsVo = accountDetailsService.getAccountDetails(userId);
+		userDetailsModel = accountDetailsService.getAccountDetails(userId);
 		
-		return userDetailsVo;
+		return userDetailsModel;
 		
 		
 		
@@ -61,7 +62,7 @@ public class Account {
 	public JSONObject changePassword(JSONObject jsonObject) throws JSONException{
 		
 		
-		UserDetailsVo userDetailsVo = new UserDetailsVo();
+		UserDetailsModel userDetailsModel = new UserDetailsModel();
 		
 		
 		String currentpassword = jsonObject.getString("currentpassword");
@@ -78,12 +79,12 @@ public class Account {
 		Object userId = session.getAttribute("userId");
 		
 		
-		 userDetailsVo = accountDetailsService.getAccountDetails(userId);
+		userDetailsModel = accountDetailsService.getAccountDetails(userId);
 		 
 		 String encryptedCurrentPassword =JavaMD5Hash.md5(currentpassword);
 		 String encryptedNewPassword = JavaMD5Hash.md5(newpassword);
 		 
-		 if(!encryptedCurrentPassword.equals(userDetailsVo.getPassword())){
+		 if(!encryptedCurrentPassword.equals(userDetailsModel.getPassword())){
 			 
 			 jsonobject.put("msg","error_currentpassword"); 
 			 
@@ -93,9 +94,10 @@ public class Account {
 		 }
 		 else{
 			 
-			 userDetailsVo.setPassword(encryptedNewPassword);
+			 userDetailsModel.setPassword(encryptedNewPassword);
+			 System.out.println(userDetailsModel);
 			 
-			boolean updatepassword =  accountDetailsService.updateNewPassword(userDetailsVo);
+			boolean updatepassword =  accountDetailsService.updateNewPassword(userDetailsModel);
 			
 			if(updatepassword){
 				
@@ -133,7 +135,7 @@ public class Account {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public JSONObject editUserDetails(JSONObject jsonObject) throws JSONException{
 		
-		UserDetailsVo userDetailsVo  = new UserDetailsVo();
+		UserDetailsModel userDetailsModel  = new UserDetailsModel();
 		
 		JSONObject jsonobject = new JSONObject();
 		
@@ -148,15 +150,15 @@ public class Account {
 		
 		
 		
-		userDetailsVo = accountDetailsService.getAccountDetails(userId);
+		userDetailsModel = accountDetailsService.getAccountDetails(userId);
 		
-		userDetailsVo.setName(jsonObject.getString("name"));
+		userDetailsModel.setName(jsonObject.getString("name"));
 		
-		userDetailsVo.seteMail(jsonObject.getString("email"));
+		userDetailsModel.seteMail(jsonObject.getString("email"));
 		
-		userDetailsVo.setUserName(jsonObject.getString("username"));
+		userDetailsModel.setUserName(jsonObject.getString("username"));
 				
-		updated= accountDetailsService.updateDetails(userDetailsVo);
+		updated= accountDetailsService.updateDetails(userDetailsModel);
 		
 		if(updated){
 			
