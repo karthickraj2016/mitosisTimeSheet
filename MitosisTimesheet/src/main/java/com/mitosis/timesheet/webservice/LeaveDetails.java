@@ -64,6 +64,13 @@ public class LeaveDetails {
 	leaveModel.setToDate(toDate);
 	/*leaveModel.setStatus(status);*/
 	
+	boolean validation=leaveService.validateEntry(leaveModel);
+	
+	if(validation){
+		json.put("value", "error");
+		return json;
+	}else{
+	
 	insert=leaveService.insertLeaveEntry(leaveModel);
 	
 	if(insert){
@@ -74,8 +81,9 @@ public class LeaveDetails {
 		json.put("value", "error");
 		return json;
 	}
+  }
 	
-	}
+}
 	
 	@Path("/updateLeaveEntry")
 	@POST

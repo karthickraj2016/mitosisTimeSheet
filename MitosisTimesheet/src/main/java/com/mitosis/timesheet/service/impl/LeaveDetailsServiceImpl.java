@@ -53,5 +53,15 @@ public class LeaveDetailsServiceImpl implements LeaveDetailsService {
 		return leaveModel;
 	}
 
+	@Override
+	public boolean validateEntry(LeaveDetailsModel leaveModel) {
+		
+        boolean flag= false;
+		
+		flag = leaveDao.validateEntry(leaveModel);
+			
+		return flag;
+	}
+
 
 }

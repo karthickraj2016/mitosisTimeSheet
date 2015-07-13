@@ -14,4 +14,6 @@ public interface LeaveDetailsDao {
 
 public List<LeaveDetailsModel> showLeaveEntryDetails();
 
+public boolean validateEntry(LeaveDetailsModel leaveModel);
+
 }

@@ -82,6 +82,13 @@ angular.module('myApp.controllers')
 		console.log(result);
 
 		$scope.employeeNameList=result;
+		
+		for(var i=0;i<$scope.employeeNameList.length;i++){
+		    if($scope.employeeNameList[i].adminFlag >= 1){
+		     $scope.employeeNameList[i];
+		    }
+		}
+		console.log($scope.employeeNameList);
 	});
 	
    $scope.list = function() {
