@@ -149,12 +149,19 @@ angular.module('myApp.controllers')
 			        $scope.currentPage = pageNo;
 			    };
 			$scope.noOfPages = Math.ceil($scope.projectlist.length/$scope.maxSize);
-			 $scope.$watch('search', function(term) {
-				 
-				 $scope.filtered = filterFilter($scope.projectlist, term);
-			        $scope.noOfPages = Math.ceil($scope.filtered.length/$scope.maxSize);
-			    });
-
+			  $scope.filter = function() {
+		 			 $scope.$watch('search', function(term) {
+						 if(term==undefined){
+							 $scope.totalItems =	$scope.projectlist.length; 
+							 
+							
+						 }
+						  window.setTimeout(function() {
+							  $scope.totalItems = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
+							  $scope.noOfPages = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
+		}, 10);
+		 			 });
+	}
 		});
 	}
 
@@ -187,7 +194,7 @@ angular.module('myApp.controllers')
 					$(".alert-danger").html("End Date cannot be Before Start Date...!");
 					return;
 							
-		          }
+		          }	
 				
 				else{
 			$http({

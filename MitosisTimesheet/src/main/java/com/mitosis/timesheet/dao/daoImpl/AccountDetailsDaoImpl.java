@@ -106,7 +106,7 @@ public class AccountDetailsDaoImpl extends BaseService implements AccountDetails
 			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 			CriteriaQuery<UserDetailsModel> cq = qb.createQuery(UserDetailsModel.class);
 			Root<UserDetailsModel> root = cq.from(UserDetailsModel.class);
-			cq.where(qb.equal(root.get("email"), MailId));
+			cq.where(qb.equal(root.get("eMail"), MailId));
 			cq.select(root);
 			userDetailsModel = entityManager.createQuery(cq).getSingleResult();	
 			checkMailId = false;

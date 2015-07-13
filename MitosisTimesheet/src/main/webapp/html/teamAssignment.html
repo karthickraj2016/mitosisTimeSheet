@@ -64,7 +64,7 @@
 </div>
 <div  class="container" style="width: 100%;">
 <div class="search-tab"> 
-	       <input type="text" id="search" required class="form-control"  ng-model="search" placeholder="Search"></input>
+	       <input type="text" id="search" required class="form-control" ng-change="filter()" ng-model="search" placeholder="Search"></input>
 </div>
 <table class="table" style="">
 	<thead class="thead-mit-ts">
@@ -76,7 +76,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="sheet in filteredParticipantsResults|filter:search ">
+				<tr ng-repeat="sheet in filteredParticipantsResults=(teamLists | filter:search) | startFrom:(currentPage-1)*maxSize | limitTo:maxSize| orderBy:asc">
 			<td >
 				<span ng-show="!showEdit">{{sheet.project.projectName}}</span>
 				<span ng-show="showEdit" >
@@ -115,7 +115,7 @@
 	</tbody>
 </table>
 
-<pagination  total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="numPerPage" class="pagination-sm" boundary-links="true"></pagination>
+<pagination data-num-pages="noOfPages" total-items="totalItems" ng-model="currentPage" max-size="maxSize" data-current-page="currentPage" items-per-page="numPerPage" class="pagination-sm" boundary-links="true"></pagination>
 </div>
 <div class="alert-msg col-xs-12 col-sm-6"><p class="alert-success"></p></div>
 <div class="alert-msg1 col-xs-12 col-sm-6"><p class="alert-danger"></p></div>

@@ -83,7 +83,7 @@ angular.module('myApp.controllers')
 	$scope.filteredParticipantsResults = []
 	,$scope.currentPage = 1
 	,$scope.numPerPage = 8
-	,$scope.maxSize = 5;
+	,$scope.maxSize = 8;
 	$scope.units;
 	var hoursallowed;
 
@@ -149,8 +149,28 @@ angular.module('myApp.controllers')
 						, end = begin + $scope.numPerPage;
 						$scope.filteredParticipantsResults = $scope.teamLists.slice(begin, end);
 						$scope.totalItems =	$scope.teamLists.length;
-
 					});
+					$scope.noOfPages = Math.ceil($scope.teamLists.length/$scope.maxSize);
+					
+					 $scope.setPage = function(pageNo) {
+					        $scope.currentPage = pageNo;
+					    };
+					
+					    $scope.filter = function() {
+					 $scope.$watch('search', function(term) {
+						 if(term==undefined){
+							 $scope.totalItems =	$scope.teamLists.length; 
+							 
+							 
+						 }
+						  window.setTimeout(function() {
+							  $scope.totalItems = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
+						 
+					        $scope.noOfPages = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
+						  }, 10);
+					    });
+					 
+					    };
 
 				});
 	    	}

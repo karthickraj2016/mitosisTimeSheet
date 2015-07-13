@@ -168,12 +168,15 @@ angular.module('myApp.controllers')
  	    		}
  	    	}).success(function(result, status, headers) {
  	    		
- 	    		if( !result) {
+ 	    		if(result=="true") {
+ 	    			
+ 	    			$scope.edituserdetails();
+ 	    			
+ 	    		} else{
+ 	    		
  	    			$(".alert-msg1").show().delay(1000).fadeOut(); 
  	    			$(".alert-danger").html("Email Id already exists!!!.. Please give a different mail id..!");
  	    			return;
- 	    		} else{
- 	    			$scope.edituserdetails();
  	    			
  	    			
  	    		}

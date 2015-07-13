@@ -82,7 +82,7 @@
 </div>
 <div class="container" style="width: 100%;">
 <div class="search-tab"> 
-	       <input type="text" id="search" required class="form-control"  ng-model="search" placeholder="Search"></input>
+	       <input type="text" id="search" required class="form-control" ng-change="filter()"  ng-model="search" placeholder="Search"></input>
 </div>
 <table class="table">
 	<thead class="thead-mit-ts" >
@@ -153,7 +153,7 @@
 </table>
 
 <pagination data-num-pages="noOfPages" total-items="totalItems" ng-model="currentPage" max-size="maxSize" data-current-page="currentPage" items-per-page="numPerPage" class="pagination-sm" boundary-links="true"></pagination>
-<!-- 	 <pagination data-num-pages="noOfPages" data-boundary-links="true"  max-size="maxSize"  data-previous-text="&laquo;" data-next-text="&raquo;"></pagination> -->
+
 
 
 </div>
