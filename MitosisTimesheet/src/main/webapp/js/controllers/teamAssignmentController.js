@@ -171,7 +171,7 @@ angular.module('myApp.controllers')
 							 
 						 }
 						  window.setTimeout(function() {
-							  $scope.totalItems = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
+							  $scope.totalItems = Math.ceil($scope.filteredParteamliststicipantsResults.length/$scope.maxSize);
 						 
 					        $scope.noOfPages = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
 						  }, 10);
@@ -220,20 +220,41 @@ angular.module('myApp.controllers')
 			}
 		}).success(function(result, status, headers) {
 
-			$scope.teamlists=result; 
+			$scope.teamLists=result; 
 
 			$scope.$watch('currentPage + numPerPage', function() {
 				var begin = (($scope.currentPage - 1) * $scope.numPerPage)
 				, end = begin + $scope.numPerPage;
-				$scope.filteredParticipantsResults = $scope.teamlists.slice(begin, end);
-				$scope.totalItems =	$scope.teamlists.length;
+				$scope.filteredParticipantsResults = $scope.teamLists.slice(begin, end);
+				$scope.totalItems =	$scope.teamLists.length;
 
 			     });
 
-	         	})
-		
-	          });
-		 }
+			$scope.noOfPages = Math.ceil($scope.teamLists.length/$scope.maxSize);
+			
+			 $scope.setPage = function(pageNo) {
+			        $scope.currentPage = pageNo;
+			    };
+			
+			    $scope.filter = function() {
+			 $scope.$watch('search', function(term) {
+				 if(term==undefined){
+					 $scope.totalItems =	$scope.teamLists.length; 
+					 
+					 
+				 }
+				  window.setTimeout(function() {
+					  $scope.totalItems = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
+				 
+			        $scope.noOfPages = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
+				  }, 10);
+			    });	
+			 
+			    };
+
+		});
+	})
+},
     
 	
 	$scope.validateAssignment = function(){
