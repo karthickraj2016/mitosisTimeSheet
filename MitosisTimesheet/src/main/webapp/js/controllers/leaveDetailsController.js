@@ -178,6 +178,9 @@ angular.module('myApp.controllers')
 			if(result.value=="updated"){
 				 $(".alert-msg").show().delay(1000).fadeOut(); 
 				 $(".alert-success").html("Leave Entry Updated Successfully");
+			}else if(result.value=="already exist"){
+				 $(".alert-msg1").show().delay(1000).fadeOut(); 
+				 $(".alert-danger").html("Leave Entry Already Exist");
 			}else{
 				 $(".alert-msg1").show().delay(1000).fadeOut(); 
 				 $(".alert-danger").html("Leave Entry updating Failed");

@@ -78,12 +78,12 @@
 			</td>
 			<td>
 				<span ng-show="!showEdit">{{sheet.frmEntryDate}}</span>
-				<span ng-show="showEdit"><input class="form-control" ui-date="dateOptions" ui-date-format="dd-mm-yy" type="text" ng-model="sheet.frmEntryDate"></span>
+				<span ng-show="showEdit"><input class="form-control" ui-date="dateOptionsFrom" ui-date-format="dd-mm-yy" type="text" ng-model="sheet.frmEntryDate"></span>
 				<span style="color:red" ng-show="sheet.frmEntryDate == '' || sheet.frmEntryDate == undefined">Required</span>
 			</td>
 			<td>
 				<span ng-show="!showEdit">{{sheet.toEntryDate}}</span>
-				<span ng-show="showEdit"><input class="form-control" ui-date="dateOptions" ui-date-format="dd-mm-yy" type="text" ng-model="sheet.toEntryDate"></span>
+				<span ng-show="showEdit"><input class="form-control" ui-date="dateOptionsTo" ui-date-format="dd-mm-yy" type="text" ng-model="sheet.toEntryDate"></span>
 				<span style="color:red" ng-show="sheet.toEntryDate == '' || sheet.toEntryDate == undefined">Required</span>
 			</td>
 			<td >

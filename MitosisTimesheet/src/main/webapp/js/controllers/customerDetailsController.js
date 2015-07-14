@@ -65,6 +65,8 @@ angular.module('myApp.controllers')
 			return true;
 		}else if(sheet.website == '' || sheet.website == undefined) {
 			return true;
+		}else if(sheet.status == '' || sheet.status == undefined) {
+			return true;
 		}else{
 			return false;
 		}
@@ -191,7 +193,7 @@ angular.module('myApp.controllers')
 	$scope.addCustomerDetails = function(customer){
 
 		var menuJson=angular.toJson({"customerName":$scope.customer.customerName,"email":$scope.customer.email,"address":$scope.customer.address,"skypeId":$scope.customer.skypeId,
-			"phone":$scope.customer.phone,"mobile":$scope.customer.mobile,"website":$scope.customer.website});
+			"phone":$scope.customer.phone,"mobile":$scope.customer.mobile,"website":$scope.customer.website,"status":$scope.customer.status});
 
 		$http({
 			url: 'rest/customerDetails/addCustomer',

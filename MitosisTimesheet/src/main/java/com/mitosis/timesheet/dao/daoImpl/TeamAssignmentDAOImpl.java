@@ -66,6 +66,7 @@ public class TeamAssignmentDAOImpl extends BaseService implements TeamAssignment
 			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 			CriteriaQuery<ProjectModel> cq = qb.createQuery(ProjectModel.class);
 			Root<ProjectModel> root = cq.from(ProjectModel.class);
+			cq.where(qb.equal(root.get("status"),"Open"));
 			cq.select(root);
 			cq.orderBy(qb.asc(root.get("projectName")));
 			projectlist = entityManager.createQuery(cq).getResultList();

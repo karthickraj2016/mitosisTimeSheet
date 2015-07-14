@@ -34,10 +34,9 @@ public class CustomerDetails {
 	public JSONObject addCustomerDetails(JSONObject jsonObject) throws JSONException {
 
 		boolean insert=false;
-
-		if (jsonObject.has("customerName")) {
-			customerModel.setCustomerName(jsonObject.getString("customerName"));
-		}
+		
+		customerModel.setCustomerName(jsonObject.getString("customerName"));
+		
 		if (jsonObject.has("email")) {
 			customerModel.setEmail(jsonObject.getString("email"));
 		}
@@ -56,6 +55,8 @@ public class CustomerDetails {
 		if (jsonObject.has("website")) {
 			customerModel.setWebsite(jsonObject.getString("website"));
 		}
+		
+		customerModel.setStatus(jsonObject.getString("status"));
 
 		insert=customerService.addCustomerDetails(customerModel);
 
@@ -76,9 +77,8 @@ public class CustomerDetails {
 
 		boolean update;
 
-		if (jsonObject.has("customerId")) {
-			customerModel.setCustomerId(jsonObject.getInt("customerId"));
-		} 
+		customerModel.setCustomerId(jsonObject.getInt("customerId"));
+		 
 		if (jsonObject.has("customerName")) {
 			customerModel.setCustomerName(jsonObject.getString("customerName"));
 		}
@@ -101,6 +101,8 @@ public class CustomerDetails {
 			customerModel.setWebsite(jsonObject.getString("website"));
 		}
 
+		customerModel.setStatus(jsonObject.getString("status"));
+		
 		update = customerService.updateCustomerDetails(customerModel);
 
 		if(update){

@@ -62,6 +62,14 @@
 	<div class="form-group" style="word-spacing: 0;">
     <input type="text"  class="form-control" ng-model="customer.website" placeholder="Website">
 	</div>
+	<div class="form-group" style="word-spacing: 0;">
+    <!-- <span for="dropdown"  style="font-size: 20px;">Project Status</span> -->
+    <select class="form-control select" required ng-model="customer.status">
+    <option value="" selected disabled>Status</option>
+	<option>Active</option>
+	<option>Inactive</option>
+	</select>
+	</div>
 	<div class="form-group btn-formproject">
 	<button type="submit" class="btn btn-primary">Add</button>
 	<button type="reset" style="margin-left: 10px;"  class="btn btn-primary">Clear</button>
@@ -82,6 +90,7 @@
 			<th class="">Phone</th>
 			<th class="">Mobile</th>
 			<th class="">Website</th>
+			<th class="">Status</th>
 		    <th></th>
 		</tr>
 	</thead>
@@ -114,6 +123,16 @@
 			<td>
 			    <span ng-show="!showEdit">{{sheet.website}}</span>
 				<span ng-show="showEdit" ><input class="form-control"  type="text" ng-model="sheet.website" ></span>
+			</td>
+			<td>
+				<span ng-show="!showEdit">{{sheet.status}}</span>
+				<span ng-show="showEdit">
+				<select style="margin-top: 7px;" ng-model="sheet.status">
+    			<option value="" selected disabled>{{sheet.status}}</option>
+	            <option>Active</option>
+	            <option>Inactive</option>
+				</select></span>
+				<span style="color: red" ng-show="sheet.status == '' || sheet.status == undefined">Required</span>
 			</td>
 			<td style="word-spacing: 15px;">
 			    <a><span class="glyphicon glyphicon-pencil" ng-click="showEdit = !showEdit" ng-show="!showEdit"></span></a>

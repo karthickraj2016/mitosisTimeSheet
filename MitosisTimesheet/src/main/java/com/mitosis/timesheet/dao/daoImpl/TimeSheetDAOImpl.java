@@ -139,7 +139,7 @@ public class TimeSheetDAOImpl extends BaseService implements TimeSheetDAO{
 			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 			CriteriaQuery<TeamAssignmentModel> cq = qb.createQuery(TeamAssignmentModel.class);
 			Root<TeamAssignmentModel> root = cq.from(TeamAssignmentModel.class);
-			cq.where(qb.equal(root.get("member"), userId));
+			cq.where(qb.equal(root.get("member").get("id"), userId),qb.equal(root.get("project").get("status"),"Open"));
 			cq.select(root);
 			teamAssignList = entityManager.createQuery(cq).getResultList();
 			

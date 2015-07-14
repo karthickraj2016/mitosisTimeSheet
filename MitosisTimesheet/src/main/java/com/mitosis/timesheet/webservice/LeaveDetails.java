@@ -123,6 +123,16 @@ public class LeaveDetails {
 	leaveModel.setFromDate(frmDate);
 	leaveModel.setToDate(toDate);
 	/*leaveModel.setStatus(status);*/
+	boolean validation = false;
+	
+	validation=leaveService.validateEntry(leaveModel,validation);
+	
+	if(validation){
+		
+		json.put("value", "already exist");
+		return json;
+	
+	}else{
 	
 	update=leaveService.updateLeaveEntry(leaveModel);
 	
@@ -134,8 +144,8 @@ public class LeaveDetails {
 		json.put("value", "error");
 		return json;
 	}
-	
-	}
+  }
+}
 	
 	@Path("/deleteLeaveEntry")
 	@POST

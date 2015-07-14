@@ -40,6 +40,9 @@ public class CustomerDetailsModel {
 	@Column(name="website")
 	private String website;
 	
+	@Column(name="status")
+	private String status;
+	
 	
 	public int getCustomerId() {
 		return customerId;
@@ -102,6 +105,14 @@ public class CustomerDetailsModel {
 
 	public void setWebsite(String website) {
 		this.website = website;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }
