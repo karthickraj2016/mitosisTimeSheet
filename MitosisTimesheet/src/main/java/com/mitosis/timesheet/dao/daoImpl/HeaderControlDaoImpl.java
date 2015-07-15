@@ -27,8 +27,6 @@ public class HeaderControlDaoImpl extends BaseService implements HeaderControlDa
 			cq.select(root);
 			userDetailsModel=entityManager.createQuery(cq).getSingleResult();
 			adminFlag = userDetailsModel.getAdminFlag();
-			
-		
 
 		}catch(Exception e){
 			e.printStackTrace();
