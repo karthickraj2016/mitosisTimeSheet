@@ -156,7 +156,7 @@ public class Account {
 		
 		userDetailsModel.seteMail(jsonObject.getString("email"));
 		
-		userDetailsModel.setUserName(jsonObject.getString("username"));
+		/*userDetailsModel.setUserName(jsonObject.getString("username"));*/
 				
 		updated= accountDetailsService.updateDetails(userDetailsModel);
 		

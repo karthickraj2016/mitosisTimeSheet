@@ -104,7 +104,6 @@ public class LeaveDetailsDaoImpl  extends BaseService implements LeaveDetailsDao
 			Predicate condition = qb.equal(root.get("employee").get("id"), leaveModel.getEmployee().getId());
 			Predicate condition2 = qb.equal(root.get("fromDate"),leaveModel.getFromDate());
 			Predicate condition3 = qb.equal(root.get("toDate"),leaveModel.getToDate());
-			//Predicate condition4 = qb.equal(root.get("reason"),leaveModel.getReason());
 			Predicate conditions = qb.and(condition, condition2, condition3);
 			cq.where(conditions);
 			cq.select(root);

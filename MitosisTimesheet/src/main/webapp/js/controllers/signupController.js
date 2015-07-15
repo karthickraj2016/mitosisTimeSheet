@@ -78,6 +78,12 @@ angular.module('myApp.controllers')
 	//$scope.user = {};
 	$scope.signup = function() {
 		// Try to login
+		
+		if($scope.email!=$scope.username){
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("EmailId and Username should be same");
+			return;
+		}
 
 		var emailId = $scope.email;
 		
@@ -99,14 +105,6 @@ angular.module('myApp.controllers')
 		}
 		
 		
-		console.log($scope.username);
-		
-		if($scope.username.indexOf(" ")==0){
-			$(".alert-msg1").show().delay(1500).fadeOut(); 
-			$(".alert-danger").html("Invalid username....clear spaces in username");
-			 return;
-			  
-		  }
 		if(!($scope.password.indexOf(" ")<0)){
 			$(".alert-msg1").show().delay(1500).fadeOut(); 
 			$(".alert-danger").html("Invalid Password....clear spaces in password");

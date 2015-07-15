@@ -122,7 +122,7 @@ angular.module('myApp.controllers')
      $scope.checkuserdetails = function(){
     	 
     	 var menuJson = angular.toJson({
- 			"name": $scope.name,"email":$scope.eMail,"username":$scope.username
+ 			"name": $scope.name,"email":$scope.eMail
 
  		});
      	
@@ -178,7 +178,7 @@ angular.module('myApp.controllers')
     $scope.edituserdetails = function(){
   	 
    	 var menuJson = angular.toJson({
-			"name": $scope.name,"email":$scope.eMail,"username":$scope.username
+			"name": $scope.name,"email":$scope.eMail
 		});
     	
     	$http({
