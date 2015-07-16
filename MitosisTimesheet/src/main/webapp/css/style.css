@@ -4511,3 +4511,7 @@ scale
 	{
 	z-index: 1;
 }
+
+.txtarea{
+	margin-top:-20px;
+}
