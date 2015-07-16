@@ -193,7 +193,7 @@ angular.module('myApp.controllers')
 	$scope.addCustomerDetails = function(customer){
 
 		var menuJson=angular.toJson({"customerName":$scope.customer.customerName,"email":$scope.customer.email,"address":$scope.customer.address,"skypeId":$scope.customer.skypeId,
-			"phone":$scope.customer.phone,"mobile":$scope.customer.mobile,"website":$scope.customer.website,"status":$scope.customer.status});
+			"phone":$scope.customer.phone,"mobile":$scope.customer.mobile,"website":$scope.customer.website,"fax":$scope.customer.fax,"status":$scope.customer.status});
 
 		$http({
 			url: 'rest/customerDetails/addCustomer',
@@ -231,8 +231,6 @@ angular.module('myApp.controllers')
 		if( !$scope.validateEmail(mail)) {
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("EmailId is not valid");
-			$('#customerMail').val('');
-			$('#customerMail').focus();
 			return;
 		}
 		else{

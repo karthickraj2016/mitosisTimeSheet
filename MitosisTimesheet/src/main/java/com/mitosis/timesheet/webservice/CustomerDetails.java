@@ -56,6 +56,10 @@ public class CustomerDetails {
 			customerModel.setWebsite(jsonObject.getString("website"));
 		}
 		
+		if (jsonObject.has("fax")) {
+			customerModel.setFax(jsonObject.getString("fax"));
+		}
+		
 		customerModel.setStatus(jsonObject.getString("status"));
 
 		insert=customerService.addCustomerDetails(customerModel);
@@ -100,6 +104,10 @@ public class CustomerDetails {
 		if (jsonObject.has("website")) {
 			customerModel.setWebsite(jsonObject.getString("website"));
 		}
+		if (jsonObject.has("fax")) {
+			customerModel.setFax(jsonObject.getString("fax"));
+		}
+		
 
 		customerModel.setStatus(jsonObject.getString("status"));
 		

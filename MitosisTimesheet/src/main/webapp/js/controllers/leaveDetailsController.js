@@ -42,7 +42,7 @@ angular.module('myApp.controllers')
 			dateFormat: 'dd-mm-yy',
 			onSelect: function(selected) {
 				$scope.toDate=selected;
-			  $scope.dateOptionsTo("option","minDate", selected)
+			  /*$scope.dateOptionsTo("option","minDate", selected);*/
 	        }
 
 	};
@@ -52,6 +52,7 @@ angular.module('myApp.controllers')
 			changeMonth: true,
 			dateFormat: 'dd-mm-yy',
 	};
+
 
 	$http({
 		url: 'rest/account/getName',
@@ -117,11 +118,24 @@ angular.module('myApp.controllers')
    
    $scope.insertLeaveEntry = function(){
 		
-		if ($scope.fromDate > $scope.toDate) {
-			$(".alert-msg1").show().delay(1000).fadeOut(); 
-			$(".alert-danger").html("FromDate cannot be after ToDate!");
-			return;
-		}else{
+	
+	var fromdate = new Date($scope.fromDate.split('-')[2],$scope.fromDate.split('-')[1],$scope.fromDate.split('-')[0]);
+	var todate = new Date($scope.toDate.split('-')[2],$scope.toDate.split('-')[1],$scope.toDate.split('-')[0]);
+	var datevalidationfromDate = new Date($scope.fromDate);	
+	var datevalidationtoDate = new Date($scope.toDate);
+	
+	if (datevalidationfromDate > datevalidationtoDate) {
+		$(".alert-msg1").show().delay(1000).fadeOut(); 
+		$(".alert-danger").html("FromDate cannot be after ToDate!");
+		return;
+	}
+	else if(fromdate.getDay()===2 || fromdate.getDay()===3 || todate.getDay()===2 || todate.getDay()===3){
+		$(".alert-msg1").show().delay(1000).fadeOut(); 
+		$(".alert-danger").html("FromDate or Todate cannot be on Saturdays or Sundays!!!!");
+		return;
+			
+	}
+else{
 	   
 		var menuJson = angular.toJson({
 			"employeeId": $scope.employee.id,"fromDate":$scope.fromDate,"toDate":$scope.toDate,"reason":$scope.reason

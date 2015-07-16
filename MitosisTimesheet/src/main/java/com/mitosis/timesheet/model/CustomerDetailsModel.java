@@ -43,7 +43,18 @@ public class CustomerDetailsModel {
 	@Column(name="status")
 	private String status;
 	
+	@Column(name="fax")
+	private String fax;
 	
+	
+	public String getFax() {
+		return fax;
+	}
+
+	public void setFax(String fax) {
+		this.fax = fax;
+	}
+
 	public int getCustomerId() {
 		return customerId;
 	}
