@@ -61,5 +61,13 @@ public class LeaveDetailsServiceImpl implements LeaveDetailsService {
 		return validation;
 	}
 
+	@Override
+	public boolean validateEntryForUpdate(LeaveDetailsModel leaveModel,
+			boolean validation) {
+		validation = leaveDao.validateEntryForUpdate(leaveModel,validation);
+		
+		return validation;
+	}
+
 
 }

@@ -5,7 +5,7 @@ angular.module('myApp.controllers')
 
 .controller('projectController', ['$scope', '$http', '$state','$localStorage','$rootScope','filterFilter', function($scope, $http, $state,$localStorage, $rootScope,filterFilter) {
 	$scope.filteredParticipantsResults = []
-	,/*$scope.currentPage = 1*/
+	,$scope.currentPage = 1,
 	$scope.numPerPage = 8
 	,$scope.maxSize = 8;
 
@@ -149,6 +149,8 @@ angular.module('myApp.controllers')
 			        $scope.currentPage = pageNo;
 			    };
 			$scope.noOfPages = Math.ceil($scope.projectlist.length/$scope.maxSize);
+			
+			
 			  $scope.filter = function() {
 		 			 $scope.$watch('search', function(term) {
 						 if(term==undefined){
@@ -166,6 +168,7 @@ angular.module('myApp.controllers')
 	}
 
 	
+	
 	$http({
 
 		url: 'rest/project/getCustomerList',
@@ -182,7 +185,7 @@ angular.module('myApp.controllers')
 	});
 	
 		
-
+	
 	$scope.addproject = function(projectname,customer,billable,startDate,endDate,taskstatus){
 				var startdate=$scope.project.startDate;
 				var enddate=$scope.project.endDate;
@@ -206,8 +209,9 @@ angular.module('myApp.controllers')
 				}
 			}).success(function(result, status, headers) {
 				$scope.project = '';
+				$scope.customer ='';
 				$(".alert-msg").show().delay(1000).fadeOut(); 
-				$(".alert-success").html("Projcet added successfully");
+				$(".alert-success").html("Project added successfully");
 				$scope.list();
 
 			})
@@ -306,7 +310,7 @@ angular.module('myApp.controllers')
 			url: 'rest/account/logout',
 			method: 'GET',
 		}).success(function(result, status, headers) {
-			delete $localStorage.projectList;
+	
 
 			$state.go('login')
 		})

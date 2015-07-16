@@ -171,7 +171,7 @@ angular.module('myApp.controllers')
 							 
 						 }
 						  window.setTimeout(function() {
-							  $scope.totalItems = Math.ceil($scope.filteredParteamliststicipantsResults.length/$scope.maxSize);
+							  $scope.totalItems = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
 						 
 					        $scope.noOfPages = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
 						  }, 10);

@@ -76,7 +76,7 @@
 		</tr>
 	</thead>
 	<tbody>
-				<tr ng-repeat="sheet in filteredParticipantsResults=(teamLists | filter:search) | startFrom:(currentPage-1)*maxSize | limitTo:maxSize| orderBy:asc">
+				<tr ng-repeat="sheet in filteredParticipantsResults=(teamLists | filter:search) | startFrom:(currentPage-1)*maxSize | limitTo:maxSize">
 			<td >
 				<span ng-show="!showEdit">{{sheet.project.projectName}}</span>
 				<span ng-show="showEdit" >

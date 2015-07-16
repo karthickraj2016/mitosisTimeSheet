@@ -125,7 +125,7 @@ public class LeaveDetails {
 	/*leaveModel.setStatus(status);*/
 	boolean validation = false;
 	
-	validation=leaveService.validateEntry(leaveModel,validation);
+	validation=leaveService.validateEntryForUpdate(leaveModel,validation);
 	
 	if(validation){
 		

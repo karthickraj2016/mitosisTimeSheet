@@ -100,7 +100,7 @@ public class LeaveDetailsDaoImpl  extends BaseService implements LeaveDetailsDao
 	@Override
 	public boolean validateEntry(LeaveDetailsModel leaveModel,boolean validation) {
 	
-		LeaveDetailsModel leaveDetails=null;
+		List<LeaveDetailsModel>  leavedetailslist = new ArrayList<LeaveDetailsModel>();
 		try {
 			begin();
 			entityManager.getEntityManagerFactory().getCache().evictAll();
@@ -125,13 +125,60 @@ public class LeaveDetailsDaoImpl  extends BaseService implements LeaveDetailsDao
 			cq.where(TotalConditions);
 			cq.select(root);
 				
-			leaveDetails= entityManager.createQuery(cq).getSingleResult();
+			leavedetailslist= entityManager.createQuery(cq).getResultList();
 			commit(); 
-		    if(leaveDetails!=null){
+			if(leavedetailslist.size()>0){
 		    	validation = true;
 		    }
 		}catch(Exception e){
-			e.printStackTrace();
+		}finally{
+			close();
+		}
+		return validation;
+	}
+
+	@Override
+	public boolean validateEntryForUpdate(LeaveDetailsModel leaveModel,
+			boolean validation) {
+		List<LeaveDetailsModel>  leavedetailslist = new ArrayList<LeaveDetailsModel>();
+		try {
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<LeaveDetailsModel> cq = qb.createQuery(LeaveDetailsModel.class);
+			Root<LeaveDetailsModel> root = cq.from(LeaveDetailsModel.class);
+			Path<Date> fromDate = root.get("fromDate");
+			Path<Date> toDate = root.get("toDate");
+			Predicate subcondition1 =qb.between(qb.literal(leaveModel.getFromDate()),fromDate,toDate);
+			Predicate subcondition2 =qb.equal(root.get("employee").get("id"),leaveModel.getEmployee().getId());
+			Predicate subcondition3 =root.get("id").in(leaveModel.getId());
+			Predicate subcondition4 = qb.not(subcondition3);
+			Predicate subcorrelation1 =qb.and(subcondition1,subcondition2,subcondition4);
+			Predicate subcondition5 =qb.between(qb.literal(leaveModel.getToDate()),fromDate,toDate);
+			Predicate subcondition6 =qb.equal(root.get("employee").get("id"),leaveModel.getEmployee().getId());
+			Predicate subcondition7 =root.get("id").in(leaveModel.getId());
+			Predicate subcondition8 = qb.not(subcondition7);
+			Predicate subcorrelation2 =qb.and(subcondition5,subcondition6,subcondition8);
+			Predicate subcondition9 =qb.between(fromDate,leaveModel.getFromDate(),leaveModel.getToDate());
+			Predicate subcondition10 =qb.equal(root.get("employee").get("id"),leaveModel.getEmployee().getId());
+			Predicate subcondition11 =root.get("id").in(leaveModel.getId());
+			Predicate subcondition12 =qb.not(subcondition11);
+			Predicate subcorrelation3 =qb.and(subcondition9,subcondition10,subcondition12);
+			Predicate subcondition13 =qb.between(toDate,leaveModel.getFromDate(),leaveModel.getToDate());
+			Predicate subcondition14 =qb.equal(root.get("employee").get("id"),leaveModel.getEmployee().getId());
+			Predicate subcondition15 = root.get("id").in(leaveModel.getId());
+			Predicate subcondition16 = qb.not(subcondition15);
+			Predicate subcorrelation4 =qb.and(subcondition13,subcondition14,subcondition16);
+			Predicate TotalConditions = qb.or(subcorrelation1,subcorrelation2,subcorrelation3,subcorrelation4);
+			cq.where(TotalConditions);
+			cq.select(root);
+				
+			leavedetailslist= entityManager.createQuery(cq).getResultList();
+			commit(); 
+			if(leavedetailslist.size()>0){
+		    	validation = true;
+		    }
+		}catch(Exception e){
 		}finally{
 			close();
 		}

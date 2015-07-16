@@ -106,7 +106,7 @@
 			</td>
 			<td>
 			    <span ng-show="!showEdit">{{sheet.address}}</span>
-				<span ng-show="showEdit" ><input class="form-control"  type="text" ng-model="sheet.address" ></span>
+				<span ng-show="showEdit" >​<textarea id="txtArea" ng-model="sheet.address" class="form-control" style="margin-top:-20px;"></textarea></span>
 			</td>
 			<td>
 			    <span ng-show="!showEdit">{{sheet.skypeId}}</span>
@@ -138,7 +138,7 @@
 			    <a><span class="glyphicon glyphicon-pencil" ng-click="showEdit = !showEdit" ng-show="!showEdit"></span></a>
 				<a><span class="glyphicon glyphicon-remove" ng-click="confirmDelete(sheet.customerId)" ng-show="!showEdit"></span></a>
 				<a><span class="glyphicon glyphicon-ok" ng-click="showEdit = !showEdit;updateCustomerDetails(sheet)" ng-show="showEdit" ng-disabled="check(sheet);"></span></a> 
-				<a><span class="glyphicon glyphicon-ban-circle" ng-click="showEdit = !showEdit" ng-show="showEdit"></span></a> 			
+				<a><span class="glyphicon glyphicon-ban-circle" ng-click="showEdit = !showEdit;list()" ng-show="showEdit"></span></a> 			
 			</td>
 		</tr>
 	</tbody>

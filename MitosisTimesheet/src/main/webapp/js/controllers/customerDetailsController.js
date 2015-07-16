@@ -218,6 +218,24 @@ angular.module('myApp.controllers')
 	},
 
 	$scope.updateCustomerDetails = function(reqParam){
+		
+		var mail=reqParam.email;
+		
+		$scope.validateEmail = function(mail) {
+
+			var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+			return emailReg.test( mail );
+		}
+
+		var lstIndex = mail.lastIndexOf('@');
+		if( !$scope.validateEmail(mail)) {
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("EmailId is not valid");
+			$('#customerMail').val('');
+			$('#customerMail').focus();
+			return;
+		}
+		else{
 
 		$http({
 			url: 'rest/customerDetails/updateCustomer',
@@ -236,7 +254,8 @@ angular.module('myApp.controllers')
 				$(".alert-danger").html("Customer Detail updating Failed");
 			}
 			$scope.list();	
-		})
+		});
+		}
 
 	},
 
