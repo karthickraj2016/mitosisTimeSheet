@@ -9,6 +9,7 @@ import javax.persistence.criteria.Root;
 
 import com.mitosis.timesheet.dao.CustomerDetailsDao;
 import com.mitosis.timesheet.model.CustomerDetailsModel;
+import com.mitosis.timesheet.model.ProjectModel;
 import com.mitosis.timesheet.util.BaseService;
 
 public class CustomerDetailsDaoImpl extends BaseService implements CustomerDetailsDao {
@@ -143,4 +144,31 @@ public class CustomerDetailsDaoImpl extends BaseService implements CustomerDetai
 		}
 		return flag;
     }
+
+	@Override
+	public boolean getProjectStatus(int customerId) {
+
+		List<ProjectModel> projectModel=new ArrayList<ProjectModel>();
+		boolean projectStatus=false;
+		
+		try {
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<ProjectModel> cq = qb.createQuery(ProjectModel.class);
+			Root<ProjectModel> root = cq.from(ProjectModel.class);
+			cq.where(qb.equal(root.get("customer").get("customerId"), customerId),qb.equal(root.get("status"),"Open"));
+			cq.select(root);
+			projectModel = entityManager.createQuery(cq).getResultList();
+			commit();
+			if(projectModel.size()>0){
+			projectStatus = true;
+			}
+		} catch (Exception e) {
+			return flag;
+		} finally {
+			close();
+		}
+		return projectStatus;
+	}
 }

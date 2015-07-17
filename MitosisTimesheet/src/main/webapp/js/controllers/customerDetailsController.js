@@ -231,6 +231,7 @@ angular.module('myApp.controllers')
 		if( !$scope.validateEmail(mail)) {
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("EmailId is not valid");
+			$scope.list();
 			return;
 		}
 		else{
@@ -247,7 +248,15 @@ angular.module('myApp.controllers')
 			if(result.value=="updated"){
 				$(".alert-msg").show().delay(1000).fadeOut(); 
 				$(".alert-success").html("Customer Detail Updated Successfully");
-			}else{
+			}
+			else if(result.value=="InActive"){
+				
+				$(".alert-msg1").show().delay(1000).fadeOut(); 
+				$(".alert-danger").html("Some Projects for this customer is open...Please Kindly Close those");
+				
+				
+			}
+			else{
 				$(".alert-msg1").show().delay(1000).fadeOut(); 
 				$(".alert-danger").html("Customer Detail updating Failed");
 			}

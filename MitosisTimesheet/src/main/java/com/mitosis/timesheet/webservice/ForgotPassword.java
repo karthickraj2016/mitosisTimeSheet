@@ -44,10 +44,6 @@ public class ForgotPassword {
 
 		String mailId = jsonObject.getString("emailid");
 		
-		System.out.println(jsonObject);
-		
-
-		
 		String isReset = jsonObject.getString("passwordflag");
 
 		UserDetailsModel userDetailsModel = new UserDetailsModel();

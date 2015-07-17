@@ -18,4 +18,6 @@ public interface CustomerDetailsDao {
 	
 	public boolean mailValidation(String mail);
 
+	public boolean getProjectStatus(int customerId);
+
 }

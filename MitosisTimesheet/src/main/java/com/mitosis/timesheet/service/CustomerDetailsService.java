@@ -18,4 +18,6 @@ public interface CustomerDetailsService {
 	
 	public boolean mailValidation(String mail);
 
+	public boolean getProjectStatus(int customerId);
+
 }

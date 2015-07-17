@@ -82,4 +82,16 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 		return validation;
 	}
 
+	@Override
+	public boolean getProjectStatus(int customerId) {
+		
+		
+		
+		CustomerDetailsDao customerDao=new CustomerDetailsDaoImpl();
+		
+		boolean projectstatus=customerDao.getProjectStatus(customerId);
+	
+		return projectstatus;
+	}
+
 }

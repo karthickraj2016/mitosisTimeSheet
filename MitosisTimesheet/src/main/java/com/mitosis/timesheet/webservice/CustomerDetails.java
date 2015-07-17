@@ -108,6 +108,26 @@ public class CustomerDetails {
 			customerModel.setFax(jsonObject.getString("fax"));
 		}
 		
+		
+		if(jsonObject.getString("status").equals("Inactive")){
+			
+			boolean projectstatus = customerService.getProjectStatus(customerModel.getCustomerId());
+			
+			if(projectstatus){
+				
+				json.put("value", "InActive");
+				
+				return json;
+				
+				
+				
+			}
+			
+			
+			
+		}
+		
+		
 
 		customerModel.setStatus(jsonObject.getString("status"));
 		
