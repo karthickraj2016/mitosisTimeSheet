@@ -32,10 +32,10 @@ public class CustomerDetailsModel {
 	private String skypeId;
 	
 	@Column(name="phone")
-	private int phone;
+	private Integer phone;
 	
 	@Column(name="mobile")
-	private int mobile;
+	private Integer mobile;
 	
 	@Column(name="website")
 	private String website;
@@ -94,19 +94,19 @@ public class CustomerDetailsModel {
 		this.skypeId = skypeId;
 	}
 
-	public int getPhone() {
+	public Integer getPhone() {
 		return phone;
 	}
 
-	public void setPhone(int phone) {
+	public void setPhone(Integer phone) {
 		this.phone = phone;
 	}
 
-	public int getMobile() {
+	public Integer getMobile() {
 		return mobile;
 	}
 
-	public void setMobile(int mobile) {
+	public void setMobile(Integer mobile) {
 		this.mobile = mobile;
 	}
 
