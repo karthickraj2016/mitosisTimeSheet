@@ -252,7 +252,7 @@ angular.module('myApp.controllers')
 			else if(result.value=="InActive"){
 				
 				$(".alert-msg1").show().delay(1000).fadeOut(); 
-				$(".alert-danger").html("Some Projects for this customer is open...Please Kindly Close those");
+				$(".alert-danger").html("Some Projects for this customer is open...Please Kindly close and then change Status");
 				
 				
 			}
