@@ -177,7 +177,7 @@ else{
 		}else{
 	   
 	   var menuJson = angular.toJson({
-			"id":reqParam.id,"employeeId": reqParam.employee.id,"fromDate":reqParam.frmEntryDate,"toDate":reqParam.toEntryDate,"reason":reqParam.reason
+			"id":reqParam.id,"employeeId": reqParam.employee.id,"fromDate":reqParam.frmEntryDate,"toDate":reqParam.toEntryDate,"reason":reqParam.reason,
 		});
 	   
 		$http({

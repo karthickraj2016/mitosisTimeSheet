@@ -41,6 +41,16 @@ public class LeaveDetailsModel {
 	@Column(name="status")
 	private String status;
 	
+	@Column(name="no_of_days")
+	private Integer noOfDays;
+	
+	public Integer getNoOfDays() {
+		return noOfDays;
+	}
+	public void setNoOfDays(Integer noOfDays) {
+		this.noOfDays = noOfDays;
+	}
+
 	@Transient
 	private String frmEntryDate;
 	

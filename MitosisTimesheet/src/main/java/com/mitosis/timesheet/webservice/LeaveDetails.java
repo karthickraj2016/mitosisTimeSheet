@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -52,6 +53,23 @@ public class LeaveDetails {
 	String todateInString = jsonObject.getString("toDate");
 	Date toDate = sdf.parse(todateInString);
 	
+	 Calendar fromcal = Calendar.getInstance();
+	    Calendar tocal = Calendar.getInstance();
+	    fromcal.setTime(frmDate);
+	    tocal.setTime(toDate);
+
+	    int leavedays = 1;
+	    while (fromcal.before(tocal)) {
+	        if ((Calendar.SATURDAY != fromcal.get(Calendar.DAY_OF_WEEK))
+	           &&(Calendar.SUNDAY != fromcal.get(Calendar.DAY_OF_WEEK))) {
+	        	leavedays++;
+	        	fromcal.add(Calendar.DATE,1);
+	        }else {
+	        	fromcal.add(Calendar.DATE,1);
+	        }
+	    }
+	    
+	
 	if (jsonObject.has("reason")) {
 		leaveModel.setReason(jsonObject.getString("reason"));
 	}
@@ -62,6 +80,7 @@ public class LeaveDetails {
 	leaveModel.setEmployee(userModel);
 	leaveModel.setFromDate(frmDate);
 	leaveModel.setToDate(toDate);
+	leaveModel.setNoOfDays(leavedays);
 	/*leaveModel.setStatus(status);*/
 	
 	boolean validation = false;
@@ -113,6 +132,23 @@ public class LeaveDetails {
 		leaveModel.setReason(jsonObject.getString("reason"));
 	}
 	
+	
+	Calendar fromcal = Calendar.getInstance();
+    Calendar tocal = Calendar.getInstance();
+    fromcal.setTime(frmDate);
+    tocal.setTime(toDate);
+
+    int leavedays = 1;
+    while (fromcal.before(tocal)) {
+        if ((Calendar.SATURDAY != fromcal.get(Calendar.DAY_OF_WEEK))
+           &&(Calendar.SUNDAY != tocal.get(Calendar.DAY_OF_WEEK))) {
+        	leavedays++;
+        	fromcal.add(Calendar.DATE,1);
+        }else {
+        	fromcal.add(Calendar.DATE,1);
+        }
+    }
+	
 	/*String status=jsonObject.getString("status");*/
 	
 	if (jsonObject.has("id")) {
@@ -122,6 +158,7 @@ public class LeaveDetails {
 	leaveModel.setEmployee(userModel);
 	leaveModel.setFromDate(frmDate);
 	leaveModel.setToDate(toDate);
+	leaveModel.setNoOfDays(leavedays);
 	/*leaveModel.setStatus(status);*/
 	boolean validation = false;
 	

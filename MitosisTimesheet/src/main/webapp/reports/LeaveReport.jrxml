@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fromDate" class="java.lang.String"/>
+	<parameter name="toDate" class="java.lang.String"/>
+	<field name="employee.name" class="java.lang.String"/>
+	<field name="fromDate" class="java.util.Date"/>
+	<field name="toDate" class="java.util.Date"/>
+	<field name="noOfDays" class="java.lang.Integer"/>
+	<variable name="noofdays" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{noOfDays}]]></variableExpression>
+	</variable>
+	<group name="employee name">
+		<groupExpression><![CDATA[$F{employee.name}]]></groupExpression>
+		<groupHeader>
+			<band height="66">
+				<staticText>
+					<reportElement x="6" y="13" width="89" height="20"/>
+					<textElement/>
+					<text><![CDATA[Employee Name:]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="94" y="13" width="159" height="20"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{employee.name}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement x="0" y="33" width="555" height="32"/>
+				</rectangle>
+				<line>
+					<reportElement x="118" y="33" width="1" height="33"/>
+				</line>
+				<staticText>
+					<reportElement x="15" y="41" width="100" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[Name]]></text>
+				</staticText>
+				<line>
+					<reportElement x="276" y="33" width="1" height="33"/>
+				</line>
+				<line>
+					<reportElement x="387" y="33" width="1" height="33"/>
+				</line>
+				<staticText>
+					<reportElement x="154" y="41" width="100" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[From Date]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="292" y="41" width="76" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[To Date]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="428" y="41" width="100" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[No of Days]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="31">
+				<rectangle>
+					<reportElement x="276" y="-1" width="279" height="29"/>
+				</rectangle>
+				<line>
+					<reportElement x="387" y="0" width="1" height="29"/>
+				</line>
+				<staticText>
+					<reportElement x="288" y="3" width="100" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[No of Days]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="423" y="3" width="104" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{noofdays}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="72" splitType="Stretch">
+			<staticText>
+				<reportElement x="179" y="8" width="275" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Mitosis Timesheet - Leave Report]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="106" y="40" width="55" height="20"/>
+				<textElement/>
+				<text><![CDATA[FromDate:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="161" y="40" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{fromDate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="333" y="40" width="44" height="20"/>
+				<textElement/>
+				<text><![CDATA[ToDate:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="377" y="40" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{toDate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="42" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="41"/>
+			</rectangle>
+			<line>
+				<reportElement x="118" y="-1" width="1" height="42"/>
+			</line>
+			<line>
+				<reportElement x="276" y="0" width="1" height="42"/>
+			</line>
+			<line>
+				<reportElement x="387" y="0" width="1" height="41"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="282" y="10" width="102" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[new SimpleDateFormat("dd-MM-yyyy").format($F{toDate})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="132" y="9" width="129" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[new SimpleDateFormat("dd-MM-yyyy").format($F{fromDate})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="5" y="9" width="101" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{employee.name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="424" y="9" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{noOfDays}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="53" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

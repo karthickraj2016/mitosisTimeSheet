@@ -97,7 +97,15 @@ angular.module('myApp', ['ui.router','myApp.controllers','ngStorage','ui.bootstr
 						 url: '/customerDetails',
 						 templateUrl: 'html/customerDetails.html',
 						 controller :'customerDetailsController'
+					 })
+					 
+					 .state('leavereport', {
+						 url: '/leaveReport',
+						 templateUrl: 'html/leavereport.html',
+						 controller :'leaveReportController'
 					 });
+					 
+					 
 
 				 }
 				 ]);
