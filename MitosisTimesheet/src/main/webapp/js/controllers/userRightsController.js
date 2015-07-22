@@ -42,6 +42,8 @@ angular.module('myApp.controllers')
 			return true;
 		} else if(sheet.manageCustomer == '' || sheet.manageCustomer == undefined) {
 			return true;
+		}else if(sheet.manageEmployees == '' || sheet.manageEmployees == undefined) {
+			return true;
 		}else{
 			return false;
 		}

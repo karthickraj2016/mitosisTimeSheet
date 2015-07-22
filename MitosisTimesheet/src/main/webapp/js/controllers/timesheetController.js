@@ -79,6 +79,7 @@ angular.module('myApp.controllers')
 		$scope.manageProject=result.manageProject;
 		$scope.manageTeam=result.manageTeam;
 		$scope.manageCustomer=result.manageCustomer;
+		$scope.manageEmployees=result.manageEmployees;
 	});
 
 		

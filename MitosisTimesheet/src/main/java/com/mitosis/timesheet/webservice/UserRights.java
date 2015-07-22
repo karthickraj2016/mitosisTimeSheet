@@ -60,6 +60,7 @@ public class UserRights {
 		userModel.setManageProject(jsonobject.getBoolean("manageProject"));
 		userModel.setManageTeam(jsonobject.getBoolean("manageTeam"));
 		userModel.setManageCustomer(jsonobject.getBoolean("manageCustomer"));
+		userModel.setManageCustomer(jsonobject.getBoolean("manageEmployees"));
 
 		flag = rightsService.updateRights(userModel);
 

@@ -48,7 +48,9 @@ public class UserDetailsModel {
 	@Column(name="manage_customer")
 	private boolean manageCustomer;
 	
-	
+	@Column(name="manage_employees")
+	private boolean manageEmployees;
+		
 	@Column(name="admin_flag")
 	private int adminFlag;
 
@@ -132,6 +134,15 @@ public class UserDetailsModel {
 	public void setManageCustomer(boolean manageCustomer) {
 		this.manageCustomer = manageCustomer;
 	}
+	
+	public boolean isManageEmployees() {
+		return manageEmployees;
+	}
+
+	public void setManageEmployees(boolean manageEmployees) {
+		this.manageEmployees = manageEmployees;
+	}
+
 	public int getAdminFlag() {
 		return adminFlag;
 	}

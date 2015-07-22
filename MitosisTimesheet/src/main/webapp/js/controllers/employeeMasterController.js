@@ -28,6 +28,20 @@ angular.module('myApp.controllers')
 		}
 	});
 
+	$http({
+		url: 'rest/timesheet/getUserDetails',
+		method: 'GET',
+		/*data: menuJson,*/
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	}).success(function(result, status, headers) {
+		
+		$scope.manageProject=result.manageProject;
+		$scope.manageTeam=result.manageTeam;
+		$scope.manageCustomer=result.manageCustomer;
+		$scope.manageEmployees=result.manageEmployees;
+	});
 
 	$http({
 
@@ -251,5 +265,16 @@ angular.module('myApp.controllers')
 		}
 			
 	}
+	
+	$scope.logout = function(){
+
+		$http({
+			url: 'rest/account/logout',
+			method: 'GET',
+		}).success(function(result, status, headers) {
+
+			$state.go('login')
+		})
+	};
 	 
 }])
