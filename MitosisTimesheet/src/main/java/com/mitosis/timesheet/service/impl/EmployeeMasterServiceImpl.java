@@ -63,4 +63,22 @@ public class EmployeeMasterServiceImpl implements EmployeeMasterService {
 		return levelModel;
 	}
 
+	@Override
+	public boolean employeeIdValidation(String employeeId, boolean empId) {
+		
+		empId=masterDao.employeeIdValidation(employeeId,empId);
+		
+		return empId;
+		
+	}
+
+	@Override
+	public boolean employeeValidation(int userId, boolean empId) {
+       
+		empId=masterDao.employeeValidation(userId,empId);
+		
+		return empId;
+	}
+
+	
 }

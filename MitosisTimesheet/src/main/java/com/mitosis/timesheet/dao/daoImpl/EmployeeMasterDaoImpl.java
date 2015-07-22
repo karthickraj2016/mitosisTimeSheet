@@ -129,4 +129,56 @@ public class EmployeeMasterDaoImpl extends BaseService implements EmployeeMaster
 		return levelModel;
 	}
 
+	@Override
+	public boolean employeeIdValidation(String employeeId, boolean empId) {
+	
+
+		EmployeeMasterModel masterModel=new EmployeeMasterModel();
+		
+		try{
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<EmployeeMasterModel> cq = qb.createQuery(EmployeeMasterModel.class);
+			Root<EmployeeMasterModel> root = cq.from(EmployeeMasterModel.class);
+		    cq.where(qb.equal(root.get("employeeId"), employeeId));
+		    cq.select(root);
+		    masterModel=entityManager.createQuery(cq).getSingleResult();
+		    if(masterModel!=null){
+		    	empId=true;
+		    }
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close();
+		}
+		return empId;
+	}
+	
+	@Override
+	public boolean employeeValidation(int userId, boolean empId) {
+	
+
+		EmployeeMasterModel masterModel=new EmployeeMasterModel();
+		
+		try{
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<EmployeeMasterModel> cq = qb.createQuery(EmployeeMasterModel.class);
+			Root<EmployeeMasterModel> root = cq.from(EmployeeMasterModel.class);
+		    cq.where(qb.equal(root.get("employee").get("id"), userId));
+		    cq.select(root);
+		    masterModel=entityManager.createQuery(cq).getSingleResult();
+		    if(masterModel!=null){
+		    	empId=true;
+		    }
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close();
+		}
+		return empId;
+	}
+
 }

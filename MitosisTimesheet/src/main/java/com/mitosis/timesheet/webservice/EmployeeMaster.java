@@ -221,5 +221,50 @@ public class EmployeeMaster {
 		}
 		return json;
 	}
+    
+    @Path("/employeeIdValidation")
+   	@POST
+   	@Consumes(MediaType.APPLICATION_JSON)
+   	@Produces(MediaType.APPLICATION_JSON)
+   	
+   	public JSONObject employeeIdValidation(JSONObject jsonObject) throws JSONException, ParseException {
+    	
+    	JSONObject json=new JSONObject();
  
-}
+    	String employeeId=jsonObject.getString("employeeId");
+    	
+    	boolean empId=false;
+    	
+    	empId=masterService.employeeIdValidation(employeeId,empId);
+    	
+    	if(empId){
+    		json.put("value", "already exist");
+    	}else{
+    		json.put("value", "new");
+    	}
+     	return json;
+     }
+    
+    @Path("/employeeValidation")
+   	@POST
+   	@Consumes(MediaType.APPLICATION_JSON)
+   	@Produces(MediaType.APPLICATION_JSON)
+   	
+   	public JSONObject employeeValidation(JSONObject jsonObject) throws JSONException, ParseException {
+    	
+    	JSONObject json=new JSONObject();
+ 
+    	int userId=jsonObject.getInt("userId");
+    	
+    	boolean empId=false;
+    	
+    	empId=masterService.employeeValidation(userId,empId);
+    	
+    	if(empId){
+    		json.put("value", "already exist");
+    	}else{
+    		json.put("value", "new");
+    	}
+     	return json;
+     }
+ }
