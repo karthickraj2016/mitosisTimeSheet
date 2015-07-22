@@ -17,4 +17,8 @@ public interface EmployeeMasterService {
 
 	public LevelMasterModel findEmployeeLevel(int yearsOfExp);
 
+	public boolean employeeIdValidation(String employeeId, boolean empId);
+
+	public boolean employeeValidation(int userId, boolean empId);
+
 }

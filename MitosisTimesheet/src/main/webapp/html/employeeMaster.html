@@ -35,19 +35,19 @@
 <form   class="form-inline" role="form" id="addEntry" ng-submit="addEmployeeMasterDetails(joiningDate,expStartDate,billable)">
     
     <div class="form-group">
-    <select  class="form-control empdet-form" required ng-model="employee" ng-options="item as item.name for item in employeeNameList">
+    <select id="userId" class="form-control empdet-form" required ng-model="employee" ng-options="item as item.name for item in employeeNameList" ng-blur="validateEmployee(employee)">
     <option value="">Employee Name</option>
     </select> 
     </div>
-     <div class="form-group"><input type="text" required class="form-control empdet-form" placeholder="Employee Id" ng-model="employeeDetail.employeeId"></div>
+     <div class="form-group"><input id="empId" type="text" required class="form-control empdet-form" placeholder="Employee Id" ng-model="employeeDetail.employeeId"></div>
      <div class="form-group"><input type="text" required class="form-control empdet-form" placeholder="First Name" ng-model="employeeDetail.firstName"></div>
        <div class="form-group"><input type="text" required class="form-control empdet-form" placeholder="Last Name" ng-model="employeeDetail.lastName"></div>
-    <div ng-init="dates()" class="form-group">
-       <input type="text" required class="form-control empdet-form" placeholder="Joining Date" ui-date="dateOptions" ui-date-format="dd-mm-yy" ng-model="employeeDetail.joiningDate">
+    <div class="form-group">
+       <input type="text" id="joinDate" required class="form-control empdet-form" placeholder="Joining Date" ui-date="dateOptions" ui-date-format="dd-mm-yy" ng-model="employeeDetail.joiningDate">
     </div>
     
-    <div ng-init="dates()" class="form-group">
-       <input type="text" required class="form-control empdet-form" placeholder="Experience Start Date" ui-date="dateOptions" ui-date-format="dd-mm-yy" ng-model="employeeDetail.expStartDate">
+    <div  class="form-group">
+       <input type="text" id="startDate" required class="form-control empdet-form" placeholder="Experience Start Date" ui-date="dateOptions" ui-date-format="dd-mm-yy" ng-model="employeeDetail.expStartDate">
     </div>
     <div class="form-group">
     <select class="form-control select" required ng-model="employeeDetail.billable">
