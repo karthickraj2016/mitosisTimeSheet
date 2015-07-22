@@ -109,7 +109,13 @@ angular.module('myApp', ['ui.router','myApp.controllers','ngStorage','ui.bootstr
 						 url: '/employeeMaster',
 						 templateUrl: 'html/employeeMaster.html',
 						 controller :'employeeMasterController'
-					 });
+					 })
+					 .state('invoice', {
+						 url: '/invoice',
+						 templateUrl: 'html/project_invoice.html',
+						 controller :'invoiceDetailsController'
+					 })
+
 
 
 				 }

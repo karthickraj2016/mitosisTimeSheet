@@ -1,9 +1,14 @@
 package com.mitosis.timesheet.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.mitosis.timesheet.dao.InvoiceDetailsDao;
 import com.mitosis.timesheet.dao.daoImpl.InvoiceDetailsDaoImpl;
+import com.mitosis.timesheet.model.CustomerDetailsModel;
 import com.mitosis.timesheet.model.InvoiceDetailsModel;
 import com.mitosis.timesheet.model.InvoiceHdrModel;
+import com.mitosis.timesheet.model.ProjectModel;
 import com.mitosis.timesheet.service.InvoiceDetailsService;
 
 public class InvoiceDetailsServiceImpl implements InvoiceDetailsService {
@@ -40,6 +45,36 @@ public class InvoiceDetailsServiceImpl implements InvoiceDetailsService {
 		
 		String Invoicenumber = invoiceDetailsDao.getInvoiceNumber();
 		return Invoicenumber;
+	}
+
+
+	@Override
+	public int getId(String invoiceNumber) {
+		// TODO Auto-generated method stub
+		int id  = invoiceDetailsDao.getId(invoiceNumber);
+		return id;
+	}
+
+
+	@Override
+	public List<ProjectModel> getProjectList() {
+		// TODO Auto-generated method stub
+		List<ProjectModel> projectModel = new ArrayList<ProjectModel>();
+		
+		projectModel = invoiceDetailsDao.getProjectList();
+		return projectModel;
+	}
+
+
+	@Override
+	public List<CustomerDetailsModel> getCustomerList() {
+		
+		
+		List<CustomerDetailsModel> customerDetailsModel = new ArrayList<CustomerDetailsModel>();
+		
+		customerDetailsModel = invoiceDetailsDao.getCustomerList();
+		// TODO Auto-generated method stub
+		return customerDetailsModel;
 	}
 
 }

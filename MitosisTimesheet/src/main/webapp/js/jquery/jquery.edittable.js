@@ -28,24 +28,52 @@
         i = i + 1;
 
         // Build cell
-        function buildCell(content) {
+        /*function buildCell(content) {
             content = (content === 0) ? "0" : (content || '').toString();
+			
             return '<td><input type="text" name="" value="' + content.replace(/"/g, "&quot;") + '" /></td>';
+        }*/
+        
+        function buildCell(content,rownum) {
+        	if(content==0){
+	        	return '<td>'+rownum+'</td>'; 
+	        }
+        	else if(content==1)
+        	{
+        		return '<td><input type="text" required class="form-control empdet-form" placeholder="From Date" ui-date="dateOptions" ui-date-format="yy-mm-dd" ng-model="invoice.fromdate"></td>'; 
+        	}
+	        else if(content==2){
+	        	return '<td><input type="text" required class="form-control empdet-form" placeholder="To Date" ui-date="dateOptions" ui-date-format="yy-mm-dd" ng-model="invoice.todate"></td>'; 
+	        }
+	        else if(content==3){
+	        	return '<td><input type="text" name=""/></td>'; 
+	        }
+	        else if(content==4){
+	        	return '<td><select class="form-control"><option value="0">Select</option><option value="1">Kathir</option><option value="2">Ram</option></select></td>'; 
+	        }
+	        else if(content==5){
+	        	return '<td><input type="number"  name=""/></td>'; 
+	        }
+	        else if(content==6){
+	        	return '<td><input type="text"  name=""/></td>'; 
+	        }                 
+            
         }
+        
 
         // Build row
         function buildRow(data, len) {
 
             var rowcontent = '', b;
-
+            var rownum = $table.find('tbody tr').length;
             data = data || '';
 
-            for (b = 0; b < (len || data.length); b += 1) {
-                rowcontent += buildCell(data[b]);
+            for (b = 0; b < (len || data.length); b ++) {
+            	rowcontent += buildCell(b,rownum);
             }
 
             return $('<tr/>', {
-                html: rowcontent + '<td><a class="addrow icon-button" href="#">+</a> <a class="delrow icon-button" href="#">-</a></td>'
+                html: rowcontent + '<td class="last-col"><a class="addrow" href="#"><span class="glyphicon glyphicon-plus"></span></a> <a class="delrow" href="#"><span class="glyphicon glyphicon-remove"></span></a></td>'
             });
 
         }
@@ -96,7 +124,6 @@
             // Count rows and columns
             colnumber = $table.find('thead th').length - 1;
             rownumber = $table.find('tbody tr').length;
-
             checkButtons();
         }
 

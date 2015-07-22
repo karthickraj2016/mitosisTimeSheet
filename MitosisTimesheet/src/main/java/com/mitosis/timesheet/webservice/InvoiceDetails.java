@@ -4,9 +4,12 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -15,6 +18,7 @@ import javax.ws.rs.core.MediaType;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import com.mitosis.timesheet.dao.InvoiceDetailsDao;
 import com.mitosis.timesheet.model.CustomerDetailsModel;
 import com.mitosis.timesheet.model.InvoiceDetailsModel;
 import com.mitosis.timesheet.model.InvoiceHdrModel;
@@ -25,6 +29,8 @@ import com.mitosis.timesheet.service.impl.InvoiceDetailsServiceImpl;
 
 @Path("invoiceDetails")
 public class InvoiceDetails {
+	
+	InvoiceDetailsService InvoiceService = new InvoiceDetailsServiceImpl();
 
 
 	@Path("/insertInvoice")
@@ -34,7 +40,7 @@ public class InvoiceDetails {
 
 	public JSONObject insertInvoice(JSONObject jsonObject) throws JSONException, ParseException{
 
-		InvoiceDetailsService InvoiceService = new InvoiceDetailsServiceImpl();
+		
 
 		InvoiceHdrModel invoiceHdrModel = new InvoiceHdrModel();
 
@@ -52,7 +58,7 @@ public class InvoiceDetails {
 
 		if(invoiceNumber == null){
 
-			invoiceNumber ="Mit_"+1;
+			invoiceNumber ="MIT-"+1;
 
 			invoiceHdrModel.setInvoiceNumber(invoiceNumber);
 
@@ -86,7 +92,7 @@ public class InvoiceDetails {
 		System.out.println(invoiceHdrModel);
 
 
-		/*DateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
+		DateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
 		String InvoiceFromDateString= jsonObject.getString("invoicefromdate");
 		Date invoiceFromDate = sdf1.parse(InvoiceFromDateString);
 
@@ -104,15 +110,15 @@ public class InvoiceDetails {
 		invoiceDetailsModel.setInvoice(invoicehdrModel);
 		invoiceDetailsModel.setInvoiceFromDate(invoiceFromDate);
 		invoiceDetailsModel.setInvoiceToDate(invoiceToDate);
-		invoiceDetailsModel.setDescription(json.getString("description"));
+		invoiceDetailsModel.setDescription(jsonObject.getString("description"));
 		invoiceDetailsModel.setRatePerHour(rateperhour);
 		invoiceDetailsModel.setTeamMember(jsonObject.getString("teammember"));
 		invoiceDetailsModel.setBillableHours(jsonObject.getInt("billablehours"));
 		
-		System.out.println(invoiceDetailsModel);*/
+		System.out.println(invoiceDetailsModel);
 
 
-		boolean validationforhdr = false;
+		boolean validationforhdr ;
 		validationforhdr=InvoiceService.validateEntry(invoiceHdrModel);
 
 		if(validationforhdr){
@@ -121,13 +127,16 @@ public class InvoiceDetails {
 		}
 		else{
 			boolean inserthdr = InvoiceService.create(invoiceHdrModel);
-			/*boolean insertdtl = InvoiceService.create(invoiceDetailsModel);*/
+			boolean insertdtl = InvoiceService.create(invoiceDetailsModel);
+			
+			if(inserthdr && insertdtl ){
 
 			json.put("value", "Inserted Successfully");
 			return json;
+			}
 
 		}
-
+		return json;
 
 
 
@@ -151,6 +160,14 @@ public class InvoiceDetails {
 
 		JSONObject json = new JSONObject();
 		Date todaysdate = new Date();
+
+		
+		String invoiceNumber = jsonObject.getString("invoiceNumber");
+		invoiceHdrModel.setInvoiceNumber(invoiceNumber);
+		
+		int id =0;
+		
+		id = InvoiceService.getId(invoiceNumber);
 		
 		
 		if(jsonObject.has("invoicedate")){
@@ -186,33 +203,10 @@ public class InvoiceDetails {
 		
 		}
 		
-		if(jsonObject.has("createddate")){
-			
+
 			invoiceHdrModel.setCreatedDate(todaysdate);
-		}
-		
-		
-		String invoiceNumber = InvoiceService.getInvoiceNumber();
+	
 
-		if(invoiceNumber == null){
-
-			invoiceNumber ="Mit_"+1;
-
-			invoiceHdrModel.setInvoiceNumber(invoiceNumber);
-
-
-		}
-		else{
-			int nextNumber =1;
-			String[] invoiceNumbersplit= invoiceNumber.split("_");
-			nextNumber += Integer.parseInt(invoiceNumbersplit[1]);
-			invoiceHdrModel.setInvoiceNumber(invoiceNumbersplit[0]+"_"+nextNumber);
-
-		}
-
-
-
-		
 		if(jsonObject.has("invoicefromdate")){
 		
 			DateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
@@ -242,7 +236,7 @@ public class InvoiceDetails {
 		if(jsonObject.has("description")){
 			
 			
-			invoiceDetailsModel.setDescription(json.getString("description"));
+			invoiceDetailsModel.setDescription(jsonObject.getString("description"));
 		}
 		
 		if(jsonObject.has("teammember")){
@@ -256,31 +250,72 @@ public class InvoiceDetails {
 			invoiceDetailsModel.setBillableHours(jsonObject.getInt("billablehours"));
 			
 		}
-
 		
-
+		
 		InvoiceHdrModel invoicehdrModel = new InvoiceHdrModel();
 		invoicehdrModel.setInvoiceNumber(invoiceHdrModel.getInvoiceNumber());
-		
-		
+		invoiceDetailsModel.setId(id);
 		invoiceDetailsModel.setInvoice(invoicehdrModel);
 		
-
-		boolean validationforhdr = false;
-		validationforhdr=InvoiceService.validateEntry(invoiceHdrModel);
-
-		if(validationforhdr){
-			json.put("value", "already exist");
-			return json;
-		}
-		else{
+		
 			boolean inserthdr = InvoiceService.create(invoiceHdrModel);
 			boolean insertdtl = InvoiceService.create(invoiceDetailsModel);
+			
+			if(inserthdr && insertdtl ){
 
-			json.put("value", "Inserted Successfully");
+			json.put("value", "updated Successfully");
 			return json;
+			}
+			else{
+				json.put("value", "updationfailed ");
+				return json;
+			}
 
-		}
+		
+	}
+	
+	
+	
+	@Path("/getProjectList")
+	@GET
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	
+	public List<ProjectModel> getProjectList() throws JSONException, ParseException{
+		
+
+		
+		List<ProjectModel> projectList = new ArrayList<ProjectModel>();
+	
+		projectList = InvoiceService.getProjectList();
+		
+		
+		
+		return projectList;
+
+	
+	
+	}
+	
+	
+	@Path("/getCustomerList")
+	@GET
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<CustomerDetailsModel> getCustomerList() throws JSONException, ParseException{
+		
+
+		
+		List<CustomerDetailsModel> customerList = new ArrayList<CustomerDetailsModel>();
+	
+		customerList = InvoiceService.getCustomerList();
+		
+		
+		
+		return customerList;	
+	
+	
+	
 	}
 	
 	@Path("/deleteInvoice")

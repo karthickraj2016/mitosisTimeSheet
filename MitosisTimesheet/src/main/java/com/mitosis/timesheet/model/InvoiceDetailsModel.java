@@ -25,7 +25,7 @@ public class InvoiceDetailsModel {
 	private int id;
 
 	@ManyToOne(targetEntity = InvoiceHdrModel.class)
-	@JoinColumn(name = "invoice_Number", nullable = false, referencedColumnName = "invoice_Number")
+	@JoinColumn(name = "invoice_Number", nullable = false, unique=true ,referencedColumnName = "invoice_Number")
 	private InvoiceHdrModel invoice;
 
 
