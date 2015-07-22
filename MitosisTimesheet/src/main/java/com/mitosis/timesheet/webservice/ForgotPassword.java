@@ -63,7 +63,7 @@ public class ForgotPassword {
 			final String username = "testingemail2016@gmail.com";
 			final String password = "Kart@2016";
 			final String content = "In order to change your password visit the following url and set your new password<br/><a href='" + url + "/"
-					+ projectName + "/#/resetpassword?id=" + userDetailsModel.getId() + "' onclick='resetpassword(); return false'>click here for activation</a>";
+					+ projectName +"/#/resetpassword?id=" + userDetailsModel.getId() + "' onclick='resetpassword(); return false'>click here for activation</a>";
 			System.out.println(content);
 			Properties props = new Properties();
 			props.put("mail.smtp.auth", "true");

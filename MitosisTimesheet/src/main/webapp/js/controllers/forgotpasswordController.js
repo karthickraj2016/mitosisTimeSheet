@@ -15,12 +15,31 @@ angular.module('myApp.controllers')
 	
 	$scope.mailvalidation = function(){
 	
-
+var emailId = $scope.resetemailid;
 		
 		var email = angular.toJson({
 			"emailid": $scope.resetemailid
 
 		});
+		
+		$scope.validateEmail = function($email) {
+
+			var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+			return emailReg.test( $email );
+		}
+		
+		var lstIndex = emailId.lastIndexOf('@');
+		if( !$scope.validateEmail(emailId)) {
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("EmailId is not valid");
+			return;
+		} else if(emailId.substring(lstIndex + 1)!='mitosistech.com') {
+			$(".alert-msg1").show().delay(1500).fadeOut(); 
+			$(".alert-danger").html("Invalid domain name, use only mitosistech.com");
+			return;
+		}
+		
+	
 		
 
 		$http({

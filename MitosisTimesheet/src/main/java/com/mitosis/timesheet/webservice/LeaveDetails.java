@@ -141,7 +141,7 @@ public class LeaveDetails {
     int leavedays = 1;
     while (fromcal.before(tocal)) {
         if ((Calendar.SATURDAY != fromcal.get(Calendar.DAY_OF_WEEK))
-           &&(Calendar.SUNDAY != tocal.get(Calendar.DAY_OF_WEEK))) {
+           &&(Calendar.SUNDAY != fromcal.get(Calendar.DAY_OF_WEEK))) {
         	leavedays++;
         	fromcal.add(Calendar.DATE,1);
         }else {
