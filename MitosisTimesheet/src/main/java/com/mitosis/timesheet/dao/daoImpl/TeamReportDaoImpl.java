@@ -30,7 +30,7 @@ public class TeamReportDaoImpl extends BaseService implements TeamReportDao {
 			CriteriaQuery<TeamAssignmentModel> cq = qb.createQuery(TeamAssignmentModel.class);
 			Root<TeamAssignmentModel> root = cq.from(TeamAssignmentModel.class);
 			cq.select(root);
-			cq.where(qb.equal(root.get("member"),employeeId));
+			cq.where(qb.equal(root.get("member"),employeeId),qb.equal(root.get("project").get("status"), "Open"));
 			cq.orderBy(qb.asc(root.get("project").get("projectName")));
 			projectlist = entityManager.createQuery(cq).getResultList();
 			System.out.println(projectlist);

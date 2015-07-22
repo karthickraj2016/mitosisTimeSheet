@@ -127,8 +127,10 @@ margin: 2px 40px;
 	word-spacing: 5px;
 }
 .btn-formproject {
-	word-spacing: 0;
-	
+	word-spacing: 0;	
+}
+.btn-formempdet{
+			word-spacing: 0px;
 }
 
 .project-form-div {

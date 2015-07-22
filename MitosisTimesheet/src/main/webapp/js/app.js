@@ -98,14 +98,19 @@ angular.module('myApp', ['ui.router','myApp.controllers','ngStorage','ui.bootstr
 						 templateUrl: 'html/customerDetails.html',
 						 controller :'customerDetailsController'
 					 })
-					 
+
 					 .state('leavereport', {
 						 url: '/leaveReport',
 						 templateUrl: 'html/leavereport.html',
 						 controller :'leaveReportController'
+					 })
+
+					 .state('employeeMaster', {
+						 url: '/employeeMaster',
+						 templateUrl: 'html/employeeMaster.html',
+						 controller :'employeeMasterController'
 					 });
-					 
-					 
+
 
 				 }
 				 ]);
