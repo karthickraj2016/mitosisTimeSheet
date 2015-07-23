@@ -32,6 +32,15 @@ public class LevelMasterModel {
 	
 	@Column(name="rate_per_hour")
 	private BigDecimal ratePerHour;
+	
+	@Column(name="hours_per_month")
+	private int hoursPerMonth;
+	
+	@Column(name="total_employees")
+	private int totalEmployees;
+	
+	@Column(name="total_amount")
+	private BigDecimal totalAmount;
 
 	public int getId() {
 		return id;
@@ -72,4 +81,29 @@ public class LevelMasterModel {
 	public void setRatePerHour(BigDecimal ratePerHour) {
 		this.ratePerHour = ratePerHour;
 	}
+
+	public int getHoursPerMonth() {
+		return hoursPerMonth;
+	}
+
+	public void setHoursPerMonth(int hoursPerMonth) {
+		this.hoursPerMonth = hoursPerMonth;
+	}
+
+	public int getTotalEmployees() {
+		return totalEmployees;
+	}
+
+	public void setTotalEmployees(int totalEmployees) {
+		this.totalEmployees = totalEmployees;
+	}
+
+	public BigDecimal getTotalAmount() {
+		return totalAmount;
+	}
+
+	public void setTotalAmount(BigDecimal totalAmount) {
+		this.totalAmount = totalAmount;
+	}
+	
 }

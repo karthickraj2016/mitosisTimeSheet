@@ -126,6 +126,14 @@ margin: 2px 40px;
 	margin: 35px 0px 35px 0px;
 	word-spacing: 5px;
 }
+.level-form-div {
+	width: 100%;
+	margin: 35px 0px 35px 0px;
+	word-spacing: 5px;
+}
+.level-form-div .form-inline .form-control{
+	width: 170px;
+}
 .btn-formproject {
 	word-spacing: 0;	
 }

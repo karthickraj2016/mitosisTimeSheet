@@ -184,15 +184,19 @@ angular.module('myApp.controllers')
 		var yyyy = dt.getFullYear();
 		dt=dd+"-"+mm+"-"+yyyy;
 		var asOnDate=dt;
+		
 		var joinDate=($scope.employeeDetail.joiningDate).split("-");
 		var startDate=($scope.employeeDetail.expStartDate).split("-");
         var joinedDate=new Date(joinDate[1]+"-"+joinDate[0]+"-"+joinDate[2]);
         var startedDate=new Date(startDate[1]+"-"+startDate[0]+"-"+startDate[2]);
-		if(joinedDate<startedDate){
+		
+        if(joinedDate<startedDate){
+			
     	   $(".alert-msg1").show().delay(1000).fadeOut(); 
-		   $(".alert-danger").html("Process Failed");
+		   $(".alert-danger").html("ExpStartDate cannot be after JoinedDate!");
 		  return;
        }
+		
 		var menuJson=angular.toJson({"userId":$scope.employee.id,"employeeId":$scope.employeeDetail.employeeId,"firstName":$scope.employeeDetail.firstName,"lastName":$scope.employeeDetail.lastName,"joiningDate":$scope.employeeDetail.joiningDate,
 			"expStartDate":$scope.employeeDetail.expStartDate,"asOnDate":asOnDate,"billable":$scope.employeeDetail.billable});
 

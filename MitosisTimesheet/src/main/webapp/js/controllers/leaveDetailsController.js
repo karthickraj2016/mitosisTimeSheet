@@ -27,13 +27,14 @@ angular.module('myApp.controllers')
 	}
 	
 	$scope.dates = function() {
-	        var dt = new Date();
-		    var dd = ("0"+ (dt.getDate()-1)).slice(-2);
-		    var mm = ("0"+ (dt.getMonth()+1)).slice(-2); 
-		    var yyyy = dt.getFullYear();
-		    dt=dd+"-"+mm+"-"+yyyy;
-		 $scope.fromDate=dt;
-		 $scope.toDate=dt;
+		var dt = new Date();
+		var dd = ("0"+ (dt.getDate()-1)).slice(-2);
+		var mm = ("0"+ (dt.getMonth()+1)).slice(-2); 
+		var yyyy = dt.getFullYear();
+		dt=dd+"-"+mm+"-"+yyyy;
+		$scope.fromDate=dt;
+		$scope.toDate=dt;
+		
 	};
 	
 	$scope.dateOptionsFrom = {
@@ -121,8 +122,10 @@ angular.module('myApp.controllers')
 	
 	var fromdate = new Date($scope.fromDate.split('-')[2],$scope.fromDate.split('-')[1],$scope.fromDate.split('-')[0]);
 	var todate = new Date($scope.toDate.split('-')[2],$scope.toDate.split('-')[1],$scope.toDate.split('-')[0]);
-	var datevalidationfromDate = new Date($scope.fromDate);	
-	var datevalidationtoDate = new Date($scope.toDate);
+	
+	var datevalidationfromDate =new Date(($scope.fromDate).split("-")[1]+"-"+($scope.fromDate).split("-")[0]+"-"+($scope.fromDate).split("-")[2]);	
+	var datevalidationtoDate = new Date(($scope.toDate).split("-")[1]+"-"+($scope.toDate).split("-")[0]+"-"+($scope.toDate).split("-")[2]);;
+	
 	
 	if (datevalidationfromDate > datevalidationtoDate) {
 		$(".alert-msg1").show().delay(1000).fadeOut(); 

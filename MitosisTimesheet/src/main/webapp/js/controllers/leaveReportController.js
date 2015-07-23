@@ -32,12 +32,23 @@ angular.module('myApp.controllers')
 		$scope.leave = '';
 		$scope.leave={};
 		var dt = new Date();
-		var dd = ("0"+ (dt.getDate())).slice(-2);
-		var mm = ("0"+ (dt.getMonth()+1)).slice(-2); 
+		var mm = ("0"+ (dt.getMonth())).slice(-2); 
+		var mm1 = ("0"+ (dt.getMonth()+1)).slice(-2); 
 		var yyyy = dt.getFullYear();
-		dt=dd+"-"+mm+"-"+yyyy;
-		$scope.leave.fromdate=dt;
-		$scope.leave.todate=dt;
+		
+		 var date1=new Date(yyyy,mm,1);
+		 var d=("0"+ date1.getDate()).slice(-2);
+		 var m=("0"+ (date1.getMonth()+1)).slice(-2);
+		 var y= date1.getFullYear();
+		 date1=d+"-"+m+"-"+y;
+		 $scope.leave.fromdate=date1;
+		
+		 var date2=new Date(yyyy,mm1,0);
+		 var d1=("0"+date2.getDate()).slice(-2);
+		 var m1=("0"+ (date2.getMonth()+1)).slice(-2);
+		 var y1= date2.getFullYear();
+		 date2=d1+"-"+m1+"-"+y1;
+		 $scope.leave.todate =date2;
 	};
 
 	$scope.dateOptions = {
@@ -81,13 +92,15 @@ angular.module('myApp.controllers')
 		var fromdate = $scope.leave.fromdate;
 		var todate = $scope.leave.todate;
 
-		if (fromdate > todate) {
+		var datevalidationfromDate =new Date(fromdate.split("-")[1]+"-"+fromdate.split("-")[0]+"-"+fromdate.split("-")[2]);	
+		var datevalidationtoDate = new Date(todate.split("-")[1]+"-"+todate.split("-")[0]+"-"+todate.split("-")[2]);
+				
+		if (datevalidationfromDate > datevalidationtoDate) {
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("FromDate cannot be after ToDate!");
 			return;
 		}
-
-
+		
 		$http({
 			url: 'rest/leavereport/detailreport',
 			method: 'POST',

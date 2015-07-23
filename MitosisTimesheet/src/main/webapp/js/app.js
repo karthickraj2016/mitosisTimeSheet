@@ -16,8 +16,7 @@ angular.module('myApp', ['ui.router','myApp.controllers','ngStorage','ui.bootstr
 				[
 				 '$stateProvider',
 				 '$urlRouterProvider',
-				 function($stateProvider, $urlRouterProvider
-				 ) {
+				 function($stateProvider, $urlRouterProvider) {
 
 					 // lazy controller, directive and service
 					 /*app.controller = $controllerProvider.register;
@@ -115,10 +114,12 @@ angular.module('myApp', ['ui.router','myApp.controllers','ngStorage','ui.bootstr
 						 templateUrl: 'html/project_invoice.html',
 						 controller :'invoiceDetailsController'
 					 })
-
-
-
-				 }
-				 ]);
+					 .state('levelMaster', {
+						 url: '/levelMaster',
+						 templateUrl: 'html/levelMaster.html',
+						 controller :'levelMasterController'
+					 })
+					 
+				 }]);
 
 angular.module('myApp.controllers',[])
