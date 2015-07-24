@@ -5,7 +5,9 @@ import java.util.List;
 import com.mitosis.timesheet.model.CustomerDetailsModel;
 import com.mitosis.timesheet.model.InvoiceDetailsModel;
 import com.mitosis.timesheet.model.InvoiceHdrModel;
+import com.mitosis.timesheet.model.ProjectCostHdrModel;
 import com.mitosis.timesheet.model.ProjectModel;
+import com.mitosis.timesheet.model.TeamAssignmentModel;
 
 public interface InvoiceDetailsService {
 
@@ -23,4 +25,9 @@ public interface InvoiceDetailsService {
 
 	public List<CustomerDetailsModel> getCustomerList();
 
+	public List<ProjectCostHdrModel> getProjectCostHdrList();
+
+	public List<TeamAssignmentModel> getTeamList();
+
+	
 }

@@ -15,7 +15,9 @@ import com.mitosis.timesheet.model.CustomerDetailsModel;
 import com.mitosis.timesheet.model.InvoiceDetailsModel;
 import com.mitosis.timesheet.model.InvoiceHdrModel;
 import com.mitosis.timesheet.model.LeaveDetailsModel;
+import com.mitosis.timesheet.model.ProjectCostHdrModel;
 import com.mitosis.timesheet.model.ProjectModel;
+import com.mitosis.timesheet.model.TeamAssignmentModel;
 import com.mitosis.timesheet.util.BaseService;
 
 public class InvoiceDetailsDaoImpl extends BaseService implements InvoiceDetailsDao {
@@ -182,6 +184,44 @@ public class InvoiceDetailsDaoImpl extends BaseService implements InvoiceDetails
 			close();
 		}
 		return customerList;
+	}
+
+	@Override
+	public List<ProjectCostHdrModel> getProjectCosthdrList() {
+		List<ProjectCostHdrModel> projectCostHdrList = new ArrayList<ProjectCostHdrModel>();
+		try{
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<ProjectCostHdrModel> cq = qb.createQuery(ProjectCostHdrModel.class);
+			Root<ProjectCostHdrModel> root = cq.from(ProjectCostHdrModel.class);
+			cq.select(root);		
+			projectCostHdrList = entityManager.createQuery(cq).getResultList();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close();
+		}
+		return projectCostHdrList;
+	}
+
+	@Override
+	public List<TeamAssignmentModel> getTeamList() {
+		List<TeamAssignmentModel> teamList = new ArrayList<TeamAssignmentModel>();
+		try{
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<TeamAssignmentModel> cq = qb.createQuery(TeamAssignmentModel.class);
+			Root<TeamAssignmentModel> root = cq.from(TeamAssignmentModel.class);
+			cq.select(root);		
+			teamList = entityManager.createQuery(cq).getResultList();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close();
+		}
+		return teamList;
 	}
 	
 	

@@ -22,7 +22,9 @@ import com.mitosis.timesheet.dao.InvoiceDetailsDao;
 import com.mitosis.timesheet.model.CustomerDetailsModel;
 import com.mitosis.timesheet.model.InvoiceDetailsModel;
 import com.mitosis.timesheet.model.InvoiceHdrModel;
+import com.mitosis.timesheet.model.ProjectCostHdrModel;
 import com.mitosis.timesheet.model.ProjectModel;
+import com.mitosis.timesheet.model.TeamAssignmentModel;
 import com.mitosis.timesheet.service.InvoiceDetailsService;
 import com.mitosis.timesheet.service.impl.InvoiceDetailsServiceImpl;
 
@@ -41,7 +43,8 @@ public class InvoiceDetails {
 	public JSONObject insertInvoice(JSONObject jsonObject) throws JSONException, ParseException{
 
 		
-
+	
+		
 		InvoiceHdrModel invoiceHdrModel = new InvoiceHdrModel();
 
 		InvoiceDetailsModel invoiceDetailsModel =  new InvoiceDetailsModel();
@@ -72,7 +75,7 @@ public class InvoiceDetails {
 
 		}
 
-		int  invoiceamount =jsonObject.getInt("invoiceamount");
+		int  invoiceamount =jsonObject.getInt("invoiceamt");
 
 
 		BigDecimal invoiceAmt = new BigDecimal(invoiceamount);
@@ -88,8 +91,7 @@ public class InvoiceDetails {
 		invoiceHdrModel.setCustomer(customerModel);
 		invoiceHdrModel.setProjectType(jsonObject.getString("projecttype"));
 		invoiceHdrModel.setCreatedDate(todaysdate);
-		
-		System.out.println(invoiceHdrModel);
+	
 
 
 		DateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
@@ -101,7 +103,7 @@ public class InvoiceDetails {
 		String InvoiceToDateString= jsonObject.getString("invoicetodate");
 		Date invoiceToDate = sdf2.parse(InvoiceToDateString);
 
-		BigDecimal rateperhour = new BigDecimal(jsonObject.getInt("rateperhour"));
+		/*BigDecimal rateperhour = new BigDecimal(jsonObject.getInt("rateperhour"));*/
 
 		InvoiceHdrModel invoicehdrModel = new InvoiceHdrModel();
 		invoicehdrModel.setInvoiceNumber(invoiceHdrModel.getInvoiceNumber());
@@ -111,7 +113,7 @@ public class InvoiceDetails {
 		invoiceDetailsModel.setInvoiceFromDate(invoiceFromDate);
 		invoiceDetailsModel.setInvoiceToDate(invoiceToDate);
 		invoiceDetailsModel.setDescription(jsonObject.getString("description"));
-		invoiceDetailsModel.setRatePerHour(rateperhour);
+/*		invoiceDetailsModel.setRatePerHour(rateperhour);*/
 		invoiceDetailsModel.setTeamMember(jsonObject.getString("teammember"));
 		invoiceDetailsModel.setBillableHours(jsonObject.getInt("billablehours"));
 		
@@ -317,6 +319,50 @@ public class InvoiceDetails {
 	
 	
 	}
+	
+	
+	@Path("/getProjectTypeList")
+	@GET
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<ProjectCostHdrModel> getProjectTypeList() throws JSONException, ParseException{
+		
+
+		
+		List<ProjectCostHdrModel> projectCostHdrList = new ArrayList<ProjectCostHdrModel>();
+	
+		projectCostHdrList = InvoiceService.getProjectCostHdrList();
+		
+		
+		
+		return projectCostHdrList;	
+	
+	
+	
+	}
+	
+	
+
+	@Path("/getTeamMembers")
+	@GET
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<TeamAssignmentModel> getTeamMembers() throws JSONException, ParseException{
+		
+
+		
+		List<TeamAssignmentModel> TeamAssignmentList = new ArrayList<TeamAssignmentModel>();
+	
+		TeamAssignmentList = InvoiceService.getTeamList();
+		
+		
+		
+		return TeamAssignmentList;	
+	
+	
+	
+	}
+	
 	
 	@Path("/deleteInvoice")
 	@POST
