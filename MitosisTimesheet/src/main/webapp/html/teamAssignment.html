@@ -14,10 +14,19 @@
     <div class="collapse navbar-collapse" id="myNavbar" ng-controller="HeaderController">
       <ul class="nav navbar-nav" style="margin-left: 30px; margin-top: 8px;">
         <li ng-class="{ active: isActive('/timesheet')}"><a ui-sref="timesheet">Home</a></li>
-        <li ng-show="manageProject" ng-class="{ active: isActive('/project')}"><a ui-sref="project">Project Details</a></li>
+         <li ng-show="manageFinance" ng-class="{ active: isActive('/finance')}"><a class="dropdown-toggle" data-toggle="dropdown"> Finance<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li><a ui-sref="levelMaster">Monthly Revenue Projection</a></li>
+            <li><a ui-sref="">Invoice</a></li>
+            <li><a ui-sref="">Receipt</a></li>
+             <li><a ui-sref="">Bank</a></li>
+              <li><a ui-sref="">Company Info</a></li>
+          </ul>
+        </li>
+          <li ng-show="manageCustomer" ng-class="{ active: isActive('/customerDetails')}"><a ui-sref="customerDetails">Customer Details</a></li>
+     <li ng-show="manageProject" ng-class="{ active: isActive('/project')}"><a ui-sref="project">Project Details</a></li>
         <li ng-show="manageTeam" ng-class="{ active: isActive('/teamAssignment')}"><a ui-sref="teamAssignment">Team Assignment</a></li>
-        <li ng-show="manageCustomer" ng-class="{ active: isActive('/customerDetails')}"><a ui-sref="customerDetails">Customer Details</a></li>
-        <li ng-show="manageEmployees" ng-class="{ active: isActive('/employeeMaster')}"><a ui-sref="employeeMaster">Employee Master</a></li>
+         <li ng-show="manageEmployees" ng-class="{ active: isActive('/employeeMaster')}"><a ui-sref="employeeMaster">Employee Master</a></li>
         <li ng-class="{ active: isActive('/reports')}"><a class="dropdown-toggle" data-toggle="dropdown"> Reports<span class="caret"></span></a>
         <ul class="dropdown-menu">
             <li><a ui-sref="individualreport">Individual Reports</a></li>
@@ -64,6 +73,7 @@
 </div>
 </div>
 <div  class="container" style="width: 100%;">
+<div class="table-responsive">
 <div class="search-tab"> 
 	       <input type="text" id="search" required class="form-control" ng-change="filter()" ng-model="search" placeholder="Search"></input>
 </div>
@@ -117,6 +127,7 @@
 </table>
 
 <pagination data-num-pages="noOfPages" total-items="totalItems" ng-model="currentPage" max-size="maxSize" data-current-page="currentPage" items-per-page="numPerPage" class="pagination-sm" boundary-links="true"></pagination>
+</div>
 </div>
 <div class="alert-msg col-xs-12 col-sm-6"><p class="alert-success"></p></div>
 <div class="alert-msg1 col-xs-12 col-sm-6"><p class="alert-danger"></p></div>

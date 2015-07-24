@@ -168,6 +168,7 @@ white-space: nowrap;
 
 .table th {
 	text-align: left;
+	width: 110px;
 }
 
 .table tbody td {

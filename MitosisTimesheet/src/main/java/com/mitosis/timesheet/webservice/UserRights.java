@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -57,6 +56,7 @@ public class UserRights {
 		userModel.seteMail(jsonobject.getString("eMail"));
 		userModel.setPassword(jsonobject.getString("password"));
 		userModel.setActive(jsonobject.getBoolean("active"));
+		userModel.setManageFinance(jsonobject.getBoolean("manageFinance"));
 		userModel.setManageProject(jsonobject.getBoolean("manageProject"));
 		userModel.setManageTeam(jsonobject.getBoolean("manageTeam"));
 		userModel.setManageCustomer(jsonobject.getBoolean("manageCustomer"));

@@ -28,17 +28,18 @@
 <div class="container" style="margin-top: 8%; margin-bottom: 2%;"><div class="row"><div class="col-xs-12 col-md-12"><h2 style="margin-left: 35%;">User Rights</h2></div></div></div>
 
 <div  class="container" style="width: 100%;">
+<div class="table-responsive">
 <table class="table" style="">
 	<thead class="thead-mit-ts" >
 		<tr>
 			<th>FullName</th>
 			<th>EmailId</th>
-			<th>UserName</th>
 			<th>Active</th>
-		    <th>Manage Project</th>
-		    <th>Manage Team</th>
-		    <th>Manage Cust</th>
-		    <th>Manage Emp</th>		    
+			<th>Finance</th>
+		    <th>Project</th>
+		    <th>Team</th>
+		    <th>Customer</th>
+		    <th>Employees</th>		    
 		    <th></th>
 		</tr>
 	</thead>
@@ -46,8 +47,8 @@
 		<tr ng-repeat="sheet in filteredParticipantsResults ">
 			<td>{{sheet.name}} </td>
 			<td>{{sheet.eMail}} </td>
-			<td>{{sheet.userName}}</td>
 			<td align="center"><input type="checkbox"  name="myTextEditBox" ng-model="sheet.active"/></td>
+			<td><input type="checkbox"  name="myTextEditBox" ng-model="sheet.manageFinance"/></td>
 			<td><input type="checkbox"  name="myTextEditBox" ng-model="sheet.manageProject" /></td>
 			<td><input type="checkbox"  name="myTextEditBox" ng-model="sheet.manageTeam"/></td>
 			<td><input type="checkbox"  name="myTextEditBox" ng-model="sheet.manageCustomer"/></td>
@@ -58,6 +59,7 @@
 </table>
 
 <pagination  total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="numPerPage" class="pagination-sm" boundary-links="true"></pagination>
+</div>
 </div>
 <div class="alert-msg col-xs-12 col-sm-6"><p class="alert-success"></p></div>
  <div class="alert-msg1 col-xs-12 col-sm-6"><p class="alert-danger"></p></div>

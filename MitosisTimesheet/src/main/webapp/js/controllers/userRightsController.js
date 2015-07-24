@@ -32,9 +32,9 @@ angular.module('myApp.controllers')
 			return true;
 		} else if(sheet.eMail == '' || sheet.eMail == undefined) {
 			return true;
-		} else if(sheet.userName == '' || sheet.userName == undefined) {
-			return true;
 		} else if(sheet.active == '' || sheet.active == undefined) {
+			return true;
+		} else if(sheet.manageFinance == '' || sheet.manageFinance == undefined) {
 			return true;
 		} else if(sheet.manageProject == '' || sheet.manageProject == undefined) {
 			return true;

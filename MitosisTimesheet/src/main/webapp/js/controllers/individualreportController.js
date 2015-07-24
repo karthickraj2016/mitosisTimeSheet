@@ -61,6 +61,7 @@ angular.module('myApp.controllers')
 		}
 	}).success(function(result, status, headers) {
 		
+		$scope.manageFinance=result.manageFinance;
 		$scope.manageProject=result.manageProject;
 		$scope.manageTeam=result.manageTeam;
 	    $scope.manageCustomer=result.manageCustomer;
