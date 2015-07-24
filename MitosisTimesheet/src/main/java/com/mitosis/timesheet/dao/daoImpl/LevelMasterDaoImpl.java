@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import com.mitosis.timesheet.dao.LevelMasterDao;
@@ -91,7 +92,10 @@ public class LevelMasterDaoImpl  extends BaseService implements LevelMasterDao {
 			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 			CriteriaQuery<EmployeeMasterModel> cq = qb.createQuery(EmployeeMasterModel.class);
 			Root<EmployeeMasterModel> root = cq.from(EmployeeMasterModel.class);
-			cq.where(qb.equal(root.get("level"), level));
+			Predicate condition = qb.equal(root.get("level"), level);
+			Predicate condition1 = qb.equal(root.get("billable"),"Yes");
+			Predicate conditions = qb.and(condition, condition1);
+			cq.where(conditions);
 			cq.select(root);
 			numberOfEmployees=entityManager.createQuery(cq).getResultList().size();
 			

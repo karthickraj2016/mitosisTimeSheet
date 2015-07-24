@@ -190,7 +190,7 @@ angular.module('myApp.controllers')
 
 				if(result.value=="success"){
 					$(".alert-msg").show().delay(1000).fadeOut(); 
-					$(".alert-success").html("Estimation Updated Successfully");
+					$(".alert-success").html("Projection Updated Successfully");
 				}else{
 					$(".alert-msg1").show().delay(1000).fadeOut(); 
 					$(".alert-danger").html("Process Failed");
