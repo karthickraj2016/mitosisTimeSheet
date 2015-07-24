@@ -36,8 +36,8 @@ public class LevelMasterModel {
 	@Column(name="hours_per_month")
 	private int hoursPerMonth;
 	
-	@Column(name="total_employees")
-	private int totalEmployees;
+	@Column(name="number_of_employees")
+	private int numberOfEmployees;
 	
 	@Column(name="total_amount")
 	private BigDecimal totalAmount;
@@ -90,12 +90,13 @@ public class LevelMasterModel {
 		this.hoursPerMonth = hoursPerMonth;
 	}
 
-	public int getTotalEmployees() {
-		return totalEmployees;
+	
+	public int getNumberOfEmployees() {
+		return numberOfEmployees;
 	}
 
-	public void setTotalEmployees(int totalEmployees) {
-		this.totalEmployees = totalEmployees;
+	public void setNumberOfEmployees(int numberOfEmployees) {
+		this.numberOfEmployees = numberOfEmployees;
 	}
 
 	public BigDecimal getTotalAmount() {

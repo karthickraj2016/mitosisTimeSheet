@@ -1,0 +1,133 @@
+<div ng-init="list()">
+<nav class="navbar navbar-inverse navbar-fixed-top" style="border-bottom: 1px solid gray; background: none;">
+  <div class="container-fluid" style="max-width: 100%; background: grey; color: white;">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <div class="logo"><img src="images/mit_lg-ts.jpg"></div>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar" ng-controller="HeaderController">
+      <ul class="nav navbar-nav" style="margin-left: 30px; margin-top: 8px;">
+        <!-- <li ng-class="{ active: isActive('/timesheet')}"><a ui-sref="timesheet">Home</a></li>
+        <li ng-show="manageProject" ng-class="{ active: isActive('/project')}"><a ui-sref="project">Project Details</a></li>
+        <li ng-show="manageTeam" ng-class="{ active: isActive('/teamAssignment')}"><a ui-sref="teamAssignment">Team Assignment</a></li>
+        <li ng-show="manageCustomer" ng-class="{ active: isActive('/customerDetails')}"><a ui-sref="customerDetails">Customer Details</a></li>
+         <li ng-show="manageEmployees" ng-class="{ active: isActive('/employeeMaster')}"><a ui-sref="employeeMaster">Employee Master</a></li>
+        <li ng-class="{ active: isActive('/reports')}"><a class="dropdown-toggle" data-toggle="dropdown"> Reports<span class="caret"></span></a> -->
+        </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="lb-username"><lable ng-model="name">Welcome {{name}}</lable></li>
+        <li><a style="padding-left: 0;" ui-sref="account"><button class="btn btn-sm btn-primary">Account</button></a></li>
+        <li><button class="btn btn-sm btn-primary btn-logout" ng-click="logout();">Logout</button></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container" style="margin-top: 8%;"><div class="row"><div class="col-xs-12 col-md-12"><h2>Monthly Revenue Estimation</h2></div></div></div>
+<div class="container" style="width: 100%;">
+<div class="level-form-div">
+
+<form   class="form-inline" role="form" id="addEntry" ng-submit="addLevelMasterDetails(yearFrom,yearTo,level,ratePerHour)">
+
+    
+   <div class="form-group"> 
+       <input type="text"  id="name" required class="form-control"  ng-model="levelDetail.yearFrom" placeholder="Year From"></input>
+   </div> 
+   <div class="form-group"> 
+       <input type="text"  required class="form-control"  ng-model="levelDetail.yearTo" placeholder="Year To"></input>
+   </div> 
+   <div class="form-group"> 
+       <input type="text"   required class="form-control"  ng-model="levelDetail.level" placeholder="Level"></input>
+   </div> 
+   <div class="form-group"> 
+       <input type="text"  required class="form-control"  ng-model="levelDetail.ratePerHour" placeholder="Rate Per Hour"></input>
+   </div> 
+   <div class="form-group"> 
+       <input type="text"  required class="form-control"  ng-model="levelDetail.hoursPerMonth" placeholder="Hours per Month"></input>
+   </div> 
+ 
+    <div class="form-group btn-formempdet">
+    <button type="submit" class="btn btn-primary">Add</button>
+	<button type="reset"  class="btn btn-primary">Clear</button>
+	</div> 
+  </form>
+</div>
+</div>
+<div class="container" style="width: 100%;">
+<table class="table">
+	<thead class="thead-mit-ts">
+		<tr>
+			<th>Year From</th>
+			<th>Year To</th>
+			<th>Level</th>
+			<th>Rate/Hour ($)</th>
+			<th>Hours/Month</th>
+			<th>No., Of Emp</th>
+			<th>Total Amount ($)</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="sheet in filteredParticipantsResults">
+			<td>
+			   <span ng-show="!showEdit">{{sheet.yearFrom}}</span>
+				<span ng-show="showEdit"><input class="form-control" ng-model="sheet.yearFrom" onkeypress="return isNumber(evt)" style="color: #777777;">
+				</span>
+			</td>
+			<td>
+				<span ng-show="!showEdit">{{sheet.yearTo}}</span>
+				<span ng-show="showEdit"><input class="form-control" type="text" ng-model="sheet.yearTo" onkeypress="return isNumber(evt)" ></span>
+			</td>
+			<td>
+		    	<span ng-show="!showEdit">{{sheet.level}}</span>
+				<span  ng-show="showEdit"><input class="form-control"  type="text" onkeypress="return isNumber(event)" ng-model="sheet.level"></span>
+				
+			</td>
+			<td>
+				<span ng-show="!showEdit">{{sheet.ratePerHour}}</span>
+				<span ng-show="showEdit"><input class="form-control" type="text" ng-model="sheet.ratePerHour" onkeypress="return isNumber(evt)" ></span>
+			</td>
+			<td>
+				<span ng-show="!showEdit">{{sheet.hoursPerMonth}}</span>
+				<span ng-show="showEdit"><input class="form-control" type="text" ng-model="sheet.hoursPerMonth" onkeypress="return isNumber(evt)" ></span>
+			</td>
+			 <td>
+				<span ng-show="!showEdit">{{sheet.numberOfEmployees}}</span>
+				<span ng-show="showEdit"><input class="form-control" type="text" ng-model="sheet.numberOfEmployees" onkeypress="return isNumber(evt)" readonly></span>
+			</td>
+			<td>
+				<span ng-show="!showEdit">{{sheet.totalAmount}}</span>
+				<span ng-show="showEdit"><input class="form-control" type="text" ng-model="sheet.totalAmount" onkeypress="return isNumber(evt)" readonly></span>
+			</td>
+			<td style="word-spacing: 15px;">
+				<a><span class="glyphicon glyphicon-pencil" ng-click="showEdit = !showEdit" ng-show="!showEdit"></span></a>
+				<a><span class="glyphicon glyphicon-remove" ng-click="confirmDelete(sheet.id)" ng-show="!showEdit"></span></a>
+				<a><span class="glyphicon glyphicon-ok" ng-click="showEdit = !showEdit;updateLevelMasterDetails(sheet)" ng-show="showEdit" ng-disabled="checkRequired(sheet);"></span></a>
+				<a><span class="glyphicon glyphicon-ban-circle" ng-click="showEdit = !showEdit" ng-show="showEdit"></span></a>
+     		</td>
+		</tr>
+	</tbody>
+	 <tfoot>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                 <th>{{getCountOfEmp()}}</th>
+                 <th>{{getEstimatedRevenue()}}</th>
+                 <th></th>
+                </tr>
+     </tfoot>
+</table>
+<button class="btn btn-primary" ng-click="calculateAndUpdateEstimation()">Estimate</button>
+
+
+</div>
+ <div class="alert-msg col-xs-12 col-sm-6"><p class="alert-success"></p></div>
+ <div class="alert-msg1 col-xs-12 col-sm-6"><p class="alert-danger"></p></div>
+ </div>
