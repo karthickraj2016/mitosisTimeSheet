@@ -1,0 +1,58 @@
+------>>>>>>>>>>>>>>>>>>>>>>>>>>22-07-2015<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<-----------------
+
+CREATE TABLE `project_cost_hdr` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `project_id` int(11) DEFAULT NULL,
+  `project_type` varchar(45) DEFAULT NULL,
+  `project_cost` decimal(10,2) DEFAULT NULL,
+  `currency_code` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_project_cost_hdr_projectId_idx` (`project_id`),
+  CONSTRAINT `fk_project_cost_hdr_projectId` FOREIGN KEY (`project_id`) REFERENCES `project_details` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `project_cost_details` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `project_cost_hdr_id` int(20) DEFAULT NULL,
+  `employee_id` int(11) DEFAULT NULL,
+  `rate` decimal(4,2) DEFAULT NULL,
+  `currency_code` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_project_cost_hdr_id_idx` (`project_cost_hdr_id`),
+  KEY `fk_project_employee_id_idx` (`employee_id`),
+  CONSTRAINT `fk_project_employee_id` FOREIGN KEY (`employee_id`) REFERENCES `employee_master` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_project_cost_hdr_id` FOREIGN KEY (`project_cost_hdr_id`) REFERENCES `project_cost_hdr` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `invoice_details` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `invoice_number` varchar(45) DEFAULT NULL,
+  `team_member` varchar(45) DEFAULT NULL,
+  `description` text,
+  `invoice_from_date` date DEFAULT NULL,
+  `invoice_to_date` date DEFAULT NULL,
+  `rate_per_hour` decimal(4,2) DEFAULT NULL,
+  `billable_hours` int(11) DEFAULT NULL,
+  `total_amount` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_invoice_details_invoice_number_idx` (`invoice_number`),
+  CONSTRAINT `fk_invoice_details_invoicenumber` FOREIGN KEY (`invoice_number`) REFERENCES `invoice_hdr` (`invoice_number`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `invoice_hdr` (
+  `invoice_number` varchar(45) NOT NULL DEFAULT '',
+  `project_id` int(11) DEFAULT NULL,
+  `invoice_date` date DEFAULT NULL,
+  `invoice_amount` decimal(10,2) DEFAULT NULL,
+  `paid_amount` decimal(10,2) DEFAULT NULL,
+  `balance_amount` decimal(10,2) DEFAULT NULL,
+  `currency_code` varchar(45) DEFAULT NULL,
+  `created_date` date DEFAULT NULL,
+  `customer_id` int(11) DEFAULT NULL,
+  `project_type` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`invoice_number`),
+  KEY `fk_invoice_hdr_projectid_idx` (`project_id`),
+  CONSTRAINT `fk_invoice_hdr_projectid` FOREIGN KEY (`project_id`) REFERENCES `project_details` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
