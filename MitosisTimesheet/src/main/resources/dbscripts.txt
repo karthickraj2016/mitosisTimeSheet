@@ -56,3 +56,16 @@ CREATE TABLE `invoice_hdr` (
   KEY `fk_invoice_hdr_projectid_idx` (`project_id`),
   CONSTRAINT `fk_invoice_hdr_projectid` FOREIGN KEY (`project_id`) REFERENCES `project_details` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `level_master` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `year_from` int(11) DEFAULT NULL,
+  `year_to` int(11) DEFAULT NULL,
+  `level` int(11) DEFAULT NULL,
+  `rate_per_hour` decimal(4,2) DEFAULT NULL,
+  `hours_per_month` int(11) DEFAULT NULL,
+  `number_of_employees` int(11) DEFAULT NULL,
+  `total_amount` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;

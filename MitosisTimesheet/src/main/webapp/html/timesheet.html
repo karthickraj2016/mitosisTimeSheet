@@ -17,10 +17,10 @@
         <li ng-show="manageFinance" ng-class="{ active: isActive('/finance')}"><a class="dropdown-toggle" data-toggle="dropdown"> Finance<span class="caret"></span></a>
         <ul class="dropdown-menu">
             <li><a ui-sref="levelMaster">Monthly Revenue Projection</a></li>
-            <li><a ui-sref="">Invoice</a></li>
+           <!--  <li><a ui-sref="">Invoice</a></li>
             <li><a ui-sref="">Receipt</a></li>
-             <li><a ui-sref="">Bank</a></li>
-              <li><a ui-sref="">Company Info</a></li>
+             <li><a ui-sref="">Bank Reconcile</a></li>
+              <li><a ui-sref="">Company Info</a></li> -->
           </ul>
         </li>
           <li ng-show="manageCustomer" ng-class="{ active: isActive('/customerDetails')}"><a ui-sref="customerDetails">Customer Details</a></li>
@@ -76,7 +76,7 @@
 	</div> 
   </form>
 </div>
-<div class="table-responsive">
+
 <table class="table" style="">
 	<thead class="thead-mit-ts">
 		<tr>
@@ -129,7 +129,6 @@
 </table>
 
 <pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="numPerPage" class="pagination-sm" boundary-links="true"></pagination>
-</div>
 </div>
  <div class="alert-msg col-xs-12 col-sm-6"><p class="alert-success"></p></div>
  <div class="alert-msg1 col-xs-12 col-sm-6"><p class="alert-danger"></p></div>
