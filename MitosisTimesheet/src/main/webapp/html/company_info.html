@@ -1,0 +1,162 @@
+
+<div ng-init="list()">
+<nav class="navbar navbar-inverse navbar-fixed-top" style="border-bottom: 1px solid gray; background: none;">
+  <div class="container-fluid" style="max-width: 100%; background: grey; color: white;">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <div class="logo"><img src="images/mit_lg-ts.jpg"></div>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar" ng-controller="HeaderController">
+      <ul class="nav navbar-nav" style="margin-left: 30px; margin-top: 8px;">
+        <li ng-class="{ active: isActive('/timesheet')}"><a ui-sref="timesheet">Home</a></li>
+        <li ng-class="{ active: isActive('/project')}"><a ui-sref="project">Project Details</a></li>
+        <li ng-class="{ active: isActive('/projectmapping')}"><a ui-sref="projectmapping">Team Assignment</a></li>
+        <li ng-class="{ active: isActive('/report')}"><a ui-sref="report">Report</a></li>
+        </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="lb-username"><lable ng-model="name">Welcome {{name}}</lable></li>
+        <li><a style="padding-left: 0;" ui-sref="account"><button class="btn btn-sm btn-primary">Account</button></a></li>
+        <li><button class="btn btn-sm btn-primary btn-logout" ng-click="logout();">Logout</button></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container" style="margin-top: 6%;"><div class="row"><div class="col-xs-12 col-md-12"><h2>Company Information</h2></div></div></div>
+<div class="container" style="width: 100%;">
+<div class="row">
+<div class="col-xs-12 padd-wb">
+<div class="whitebox">
+<form class="form-horizontal" role="form" ng-submit="addCompany(id,companyName,companyAddress,phoneNumber,mobileNumber,faxNo,logo,accountNumber,bankName,bankAddress,ifscCode,micrCode,swiftCode)">
+	<h4 style="text-decoration: underline;">Company Profile:</h4>
+
+    <div class="form-group">
+      <label class="control-label col-sm-3 textleft">Company Name<span>:</span></label>
+      <div class="col-sm-9 profile-value">  
+        <span class="span-profile">{{comp.companyName}}</span>        
+        <input class="form-control edit-profile" type="text" required ng-model="comp.companyName">
+      	<input type="hidden" ng-model="comp.id">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-3 textleft">Company Address<span>:</span></label>
+      <div class="col-sm-9 profile-value">          
+        <span class="span-profile"> {{comp.companyAddress}}</span>
+        <input class="form-control edit-profile" type="text" required ng-model="comp.companyAddress">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-3 textleft">Phone No<span>:</span></label>
+      <div class="col-sm-9 profile-value">  
+        <span class="span-profile"> {{comp.phoneNumber}}</span>        
+        <input class="form-control edit-profile" type="text" ng-model="comp.phoneNumber" onkeypress="return isNumber(event)">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-3 textleft">Mobile No<span>:</span></label>
+      <div class="col-sm-9 profile-value">  
+        <span class="span-profile">{{comp.mobileNumber}}</span>        
+        <input class="form-control edit-profile" type="text" ng-model="comp.mobileNumber" onkeypress="return isNumber(event)">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-3 textleft">Fax No<span>:</span></label>
+      <div class="col-sm-9 profile-value">  
+        <span class="span-profile"> {{comp.faxNo}}</span>        
+        <input class="form-control edit-profile" type="text" ng-model="comp.faxNo" onkeypress="return isNumber(event)">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-3 textleft">Logo<span>:</span></label>
+      <div class="col-sm-9 profile-value">  
+        <span class="span-profile-img"><img id="img2" style="width: 130px;height: 80px;"  ng-src={{comp.logo}}></img> </span>        
+        <input class="form-control edit-profile-img" style="display: none;" id="img1" type="file" ng-model="comp.logo" onchange="angular.element(this).scope().handleFileSelect(this)"">
+        
+      </div>
+    </div>
+    <h4 style="text-decoration: underline;">Account Details:</h4>
+    <div class="form-group">
+      <label class="control-label col-sm-3 textleft">Account Number<span>:</span></label>
+      <div class="col-sm-9 profile-value">  
+        <span class="span-profile"> {{comp.accountNumber}}</span>        
+        <input class="form-control edit-profile" type="text" required ng-model="comp.accountNumber" onkeypress="return isNumber(event)">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-3 textleft">Bank Name<span>:</span></label>
+      <div class="col-sm-9 profile-value">  
+        <span class="span-profile"> {{comp.bankName}}</span>        
+        <input class="form-control edit-profile" type="text" required ng-model="comp.bankName">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-3 textleft">Bank Address<span>:</span></label>
+      <div class="col-sm-9 profile-value">  
+        <span class="span-profile"> {{comp.bankAddress}}</span>        
+        <input class="form-control edit-profile" type="text" required ng-model="comp.bankAddress">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-3 textleft">IFSC Code<span>:</span></label>
+      <div class="col-sm-9 profile-value">  
+        <span class="span-profile"> {{comp.ifscCode}}</span>        
+        <input class="form-control edit-profile" type="text" required ng-model="comp.ifscCode">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-3 textleft">MICR Code<span>:</span></label>
+      <div class="col-sm-9 profile-value">  
+        <span class="span-profile"> {{comp.micrCode}}</span>        
+        <input class="form-control edit-profile" type="text" required ng-model="comp.micrCode">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-3 textleft">Swift Code<span>:</span></label>
+      <div class="col-sm-9 profile-value">  
+        <span class="span-profile"> {{comp.swiftCode}}</span>        
+        <input class="form-control edit-profile" type="text" required ng-model="comp.swiftCode">
+      </div>
+    </div>
+    
+     <div class="form-group">        
+      <div class=" col-sm-10" style="word-spacing: 15px; margin-top: 10px;">
+        <button type="button" class="btn btn-primary btn-sm btn-profile-edit">
+	    <span class="glyphicon glyphicon-pencil"></span> Edit
+	    </button>
+	    <button type="submit" class="btn btn-primary btn-sm btn-profile-save">Save</button>
+	    <button type="button" class="btn btn-primary btn-sm btn-profile-cancel">Cancel</button>
+      </div>
+    </div>
+    </form>
+</div>
+</div>
+</div>
+</div>
+ </div>
+ <div class="alert-msg col-xs-12 col-sm-6"><p class="alert-success"></p></div>
+ <div class="alert-msg1 col-xs-12 col-sm-6"><p class="alert-danger"></p></div>
+ 
+ <script>
+$(".btn-profile-edit").click(function() {
+	$(".span-profile").hide();
+	$(".edit-profile").show();
+	$(".edit-profile-img").show();
+	$(".span-profile-img").show();
+	$('.btn-profile-edit').hide();	
+	$('.btn-profile-save').show();
+	$('.btn-profile-cancel').show();
+});
+$(".btn-profile-cancel").click(function() {
+	$(".span-profile").show();
+	$(".edit-profile").hide();
+	$(".edit-profile-img").hide();
+	$('.btn-profile-edit').show();	
+	$('.btn-profile-save').hide();
+	$('.btn-profile-cancel').hide();
+});
+
+</script>

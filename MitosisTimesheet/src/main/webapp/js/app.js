@@ -119,6 +119,11 @@ angular.module('myApp', ['ui.router','myApp.controllers','ngStorage','ui.bootstr
 						 templateUrl: 'html/levelMaster.html',
 						 controller :'levelMasterController'
 					 })
+					 .state('company_info', {
+						 url: '/company_info',
+						 templateUrl: 'html/company_info.html',
+						 controller	:'companyInfoController'
+					 })
 					 
 				 }]);
 
