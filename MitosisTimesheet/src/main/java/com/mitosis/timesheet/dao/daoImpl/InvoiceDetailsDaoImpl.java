@@ -187,7 +187,7 @@ public class InvoiceDetailsDaoImpl extends BaseService implements InvoiceDetails
 	}
 
 	@Override
-	public List<ProjectCostHdrModel> getProjectCosthdrList() {
+	public List<ProjectCostHdrModel> getProjectCosthdrList(int id) {
 		List<ProjectCostHdrModel> projectCostHdrList = new ArrayList<ProjectCostHdrModel>();
 		try{
 			begin();
@@ -195,6 +195,8 @@ public class InvoiceDetailsDaoImpl extends BaseService implements InvoiceDetails
 			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 			CriteriaQuery<ProjectCostHdrModel> cq = qb.createQuery(ProjectCostHdrModel.class);
 			Root<ProjectCostHdrModel> root = cq.from(ProjectCostHdrModel.class);
+			Predicate condition = qb.equal(root.get("project").get("projectId"),id);
+			cq.where(condition);
 			cq.select(root);		
 			projectCostHdrList = entityManager.createQuery(cq).getResultList();
 		}catch(Exception e){

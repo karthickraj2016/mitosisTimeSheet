@@ -25,7 +25,7 @@ public interface InvoiceDetailsDao {
 
 	public List<CustomerDetailsModel> getCustomerList();
 
-	public List<ProjectCostHdrModel> getProjectCosthdrList();
+	public List<ProjectCostHdrModel> getProjectCosthdrList(int id);
 
 	public List<TeamAssignmentModel> getTeamList();
 

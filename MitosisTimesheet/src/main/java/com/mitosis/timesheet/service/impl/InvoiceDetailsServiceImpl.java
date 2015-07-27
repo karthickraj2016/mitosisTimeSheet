@@ -81,12 +81,12 @@ public class InvoiceDetailsServiceImpl implements InvoiceDetailsService {
 
 
 	@Override
-	public List<ProjectCostHdrModel> getProjectCostHdrList() {
+	public List<ProjectCostHdrModel> getProjectCostHdrList(int id) {
 		// TODO Auto-generated method stub
 		
 		List<ProjectCostHdrModel> ProjectCosthdrList = new ArrayList<ProjectCostHdrModel>();
 		
-		ProjectCosthdrList = invoiceDetailsDao.getProjectCosthdrList();
+		ProjectCosthdrList = invoiceDetailsDao.getProjectCosthdrList(id);
  		return ProjectCosthdrList;
 	}
 

@@ -322,22 +322,22 @@ public class InvoiceDetails {
 	
 	
 	@Path("/getProjectTypeList")
-	@GET
+	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<ProjectCostHdrModel> getProjectTypeList() throws JSONException, ParseException{
+	public List<ProjectCostHdrModel> getProjectTypeList(JSONObject jsonObject) throws JSONException, ParseException{
 		
-
+		int id = jsonObject.getInt("projectId");
 		
 		List<ProjectCostHdrModel> projectCostHdrList = new ArrayList<ProjectCostHdrModel>();
 	
-		projectCostHdrList = InvoiceService.getProjectCostHdrList();
+		projectCostHdrList = InvoiceService.getProjectCostHdrList(id);
 		
 		
 		
 		return projectCostHdrList;	
 	
-	
+		
 	
 	}
 	

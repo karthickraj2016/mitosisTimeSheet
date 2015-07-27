@@ -44,27 +44,23 @@
     <div class="form-group">
       <label class="control-label col-sm-4 textleft" for="">Customer Name<span>:</span></label>
       <div class="col-sm-8">
-        <select  class="form-control empdet-form" required style="color: #777777;">
-	    <option value="">Name</option>
-	    <option value="">Name1</option>
-	    <option value="">Name2</option>
+        <select  class="form-control empdet-form" ng-model="invoice.customer"  ng-options="item as item.customerName for item in customerList" required style="color: #777777;">
+	    <option value="">Customer Name</option>
 		</select> 
       </div>
     </div>
     <div class="form-group">
       <label class="control-label col-sm-4 textleft" >Project<span>:</span></label>
       <div class="col-sm-8">          
-        <select  class="form-control empdet-form" required style="color: #777777;">
-	    <option value="">Project</option>
-	    <option value="">project1</option>
-	    <option value="">project2</option>
+        <select  class="form-control empdet-form"  ng-model="invoice.projectlist" ng-options="option.projectId as option.projectName for option in projectList" ng-change="projectType(invoice.projectlist);" required style="color: #777777;">
+	    <option value="" ng-selected="true">Project</option>
 		</select> 
       </div>
     </div>
     <div class="form-group">
       <label class="control-label col-sm-4 textleft">Project Type<span>:</span></label>
-      <div class="col-sm-8">          
-        <span class="form-control">Hourly</spasn> 
+      <div class="col-sm-8">   
+       <input type="text" class="form-control" ng-disabled="true" ng-model="invoice.projectType"  placeholder="">       	
       </div>
     </div>
     </div>
@@ -73,26 +69,26 @@
     <div ng-init="dates()" class="form-group">
       <label class="control-label col-sm-4 textleft" for="">Invoice Date<span>:</span></label>
       <div class="col-sm-8">
-       <input type="text" required class="form-control empdet-form" placeholder="Invoice Date" ui-date="dateOptions" ui-date-format="yy-mm-dd" ng-model="timesheet.date">
+       <input type="text" required class="form-control empdet-form" ng-model="invoice.invoicedate" placeholder="Invoice Date" ui-date="dateOptions" ui-date-format="yy-mm-dd" ng-model="invoice.date">
        </div>
     </div>
     
     <div class="form-group">
       <label class="control-label col-sm-4 textleft">Invoice No<span>:</span></label>
       <div class="col-sm-8">          
-        <span class="form-control">#12345</span> 
+        <span class="form-control" ng-model="invoice.invoiceno"></span> 
       </div>
     </div>
     <div class="form-group">
       <label class="control-label col-sm-4 textleft">Invoice Amount<span>:</span></label>
       <div class="col-sm-8">          
-        <input type="text" class="form-control" id="" placeholder="">
+        <input type="text" class="form-control" ng-model="invoice.invoiceamt" id="" placeholder="">
       </div>
     </div>
     <div class="form-group">
       <label class="control-label col-sm-4 textleft">Currency<span>:</span></label>
       <div class="col-sm-8">          
-        <input type="text" class="form-control" id="" placeholder="">
+        <input type="text" class="form-control" ng-model="invoice.currency" id="" placeholder="">
       </div>
     </div>
     </div>
@@ -102,38 +98,97 @@
     <div class="container" style="width: 100%;">
 	<div class=" form-inline" style="word-spacing: 30px; margin-top: 20px;">
     <div ng-init="dates()" class="form-group" style="">
-       <input type="text" required class="form-control" placeholder="From Date" ui-date="dateOptions" ui-date-format="yy-mm-dd" ng-model="timesheet.date">
+       <input type="text" required class="form-control" placeholder="From Date" ui-date="dateOptions" ui-date-format="yy-mm-dd" ng-model="invoice.fromdate">
     </div>
     <div ng-init="dates()" class="form-group" style="">
-       <input type="text" required class="form-control" placeholder="To Date" ui-date="dateOptions" ui-date-format="yy-mm-dd" ng-model="timesheet.date">
+       <input type="text" required class="form-control" placeholder="To Date" ui-date="dateOptions" ui-date-format="yy-mm-dd" ng-model="invoice.todate">
     </div>
     <div class="form-group">
-       <input class="form-control" type="text" placeholder="Description" required>
+    <textarea rows="1" required class="form-control" ng-model="invoice.description" placeholder="Description"></textarea>
     </div>
     <div class="form-group">
-       <select  class="form-control" required style="color: #777777;">
+       <select  class="form-control" style="color: #777777;">
 	    <option value="">Team Members</option>
-	    <option value="">1</option>
-	    <option value="">2</option>
 		</select>
     </div>
     <div class="form-group">
-       <input class="form-control" type="text" placeholder="Billable hours" required>
+       <input class="form-control" type="text" ng-model="invoice.billablehours" placeholder="Billable hours" required>
     </div>
     <div class="form-group">
-       <input class="form-control" type="text" placeholder="Amount" required>
+       <input class="form-control" type="text" ng-model="invoice.amount" placeholder="Amount" required>
     </div>
     
     <div class="form-group">        
       <div class=" col-sm-12" style="word-spacing: 10px;">
-	    <button type="submit" class="btn btn-primary btn-sm ">Add</button>
-	    <button type="button" class="btn btn-primary btn-sm ">Clear</button>
+	    <input type="button" id="addentry" value="Add" ng-click="" class="btn btn-primary btn-sm "  />
       </div>
     </div>
+    
+     <table class="table" style="">
+	<thead class="thead-mit-ts">
+		<tr>
+			<th>From Date</th>
+			<th>To Date</th>
+			<th>Description</th>
+			<th>Team Members</th>
+			<th>Billable Hours</th>
+			<th>Amount</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="sheet in invoicelist track by $index">
+			<td>
+				<span ng-show="!showEdit">{{sheet.fromdate}}</span>
+				<span ng-show="showEdit"><input class="form-control" ui-date="dateOptions" ui-date-format="dd-mm-yy" type="text" ng-model="sheet.fromdate"></span>
+				<span style="color:red" ng-show="sheet.fromdate == '' || sheet.fromdate == undefined">Required</span> 
+			</td>
+			<td>
+				<span ng-show="!showEdit">{{sheet.todate}}</span>
+				<span ng-show="showEdit"><input class="form-control" ui-date="dateOptions" ui-date-format="dd-mm-yy" type="text" ng-model="sheet.todate"></span>
+				<span style="color:red" ng-show="sheet.todate == '' || sheet.todate == undefined">Required</span>
+			</td>
+			
+			<td >
+				<span ng-show="!showEdit">{{sheet.description}}</span>
+				<span ng-show="showEdit"><textarea rows="1" class="form-control" type="text" ng-model="sheet.description"></textarea></span>
+				<span style="color:red" ng-show="sheet.description == '' || sheet.description == undefined">Required</span>
+			</td>
+			<td>
+				<span ng-show="!showEdit">{{sheet.employee.name}}</span>
+				<span id="{{sheet.employee.id}}" ng-show="showEdit"><select class="form-control" ng-model="sheet.employee" ng-options="item as item.projectName for item in projectList" style="color: #777777;">
+				<option value="">{{sheet.employee.name}}</option>
+				</select> 
+				</span>
+			</td>
+			<td>
+				<span ng-show="!showEdit">{{sheet.billablehours}}</span>
+				<span id="{{sheet.id}}" ng-show="showEdit"><input class="form-control" id="{{sheet.id}}" type="text" onkeypress="return isNumber(event)" ng-model="sheet.billablehours"></span>
+				<span style="color:red" ng-show="sheet.billablehours == '' || sheet.billablehours == undefined">Required</span>
+			</td>
+			<td>
+				<span ng-show="!showEdit">{{sheet.amount}}</span>
+				<span id="{{sheet.id}}" ng-show="showEdit"><input class="form-control" id="{{sheet.id}}" type="text" onkeypress="return isNumber(event)" ng-model="sheet.amount"></span>
+				<span style="color:red" ng-show="sheet.amount == '' || sheet.amount == undefined">Required</span>
+			</td>
+			
+			<td style="word-spacing: 15px;">
+		
+	            <a><span class="glyphicon glyphicon-pencil" ng-click="showEdit = !showEdit" ng-show="!showEdit"></span></a>
+				<a><span class="glyphicon glyphicon-remove" ng-click="confirmDelete(sheet.id)" ng-show="!showEdit"></span></a>
+				<a><span class="glyphicon glyphicon-ok" ng-click="showEdit = !showEdit;updatetimesheet(sheet)" ng-show="showEdit" ng-disabled="checkRequired(sheet);"></span></a> 
+				<a><span class="glyphicon glyphicon-ban-circle" ng-click="showEdit = !showEdit;list()" ng-show="showEdit"></span></a> 			
+			</td>
+		</tr>
+	</tbody>
+</table>
      
     </div>
     </div>
+    
+   
     </div>
+    
+    <pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="numPerPage" class="pagination-sm" boundary-links="true"></pagination>
     </div>
     </div>
   
@@ -141,34 +196,5 @@
 
 </div>
 </form>
-<!-- <div  class="container" style="width: 100%;"> -->
 
-<div id="edittable" class="table-responsive">
-
-</div>
-<!-- <script>
-    	$("#edittable").editTable({
-			data: [
-				  ['','', '', '', '', '', '']
-			],
-			headerCols: [
-			    'S.no',
-				'From Date',
-				'To Date',
-				'Description',
-				'Team Members',
-				'Billable Hours',
-				'Amount'
-			],
-			//maxRows: 3
-		});
-    	
-    </script>
-    <div class="form-group btn-invoicesubmit">
-    <button type="submit" class="btn btn-primary">Submit</button>
-    <button type="submit" class="btn btn-primary">Edit</button>
-	<button type="reset"  class="btn btn-primary">Clear</button>
-	</div> 
-	
-</div> --> 
  </div>

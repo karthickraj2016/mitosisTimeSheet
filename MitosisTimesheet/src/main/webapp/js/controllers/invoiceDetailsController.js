@@ -2,6 +2,38 @@ angular.module('myApp.controllers')
 
 .controller('invoiceDetailsController', ['$scope', '$http', '$state','$rootScope', function($scope, $http, $state, $rootScope) {
 
+	
+   	$scope.invoicelist = new Array()
+	,$scope.currentPage = 1
+	,$scope.numPerPage = 8
+	,$scope.maxSize = 5;
+ 	$scope.iterator=0;
+	
+   	var hoursallowed;
+   	
+   	 $scope.invoicedetails = {
+   		    invoice: []
+   		};
+
+	$scope.checkRequired = function(sheet){
+		if(sheet.entryDate == '' || sheet.entryDate == undefined){
+			return true;
+		} else if(sheet.hours == '' || sheet.hours == undefined) {
+			return true;
+		} else if(sheet.amount == '' || sheet.amount == undefined) {
+			return true;
+		} else if(sheet.description == '' || sheet.description == undefined) {
+			return true;
+		}
+		else if(sheet.billablehours == ''|| sheet.billablehours == undefined){
+			return true;
+	}
+		else{
+			return false;
+		}
+		
+	}
+	
 	$scope.dates = function() {
 	     $scope.invoice = '';
 		 $scope.invoice={};
@@ -73,21 +105,7 @@ angular.module('myApp.controllers')
 			$scope.customerList=result;
 		});
 
-
-		$http({
-
-			url: 'rest/invoiceDetails/getProjectTypeList',
-			method: 'GET',
-			/*data: menuJson,*/
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		}).success(function(result, status, headers) {
-
-			console.log(result);
-
-			$scope.projectTypeList=result;
-		});
+		
 
 		
 		$http({
@@ -108,6 +126,46 @@ angular.module('myApp.controllers')
 
 
 	}
+	
+	
+	$scope.projectType = function(projectId){
+		
+		var menuJson = angular.toJson({"projectId":projectId});
+		
+		
+		
+
+		$http({
+
+			url: 'rest/invoiceDetails/getProjectTypeList',
+			method: 'POST',
+			data: menuJson,
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).success(function(result, status, headers) {
+		
+			
+			$scope.projectTypeList=result;
+			$scope.invoice.projectType =$scope.projectTypeList[0].projectType;
+		});
+
+		
+	}
+	
+	
+$('#addentry').click(function(){
+	
+	
+console.log($scope.invoice);
+$scope.invoicelist.push($scope.invoice);
+
+	
+
+	
+	
+	
+});
 	
 
 	
@@ -152,6 +210,8 @@ angular.module('myApp.controllers')
 		
 		
 	}
+	
+	
 
 
 }])

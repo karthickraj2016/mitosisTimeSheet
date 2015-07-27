@@ -25,7 +25,7 @@ public interface InvoiceDetailsService {
 
 	public List<CustomerDetailsModel> getCustomerList();
 
-	public List<ProjectCostHdrModel> getProjectCostHdrList();
+	public List<ProjectCostHdrModel> getProjectCostHdrList(int id);
 
 	public List<TeamAssignmentModel> getTeamList();
 
