@@ -8,6 +8,7 @@ import com.mitosis.timesheet.dao.daoImpl.InvoiceDetailsDaoImpl;
 import com.mitosis.timesheet.model.CustomerDetailsModel;
 import com.mitosis.timesheet.model.InvoiceDetailsModel;
 import com.mitosis.timesheet.model.InvoiceHdrModel;
+import com.mitosis.timesheet.model.ProjectCostDetailsModel;
 import com.mitosis.timesheet.model.ProjectCostHdrModel;
 import com.mitosis.timesheet.model.ProjectModel;
 import com.mitosis.timesheet.model.TeamAssignmentModel;
@@ -35,7 +36,7 @@ public class InvoiceDetailsServiceImpl implements InvoiceDetailsService {
 
 
 	@Override
-	public boolean create(InvoiceDetailsModel invoiceDetailsModel) {
+	public boolean create(List<InvoiceDetailsModel> invoiceDetailsModel) {
 		boolean validation = invoiceDetailsDao.create(invoiceDetailsModel);
 		return validation;
 	}
@@ -92,13 +93,13 @@ public class InvoiceDetailsServiceImpl implements InvoiceDetailsService {
 
 
 	@Override
-	public List<TeamAssignmentModel> getTeamList() {
+	public List<ProjectCostDetailsModel> getTeamList(int projectId) {
 		// TODO Auto-generated method stub
 		
-		List<TeamAssignmentModel> teamList = new ArrayList<TeamAssignmentModel>();
+		List<ProjectCostDetailsModel> teamMembersList = new ArrayList<ProjectCostDetailsModel>();
 		
-		teamList = invoiceDetailsDao.getTeamList();
-		return teamList;
+		teamMembersList = invoiceDetailsDao.getTeamList(projectId);
+		return teamMembersList;
 	}
 
 }

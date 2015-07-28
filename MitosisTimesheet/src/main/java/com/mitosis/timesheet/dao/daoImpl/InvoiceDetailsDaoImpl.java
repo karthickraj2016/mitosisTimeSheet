@@ -15,6 +15,7 @@ import com.mitosis.timesheet.model.CustomerDetailsModel;
 import com.mitosis.timesheet.model.InvoiceDetailsModel;
 import com.mitosis.timesheet.model.InvoiceHdrModel;
 import com.mitosis.timesheet.model.LeaveDetailsModel;
+import com.mitosis.timesheet.model.ProjectCostDetailsModel;
 import com.mitosis.timesheet.model.ProjectCostHdrModel;
 import com.mitosis.timesheet.model.ProjectModel;
 import com.mitosis.timesheet.model.TeamAssignmentModel;
@@ -79,8 +80,9 @@ public class InvoiceDetailsDaoImpl extends BaseService implements InvoiceDetails
 	}
 
 	@Override
-	public boolean create(InvoiceDetailsModel invoiceDetailsModel) {
+	public boolean create(List<InvoiceDetailsModel> invoiceDetailsModel) {
 		boolean insert = false;
+		for(int i=0;i<invoiceDetailsModel.size();i++){
 		try {
 			begin();
 			merge(invoiceDetailsModel);
@@ -90,6 +92,7 @@ public class InvoiceDetailsDaoImpl extends BaseService implements InvoiceDetails
 			e.printStackTrace();
 		} finally {
 			close();
+		}
 		}
 		return insert;
 	}
@@ -208,23 +211,26 @@ public class InvoiceDetailsDaoImpl extends BaseService implements InvoiceDetails
 	}
 
 	@Override
-	public List<TeamAssignmentModel> getTeamList() {
-		List<TeamAssignmentModel> teamList = new ArrayList<TeamAssignmentModel>();
+	public List<ProjectCostDetailsModel> getTeamList(int projectId) {
+		List<ProjectCostDetailsModel> teamMembersList = new ArrayList<ProjectCostDetailsModel>();
 		try{
 			begin();
 			entityManager.getEntityManagerFactory().getCache().evictAll();
 			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
-			CriteriaQuery<TeamAssignmentModel> cq = qb.createQuery(TeamAssignmentModel.class);
-			Root<TeamAssignmentModel> root = cq.from(TeamAssignmentModel.class);
+			CriteriaQuery<ProjectCostDetailsModel> cq = qb.createQuery(ProjectCostDetailsModel.class);
+			Root<ProjectCostDetailsModel> root = cq.from(ProjectCostDetailsModel.class);
+			Predicate condition = qb.equal(root.get("projectCostHdr").get("project").get("projectId"),projectId);
+			cq.where(condition);
 			cq.select(root);		
-			teamList = entityManager.createQuery(cq).getResultList();
+			teamMembersList = entityManager.createQuery(cq).getResultList();
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{
 			close();
 		}
-		return teamList;
+		return teamMembersList;
 	}
+
 	
 	
 

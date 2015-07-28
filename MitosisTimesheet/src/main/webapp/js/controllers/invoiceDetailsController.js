@@ -3,17 +3,14 @@ angular.module('myApp.controllers')
 .controller('invoiceDetailsController', ['$scope', '$http', '$state','$rootScope', function($scope, $http, $state, $rootScope) {
 
 	
-   	$scope.invoicelist = new Array()
-	,$scope.currentPage = 1
+   	$scope.currentPage = 1
 	,$scope.numPerPage = 8
 	,$scope.maxSize = 5;
  	$scope.iterator=0;
 	
    	var hoursallowed;
    	
-   	 $scope.invoicedetails = {
-   		    invoice: []
-   		};
+   	
 
 	$scope.checkRequired = function(sheet){
 		if(sheet.entryDate == '' || sheet.entryDate == undefined){
@@ -108,27 +105,14 @@ angular.module('myApp.controllers')
 		
 
 		
-		$http({
-
-			url: 'rest/invoiceDetails/getTeamMembers',
-			method: 'GET',
-			/*data: menuJson,*/
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		}).success(function(result, status, headers) {
-
-			console.log(result);
-
-			$scope.teammembers=result;
-		});
+		
 
 
 
 	}
 	
 	
-	$scope.projectType = function(projectId){
+	$scope.projectBasedSelections = function(projectId){
 		
 		var menuJson = angular.toJson({"projectId":projectId});
 		
@@ -151,42 +135,66 @@ angular.module('myApp.controllers')
 		});
 
 		
+		$http({
+
+			url: 'rest/invoiceDetails/getTeamMembers',
+			method: 'POST',
+			data: menuJson,
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).success(function(result, status, headers) {
+
+			console.log(result);
+
+			$scope.invoice.teammembers=result;
+
+		});
+		
 	}
 	
 	
-$('#addentry').click(function(){
+	$scope.addTeamMember = function (){
+		if(angular.isUndefined($scope.invoiceList)){
+			$scope.invoiceList =[];
+		}
+		var invoice = [];
+		console.log($scope.member.teamlist);
+		invoice = {"fromdate":$scope.member.fromdate,"todate":$scope.member.todate,"description":$scope.member.description,"billablehours":$scope.member.billablehours,"amount":$scope.member.amount,"teammember":$scope.member.teamlist.employee.name,"amount":$scope.member.amount};
+		$scope.	invoiceList.push(invoice);
+		$scope.member.fromdate='';
+		$scope.member.todate='';
+		$scope.member.description='';
+		$scope.member.billablehours='';
+		$scope.member.amount='';
+		
+		console.log($scope.invoiceList);
+		
+	}
 	
-	
-console.log($scope.invoice);
-$scope.invoicelist.push($scope.invoice);
 
-	
-
-	
-	
-	
-});
 	
 
 	
 	$scope.insert = function(){
 		
 		
+	
+		
+		var jsonstring=JSON.stringify($rootScope.invoiceList);
+		console.log(jsonstring);
+		
+		console.log($scope.invoice.customer+','+$scope.invoice.projectlist);
 		
 		
 		var menuJson = angular.toJson({
-			"customerid":$scope.employee.customerId,
+			"customerid":$scope.invoice.customer.customerId,
 			"invoicedate":$scope.invoice.invoicedate,
-			"projectid":$scope.projectlist.projectId,
-			"projecttype":$scope.projecttype.id,
-			"invoiceamt":$scope.invoiceamount,
-			"invoicefromdate":$scope.invoice.fromdate,
-			"invoicetodate":$scope.invoice.todate,
-			"project":$scope.projectlist.projectId,
-			"description":$scope.description,
-			"billablehours":$scope.billablehours,
-			"teammember":$scope.teammember.member.name,
-			"amount":$scope.amount
+			"projectid":$scope.invoice.projectlist,
+			"projecttype":$scope.invoice.projectType,
+			"invoiceamt":$scope.invoice.invoiceamt,
+			"currency":$scope.invoice.currency,
+			"invoicelist":$scope.invoiceList
 			
 
 			});
@@ -202,7 +210,7 @@ $scope.invoicelist.push($scope.invoice);
 			}
 		}).success(function(result, status, headers) {
 
-		console.log(result);
+		
 		});
 		
 		

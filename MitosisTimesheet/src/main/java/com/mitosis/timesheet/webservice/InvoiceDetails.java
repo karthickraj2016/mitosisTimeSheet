@@ -1,5 +1,6 @@
 package com.mitosis.timesheet.webservice;
 
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -15,6 +16,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.commons.beanutils.BeanUtils;
+import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
@@ -22,6 +25,7 @@ import com.mitosis.timesheet.dao.InvoiceDetailsDao;
 import com.mitosis.timesheet.model.CustomerDetailsModel;
 import com.mitosis.timesheet.model.InvoiceDetailsModel;
 import com.mitosis.timesheet.model.InvoiceHdrModel;
+import com.mitosis.timesheet.model.ProjectCostDetailsModel;
 import com.mitosis.timesheet.model.ProjectCostHdrModel;
 import com.mitosis.timesheet.model.ProjectModel;
 import com.mitosis.timesheet.model.TeamAssignmentModel;
@@ -40,10 +44,11 @@ public class InvoiceDetails {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 
-	public JSONObject insertInvoice(JSONObject jsonObject) throws JSONException, ParseException{
+	public JSONObject insertInvoice(JSONObject jsonObject) throws JSONException, ParseException, IllegalAccessException, InvocationTargetException{
 
 		
 	
+		System.out.println(jsonObject);
 		
 		InvoiceHdrModel invoiceHdrModel = new InvoiceHdrModel();
 
@@ -56,6 +61,9 @@ public class InvoiceDetails {
 		DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		String InvoiceDateString = jsonObject.getString("invoicedate");
  		Date invoiceDate = sdf.parse(InvoiceDateString);
+ 		
+ 		DateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
+ 		DateFormat sdf2 = new SimpleDateFormat("dd-MM-yyyy");
 
 		String invoiceNumber = InvoiceService.getInvoiceNumber();
 
@@ -75,10 +83,58 @@ public class InvoiceDetails {
 
 		}
 
-		int  invoiceamount =jsonObject.getInt("invoiceamt");
+		
+		
+		List<InvoiceDetailsModel> invoiceDetailList = new ArrayList<InvoiceDetailsModel>();
+		
+	
+		
+		
+		JSONArray jsonarray = new JSONArray();
+		jsonarray =  jsonObject.getJSONArray("invoicelist");
+		
+		System.out.println(jsonarray);
+	
+	
+			
+			for(int i=0;i<jsonarray.length();i++){
+				
+			
+				
+				InvoiceDetailsModel invoicedetail = new InvoiceDetailsModel();
+				
+				JSONObject jsonobject = new JSONObject();
+				
+				jsonobject.put("value",jsonarray.get(i));
+				
+				String InvoiceFromDateString=(String) jsonobject.getJSONObject("value").get("fromdate");
+				Date invoiceFromDate = sdf1.parse(InvoiceFromDateString);
+				
+				int amt = jsonobject.getJSONObject("value").getInt("amount");
+				
+				invoicedetail.setInvoiceFromDate(invoiceFromDate);
+				
+				String InvoiceToDateString= (String) jsonobject.getJSONObject("value").get("todate");
+				Date invoiceToDate = sdf2.parse(InvoiceToDateString);
+				
+				invoicedetail.setInvoiceToDate(invoiceToDate);
+				invoicedetail.setDescription((String) jsonobject.getJSONObject("value").get("description"));
+				invoicedetail.setTeamMember((String) jsonobject.getJSONObject("value").get("teammember"));
+				invoicedetail.setBillableHours(jsonobject.getJSONObject("value").getInt("billablehours"));
+				/*BigDecimal Amt = new BigDecimal(amt);
+				invoicedetail.setTotalAmount(Amt);*/
+				
+				invoiceDetailList.add(invoicedetail);
+				
+			
+				
+				
+			
+			}
+			
 
 
-		BigDecimal invoiceAmt = new BigDecimal(invoiceamount);
+		
 
 		ProjectModel projectModel = new ProjectModel();
 		projectModel.setProjectId(jsonObject.getInt("projectid"));
@@ -86,6 +142,7 @@ public class InvoiceDetails {
 		customerModel.setCustomerId(jsonObject.getInt("customerid"));
 
 		invoiceHdrModel.setInvoiceDate(invoiceDate);
+		BigDecimal invoiceAmt = new BigDecimal((Integer)jsonObject.getJSONObject("value").getInt("invoiceamt"));
 		invoiceHdrModel.setInvoiceAmount(invoiceAmt);
 		invoiceHdrModel.setProject(projectModel);
 		invoiceHdrModel.setCustomer(customerModel);
@@ -93,49 +150,22 @@ public class InvoiceDetails {
 		invoiceHdrModel.setCreatedDate(todaysdate);
 	
 
-
-		DateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
-		String InvoiceFromDateString= jsonObject.getString("invoicefromdate");
-		Date invoiceFromDate = sdf1.parse(InvoiceFromDateString);
-
-
-		DateFormat sdf2 = new SimpleDateFormat("dd-MM-yyyy");
-		String InvoiceToDateString= jsonObject.getString("invoicetodate");
-		Date invoiceToDate = sdf2.parse(InvoiceToDateString);
-
-		/*BigDecimal rateperhour = new BigDecimal(jsonObject.getInt("rateperhour"));*/
-
 		InvoiceHdrModel invoicehdrModel = new InvoiceHdrModel();
 		invoicehdrModel.setInvoiceNumber(invoiceHdrModel.getInvoiceNumber());
 		
+
+		System.out.println(invoicehdrModel);
+		System.out.println(invoiceDetailList);
 		
-		invoiceDetailsModel.setInvoice(invoicehdrModel);
-		invoiceDetailsModel.setInvoiceFromDate(invoiceFromDate);
-		invoiceDetailsModel.setInvoiceToDate(invoiceToDate);
-		invoiceDetailsModel.setDescription(jsonObject.getString("description"));
-/*		invoiceDetailsModel.setRatePerHour(rateperhour);*/
-		invoiceDetailsModel.setTeamMember(jsonObject.getString("teammember"));
-		invoiceDetailsModel.setBillableHours(jsonObject.getInt("billablehours"));
 		
-		System.out.println(invoiceDetailsModel);
-
-
-		boolean validationforhdr ;
-		validationforhdr=InvoiceService.validateEntry(invoiceHdrModel);
-
-		if(validationforhdr){
-			json.put("value", "already exist");
-			return json;
-		}
-		else{
 			boolean inserthdr = InvoiceService.create(invoiceHdrModel);
-			boolean insertdtl = InvoiceService.create(invoiceDetailsModel);
+			boolean insertdtl = InvoiceService.create(invoiceDetailList);
 			
 			if(inserthdr && insertdtl ){
 
 			json.put("value", "Inserted Successfully");
 			return json;
-			}
+			
 
 		}
 		return json;
@@ -153,6 +183,8 @@ public class InvoiceDetails {
 	@Produces(MediaType.APPLICATION_JSON)
 
 	public JSONObject updateInvoice(JSONObject jsonObject) throws JSONException, ParseException{
+		
+		List<InvoiceDetailsModel> invoiceDetailList = new ArrayList<InvoiceDetailsModel>();
 
 		InvoiceDetailsService InvoiceService = new InvoiceDetailsServiceImpl();
 
@@ -261,7 +293,7 @@ public class InvoiceDetails {
 		
 		
 			boolean inserthdr = InvoiceService.create(invoiceHdrModel);
-			boolean insertdtl = InvoiceService.create(invoiceDetailsModel);
+			boolean insertdtl = InvoiceService.create(invoiceDetailList);
 			
 			if(inserthdr && insertdtl ){
 
@@ -344,20 +376,22 @@ public class InvoiceDetails {
 	
 
 	@Path("/getTeamMembers")
-	@GET
+	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<TeamAssignmentModel> getTeamMembers() throws JSONException, ParseException{
+	public List<ProjectCostDetailsModel> getTeamMembers(JSONObject jsonObject) throws JSONException, ParseException{
 		
 
 		
-		List<TeamAssignmentModel> TeamAssignmentList = new ArrayList<TeamAssignmentModel>();
+		List<ProjectCostDetailsModel> memberList = new ArrayList<ProjectCostDetailsModel>();
+		
+		int projectId=jsonObject.getInt("projectId");
 	
-		TeamAssignmentList = InvoiceService.getTeamList();
+		memberList = InvoiceService.getTeamList(projectId);
 		
 		
 		
-		return TeamAssignmentList;	
+		return memberList;	
 	
 	
 	

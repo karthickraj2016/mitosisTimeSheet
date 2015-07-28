@@ -5,6 +5,7 @@ import java.util.List;
 import com.mitosis.timesheet.model.CustomerDetailsModel;
 import com.mitosis.timesheet.model.InvoiceDetailsModel;
 import com.mitosis.timesheet.model.InvoiceHdrModel;
+import com.mitosis.timesheet.model.ProjectCostDetailsModel;
 import com.mitosis.timesheet.model.ProjectCostHdrModel;
 import com.mitosis.timesheet.model.ProjectModel;
 import com.mitosis.timesheet.model.TeamAssignmentModel;
@@ -15,7 +16,7 @@ public interface InvoiceDetailsDao {
 
 	public boolean create(InvoiceHdrModel invoiceHdrModel);
 
-	public boolean create(InvoiceDetailsModel invoiceDetailsModel);
+	public boolean create(List<InvoiceDetailsModel> invoiceDetailsModel);
 
 	public String getInvoiceNumber();
 
@@ -27,6 +28,6 @@ public interface InvoiceDetailsDao {
 
 	public List<ProjectCostHdrModel> getProjectCosthdrList(int id);
 
-	public List<TeamAssignmentModel> getTeamList();
+	public List<ProjectCostDetailsModel> getTeamList(int projectId);
 
 }
