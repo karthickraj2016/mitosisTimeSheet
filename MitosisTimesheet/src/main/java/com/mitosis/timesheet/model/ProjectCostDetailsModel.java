@@ -1,9 +1,6 @@
 package com.mitosis.timesheet.model;
 
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 
@@ -31,17 +27,14 @@ public class ProjectCostDetailsModel{
 	@JoinColumn(name = "project_cost_hdr_id", nullable = false, referencedColumnName = "id")
 	private ProjectCostHdrModel projectCostHdr;
 
-	@ManyToOne(targetEntity = CustomerDetailsModel.class)
+	@ManyToOne(targetEntity = UserDetailsModel.class)
 	@JoinColumn(name = "employee_id", nullable = false, referencedColumnName = "id")
-	private CustomerDetailsModel employee;
+	private UserDetailsModel employee;
 	
 
 	@Column(name="rate")
 	private BigDecimal rate;
 	
-	@Column(name="currency_code")
-	private String currencyCode;
-
 	public int getId() {
 		return id;
 	}
@@ -58,11 +51,12 @@ public class ProjectCostDetailsModel{
 		this.projectCostHdr = projectCostHdr;
 	}
 
-	public CustomerDetailsModel getEmployee() {
+	
+	public UserDetailsModel getEmployee() {
 		return employee;
 	}
 
-	public void setEmployee(CustomerDetailsModel employee) {
+	public void setEmployee(UserDetailsModel employee) {
 		this.employee = employee;
 	}
 
@@ -73,19 +67,6 @@ public class ProjectCostDetailsModel{
 	public void setRate(BigDecimal rate) {
 		this.rate = rate;
 	}
-
-	public String getCurrencyCode() {
-		return currencyCode;
-	}
-
-	public void setCurrencyCode(String currencyCode) {
-		this.currencyCode = currencyCode;
-	}
-
-	
-
-
-	
 
 }
 

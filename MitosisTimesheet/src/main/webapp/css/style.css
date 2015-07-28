@@ -298,11 +298,6 @@ width:30%;
  a .glyphicon{
  	padding-left: 10px;
  }
-h2 {
-	float: left;
-	color: gray;
-	margin-left: 30%;
-}
 
 @media ( max-width : 450px) {
 	h2 {
@@ -4539,6 +4534,18 @@ scale
 	z-index: 1;
 }
 
-.txtarea{
-	margin-top:-20px;
+.pay-form-div{
+	text-align: center;
+	word-spacing: 40px;
+	margin-top: 15px;
+	margin-bottom: 30px;
 }
+
+#h-show{
+	display: none;
+}
+#hr-show{
+	display: none;
+}
+
+ 
