@@ -1431,15 +1431,14 @@ input, button, select, textarea {
 }
 
 a {
-	color: #F1F4F7;
+	color: #428bca;
 	text-decoration: none;
 }
 
 a:hover, a:focus {
-	color: #F1F4F7;
-	text-decoration: none;
+	color: #2a6496;
+	text-decoration: underline;
 }
-
 a:focus {
 	outline: thin dotted;
 	outline: 5px auto -webkit-focus-ring-color;

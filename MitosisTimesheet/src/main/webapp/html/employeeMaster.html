@@ -84,7 +84,7 @@
 <table class="table">
 	<thead class="thead-mit-ts">
 		<tr>
-			<th><a href="" ng-click="predicate = 'employeeId'; reverse=!reverse">Emp Id</a></th>
+			<th><span ng-init="predicate = 'employeeId'; reverse=!reverse">Emp Id</span></th>
 			<th style="width: 150px;">First Name</th>
 			<th style="width: 150px;">Last Name</th>
 			<th>Joined Date</th>
@@ -98,7 +98,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="sheet in filteredParticipantsResults |  orderBy:predicate:reverse">
+		<tr ng-repeat="sheet in filteredParticipantsResults |  orderBy:predicate:!reverse">
 			<td>
 			   <span ng-show="!showEdit">{{sheet.employeeId}}</span>
 				<span ng-show="showEdit"><input class="form-control" ng-model="sheet.employeeId" style="color: #777777;">
