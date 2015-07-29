@@ -140,7 +140,9 @@
 		</tr>
 	</thead>
 	<tbody>
+
 		<tr ng-repeat="sheet in invoiceList">
+			
 			<td>
 				<span ng-show="!showEdit">{{sheet.fromdate}}</span>
 				<span ng-show="showEdit"><input class="form-control" ui-date="dateOptions" ui-date-format="dd-mm-yy" type="text" ng-model="sheet.fromdate"></span>
@@ -158,9 +160,9 @@
 				<span style="color:red" ng-show="sheet.description == '' || sheet.description == undefined">Required</span>
 			</td>
 			<td>
-				<span ng-show="!showEdit">{{sheet.teamlist}}</span>
-				<span id="{{sheet.employee.id}}" ng-show="showEdit"><select class="form-control" ng-model="sheet.teamlist" ng-options="item as item.employee.name for item in invoice.teammembers" style="color: #777777;">
-				<option value="">{{sheet.teamlist.employee.name}}</option>
+				<span ng-show="!showEdit">{{sheet.teammember}}</span>
+				<span id="{{sheet.employee.id}}" ng-show="showEdit"><select class="form-control" ng-model="sheet.teammember" ng-options="item as item.employee.name for item in invoice.teammembers" style="color: #777777;">
+				<option value="">{{sheet.teammember}}</option>
 				</select> 
 				</span>
 			</td>
@@ -178,9 +180,9 @@
 			<td style="word-spacing: 15px;">
 		
 	            <a><span class="glyphicon glyphicon-pencil" ng-click="showEdit = !showEdit" ng-show="!showEdit"></span></a>
-				<a><span class="glyphicon glyphicon-remove" ng-click="confirmDelete(sheet.id)" ng-show="!showEdit"></span></a>
-				<a><span class="glyphicon glyphicon-ok" ng-click="showEdit = !showEdit;updatetimesheet(sheet)" ng-show="showEdit" ng-disabled="checkRequired(sheet);"></span></a> 
-				<a><span class="glyphicon glyphicon-ban-circle" ng-click="showEdit = !showEdit;list()" ng-show="showEdit"></span></a> 			
+				<a><span class="glyphicon glyphicon-remove" ng-click="deleteteammembers(sheet)" ng-show="!showEdit"></span></a>
+				<a><span class="glyphicon glyphicon-ok" ng-click="showEdit = !showEdit;updateteammebers(sheet)" ng-show="showEdit" ng-disabled="checkRequired(sheet);"></span></a> 
+				<a><span class="glyphicon glyphicon-ban-circle" ng-click="showEdit = !showEdit;teammemberslist()" ng-show="showEdit"></span></a> 			
 			</td>
 		</tr>
 	</tbody>

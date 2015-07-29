@@ -1,6 +1,7 @@
 package com.mitosis.timesheet.model;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -11,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 
@@ -49,6 +51,29 @@ public class InvoiceDetailsModel {
 	
 	@Column(name="total_amount")
 	private BigDecimal totalAmount;
+	
+	@Transient
+	private String frmEntryDate;
+	
+	@Transient
+	private String toEntryDate;
+
+	public String getToEntryDate() {
+		Date d= getInvoiceToDate();
+		toEntryDate = new SimpleDateFormat("dd-MM-yyyy").format(d);
+		return toEntryDate;
+	}
+	public void setToEntryDate(String toEntryDate) {
+		this.toEntryDate = toEntryDate;
+	}
+	public String getFrmEntryDate() {
+		Date d= getInvoiceFromDate();
+		frmEntryDate = new SimpleDateFormat("dd-MM-yyyy").format(d);
+		return frmEntryDate;
+	}
+	public void setFrmEntryDate(String frmEntryDate) {
+		this.frmEntryDate = frmEntryDate;
+	}
 	
 	
 	public InvoiceHdrModel getInvoice() {

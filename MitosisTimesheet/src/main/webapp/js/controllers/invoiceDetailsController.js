@@ -155,13 +155,61 @@ angular.module('myApp.controllers')
 	
 	
 	$scope.addTeamMember = function (){
+		
+		console.log($scope.member.fromdate);
+		
+		if($scope.member==undefined){
+			
+			alert("please enter from date");
+			return;
+		}
+		
+	
+		if($scope.member.fromdate==undefined){
+			
+			alert("please enter from date");
+			
+			return;
+			
+		}
+		
+		if($scope.member.todate==undefined){
+			
+			alert("please enter to date");
+			return;
+			
+		}
+		
+		if($scope.member.description==undefined){
+			
+			alert("please enter to description");
+			return;
+			
+		}
+		
+		if($scope.member.billablehours==undefined){
+			
+			alert("please enter billable hours");
+			return;
+		}
+		
+		if($scope.member.amount==undefined){
+			
+			alert("please enter amount");
+			return;
+		}
+		
+		
+		
 		if(angular.isUndefined($scope.invoiceList)){
 			$scope.invoiceList =[];
 		}
 		var invoice = [];
+		
 		console.log($scope.member.teamlist);
-		invoice = {"fromdate":$scope.member.fromdate,"todate":$scope.member.todate,"description":$scope.member.description,"billablehours":$scope.member.billablehours,"amount":$scope.member.amount,"teammember":$scope.member.teamlist.employee.name,"amount":$scope.member.amount};
+		invoice = {"fromdate":$scope.member.fromdate,"todate":$scope.member.todate,"description":$scope.member.description,"billablehours":$scope.member.billablehours,"amount":$scope.member.amount,"teammember":$scope.member.teamlist.employee.name,"amount":$scope.member.amount,"index":$scope.iterator};
 		$scope.	invoiceList.push(invoice);
+		$scope.iterator++;
 		$scope.member.fromdate='';
 		$scope.member.todate='';
 		$scope.member.description='';
@@ -172,15 +220,29 @@ angular.module('myApp.controllers')
 		
 	}
 	
+	$scope.updateteammebers= function(sheet){
+
+		$scope.invoiceList[sheet.index]=sheet;
+		
+	}
+	
+	
+	$scope.deleteteammembers = function(sheet){
+			
+		$scope.invoiceList.splice(sheet.index,1);
+		
+		console.log($scope.invoiceList);
+		
+		
+	}
+	
 
 	
 
 	
 	$scope.insert = function(){
 		
-		
-	
-		
+
 		var jsonstring=JSON.stringify($rootScope.invoiceList);
 		console.log(jsonstring);
 		
@@ -195,7 +257,6 @@ angular.module('myApp.controllers')
 			"invoiceamt":$scope.invoice.invoiceamt,
 			"currency":$scope.invoice.currency,
 			"invoicelist":$scope.invoiceList
-			
 
 			});
 		

@@ -1,5 +1,6 @@
 package com.mitosis.timesheet.dao.daoImpl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,6 +10,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
+import org.apache.commons.beanutils.BeanUtils;
 
 import com.mitosis.timesheet.dao.InvoiceDetailsDao;
 import com.mitosis.timesheet.model.CustomerDetailsModel;
@@ -80,12 +83,13 @@ public class InvoiceDetailsDaoImpl extends BaseService implements InvoiceDetails
 	}
 
 	@Override
-	public boolean create(List<InvoiceDetailsModel> invoiceDetailsModel) {
+	public boolean create(List<InvoiceDetailsModel> invoiceDetailsModel) throws IllegalAccessException, InvocationTargetException {
 		boolean insert = false;
 		for(int i=0;i<invoiceDetailsModel.size();i++){
+	
 		try {
 			begin();
-			merge(invoiceDetailsModel);
+			merge(invoiceDetailsModel.get(i));
 			commit();
 			insert = true;
 		} catch (Exception e) {

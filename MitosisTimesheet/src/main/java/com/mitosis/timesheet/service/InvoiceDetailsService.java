@@ -1,5 +1,6 @@
 package com.mitosis.timesheet.service;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import com.mitosis.timesheet.model.CustomerDetailsModel;
@@ -16,7 +17,7 @@ public interface InvoiceDetailsService {
 
 	public boolean create(InvoiceHdrModel invoiceHdrModel);
 
-	public boolean create(List<InvoiceDetailsModel> invoiceDetailsModel);
+	public boolean create(List<InvoiceDetailsModel> invoiceDetailsModel) throws IllegalAccessException, InvocationTargetException;
 
 	public String getInvoiceNumber();
 

@@ -1,5 +1,6 @@
 package com.mitosis.timesheet.service.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class InvoiceDetailsServiceImpl implements InvoiceDetailsService {
 
 
 	@Override
-	public boolean create(List<InvoiceDetailsModel> invoiceDetailsModel) {
+	public boolean create(List<InvoiceDetailsModel> invoiceDetailsModel) throws IllegalAccessException, InvocationTargetException {
 		boolean validation = invoiceDetailsDao.create(invoiceDetailsModel);
 		return validation;
 	}
