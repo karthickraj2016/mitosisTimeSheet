@@ -129,6 +129,7 @@ angular.module('myApp', ['ui.router','myApp.controllers','ngStorage','ui.bootstr
 						 templateUrl: 'html/projectCost.html',
 					     controller :'projectCostDetailsController'
 					 })
+					 
 				 }]);
 
 angular.module('myApp.controllers',[])

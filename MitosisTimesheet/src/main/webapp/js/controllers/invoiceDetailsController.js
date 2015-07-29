@@ -270,6 +270,29 @@ angular.module('myApp.controllers')
 				'Content-Type': 'application/json'
 			}
 		}).success(function(result, status, headers) {
+			
+			if(result.pdfPath=="norecords"){
+				
+				$(".alert-msg1").show().delay(1000).fadeOut(); 
+				$(".alert-danger").html("No records availiable");
+				return;
+					
+				}
+			
+			else{
+			
+			var a = document.createElement('a');
+			 a.href = "/MitosisTimesheet/reports/"+result.pdfFileName;
+			console.log(a);
+			a.download = "InvoiceReport.pdf";
+			a.target="_blank";
+			 document.body.appendChild(a);
+		        a.click();
+		        document.body.removeChild(a);
+		    $scope.filepath = a.href;
+		        console.log($scope.filepath);
+		        //$scope.deletepdfFile(result.pdfPath);
+			}
 
 		
 		});

@@ -3,6 +3,7 @@ package com.mitosis.timesheet.dao;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
+import com.mitosis.timesheet.model.CompanyInfoModel;
 import com.mitosis.timesheet.model.CustomerDetailsModel;
 import com.mitosis.timesheet.model.InvoiceDetailsModel;
 import com.mitosis.timesheet.model.InvoiceHdrModel;
@@ -30,5 +31,7 @@ public interface InvoiceDetailsDao {
 	public List<ProjectCostHdrModel> getProjectCosthdrList(int id);
 
 	public List<ProjectCostDetailsModel> getTeamList(int projectId);
+
+	public CompanyInfoModel getCompanyInfo();
 
 }

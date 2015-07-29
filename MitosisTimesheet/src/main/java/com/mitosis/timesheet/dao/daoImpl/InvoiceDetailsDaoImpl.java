@@ -11,17 +11,14 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.apache.commons.beanutils.BeanUtils;
-
 import com.mitosis.timesheet.dao.InvoiceDetailsDao;
+import com.mitosis.timesheet.model.CompanyInfoModel;
 import com.mitosis.timesheet.model.CustomerDetailsModel;
 import com.mitosis.timesheet.model.InvoiceDetailsModel;
 import com.mitosis.timesheet.model.InvoiceHdrModel;
-import com.mitosis.timesheet.model.LeaveDetailsModel;
 import com.mitosis.timesheet.model.ProjectCostDetailsModel;
 import com.mitosis.timesheet.model.ProjectCostHdrModel;
 import com.mitosis.timesheet.model.ProjectModel;
-import com.mitosis.timesheet.model.TeamAssignmentModel;
 import com.mitosis.timesheet.util.BaseService;
 
 public class InvoiceDetailsDaoImpl extends BaseService implements InvoiceDetailsDao {
@@ -233,6 +230,29 @@ public class InvoiceDetailsDaoImpl extends BaseService implements InvoiceDetails
 			close();
 		}
 		return teamMembersList;
+	}
+
+	@Override
+	public CompanyInfoModel getCompanyInfo() {
+		
+		CompanyInfoModel companyInfoModel = new CompanyInfoModel();
+		try{
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<CompanyInfoModel> cq = qb.createQuery(CompanyInfoModel.class);
+			Root<CompanyInfoModel> root = cq.from(CompanyInfoModel.class);
+	
+			cq.select(root);		
+			companyInfoModel = entityManager.createQuery(cq).getSingleResult();
+			
+		
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close();
+		}
+		return companyInfoModel;
 	}
 
 	

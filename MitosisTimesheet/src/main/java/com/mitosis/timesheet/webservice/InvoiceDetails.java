@@ -38,6 +38,8 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import com.mitosis.timesheet.dao.InvoiceDetailsDao;
+import com.mitosis.timesheet.model.CompanyInfoModel;
+import com.mitosis.timesheet.model.CompanyInfoModel;
 import com.mitosis.timesheet.model.CustomerDetailsModel;
 import com.mitosis.timesheet.model.InvoiceDetailsModel;
 import com.mitosis.timesheet.model.InvoiceHdrModel;
@@ -66,7 +68,7 @@ public class InvoiceDetails {
 	public JSONObject insertInvoice(JSONObject jsonObject) throws JSONException, ParseException, IllegalAccessException, InvocationTargetException, JRException{
 
 
-		HttpSession session= request.getSession(true);
+	HttpSession session= request.getSession(true);
 
 		if(session.getAttribute("userId")==null){
 			return null;
@@ -108,7 +110,7 @@ public class InvoiceDetails {
 			String[] invoiceNumbersplit= invoiceNumber.split("-");
 			System.out.println(invoiceNumbersplit);
 			nextNumber += Integer.parseInt(invoiceNumbersplit[1]);
-			invoiceHdrModel.setInvoiceNumber(invoiceNumbersplit[0]+"_"+nextNumber);
+			invoiceHdrModel.setInvoiceNumber(invoiceNumbersplit[0]+"-"+nextNumber);
 
 		}
 
@@ -188,50 +190,58 @@ public class InvoiceDetails {
 		if(inserthdr && insertdtl ){
 
 			json.put("value", "Inserted Successfully");
+			
+			CompanyInfoModel companyinfoModel = new CompanyInfoModel();
+			
+			companyinfoModel = InvoiceService.getCompanyInfo();
 
 
 
-			List<InvoiceDetailsReport> invoiceReport = new ArrayList<InvoiceDetailsReport>();
-
-			invoiceReport.get(0).setInvoiceHdr(invoiceHdrModel);
-
-			invoiceReport.add((InvoiceDetailsReport) invoiceDetailList);
-
-			System.out.println(invoiceReport);
+			List<InvoiceDetailsReport> invoiceReportList = new ArrayList<InvoiceDetailsReport>();
+		
+				InvoiceDetailsReport invoiceDetailsReport = new InvoiceDetailsReport();
+				
+				
+				invoiceDetailsReport.setInvoiceHdr(invoiceHdrModel);
+				invoiceDetailsReport.setCompanyInfo(companyinfoModel);
+				invoiceDetailsReport.setInvoiceDetailsModel(invoiceDetailList);
+				
+				invoiceReportList.add(invoiceDetailsReport);
+				
+			System.out.println(request.getSession().getServletContext()
+					.getRealPath("/")
+					+ "reports/InvoiceReport.jrxml");
 
 			JasperDesign jasperDesign = JRXmlLoader.load(request.getSession().getServletContext()
 					.getRealPath("/")
-					+ "reports/invoiceDetailsReport.jrxml");
+					+ "reports/InvoiceReport.jrxml");
 
 			JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
 			// JREmptyDataSource jrEmptyDatasource = new JREmptyDataSource();
 			Map<String, Object> parameters = new HashMap<String, Object>();
 
 
-			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(invoiceReport);
+			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(invoiceReportList);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, ds);
 
 			String path = this.getClass().getClassLoader().getResource("/").getPath();
 			String pdfPath = path.replaceAll("WEB-INF/classes/", "");
 			String pdfFilePath = pdfPath
-					+ "reports/invoiceDetailsReport" + employeeId + ".pdf";
+					+ "reports/InvoiceReport" + employeeId + ".pdf";
 
 			new File(pdfFilePath).deleteOnExit();
 
 			JasperExportManager.exportReportToPdfFile(jasperPrint,pdfFilePath);
+			
+			
 
 
-			json.put("pdfFileName","invoiceDetailsReport"+employeeId+".pdf");
+			json.put("pdfFileName","InvoiceReport"+employeeId+".pdf");
 			json.put("pdfPath",pdfFilePath);
-
-
-
-
-			return json;
-
 
 		}
 		return json;
+	
 
 
 
@@ -451,8 +461,6 @@ public class InvoiceDetails {
 		int projectId=jsonObject.getInt("projectId");
 
 		memberList = InvoiceService.getTeamList(projectId);
-
-
 
 		return memberList;	
 

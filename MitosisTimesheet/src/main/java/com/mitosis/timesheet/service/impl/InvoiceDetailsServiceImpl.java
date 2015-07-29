@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.mitosis.timesheet.dao.InvoiceDetailsDao;
 import com.mitosis.timesheet.dao.daoImpl.InvoiceDetailsDaoImpl;
+import com.mitosis.timesheet.model.CompanyInfoModel;
 import com.mitosis.timesheet.model.CustomerDetailsModel;
 import com.mitosis.timesheet.model.InvoiceDetailsModel;
 import com.mitosis.timesheet.model.InvoiceHdrModel;
@@ -103,4 +104,15 @@ public class InvoiceDetailsServiceImpl implements InvoiceDetailsService {
 		return teamMembersList;
 	}
 
+
+	@Override
+	public CompanyInfoModel getCompanyInfo() {
+		CompanyInfoModel companyInfo = new CompanyInfoModel();
+		
+		companyInfo = invoiceDetailsDao.getCompanyInfo();
+		return companyInfo;
+	}
+
+	
+	
 }
