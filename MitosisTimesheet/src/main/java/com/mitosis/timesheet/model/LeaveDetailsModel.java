@@ -123,6 +123,4 @@ public class LeaveDetailsModel {
 		this.status = status;
 	}
 
-	
-	
 }

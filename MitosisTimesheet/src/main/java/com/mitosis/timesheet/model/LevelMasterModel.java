@@ -41,6 +41,9 @@ public class LevelMasterModel {
 	
 	@Column(name="total_amount")
 	private BigDecimal totalAmount;
+	
+	@Column(name="total_amount_inr")
+	private BigDecimal totalAmountINR;
 
 	public int getId() {
 		return id;
@@ -105,6 +108,14 @@ public class LevelMasterModel {
 
 	public void setTotalAmount(BigDecimal totalAmount) {
 		this.totalAmount = totalAmount;
+	}
+
+	public BigDecimal getTotalAmountINR() {
+		return totalAmountINR;
+	}
+
+	public void setTotalAmountINR(BigDecimal totalAmountINR) {
+		this.totalAmountINR = totalAmountINR;
 	}
 	
 }

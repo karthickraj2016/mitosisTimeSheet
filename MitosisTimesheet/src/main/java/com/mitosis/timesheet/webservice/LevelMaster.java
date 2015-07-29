@@ -78,6 +78,9 @@ public class LevelMaster {
 		int amount=jsonObject.getInt("totalAmount");
 		BigDecimal totalAmount=new BigDecimal(amount);
 		levelModel.setTotalAmount(totalAmount);
+		int amountInr=jsonObject.getInt("totalAmountINR");
+		BigDecimal totalAmountINR=new BigDecimal(amountInr);
+		levelModel.setTotalAmountINR(totalAmountINR);
         
 		boolean update=false;
 		
@@ -145,8 +148,12 @@ public class LevelMaster {
 		
 		int amount=jsonObject.getInt("amount");
 		int totAmount=amount*numberOfEmployees;
+		int inrRate=jsonObject.getInt("inrRate");
+
+		int totAmountInr=totAmount*inrRate; 
 		
 		BigDecimal totalAmount=new BigDecimal(totAmount);
+		BigDecimal totalAmountINR=new BigDecimal(totAmountInr);		
 		
 		levelModel.setId(jsonObject.getInt("id"));
 		levelModel.setYearFrom(jsonObject.getInt("yearFrom"));
@@ -158,6 +165,7 @@ public class LevelMaster {
 		levelModel.setHoursPerMonth(jsonObject.getInt("hoursPerMonth"));
 		levelModel.setNumberOfEmployees(numberOfEmployees);
 		levelModel.setTotalAmount(totalAmount);
+		levelModel.setTotalAmountINR(totalAmountINR);
 		
         boolean update=false;
 		

@@ -77,13 +77,14 @@
 <table class="table">
 	<thead class="thead-mit-ts">
 		<tr>
-			<th>Year From</th>
-			<th>Year To</th>
-			<th>Level</th>
-			<th>Rate/Hour ($)</th>
-			<th>Hours/Month</th>
-			<th>Billable Emp</th>
+			<th style="width: 80px;">Year From</th>
+			<th style="width: 80px;">Year To</th>
+			<th style="width: 70px;">Level</th>
+			<th style="width: 90px;">Rate/Hour ($)</th>
+			<th style="width: 90px;">Hours/Month</th>
+			<th style="width: 90px;">Billable Emp</th>
 			<th>Total Amount ($)</th>
+			<th>Total Amount (INR)</th>
 			<th></th>
 		</tr>
 	</thead>
@@ -119,6 +120,10 @@
 				<span ng-show="!showEdit">{{sheet.totalAmount}}</span>
 				<span ng-show="showEdit"><input class="form-control" type="text" ng-model="sheet.totalAmount" onkeypress="return isNumber(evt)" readonly></span>
 			</td>
+			<td>
+				<span ng-show="!showEdit">{{sheet.totalAmountINR}}</span>
+				<span ng-show="showEdit"><input class="form-control" type="text" ng-model="sheet.totalAmountINR" onkeypress="return isNumber(evt)" readonly></span>
+			</td>
 			<td style="word-spacing: 15px;">
 				<a><span class="glyphicon glyphicon-pencil" ng-click="showEdit = !showEdit" ng-show="!showEdit"></span></a>
 				<a><span class="glyphicon glyphicon-remove" ng-click="confirmDelete(sheet.id)" ng-show="!showEdit"></span></a>
@@ -136,12 +141,20 @@
                     <th></th>
                  <th>{{getCountOfEmp()}}</th>
                  <th>{{getEstimatedRevenue()}}</th>
-                 <th></th>
+                 <th>{{getEstimatedRevenueINR()}}</th>
+                <th></th>
                 </tr>
      </tfoot>
 </table>
+<div class="row">
+<div class="col-xs-12 col-md-2">
+<div class="form-group"> 
+       <input type="text"  id="name" required class="form-control" style="width: 170px;"  ng-model="inrRate" placeholder="INR Rate"></input>
+   </div> </div>
+<div class="col-xs-12 col-md-3">
 <button class="btn btn-primary" ng-click="calculateAndUpdateEstimation()">Compute</button>
-
+</div>
+</div>
 </div>
  <div class="alert-msg col-xs-12 col-sm-6"><p class="alert-success"></p></div>
  <div class="alert-msg1 col-xs-12 col-sm-6"><p class="alert-danger"></p></div>

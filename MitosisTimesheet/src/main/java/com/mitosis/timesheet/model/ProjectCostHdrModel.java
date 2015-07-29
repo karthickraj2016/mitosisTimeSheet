@@ -21,7 +21,7 @@ public class ProjectCostHdrModel{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
-	private int id;
+	private Integer id;
 
 	@ManyToOne(targetEntity = ProjectModel.class)
 	@JoinColumn(name = "project_id", nullable = false, referencedColumnName = "id")

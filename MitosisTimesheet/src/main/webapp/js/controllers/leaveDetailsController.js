@@ -38,6 +38,7 @@ angular.module('myApp.controllers')
 	};
 	
 	$scope.dateOptionsFrom = {
+
 			changeYear: true,
 			changeMonth: true,
 			dateFormat: 'dd-mm-yy',

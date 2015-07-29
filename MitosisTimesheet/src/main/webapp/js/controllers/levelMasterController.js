@@ -36,7 +36,7 @@ angular.module('myApp.controllers')
 		$scope.manageTeam=result.manageTeam;
 		$scope.manageCustomer=result.manageCustomer;
 		$scope.manageEmployees=result.manageEmployees;
-		$scope.accessRights();
+	
 	});
 	
 	$scope.filteredParticipantsResults = []
@@ -174,9 +174,10 @@ angular.module('myApp.controllers')
 			var ratePerHour=levelList[i].ratePerHour;
 			var hoursPerMonth=levelList[i].hoursPerMonth;
 			var amount=ratePerHour*hoursPerMonth;
-			
+		    			
 			var menuJson=angular.toJson({"id":levelList[i].id,"yearFrom":levelList[i].yearFrom,"yearTo":levelList[i].yearTo,
-				"level":levelList[i].level,"ratePerHour":levelList[i].ratePerHour,"hoursPerMonth":levelList[i].hoursPerMonth,"amount":amount});
+				"level":levelList[i].level,"ratePerHour":levelList[i].ratePerHour,"hoursPerMonth":levelList[i].hoursPerMonth,"amount":amount,
+				"inrRate":$scope.inrRate});
 		
 				
 			$http({
@@ -191,6 +192,7 @@ angular.module('myApp.controllers')
 				if(result.value=="success"){
 					$(".alert-msg").show().delay(1000).fadeOut(); 
 					$(".alert-success").html("Projection Updated Successfully");
+					$scope.inrRate="";
 				}else{
 					$(".alert-msg1").show().delay(1000).fadeOut(); 
 					$(".alert-danger").html("Process Failed");
@@ -220,6 +222,17 @@ angular.module('myApp.controllers')
 	        numOfEmp += emp;
 	    }
 	    return numOfEmp;
+	},
+	
+	$scope.getEstimatedRevenueINR = function(){
+		   
+		var estimatedRevenueINR = 0;
+	  
+		for(var i = 0; i < $scope.filteredParticipantsResults.length; i++){
+	        var revenue =  $scope.filteredParticipantsResults[i].totalAmountINR;
+	        estimatedRevenueINR += revenue;
+	    }
+	    return estimatedRevenueINR;
 	},
 	
 	$scope.logout = function(){
