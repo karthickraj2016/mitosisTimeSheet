@@ -1,0 +1,204 @@
+
+<div ng-init="list()">
+<!-- <div class="top-fixed">
+<div class="logo"><img src="images/mt1.png"></div>
+<h2>Project Mapping</h2>
+<button class="btn btn-sm btn-primary btn-logout" ng-click="logout();">Logout</button>
+<lable class="lb-username" ng-model="name">Welcome {{name}}</lable>
+</div> -->
+
+<nav class="navbar navbar-inverse navbar-fixed-top" style="border-bottom: 1px solid gray; background: none;">
+  <div class = "container-fluid" style="max-width: 100%; background: grey; color: white;">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <div class="logo"><img src="images/mit_lg-ts.jpg"></div>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar" ng-controller="HeaderController">
+      <ul class="nav navbar-nav" style="margin-left: 30px; margin-top: 8px;">
+        <li ng-class="{ active: isActive('/timesheet')}"><a ui-sref="timesheet">Home</a></li>
+        <li ng-class="{ active: isActive('/project')}"><a ui-sref="project">Project Details</a></li>
+        <li ng-class="{ active: isActive('/projectmapping')}"><a ui-sref="projectmapping">Team Assignment</a></li>
+        <li ng-class="{ active: isActive('/report')}"><a ui-sref="report">Report</a></li>
+        </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="lb-username"><lable ng-model="name">Welcome {{name}}</lable></li>
+        <li><a style="padding-left: 0;" ui-sref="account"><button class="btn btn-sm btn-primary">Account</button></a></li>
+        <li><button class="btn btn-sm btn-primary btn-logout" ng-click="logout();">Logout</button></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container" style="margin-top: 6%;"><div class="row"><div class="col-xs-12 col-md-12"><h2 class="text-center">Customer Payment Details</h2></div></div></div>
+
+
+<form class="" role="form" ng-submit="addPayment(receiptDate,invoiceNumber,receiptNumber,paidAmount,currencyCode)">
+<div class="container" style="width: 100%;">
+	<div class="form-invoice form-horizontal">
+	<div class="row">
+	<div class="col-md-4 col-sm-6" >
+    <div class="form-group">
+      <label class="control-label col-sm-5 textleft">Customer Name<span>:</span></label>
+      <div class="col-sm-7">
+        <select  class="form-control empdet-form" required style="color: #777777;" ng-model="customers" ng-options="item as item.customerName for item in customerList" ng-change="customerChanged()">
+	  	<option value="">Select Customer</option>
+	  	</select> 
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-5 textleft" >Project<span>:</span></label>
+      <div class="col-sm-7">          
+        <select  class="form-control empdet-form" required style="color: #777777;" ng-model="projects" ng-options="item as item.projectName for item in projectList" ng-change="projectChanged()">
+	    <option value="">Select Project</option>
+	    </select> 
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-5 textleft">Invoice No<span>:</span></label>
+      <div class="col-sm-7">          
+        <select  class="form-control empdet-form" required style="color: #777777;" ng-model="invoices" ng-options="item as item.invoiceNumber for item in invoiceList" ng-change="invoiceChanged()">
+	   <option value="">Select Invoice</option>
+		</select> 
+      </div>
+    </div>
+    
+    </div>
+    
+    <div class="col-md-4 col-sm-6">
+    <div ng-init="dates()" class="form-group">
+      <label class="control-label col-sm-5 textleft">Invoice Date<span>:</span></label>
+      <div class="col-sm-7">
+       <span class="form-control">{{invoice.date}}</span> 
+       </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-5 textleft">Paid Status<span>:</span></label>
+      <div class="col-sm-7">          
+        <span class="form-control">{{invoice.status}}</span> 
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-5 textleft">Invoice Amount<span>:</span></label>
+      <div class="col-sm-7">          
+        <span class="form-control">{{invoice.invoiceAmount}}</span> 
+      </div>
+    </div>
+    </div>
+    
+    <div class="col-md-4 col-sm-6">
+    <div class="form-group">
+      <label class="control-label col-sm-5 textleft">Paid So Far<span>:</span></label>
+      <div class="col-sm-7">          
+        <span class="form-control">{{invoice.paidAmount}}</span> 
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-5 textleft">Balance Amount<span>:</span></label>
+      <div class="col-sm-7">          
+        <span class="form-control">{{invoice.balanceAmount}}</span> 
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-5 textleft">Currency<span>:</span></label>
+      <div class="col-sm-7">          
+        <span class="form-control">{{invoice.currencyCode}}</span> 
+      </div>
+    </div>
+    </div>
+    </div>
+     <div class="col-xs-12">
+    <h4 class="text-center">Current Payment Information</h4>
+    
+    <div class="container" style="width: 100%;">
+	<div class="pay-form-div form-inline">
+    <div class="form-group" style="margin: 0;">
+      	<input class="form-control" type="text" placeholder="Receipt Number" required ng-model="payment.receiptNumber">
+    </div>
+    <div ng-init="dates()" class="form-group" style="margin: 0;">
+       <input type="text" required class="form-control" placeholder="Receipt Date" ui-date="dateOptions" ui-date-format="dd-mm-yy" ng-model="payment.receiptDate">
+    </div>
+    <div class="form-group" style="margin: 0;">
+       <input class="form-control" type="text" placeholder="Amount Paid" required ng-model="payment.paidAmount" onkeypress="return isNumber(event)">
+    </div>
+    
+    <div class="form-group" style="margin: 0;">        
+      <div class=" col-sm-12" style="word-spacing: 15px;">
+	    <button type="submit" class="btn btn-primary btn-sm ">Save</button>
+	    <button type="button" class="btn btn-primary btn-sm ">Clear</button>
+      </div>
+    </div>
+     
+    </div>
+    </div>
+    </div>
+    
+    </div>
+    
+    
+</div>
+</form>
+
+<div class="container" style="width: 100%;">
+<div class="table-responsive">
+<table class="table">
+	<thead class="thead-mit-ts">
+		<tr>
+			<th>Customer</th>
+			<th>Project</th>
+			<th style="width: 90px;">Invoice No</th>
+			<th style="width: 100px;">Invoice Date</th>
+			<th style="width: 120px;">Invoice Amount</th>			
+			<th>Paid So far</th>
+			<th>Receipt No</th>
+			<th>Receipt Date</th>
+			<th>Amount Paid</th>
+			<th>Balance Amount</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="sheet in filteredParticipantsResults ">
+			<td>
+				<span ng-show="!showEdit">{{sheet.invoiceHdr.project.customer.customerName}}</span>
+			</td>
+			<td>
+				<span ng-show="!showEdit">{{sheet.invoiceHdr.project.projectName}}</span>
+			</td>
+			<td>
+			<span ng-show="!showEdit">{{sheet.invoiceHdr.invoiceNumber}}</span>
+			</td>
+			<td>
+			<span ng-show="!showEdit">{{sheet.invoiceHdr.invoiceDateStr}}</span>
+			</td>
+			<td>
+			<span ng-show="!showEdit">{{sheet.invoiceHdr.invoiceAmount}}</span>
+			</td>
+			<td>
+			<span ng-show="!showEdit">{{sheet.invoiceHdr.paidAmount}}</span>
+			</td>
+			<td>
+			<span ng-show="!showEdit">{{sheet.receiptNumber}}</span>
+			</td>
+			<td>
+			<span ng-show="!showEdit">{{sheet.receiptDateStr}}</span>
+			</td>
+			<td>
+			<span ng-show="!showEdit">{{sheet.paidAmount}}</span>
+			</td>
+			<td>
+			<span ng-show="!showEdit">xxx</span>
+			</td>
+			<td>
+
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="numPerPage" class="pagination-sm" boundary-links="true"></pagination>
+</div>
+</div>
