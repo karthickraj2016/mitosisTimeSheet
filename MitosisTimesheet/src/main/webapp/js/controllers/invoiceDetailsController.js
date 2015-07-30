@@ -10,7 +10,6 @@ angular.module('myApp.controllers')
 	
    	var hoursallowed;
    	
-   	var copy={};
    	
 	var invoice = [];
    	
@@ -110,17 +109,9 @@ angular.module('myApp.controllers')
 			$scope.customerList=result;
 		});
 
-		
-
-		
-		
-
-
 
 	}
 	
-	
-	var listvalue = new Array();
 	
 	$scope.amountCalForinsert = function(){
 	
@@ -131,26 +122,16 @@ angular.module('myApp.controllers')
 		
 		$scope.member.amount=parseFloat($scope.member.billablehours*$scope.member.rateperhour);
 		
-		 console.log($scope.member.amount); 
-		 
-		 
 
-	
-	
-	
 	}
 	
 	$scope.amountCalForUpdate = function (sheet){
-		
-		
 		
 		sheet.rateperhour =parseFloat(sheet.rateperhour);
 		
 		sheet.billablehours = parseFloat(sheet.billablehours);
 		
 		sheet.amount = parseFloat(sheet.billablehours*sheet.rateperhour);
-		
-		console.log(sheet.amount);
 		
 	}
 	
@@ -202,10 +183,10 @@ angular.module('myApp.controllers')
 	$scope.addTeamMember = function (){
 		
 		
-			if($scope.member==undefined||$scope.member.fromdate==undefined||$scope.member.todate==undefined||$scope.member.description==undefined||$scope.member.billablehours==undefined||$scope.member.amount==undefined){
+			if($scope.member==undefined||$scope.member.fromdate==undefined||$scope.member.todate==undefined||$scope.member.description==undefined||$scope.member.billablehours==undefined||$scope.member.teamlist==undefined||$scope.member.amount==undefined){
 			
 				$(".alert-msg1").show().delay(1000).fadeOut(); 
-				$(".alert-danger").html("please enter all the above details");
+				$(".alert-danger").html("please enter all the above member details");
 				return;
 		}
 			else if($scope.member.fromdate>$scope.member.todate){
@@ -223,16 +204,15 @@ angular.module('myApp.controllers')
 			$scope.invoiceList =[];
 		}
 	
-		
-		
-		
-		console.log($scope.member.teamlist);
+
 		invoice = {"fromdate":$scope.member.fromdate,"todate":$scope.member.todate,"description":$scope.member.description,"billablehours":$scope.member.billablehours,"amount":$scope.member.amount,"teammember":$scope.member.teamlist.employee.name,"amount":$scope.member.amount,"index":$scope.iterator,"rateperhour":$scope.member.rateperhour};
 		
 		
 		var copiedarray=[];
 		console.log();
 		$scope.invoiceList.push(invoice);
+		$(".alert-msg1").show().delay(1000).fadeOut(); 
+		$(".alert-danger").html("Member Details added successfully!!!!!");
 		$scope.iterator++;
 		$scope.member.fromdate='';
 		$scope.member.todate='';
@@ -248,6 +228,8 @@ angular.module('myApp.controllers')
 	$scope.updateteammembers= function(sheet){
 
 		$scope.invoiceList[sheet.index]=sheet;
+		$(".alert-msg1").show().delay(1000).fadeOut(); 
+		$(".alert-danger").html("Member Details updated successfully!!!!!");
 		
 	}
 	
@@ -255,10 +237,10 @@ angular.module('myApp.controllers')
 	$scope.deleteteammembers = function(sheet){
 			
 		$scope.invoiceList.splice(sheet.index,1);
-		
-		console.log($scope.invoiceList);
-		
-		
+		$(".alert-msg1").show().delay(1000).fadeOut(); 
+		$(".alert-danger").html("Member Details deleted Successfully!!!!");
+	
+
 	}
 	
 	$scope.teammemberslist= function(){
@@ -267,9 +249,6 @@ angular.module('myApp.controllers')
 		$scope.invoiceList[invoice.index]=invoice;
 		
 	}
-	
-
-	
 
 	
 	$scope.insert = function(){
