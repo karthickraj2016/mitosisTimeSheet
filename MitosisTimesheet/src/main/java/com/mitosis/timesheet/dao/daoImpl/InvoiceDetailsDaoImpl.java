@@ -62,21 +62,21 @@ public class InvoiceDetailsDaoImpl extends BaseService implements InvoiceDetails
 	}
 
 	@Override
-	public boolean create(InvoiceHdrModel invoiceHdrModel) {
+	public InvoiceHdrModel create(InvoiceHdrModel invoiceHdrModel) {
 		
 		
-		boolean insert = false;
+		InvoiceHdrModel invoicehdrModel = new InvoiceHdrModel();
 		try {
 			begin();
 			merge(invoiceHdrModel);
 			commit();
-			insert = true;
+			invoicehdrModel = invoiceHdrModel;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			close();
 		}
-		return insert;
+		return invoicehdrModel;
 	}
 
 	@Override

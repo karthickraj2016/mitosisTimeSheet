@@ -31,9 +31,9 @@ public class InvoiceDetailsServiceImpl implements InvoiceDetailsService {
 
 
 	@Override
-	public boolean create(InvoiceHdrModel invoiceHdrModel) {
-		boolean validation = invoiceDetailsDao.create(invoiceHdrModel);
-		return validation;
+	public InvoiceHdrModel create(InvoiceHdrModel invoiceHdrModel) {
+		InvoiceHdrModel invoicehdrModel = invoiceDetailsDao.create(invoiceHdrModel);
+		return invoicehdrModel;
 	}
 
 

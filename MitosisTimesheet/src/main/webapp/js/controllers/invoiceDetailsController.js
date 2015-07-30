@@ -10,6 +10,10 @@ angular.module('myApp.controllers')
 	
    	var hoursallowed;
    	
+   	var copy={};
+   	
+	var invoice = [];
+   	
    	
 
 	$scope.checkRequired = function(sheet){
@@ -32,11 +36,14 @@ angular.module('myApp.controllers')
 	}
 	
 	$scope.dates = function() {
-	     $scope.invoice = '';
+	     $scope.member = '';
+		 $scope.member={};
+		 $scope.invoice='';
 		 $scope.invoice={};
 		 
+		 
 		 var dt = new Date();
-		    var dd = dt.getDate();
+		    var dd =dt.getDate();
 		    var mm = dt.getMonth()+1; 
 		    var yyyy = dt.getFullYear();
 		    dt=dd+"-"+mm+"-"+yyyy;
@@ -51,8 +58,8 @@ angular.module('myApp.controllers')
 		    var yyyy2 = dt2.getFullYear();
 		    dt2=dd2+"-"+mm2+"-"+yyyy2;
 		    $scope.invoice.invoicedate=dt;
-		 $scope.invoice.fromdate=dt1;	
-		 $scope.invoice.todate=dt2;
+		 $scope.member.fromdate=dt1;	
+		 $scope.member.todate=dt2;
 	};
 
 	
@@ -65,6 +72,7 @@ angular.module('myApp.controllers')
 
 			/* yearRange: '1900:-0'*/
 	};
+	
 	
 	
 	
@@ -112,11 +120,48 @@ angular.module('myApp.controllers')
 	}
 	
 	
+	var listvalue = new Array();
+	
+	$scope.amountCalForinsert = function(){
+	
+		
+		$scope.member.rateperhour =parseFloat($scope.member.rateperhour);
+		
+		$scope.member.billablehours = parseFloat($scope.member.billablehours);
+		
+		$scope.member.amount=parseFloat($scope.member.billablehours*$scope.member.rateperhour);
+		
+		 console.log($scope.member.amount); 
+		 
+		 
+
+	
+	
+	
+	}
+	
+	$scope.amountCalForUpdate = function (sheet){
+		
+		
+		
+		sheet.rateperhour =parseFloat(sheet.rateperhour);
+		
+		sheet.billablehours = parseFloat(sheet.billablehours);
+		
+		sheet.amount = parseFloat(sheet.billablehours*sheet.rateperhour);
+		
+		console.log(sheet.amount);
+		
+	}
+	
+	
+	
+	
 	$scope.projectBasedSelections = function(projectId){
 		
 		var menuJson = angular.toJson({"projectId":projectId});
 		
-		
+		$scope.invoice.projectType="";
 		
 
 		$http({
@@ -156,71 +201,51 @@ angular.module('myApp.controllers')
 	
 	$scope.addTeamMember = function (){
 		
-		console.log($scope.member.fromdate);
 		
-		if($scope.member==undefined){
+			if($scope.member==undefined||$scope.member.fromdate==undefined||$scope.member.todate==undefined||$scope.member.description==undefined||$scope.member.billablehours==undefined||$scope.member.amount==undefined){
 			
-			alert("please enter from date");
-			return;
+				$(".alert-msg1").show().delay(1000).fadeOut(); 
+				$(".alert-danger").html("please enter all the above details");
+				return;
 		}
-		
-	
-		if($scope.member.fromdate==undefined){
-			
-			alert("please enter from date");
-			
-			return;
-			
-		}
-		
-		if($scope.member.todate==undefined){
-			
-			alert("please enter to date");
-			return;
-			
-		}
-		
-		if($scope.member.description==undefined){
-			
-			alert("please enter to description");
-			return;
-			
-		}
-		
-		if($scope.member.billablehours==undefined){
-			
-			alert("please enter billable hours");
-			return;
-		}
-		
-		if($scope.member.amount==undefined){
-			
-			alert("please enter amount");
-			return;
-		}
-		
+			else if($scope.member.fromdate>$scope.member.todate){
+				
+				$(".alert-msg1").show().delay(1000).fadeOut(); 
+				$(".alert-danger").html("From date cannot be greater than To date!!!!");
+				return;
+				
+				
+				
+			}
 		
 		
 		if(angular.isUndefined($scope.invoiceList)){
 			$scope.invoiceList =[];
 		}
-		var invoice = [];
+	
+		
+		
 		
 		console.log($scope.member.teamlist);
-		invoice = {"fromdate":$scope.member.fromdate,"todate":$scope.member.todate,"description":$scope.member.description,"billablehours":$scope.member.billablehours,"amount":$scope.member.amount,"teammember":$scope.member.teamlist.employee.name,"amount":$scope.member.amount,"index":$scope.iterator};
-		$scope.	invoiceList.push(invoice);
+		invoice = {"fromdate":$scope.member.fromdate,"todate":$scope.member.todate,"description":$scope.member.description,"billablehours":$scope.member.billablehours,"amount":$scope.member.amount,"teammember":$scope.member.teamlist.employee.name,"amount":$scope.member.amount,"index":$scope.iterator,"rateperhour":$scope.member.rateperhour};
+		
+		
+		var copiedarray=[];
+		console.log();
+		$scope.invoiceList.push(invoice);
 		$scope.iterator++;
 		$scope.member.fromdate='';
 		$scope.member.todate='';
+		$scope.member.teamlist='';
 		$scope.member.description='';
 		$scope.member.billablehours='';
 		$scope.member.amount='';
 		
-		console.log($scope.invoiceList);
+		
 		
 	}
 	
-	$scope.updateteammebers= function(sheet){
+	$scope.updateteammembers= function(sheet){
 
 		$scope.invoiceList[sheet.index]=sheet;
 		
@@ -233,6 +258,13 @@ angular.module('myApp.controllers')
 		
 		console.log($scope.invoiceList);
 		
+		
+	}
+	
+	$scope.teammemberslist= function(){
+		
+		
+		$scope.invoiceList[invoice.index]=invoice;
 		
 	}
 	
@@ -271,7 +303,20 @@ angular.module('myApp.controllers')
 			}
 		}).success(function(result, status, headers) {
 			
-			if(result.pdfPath=="norecords"){
+			
+			
+			if(result.value=="inserted"){
+				
+				$scope.invoice.invoiceno=result.invoicenumber;
+				
+				
+				
+				$(".alert-msg1").show().delay(1000).fadeOut(); 
+				$(".alert-danger").html("Invoice Details are successfully Inserted!!!!!");
+				return;
+			}
+			
+			/*if(result.pdfPath=="norecords"){
 				
 				$(".alert-msg1").show().delay(1000).fadeOut(); 
 				$(".alert-danger").html("No records availiable");
@@ -284,7 +329,7 @@ angular.module('myApp.controllers')
 			var a = document.createElement('a');
 			 a.href = "/MitosisTimesheet/reports/"+result.pdfFileName;
 			console.log(a);
-			a.download = "InvoiceReport.pdf";
+			a.blank = "InvoiceReport.pdf";
 			a.target="_blank";
 			 document.body.appendChild(a);
 		        a.click();
@@ -292,7 +337,7 @@ angular.module('myApp.controllers')
 		    $scope.filepath = a.href;
 		        console.log($scope.filepath);
 		        //$scope.deletepdfFile(result.pdfPath);
-			}
+			}*/
 
 		
 		});
@@ -302,6 +347,18 @@ angular.module('myApp.controllers')
 		
 		
 	}
+	
+	$scope.logout = function(){
+
+		$http({
+			url: 'rest/individualreport/logout',
+			method: 'GET',
+		}).success(function(result, status, headers) {
+
+			$state.go('login')
+		});
+	}
+
 	
 	
 

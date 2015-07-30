@@ -13,6 +13,18 @@ public class InvoiceDetailsReport {
 	
 	public List<InvoiceDetailsModel> invoiceDetailsModel;
 	
+	public CompanyInfoModel companyInfo;
+	
+
+	public CompanyInfoModel getCompanyInfo() {
+		return companyInfo;
+	}
+
+	public void setCompanyInfo(CompanyInfoModel companyInfo) {
+		this.companyInfo = companyInfo;
+	}
+
+
 	
 	public List<InvoiceDetailsModel> getInvoiceDetailsModel() {
 		return invoiceDetailsModel;
@@ -22,17 +34,7 @@ public class InvoiceDetailsReport {
 		this.invoiceDetailsModel = invoiceDetailsModel;
 	}
 
-	public CompanyInfoModel companyInfo;
-	
-	public CompanyInfoModel getCompanyInfo() {
-		return companyInfo;
-	}
 
-	public void setCompanyInfo(CompanyInfoModel companyInfo) {
-		this.companyInfo = companyInfo;
-	}
-
-	
 
 	public InvoiceHdrModel getInvoiceHdr() {
 		return invoiceHdr;

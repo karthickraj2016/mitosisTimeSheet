@@ -16,7 +16,7 @@ public interface InvoiceDetailsService {
 
 	public boolean validateEntry(InvoiceHdrModel invoiceHdrModel);
 
-	public boolean create(InvoiceHdrModel invoiceHdrModel);
+	public InvoiceHdrModel create(InvoiceHdrModel invoiceHdrModel);
 
 	public boolean create(List<InvoiceDetailsModel> invoiceDetailsModel) throws IllegalAccessException, InvocationTargetException;
 

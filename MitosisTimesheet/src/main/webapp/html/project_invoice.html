@@ -24,12 +24,16 @@
         <li ng-class="{ active: isActive('/projectmapping')}"><a ui-sref="projectmapping">Team Assignment</a></li>
         <li ng-class="{ active: isActive('/report')}"><a ui-sref="report">Report</a></li>
         </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li class="lb-username"><lable ng-model="name">Welcome {{name}}</lable></li>
-        <li><a style="padding-left: 0;" ui-sref="account"><button class="btn btn-sm btn-primary">Account</button></a></li>
-        <li><button class="btn btn-sm btn-primary btn-logout" ng-click="logout();">Logout</button></li>
-      </ul>
+ 
     </div>
+    <section class="jtr">
+		<span class="cp" onclick="show_hide()">
+		<img class="opt" style="height: 50px; width: 50px; border-radius: 50%;" src="images/user.jpg"></img></span> 
+		<section id="acc_opt">
+		<span ng-model="name">{{name}}</span>
+		<a ui-sref="account">Account</a>
+		<a ng-click="logout();">Logout</a>
+		</section></section>
   </div>
 </nav>
 
@@ -69,20 +73,20 @@
     <div ng-init="dates()" class="form-group">
       <label class="control-label col-sm-4 textleft" for="">Invoice Date<span>:</span></label>
       <div class="col-sm-8">
-       <input type="text" required class="form-control empdet-form" ng-model="invoice.invoicedate" placeholder="Invoice Date" ui-date="dateOptions" ui-date-format="yy-mm-dd" ng-model="invoice.date">
+       <input type="text" required class="form-control empdet-form" ng-model="invoice.invoicedate" placeholder="Invoice Date" ui-date="dateOptions" ui-date-format="dd-mm-yy" ng-model="invoice.date">
        </div>
     </div>
     
     <div class="form-group">
       <label class="control-label col-sm-4 textleft">Invoice No<span>:</span></label>
       <div class="col-sm-8">          
-        <span class="form-control" ng-model="invoice.invoiceno"></span> 
+        <input type="text" class="form-control" readonly ng-model="invoice.invoiceno"/>
       </div>
     </div>
     <div class="form-group">
       <label class="control-label col-sm-4 textleft">Invoice Amount<span>:</span></label>
       <div class="col-sm-8">          
-        <input type="text" class="form-control" ng-model="invoice.invoiceamt" id="" placeholder="">
+        <input type="text" class="form-control" ng-model="invoice.invoiceamt"  onkeypress="return isNumber(event)" id="" placeholder="">
       </div>
     </div>
     <div class="form-group">
@@ -97,25 +101,29 @@
     
 	<div class=" form-inline" style="word-spacing: 30px; margin-top: 20px;">
     <div ng-init="dates()" class="form-group" style="">
-       <input type="text" class="form-control"  placeholder="From Date" ui-date="dateOptions" ui-date-format="yy-mm-dd" ng-model="member.fromdate">
+       <input type="text" class="form-control"  placeholder="From Date" ui-date="dateOptions" ui-date-format="dd-mm-yy" ng-model="member.fromdate">
     </div>
     <div ng-init="dates()" class="form-group" style="">
-       <input type="text" class="form-control" placeholder="To Date" ui-date="dateOptions" ui-date-format="yy-mm-dd" ng-model="member.todate">
+       <input type="text" class="form-control" placeholder="To Date" ui-date="dateOptions" ui-date-format="dd-mm-yy" ng-model="member.todate">
     </div>
     <div class="form-group">
     <textarea rows="1" class="form-control" ng-model="member.description" placeholder="Description"></textarea>
     </div>
     <div class="form-group">
 
-       <select  class="form-control" style="color: #777777;" ng-model="member.teamlist" ng-options="item as item.employee.name for item in invoice.teammembers" required style="color: #777777;">
+       <select  class="form-control" style="color: #777777;" ng-model="member.teamlist" ng-options="item as item.employee.name for item in invoice.teammembers"  style="color: #777777;">
 	    <option value="" ng-selected="true">Team Members</option>
 		</select>
     </div>
-    <div class="form-group">
-       <input class="form-control" type="text" ng-model="member.billablehours" placeholder="Billable hours">
+     <div class="form-group">
+       <input class="form-control" id="rateperhour"  onkeypress="return isNumber(event)"  ng-change="amountCalForinsert()"  ng-model="member.rateperhour" placeholder="Rate Per hour">
     </div>
     <div class="form-group">
-       <input class="form-control" type="text" ng-model="member.amount" placeholder="Amount">
+       <input class="form-control" id="billablehour"  onkeypress="return isNumber(event)" ng-change="amountCalForinsert()"  ng-model="member.billablehours" placeholder="Billable hours">
+    </div>
+    <div class="form-group">
+ 
+       <input class="form-control" ng-model="member.amount" onkeypress="return isNumber(event)" placeholder="Amount">
     </div>
     
     <div class="form-group">        
@@ -134,6 +142,7 @@
 			<th class="">To Date</th>
 			<th class="">Description</th>
 			<th class="">Team Members</th>
+			<th class="">Rate Per Hour</th>
 			<th class="">Billable Hours</th>
 			<th class="">Amount</th>
 			<th></th>
@@ -145,7 +154,7 @@
 			
 			<td>
 				<span ng-show="!showEdit">{{sheet.fromdate}}</span>
-				<span ng-show="showEdit"><input class="form-control" ui-date="dateOptions" ui-date-format="dd-mm-yy" type="text" ng-model="sheet.fromdate"></span>
+				<span ng-show="showEdit"><input class="form-control" ui-date="dateOptions" ui-date-format="dd-mm-yy" type="text" ng-model="sheet.fromdate" ></span>
 				<span style="color:red" ng-show="sheet.fromdate == '' || sheet.fromdate == undefined">Required</span> 
 			</td>
 			<td>
@@ -167,8 +176,13 @@
 				</span>
 			</td>
 			<td>
+				<span ng-show="!showEdit">{{sheet.rateperhour}}</span>
+				<span id="{{sheet.id}}" ng-show="showEdit"><input class="form-control" id="{{sheet.id}}" type="text" onkeypress="return isNumber(event)" ng-change="amountCalForUpdate(sheet)" ng-model="sheet.rateperhour"></span>
+				<span style="color:red" ng-show="sheet.rateperhour == '' || sheet.rateperhour == undefined">Required</span>
+			</td>
+			<td>
 				<span ng-show="!showEdit">{{sheet.billablehours}}</span>
-				<span id="{{sheet.id}}" ng-show="showEdit"><input class="form-control" id="{{sheet.id}}" type="text" onkeypress="return isNumber(event)" ng-model="sheet.billablehours"></span>
+				<span id="{{sheet.id}}" ng-show="showEdit"><input class="form-control" id="{{sheet.id}}" type="text" onkeypress="return isNumber(event)" ng-change="amountCalForUpdate(sheet)" ng-model="sheet.billablehours"></span>
 				<span style="color:red" ng-show="sheet.billablehours == '' || sheet.billablehours == undefined">Required</span>
 			</td>
 			<td>
@@ -178,16 +192,16 @@
 			</td>
 			
 			<td style="word-spacing: 15px;">
-		
+
 	            <a><span class="glyphicon glyphicon-pencil" ng-click="showEdit = !showEdit" ng-show="!showEdit"></span></a>
 				<a><span class="glyphicon glyphicon-remove" ng-click="deleteteammembers(sheet)" ng-show="!showEdit"></span></a>
-				<a><span class="glyphicon glyphicon-ok" ng-click="showEdit = !showEdit;updateteammebers(sheet)" ng-show="showEdit" ng-disabled="checkRequired(sheet);"></span></a> 
+				<a><span class="glyphicon glyphicon-ok" ng-click="showEdit = !showEdit;updateteammembers(sheet)" ng-show="showEdit" ng-disabled="checkRequired(sheet);"></span></a> 
 				<a><span class="glyphicon glyphicon-ban-circle" ng-click="showEdit = !showEdit;teammemberslist()" ng-show="showEdit"></span></a> 			
 			</td>
 		</tr>
 	</tbody>
 </table>
-     
+     	
     </div>
 
     
@@ -197,10 +211,13 @@
     <pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="numPerPage" class="pagination-sm" boundary-links="true"></pagination>
     </div>
     </div>
- 	 <input type="submit" class="btn btn-primary" value="submit"/>
-
+ 	 <div class="text-center">
+ 	 <input type="submit" class="btn btn-primary btn-sm" value="Submit"/>
+	</div>
 
 </div>
 </form>
+<div class="alert-msg col-xs-12 col-sm-6"><p class="alert-success"></p></div>
+ <div class="alert-msg1 col-xs-12 col-sm-6"><p class="alert-danger"></p></div>
 
  </div>

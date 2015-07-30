@@ -82,8 +82,6 @@ public class InvoiceDetails {
 
 		InvoiceHdrModel invoiceHdrModel = new InvoiceHdrModel();
 
-		InvoiceDetailsModel invoiceDetailsModel =  new InvoiceDetailsModel();
-
 		JSONObject json = new JSONObject();
 		Date todaysdate = new Date();
 
@@ -151,6 +149,7 @@ public class InvoiceDetails {
 			InvoiceHdrModel invoicehdrmodel = new InvoiceHdrModel();
 			invoicehdrmodel.setInvoiceNumber(invoiceHdrModel.getInvoiceNumber());
 			invoicedetail.setInvoice(invoicehdrmodel);
+			
 
 
 			invoicedetail.setInvoiceToDate(invoiceToDate);
@@ -176,26 +175,34 @@ public class InvoiceDetails {
 		invoiceHdrModel.setInvoiceAmount(invoiceAmt);
 		invoiceHdrModel.setProject(projectModel);
 		invoiceHdrModel.setCustomer(customerModel);
+		invoiceHdrModel.setInvoiceStatus("unpaid");
+		
+		
+		if(jsonObject.has("projecttype")){
 		invoiceHdrModel.setProjectType(jsonObject.getString("projecttype"));
+		
+		}
+		
 		invoiceHdrModel.setCreatedDate(todaysdate);
 
 
 		InvoiceHdrModel invoicehdrModel = new InvoiceHdrModel();
 		invoicehdrModel.setInvoiceNumber(invoiceHdrModel.getInvoiceNumber());
+		
+		String invoicenumber=invoiceHdrModel.getInvoiceNumber();
 
 
-		boolean inserthdr = InvoiceService.create(invoiceHdrModel);
+		InvoiceHdrModel invoiceHdrResult = InvoiceService.create(invoiceHdrModel);
 		boolean insertdtl = InvoiceService.create(invoiceDetailList);
 
-		if(inserthdr && insertdtl ){
+		if(invoiceHdrResult!=null && insertdtl){
 
-			json.put("value", "Inserted Successfully");
+			json.put("invoicenumber",invoicenumber);
+			json.put("value", "inserted");
 			
-			CompanyInfoModel companyinfoModel = new CompanyInfoModel();
+			/*CompanyInfoModel companyinfoModel = new CompanyInfoModel();
 			
 			companyinfoModel = InvoiceService.getCompanyInfo();
-
-
 
 			List<InvoiceDetailsReport> invoiceReportList = new ArrayList<InvoiceDetailsReport>();
 		
@@ -208,9 +215,6 @@ public class InvoiceDetails {
 				
 				invoiceReportList.add(invoiceDetailsReport);
 				
-			System.out.println(request.getSession().getServletContext()
-					.getRealPath("/")
-					+ "reports/InvoiceReport.jrxml");
 
 			JasperDesign jasperDesign = JRXmlLoader.load(request.getSession().getServletContext()
 					.getRealPath("/")
@@ -219,6 +223,9 @@ public class InvoiceDetails {
 			JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
 			// JREmptyDataSource jrEmptyDatasource = new JREmptyDataSource();
 			Map<String, Object> parameters = new HashMap<String, Object>();
+			
+			 parameters.put("invoiceDetailsList", invoiceDetailsReport.getInvoiceDetailsModel());
+
 
 
 			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(invoiceReportList);
@@ -232,13 +239,10 @@ public class InvoiceDetails {
 			new File(pdfFilePath).deleteOnExit();
 
 			JasperExportManager.exportReportToPdfFile(jasperPrint,pdfFilePath);
-			
-			
-
 
 			json.put("pdfFileName","InvoiceReport"+employeeId+".pdf");
 			json.put("pdfPath",pdfFilePath);
-
+*/
 		}
 		return json;
 	
@@ -363,9 +367,10 @@ public class InvoiceDetails {
 		invoicehdrModel.setInvoiceNumber(invoiceHdrModel.getInvoiceNumber());
 		invoiceDetailsModel.setId(id);
 		invoiceDetailsModel.setInvoice(invoicehdrModel);
+		return json;
 
-
-		boolean inserthdr = InvoiceService.create(invoiceHdrModel);
+/*
+		 inserthdr = InvoiceService.create(invoiceHdrModel);
 		boolean insertdtl = InvoiceService.create(invoiceDetailList);
 
 		if(inserthdr && insertdtl ){
@@ -376,7 +381,7 @@ public class InvoiceDetails {
 		else{
 			json.put("value", "updationfailed ");
 			return json;
-		}
+		}*/
 
 
 	}
@@ -395,8 +400,6 @@ public class InvoiceDetails {
 		List<ProjectModel> projectList = new ArrayList<ProjectModel>();
 
 		projectList = InvoiceService.getProjectList();
-
-
 
 		return projectList;
 
@@ -417,8 +420,6 @@ public class InvoiceDetails {
 
 		customerList = InvoiceService.getCustomerList();
 
-
-
 		return customerList;	
 
 
@@ -437,8 +438,6 @@ public class InvoiceDetails {
 		List<ProjectCostHdrModel> projectCostHdrList = new ArrayList<ProjectCostHdrModel>();
 
 		projectCostHdrList = InvoiceService.getProjectCostHdrList(id);
-
-
 
 		return projectCostHdrList;	
 
