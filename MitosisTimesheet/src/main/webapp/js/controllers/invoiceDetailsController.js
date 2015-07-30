@@ -209,7 +209,6 @@ angular.module('myApp.controllers')
 		
 		
 		var copiedarray=[];
-		console.log();
 		$scope.invoiceList.push(invoice);
 		$(".alert-msg1").show().delay(1000).fadeOut(); 
 		$(".alert-danger").html("Member Details added successfully!!!!!");
@@ -240,7 +239,10 @@ angular.module('myApp.controllers')
 		$(".alert-msg1").show().delay(1000).fadeOut(); 
 		$(".alert-danger").html("Member Details deleted Successfully!!!!");
 	
-
+		
+		
+		
+		
 	}
 	
 	$scope.teammemberslist= function(){
@@ -249,13 +251,12 @@ angular.module('myApp.controllers')
 		$scope.invoiceList[invoice.index]=invoice;
 		
 	}
-
 	
 	$scope.insert = function(){
 		
 
 		var jsonstring=JSON.stringify($rootScope.invoiceList);
-		console.log(jsonstring);
+		
 		
 		console.log($scope.invoice.customer+','+$scope.invoice.projectlist);
 		
