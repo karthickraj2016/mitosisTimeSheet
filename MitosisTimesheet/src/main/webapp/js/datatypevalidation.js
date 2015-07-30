@@ -1,3 +1,4 @@
+
 function isNumber(evt) {
     evt = (evt) ? evt : window.event;
     var charCode = (evt.which) ? evt.which : evt.keyCode;
@@ -16,4 +17,8 @@ function ValidateAlpha(evt)
        return false;
     }
         return true;
+}
+
+function show_hide(){
+           $('#acc_opt').toggle();
 }

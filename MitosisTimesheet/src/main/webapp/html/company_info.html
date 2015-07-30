@@ -33,13 +33,16 @@
             <li><a ui-sref="teamreport">Team Reports</a></li>
           </ul>
         </li>
-        </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li class="lb-username"><lable ng-model="name">Welcome {{name}}</lable></li>
-        <li><a style="padding-left: 0;" ui-sref="account"><button class="btn btn-sm btn-primary">Account</button></a></li>
-        <li><button class="btn btn-sm btn-primary btn-logout" ng-click="logout();">Logout</button></li>
-      </ul>
+        </ul>      
     </div>
+    <section class="jtr">
+		<span class="cp" onclick="show_hide()">
+		<img class="opt" style="height: 50px; width: 50px; border-radius: 50%;" src="images/user.jpg"></img></span> 
+		<section id="acc_opt">
+		<span ng-model="name">{{name}}</span>
+		<a ui-sref="account">Account</a>
+		<a ng-click="logout();">Logout</a>
+		</section></section>
   </div>
 </nav>
 
