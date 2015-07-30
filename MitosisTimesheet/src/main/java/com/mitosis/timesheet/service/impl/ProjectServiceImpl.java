@@ -80,4 +80,13 @@ public class ProjectServiceImpl implements ProjectService {
 			
 			return customerList;
 		}
+		@Override
+		public List<ProjectModel> getProjectList(int cusid) {
+			
+			List<ProjectModel> projectList = new ArrayList<ProjectModel>();
+		
+		     projectList = ProjectDAO.getProjectList(cusid);
+	
+			return projectList;
+		}
 }

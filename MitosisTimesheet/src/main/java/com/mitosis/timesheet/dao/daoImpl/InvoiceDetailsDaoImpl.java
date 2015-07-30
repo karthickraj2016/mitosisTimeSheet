@@ -255,7 +255,45 @@ public class InvoiceDetailsDaoImpl extends BaseService implements InvoiceDetails
 		return companyInfoModel;
 	}
 
-	
+	@Override
+	public List<InvoiceHdrModel> getInvoiceList(int projectId) {
+		List<InvoiceHdrModel> invoicelist = null;
+		try {
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<InvoiceHdrModel> cq = qb.createQuery(InvoiceHdrModel.class);
+			Root<InvoiceHdrModel> root = cq.from(InvoiceHdrModel.class);
+			cq.where(qb.equal(root.get("project").get("projectId"), projectId));
+			cq.select(root);
+			invoicelist = entityManager.createQuery(cq).getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return invoicelist;
+	}
+	@Override
+	public InvoiceHdrModel getInvoiceHdr(String invoiceNumber){
+		InvoiceHdrModel invoicehdr = new InvoiceHdrModel();
+			try{
+				begin();
+				entityManager.getEntityManagerFactory().getCache().evictAll();
+				CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+				CriteriaQuery<InvoiceHdrModel> cq = qb.createQuery(InvoiceHdrModel.class);
+				Root<InvoiceHdrModel> root = cq.from(InvoiceHdrModel.class);
+				Predicate condition = qb.equal(root.get("invoiceNumber"),invoiceNumber);
+				cq.where(condition);
+				cq.select(root);		
+				invoicehdr = entityManager.createQuery(cq).getSingleResult();
+				}catch(Exception e){
+				e.printStackTrace();
+			}finally{
+				close();
+			}
+			return invoicehdr;
+	}
 	
 
 }

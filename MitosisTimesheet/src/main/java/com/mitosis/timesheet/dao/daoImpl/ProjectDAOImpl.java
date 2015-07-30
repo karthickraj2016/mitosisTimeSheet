@@ -152,4 +152,25 @@ public class ProjectDAOImpl extends BaseService implements ProjectDAO {
 		}
 		return customerlist;
 	}
+	@Override
+	public List<ProjectModel> getProjectList(int cusid) {
+		List<ProjectModel> projectlist = null;
+		try {
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<ProjectModel> cq = qb.createQuery(ProjectModel.class);
+			Root<ProjectModel> root = cq.from(ProjectModel.class);
+			cq.where(qb.equal(root.get("customer").get("customerId"), cusid));
+			cq.select(root);
+			cq.orderBy(qb.desc(root.get("projectId")));
+			projectlist = entityManager.createQuery(cq).getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return projectlist;
+	}
+
 }

@@ -15,4 +15,5 @@ public interface ProjectDAO {
 	public boolean checkProjectName(String projectName) throws Exception;
 	public String getProjectName(int projectId) throws Exception;
 	public List<CustomerDetailsModel> getCustomerlist();
+	public List<ProjectModel>getProjectList(int cusid);
 }

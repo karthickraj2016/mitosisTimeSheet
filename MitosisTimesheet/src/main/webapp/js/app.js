@@ -124,6 +124,11 @@ angular.module('myApp', ['ui.router','myApp.controllers','ngStorage','ui.bootstr
 						 templateUrl: 'html/company_info.html',
 						 controller	:'companyInfoController'
 					 })
+					 .state('customer_payment', {
+						 url: '/customer_payment',
+						 templateUrl: 'html/customer_payment.html',
+						 controller	:'customerpaymentController'
+					 })
 					 .state('projectCostDetails', {
 						 url: '/projectCostDetails',
 						 templateUrl: 'html/projectCost.html',

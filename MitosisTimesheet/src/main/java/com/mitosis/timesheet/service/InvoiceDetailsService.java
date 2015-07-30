@@ -34,5 +34,7 @@ public interface InvoiceDetailsService {
 
 	public CompanyInfoModel getCompanyInfo();
 
+	public List<InvoiceHdrModel> getInvoiceList(int projectId);
 	
+	public InvoiceHdrModel getInvoiceHdr(String invoiceNumber);
 }

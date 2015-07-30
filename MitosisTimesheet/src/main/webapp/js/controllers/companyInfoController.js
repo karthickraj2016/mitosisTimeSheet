@@ -115,6 +115,16 @@ $scope.list = function(){
 			$('.btn-profile-cancel').hide();
 		})
 	}
+	$scope.logout = function(){
+
+		$http({
+			url: 'rest/account/logout',
+			method: 'GET',
+		}).success(function(result, status, headers) {
+
+			$state.go('login')
+		})
+	};
 	
 	
 	

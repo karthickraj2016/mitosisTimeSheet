@@ -58,6 +58,20 @@ public class InvoiceHdrModel {
 	@Column(name="project_type")
 	private String projectType;
 	
+	@Column(name="invoice_status")
+	private String invoiceStatus;
+		
+	@Transient
+	private String invoiceDateStr;
+			
+	public String getInvoiceDateStr() {
+		Date d=getInvoiceDate();
+		return new SimpleDateFormat("dd-MM-yyyy").format(d);		
+	}
+
+	public void setInvoiceDateStr(String invoiceDateStr) {
+		this.invoiceDateStr = invoiceDateStr;
+	}
 	@Transient
 	private String frmEntryDate;
 
@@ -151,6 +165,14 @@ public class InvoiceHdrModel {
 
 	public void setInvoiceNumber(String invoiceNumber) {
 		this.invoiceNumber = invoiceNumber;
+	}
+	
+	public String getInvoiceStatus() {
+		return invoiceStatus;
+	}
+
+	public void setInvoiceStatus(String invoiceStatus) {
+		this.invoiceStatus = invoiceStatus;
 	}
 	
 }
