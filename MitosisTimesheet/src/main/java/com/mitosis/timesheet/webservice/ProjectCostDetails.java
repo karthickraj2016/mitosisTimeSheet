@@ -1,8 +1,11 @@
 package com.mitosis.timesheet.webservice;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -149,5 +152,19 @@ public class ProjectCostDetails {
 		json.put("value", "already exist");
 	}
 		return json;
+	}
+	
+	@Path("/getProjectList")
+	@GET
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<ProjectModel> getprojectlist() throws JSONException {
+
+		List<ProjectModel> projectList = new ArrayList<ProjectModel>();
+
+		projectList = costService.getProjectList();
+
+		return projectList;
+
 	}
 }

@@ -2,7 +2,7 @@
 
 
 //Declare app level module which depends on filters, and services
-angular.module('myApp', ['ui.router','myApp.controllers','ngStorage','ui.bootstrap','ui.date'])
+angular.module('myApp', ['ui.router','myApp.controllers','ngStorage','ui.bootstrap','ui.date', 'dialogs'])
 
 .run(
 		['$rootScope', '$state', '$stateParams',

@@ -3,8 +3,29 @@
 angular.module('myApp.controllers')
 
 
-.controller('levelMasterController', ['$scope', '$http', '$state','$localStorage','$rootScope', function($scope, $http, $state,$localStorage, $rootScope) {
+.controller('levelMasterController', ['$scope', '$http', '$state','$localStorage','$rootScope', '$dialogs', function($scope, $http, $state,$localStorage, $rootScope,$dialogs) {
+	
+	$scope.launch = function(){	
+	var	dlg = $dialogs.create('html/empdet.html','levelController',{},{key: false,back: 'static'});
+        
+	};
+	  
+     $scope.employeeDetails = function(level) {
+    	     	   	
+    	 $http({
+    			url: 'rest/levelMaster/getEmployeesByLevel',
+    			method: 'POST',
+    			data: {"level":level},
+    			headers: {
+    				'Content-Type': 'application/json'
+    			}
+    		}).success(function(result, status, headers) {
+    		
+    			$rootScope.employeeList=result;
+    			$scope.launch();
+    		})
 
+     };
 	
 	$http({
 		url: 'rest/account/getName',
@@ -244,6 +265,15 @@ angular.module('myApp.controllers')
 
 			$state.go('login')
 		})
-	};
+	}; 
+	
+}])
+
+.controller('levelController', ['$scope','$modalInstance' ,'$rootScope', function($scope, $modalInstance, $rootScope) {
+	
+	$scope.empDetList=$rootScope.employeeList;
+	$scope.cancel = function(){
+	    $modalInstance.dismiss('canceled');  
+	  };
 	
 }])

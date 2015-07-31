@@ -56,6 +56,24 @@ a {
 	
 }
 /*MItosis Timesheet*/
+@font-face {
+    font-family: myFirstFont;
+    src: url('../css/font-awesome-4.3.0/fonts/HUMANST521-BT-ROMAN-11929.TTF');
+}
+.logospan{
+	float: left; margin-left: -15px; padding-bottom: 10px;
+}
+.h2hb{
+	font-family: myFirstFont;
+	color: #5E5F5F;
+	font-size: 42px;
+	letter-spacing: 1px;
+	line-height: 1.2;
+	margin-left: 5px;
+}
+.top-header-fixed{
+	background: #C9D4D7; 
+}
 .txtarea{
 	margin-top:-20px;
 }
@@ -72,12 +90,20 @@ a {
 	float: left;
 }.textleft{text-align: left ! important;}
 .textleft > span{float: right;}
-
+.navbar-fixed-top{
+	border-bottom: 1px solid #C9D4D7;
+}
+.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus, .navbar-inverse .navbar-nav>.open>a:hover{
+	background: #C9D4D7; font-weight: bold; color: #333;
+}
 .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover{
 	color: #333; font-weight: bold; background: none; font-size: 18px;	
 }
 .navbar-inverse .navbar-nav a:hover{
-	font-size: 16px; font-weight: bold;
+	font-size: 16px; font-weight: bold; color: #333;
+}
+.navbar-nav>li>.dropdown-menu{
+	margin-top: 9px;
 }
 .navbar-inverse .navbar-nav>li>a{
 	color: #333;
@@ -91,9 +117,9 @@ border: none;
 .navbar-nav {
 margin: 2px 40px;
 }
-.dropdown-menu>li>a{color: white;}
-.navbar-nav>li>.dropdown-menu>li>a:hover{color: grey;}
-.navbar-nav>li>.dropdown-menu{background: grey;}
+.dropdown-menu>li>a{color: #333;}
+.navbar-nav>li>.dropdown-menu>li>a:hover{color: #333;}
+.navbar-nav>li>.dropdown-menu{background: #C9D4D7;}
 .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover,
 	.pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover
 	{
@@ -111,7 +137,6 @@ margin: 2px 40px;
  .alert-danger{
  	height: 28px; font-size: 20px; border-radius: 10px;
  }
- 
 
 .thead-mit-ts {
 	background: #C9D4D7;
@@ -1226,7 +1251,7 @@ transform:scale(1);
 
 #auth_container, #stripe_container {
 	position: relative;
-	width: 375px;
+	width: 420px;
 	margin: 20px auto 0;
 	padding: 25px;
 	display: inline-block;
@@ -1664,12 +1689,6 @@ transform:scale(1);
 	margin: 35px 0px 35px 0px;
 }
 
-.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover,
-	.pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover
-	{
-	z-index: 1;
-}
-
 .pay-form-div{
 	text-align: center;
 	word-spacing: 40px;
@@ -1759,4 +1778,30 @@ transform:scale(1);
 	width:20px;
 	vertical-align:middle
 }
+
+/* Fix for Bootstrap 3 with Angular UI Bootstrap */
+
+.modal { 
+	display: block;
+}
+
+/* Custom dialog/modal headers */
+
+.dialog-header-error { background-color: #d2322d; }
+.dialog-header-wait { background-color: #428bca; }
+.dialog-header-notify { background-color: #eeeeee; }
+.dialog-header-confirm { background-color: #333333; }
+	.dialog-header-error span, .dialog-header-error h4,
+	.dialog-header-wait span, .dialog-header-wait h4,
+	.dialog-header-confirm span, .dialog-header-confirm h4 { color: #ffffff; }
+
+/* Ease Display */
+
+.pad { padding: 25px; }
  
+ @media (min-width: 768px){
+.modal-dialog {
+  width: 600px;
+  margin: 22% auto;
+}
+}

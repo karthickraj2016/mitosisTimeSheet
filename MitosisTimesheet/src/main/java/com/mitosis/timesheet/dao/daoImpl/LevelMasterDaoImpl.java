@@ -107,6 +107,27 @@ public class LevelMasterDaoImpl  extends BaseService implements LevelMasterDao {
 		return numberOfEmployees;
 	}
 
+	@Override
+	public List<EmployeeMasterModel> getEmployeesByLevel(int level) {
+		
+		List<EmployeeMasterModel> levelModel=new ArrayList<EmployeeMasterModel>();
+		try{
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<EmployeeMasterModel> cq = qb.createQuery(EmployeeMasterModel.class);
+			Root<EmployeeMasterModel> root = cq.from(EmployeeMasterModel.class);
+			cq.where(qb.equal(root.get("level"), level));
+			cq.select(root);
+			levelModel=entityManager.createQuery(cq).getResultList();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close();
+		}
+		return levelModel;
+	}
+
 }
 
 

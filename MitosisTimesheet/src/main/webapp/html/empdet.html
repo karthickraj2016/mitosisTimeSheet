@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div class="modal fade  in" ng-class="{in: animate}" ng-style="{'z-index': 1050 + index*10}" ng-transclude="" modal-window="" index="0" style="z-index: 1050;">
+<div class="modal ng-scope">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<h4 class="modal-title">
+<span class="glyphicon glyphicon-star"></span> Employee Details</h4>
+</div>
+<div class="modal-body">
+<ng-form name="nameDialog" novalidate="" role="form" class="ng-pristine ng-invalid ng-invalid-required">
+<div class="form-group input-group-lg" ng-class="{true: 'has-error'}[nameDialog.username.$dirty &amp;&amp; nameDialog.username.$invalid]">
+<table class="table">
+                <thead>
+                <tr>
+               <th>Emp Id</th><th>First Name</th><th>Last Name</th><th>Level</th>                
+               </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="sheet in empDetList">
+                <td>{{sheet.employeeId}}</td>
+                <td>{{sheet.firstName}}</td>
+                <td>{{sheet.lastName}}</td>
+                <td>{{sheet.level}}</td>
+                </tr>
+                </tbody>
+                </table>
+</div></ng-form></div>
+<div class="modal-footer">
+<button type="button" class="btn btn-primary" ng-click="cancel()">Ok</button>
+</div></div></div></div></div>
+
+</body>
+</html>

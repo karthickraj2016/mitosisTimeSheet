@@ -1,7 +1,10 @@
 package com.mitosis.timesheet.dao;
 
+import java.util.List;
+
 import com.mitosis.timesheet.model.ProjectCostDetailsModel;
 import com.mitosis.timesheet.model.ProjectCostHdrModel;
+import com.mitosis.timesheet.model.ProjectModel;
 
 public interface ProjectCostDetailsDao {
 
@@ -12,5 +15,7 @@ public interface ProjectCostDetailsDao {
 	public boolean addFixedProjectCostDetails(ProjectCostHdrModel hdrModel);
 
 	public boolean projectValidation(int projectId);
+
+	public List<ProjectModel> getProjectList();
 
 }

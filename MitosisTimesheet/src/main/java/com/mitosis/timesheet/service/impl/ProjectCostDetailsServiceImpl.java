@@ -1,9 +1,13 @@
 package com.mitosis.timesheet.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.mitosis.timesheet.dao.ProjectCostDetailsDao;
 import com.mitosis.timesheet.dao.daoImpl.ProjectCostDetailsDaoImpl;
 import com.mitosis.timesheet.model.ProjectCostDetailsModel;
 import com.mitosis.timesheet.model.ProjectCostHdrModel;
+import com.mitosis.timesheet.model.ProjectModel;
 import com.mitosis.timesheet.service.ProjectCostDetailsService;
 
 public class ProjectCostDetailsServiceImpl implements ProjectCostDetailsService {
@@ -48,6 +52,16 @@ public class ProjectCostDetailsServiceImpl implements ProjectCostDetailsService 
 		project=costDao.projectValidation(projectId);
 		
 		return project;
+	}
+
+	@Override
+	public List<ProjectModel> getProjectList() {
+
+		List<ProjectModel> projectList = new ArrayList<ProjectModel>();
+		
+		projectList=costDao.getProjectList();
+		System.out.println(projectList);
+		return projectList;
 	}
 
 }

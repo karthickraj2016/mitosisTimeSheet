@@ -163,11 +163,7 @@ angular.module('myApp.controllers')
 					$('#customerMail').val('');
 					$('#customerMail').focus();
 					return;
-				} /*else if(mail.substring(lstIndex + 1)!='.com') {
-				$(".alert-msg1").show().delay(1500).fadeOut(); 
-				$(".alert-danger").html("Invalid domain name, use only mitosistech.com");
-				return;
-			}*/
+				} 
 			})
 		}
 	}

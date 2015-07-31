@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.mitosis.timesheet.dao.LevelMasterDao;
 import com.mitosis.timesheet.dao.daoImpl.LevelMasterDaoImpl;
+import com.mitosis.timesheet.model.EmployeeMasterModel;
 import com.mitosis.timesheet.model.LevelMasterModel;
 import com.mitosis.timesheet.service.LevelMasterService;
 
@@ -50,6 +51,16 @@ public class LevelMasterServiceImpl implements LevelMasterService {
 		numberOfEmployees=levelDao.findCountOfEmpPerLevel(level);
 		
 		return numberOfEmployees;
+	}
+
+	@Override
+	public List<EmployeeMasterModel> getEmployeesByLevel(int level) {
+
+		List<EmployeeMasterModel> levelModel=new ArrayList<EmployeeMasterModel>();
+		
+		levelModel=levelDao.getEmployeesByLevel(level);
+		
+		return levelModel;
 	}
 
 }

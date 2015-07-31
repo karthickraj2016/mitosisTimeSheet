@@ -15,11 +15,43 @@
    -moz-opacity: .25;
    z-index: 100; 
  '></div>
+ 
+  <!--Signin Container
+        <div  id="login_container" ng-controller="loginController">
+            <span class="logospan"><img alt="" src="images/logo2.png"/></span><span class="h2hb">Heartbeat </span>
+            <div style="display:none;" class="login_or"></div>
+            <div id="div_error_box_login"></div>
+            <form ng-submit="login()" >
+                <ul>
+                    <li>
+                        <input required type="text" name="email" id="uname_log" required ng-model="username" ng-trim="false" placeholder="User Name" class="required requiredField Email fg-input text fg-fw" />
+                    </li>
+                    <li>
+                        <input required type="password" name="password" id="password_log" required ng-model="password" ng-trim="false" placeholder="Password" class="required requiredField fg-input text fg-fw" />
+                    </li>	
+                    <li>
+                   <div class="clear"></div>     
+                      <input type="hidden" name="plan" id="plan" value="1" />	
+                        <input type="hidden" name="redirect" id="redirect" value="IjM5M19vdGhlciI_3D" />
+                        <input type="hidden" name="login" id="login" value="login" />
+                        <input class="submit signin_btn fg-btn blue large inline fg-fw bold" type="submit" value="Sign In"/>
+                        <input type="hidden" name="submitted" id="submitted" value="true" />
+                    </li>
+                </ul>	
+            </form> 
+         <div>
+                <a class="forgot-password" id="forgot_pwd" style="cursor: pointer;">Forgot Password?</a>
+                <a id="register" class="signup-btn">Create New Account</a><br>
+                <div class="clearfix"></div>
+            </div>
+
+        </div> -->
+        
     <div id="auth_container">
 
         <!--Signup Container-->
         <div  id="login_container" ng-controller="loginController">
-            <img alt="" src="images/mt1.png" style="float: left;"><h2 class="signup_heading"> TimeSheet</h2>    
+            <span class="logospan"><img alt="" src="images/logo2.png"/></span><span class="h2hb">Heartbeat </span>    
             <div style="display:none;" class="login_or"></div>
             <div id="div_error_box_login"></div>
             <form ng-submit="login()" >

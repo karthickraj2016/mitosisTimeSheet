@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import com.mitosis.timesheet.model.EmployeeMasterModel;
 import com.mitosis.timesheet.model.LevelMasterModel;
 import com.mitosis.timesheet.service.LevelMasterService;
 import com.mitosis.timesheet.service.impl.LevelMasterServiceImpl;
@@ -177,5 +178,21 @@ public class LevelMaster {
 			json.put("value", "error");
 		}
 		return json;
+	}
+	
+	@Path("/getEmployeesByLevel")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	
+	public List<EmployeeMasterModel> getEmployeesByLevel(JSONObject jsonObject)throws JSONException{
+		
+		List<EmployeeMasterModel> levelModel=new ArrayList<EmployeeMasterModel>();
+		
+		int level=jsonObject.getInt("level");
+		
+		levelModel=levelService.getEmployeesByLevel(level);
+		
+		return levelModel;
 	}
 }

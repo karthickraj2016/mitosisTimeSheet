@@ -7,8 +7,8 @@
 <lable class="lb-username" ng-model="name">Welcome {{name}}</lable>
 </div> -->
 
-<nav class="navbar navbar-inverse navbar-fixed-top" style="border-bottom: 1px solid gray; background: none;">
-  <div class="container-fluid" style="max-width: 100%; background: grey; color: white;">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid top-header-fixed">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
         <span class="icon-bar"></span>
@@ -166,6 +166,14 @@
 </form>
 
 <div class="container" style="width: 100%;">
+<div class="row len_show" style="padding: 20px;">
+<span>Show
+<select ng-model="numPerPage" >
+<option>15</option>
+<option>25</option>
+<option>35</option>
+<option>50</option>
+</select> Entries</span></div>
 <div class="table-responsive">
 <table class="table">
 	<thead class="thead-mit-ts">

@@ -45,7 +45,7 @@ angular.module('myApp.controllers')
 
 	$http({
 
-		url: 'rest/teamAssignment/getProjectList',
+		url: 'rest/projectCost/getProjectList',
 		method: 'GET',
 		/*data: menuJson,*/
 		headers: {

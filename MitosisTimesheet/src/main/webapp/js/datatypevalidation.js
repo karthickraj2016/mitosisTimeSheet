@@ -22,3 +22,7 @@ function ValidateAlpha(evt)
 function show_hide(){
            $('#acc_opt').toggle();
 }
+
+function showmd() {
+$('#empdet').modal('show');
+}
