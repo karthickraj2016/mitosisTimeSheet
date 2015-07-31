@@ -74,13 +74,13 @@ a {
 .textleft > span{float: right;}
 
 .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover{
-	color: white; font-weight: bold; background: none; font-size: 18px;	
+	color: #333; font-weight: bold; background: none; font-size: 18px;	
 }
 .navbar-inverse .navbar-nav a:hover{
 	font-size: 16px; font-weight: bold;
 }
 .navbar-inverse .navbar-nav>li>a{
-	color: white;
+	color: #333;
 }
 .navbar-inverse .navbar-toggle {
 border: none;
@@ -114,8 +114,7 @@ margin: 2px 40px;
  
 
 .thead-mit-ts {
-	color: whitesmoke;
-	background: gray;
+	background: #C9D4D7;
 }
 
 .ts-form {
@@ -170,7 +169,7 @@ margin: 2px 40px;
 }
 
 .table {
-	border-bottom: 1px solid gainsboro;
+	border: 1px solid gainsboro;
 	table-layout: fixed;
 white-space: nowrap;
 }
@@ -1746,7 +1745,7 @@ transform:scale(1);
 
 .jtr #acc_opt a:hover
 {
-	  background:grey;
+	  background: #C9D4D7;
 	  color: white;
 }
 

@@ -8,28 +8,51 @@
 </div> -->
 
 <nav class="navbar navbar-inverse navbar-fixed-top" style="border-bottom: 1px solid gray; background: none;">
-  <div class = "container-fluid" style="max-width: 100%; background: grey; color: white;">
+  <div class="container-fluid" style="max-width: 100%; background: grey; color: white;">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      <div class="logo"><img src="images/mit_lg-ts.jpg"></div>
+      <div class="logo"><img src="images/logo2.png"></div>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar" ng-controller="HeaderController">
       <ul class="nav navbar-nav" style="margin-left: 30px; margin-top: 8px;">
         <li ng-class="{ active: isActive('/timesheet')}"><a ui-sref="timesheet">Home</a></li>
-        <li ng-class="{ active: isActive('/project')}"><a ui-sref="project">Project Details</a></li>
-        <li ng-class="{ active: isActive('/projectmapping')}"><a ui-sref="projectmapping">Team Assignment</a></li>
-        <li ng-class="{ active: isActive('/report')}"><a ui-sref="report">Report</a></li>
+        <li ng-show="manageFinance" ng-class="{ active: isActive('/finance')}"><a class="dropdown-toggle" data-toggle="dropdown"> Finance<span class="caret"></span></a>
+        
+        <ul class="dropdown-menu">
+            <li><a ui-sref="levelMaster">Monthly Revenue Projection</a></li>
+          <li><a ui-sref="company_info">Company Information</a></li>
+          <li><a ui-sref="projectCostDetails">Project Cost </a></li>
+            <li><a ui-sref="invoice">Invoice</a></li>
+           <!--  <li><a ui-sref="">Receipt</a></li>
+             <li><a ui-sref="">Bank Reconcile</a></li>
+              <li><a ui-sref="">Company Info</a></li>  -->
+          </ul>
+        </li>
+          <li ng-show="manageCustomer" ng-class="{ active: isActive('/customerDetails')}"><a ui-sref="customerDetails">Customer Details</a></li>
+     <li ng-show="manageProject" ng-class="{ active: isActive('/project')}"><a ui-sref="project">Project Details</a></li>
+        <li ng-show="manageTeam" ng-class="{ active: isActive('/teamAssignment')}"><a ui-sref="teamAssignment">Team Assignment</a></li>
+         <li ng-show="manageEmployees" ng-class="{ active: isActive('/employeeMaster')}"><a ui-sref="employeeMaster">Employee Master</a></li>
+         <li ng-class="{ active: isActive('/reports')}"><a class="dropdown-toggle" data-toggle="dropdown"> Reports<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li><a ui-sref="individualreport">Individual Reports</a></li>
+            <li><a ui-sref="teamreport">Team Reports</a></li>
+          </ul>
+        </li>
         </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li class="lb-username"><lable ng-model="name">Welcome {{name}}</lable></li>
-        <li><a style="padding-left: 0;" ui-sref="account"><button class="btn btn-sm btn-primary">Account</button></a></li>
-        <li><button class="btn btn-sm btn-primary btn-logout" ng-click="logout();">Logout</button></li>
-      </ul>
+      
     </div>
+    <section class="jtr">
+		<span class="cp" onclick="show_hide()">
+		<img class="opt" style="height: 50px; width: 50px; border-radius: 50%;" src="images/user.jpg"></img></span> 
+		<section id="acc_opt">
+		<span ng-model="name">{{name}}</span>
+		<a ui-sref="account">Account</a>
+		<a ng-click="logout();">Logout</a>
+		</section></section>
   </div>
 </nav>
 
