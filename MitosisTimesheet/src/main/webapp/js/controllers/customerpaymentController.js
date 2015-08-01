@@ -165,7 +165,29 @@ $scope.list = function() {
 			$state.go('login')
 		})
 	}
-	
+	$scope.zerocheck = function(){
+		if($scope.payment.paidAmount=="0")
+			{
+			$scope.payment.paidAmount="";
+			}
+	}
+	$scope.receiptCheck = function(){
+		var rno = angular.toJson({
+			"receiptNumber": $scope.payment.receiptNumber
+			});
+		$http({
+			url: 'rest/payment/checkReceipt',
+			method: 'POST',
+			data:rno
+		}).success(function(result, status, headers) {
+			console.log("Result==>"+result);
+			if(result!="true")
+				{
+				alert("ReceiptNumber already exists");
+				$scope.payment.receiptNumber="";
+				}
+		})
+	}
 
 
 }])

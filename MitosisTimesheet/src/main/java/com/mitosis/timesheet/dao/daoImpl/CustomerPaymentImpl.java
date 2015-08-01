@@ -115,7 +115,35 @@ public class CustomerPaymentImpl extends BaseService implements
 		}
 		return payment;
 	}
-
+	@SuppressWarnings("finally")
+	@Override
+	public boolean checkReceiptNo(String rno) {
+		boolean flag=true;
+		CustomerPaymentModel payment = null;
+		try {
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<CustomerPaymentModel> cq = qb
+					.createQuery(CustomerPaymentModel.class);
+			Root<CustomerPaymentModel> root = cq
+					.from(CustomerPaymentModel.class);
+			cq.where(qb.equal(root.get("receiptNumber"), rno));
+			cq.select(root);
+			payment = entityManager.createQuery(cq).getSingleResult();
+			if(payment!=null)
+				flag=false;
+		} catch (javax.persistence.NoResultException e) {
+			System.out.println("Valid ReceiptNo");
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally {
+			close();
+			return flag;
+		}
+	}
 	private InvoiceHdrModel updateInvoice(String id, BigDecimal amt,
 			Integer cpid) {
 		InvoiceHdrModel invoice = new InvoiceHdrModel();

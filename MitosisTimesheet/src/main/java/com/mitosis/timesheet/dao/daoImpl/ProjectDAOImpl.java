@@ -161,7 +161,7 @@ public class ProjectDAOImpl extends BaseService implements ProjectDAO {
 			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 			CriteriaQuery<ProjectModel> cq = qb.createQuery(ProjectModel.class);
 			Root<ProjectModel> root = cq.from(ProjectModel.class);
-			cq.where(qb.equal(root.get("customer").get("customerId"), cusid));
+			cq.where(qb.equal(root.get("customer").get("customerId"), cusid),qb.equal(root.get("billable"), "Yes"));
 			cq.select(root);
 			cq.orderBy(qb.desc(root.get("projectId")));
 			projectlist = entityManager.createQuery(cq).getResultList();

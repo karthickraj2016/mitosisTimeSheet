@@ -141,4 +141,13 @@ public class CustomerPayment {
 			String ino=jsonObject.getString("invoiceNumber");
 			return i.getInvoiceHdr(ino);
 		}
+		@Path("/checkReceipt")
+		@POST
+		@Consumes(MediaType.APPLICATION_JSON)
+		@Produces(MediaType.APPLICATION_JSON)
+		public Object checkReceiptNo(JSONObject jsonObject) throws JSONException, ParseException {
+			CustomerPaymentService i=new CustomerPaymentServiceImpl();
+			String rno=jsonObject.getString("receiptNumber");
+			return i.checkReceiptNo(rno);
+		}
 }

@@ -9,4 +9,5 @@ public interface CustomerPaymentDao {
 	public boolean remove(int id);
 	public List<CustomerPaymentModel> showlist();
 	public CustomerPaymentModel show(int id);
+	public boolean checkReceiptNo(String receiptNo);
 }

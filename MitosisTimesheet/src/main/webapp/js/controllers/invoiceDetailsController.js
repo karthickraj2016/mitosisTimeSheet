@@ -89,28 +89,28 @@ angular.module('myApp.controllers')
 		$scope.manageEmployees=result.manageEmployees;
 	});
 
-	
-	
-	$scope.list = function(){
+	$scope.loadProjects=function()
+	{
+		var cusid = angular.toJson({
+			"customerId": $scope.invoice.customer.customerId
+			});
 		$http({
-
-			url: 'rest/invoiceDetails/getProjectList',
-			method: 'GET',
-			/*data: menuJson,*/
+			url: 'rest/payment/projectList',
+			method: 'POST',
+			data:cusid,
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		}).success(function(result, status, headers) {
-
-			console.log(result);
-
+		}).success(function(result, status, headers) {			
+			console.log(result);		
 			$scope.projectList=result;
+			
 		});
-
-
-
+	}
+	
+	$scope.list = function(){
+		
 		$http({
-
 			url: 'rest/invoiceDetails/getCustomerList',
 			method: 'GET',
 			/*data: menuJson,*/
@@ -118,7 +118,6 @@ angular.module('myApp.controllers')
 				'Content-Type': 'application/json'
 			}
 		}).success(function(result, status, headers) {
-
 			console.log(result);
 
 			$scope.customerList=result;
@@ -173,6 +172,7 @@ angular.module('myApp.controllers')
 			
 			$scope.projectTypeList=result;
 			$scope.invoice.projectType =$scope.projectTypeList[0].projectType;
+			$scope.invoice.currency=$scope.projectTypeList[0].currencyCode;
 		});
 
 		
@@ -253,29 +253,26 @@ angular.module('myApp.controllers')
 		$scope.invoiceList.splice(sheet.index,1);
 		$(".alert-msg1").show().delay(1000).fadeOut(); 
 		$(".alert-danger").html("Member Details deleted Successfully!!!!");
-	
-		
-		
-		
-		
 	}
 	
 	$scope.teammemberslist= function(){
-		
-		
 		$scope.invoiceList[invoice.index]=invoice;
-		
 	}
 	
 	$scope.insert = function(){
-		
-
-		var jsonstring=JSON.stringify($rootScope.invoiceList);
-		
-		
+		var jsonstring=JSON.stringify($rootScope.invoiceList);	
 		console.log($scope.invoice.customer+','+$scope.invoice.projectlist);
-		
-		
+		var sc=Number($scope.sumCost());
+		var val=true;
+		if(sc>0)
+			{
+			console.log("sc greater than zero");
+			if(Number($scope.invoice.invoiceamt)==sc)
+				{val=true;}
+			else{
+				val=false;}
+			}
+		if(val){
 		var menuJson = angular.toJson({
 			"customerid":$scope.invoice.customer.customerId,
 			"invoicedate":$scope.invoice.invoicedate,
@@ -286,10 +283,7 @@ angular.module('myApp.controllers')
 			"invoicelist":$scope.invoiceList
 
 			});
-		
-		
 		$http({
-
 			url: 'rest/invoiceDetails/insertInvoice',
 			method: 'POST',
 			data: menuJson,
@@ -297,52 +291,37 @@ angular.module('myApp.controllers')
 				'Content-Type': 'application/json'
 			}
 		}).success(function(result, status, headers) {
-			
-			
-			
+			console.log("Result====>"+result+"  status==>"+status);
 			if(result.value=="inserted"){
-				
 				$scope.invoice.invoiceno=result.invoicenumber;
-				
-				
-				
 				$(".alert-msg1").show().delay(1000).fadeOut(); 
 				$(".alert-danger").html("Invoice Details are successfully Inserted!!!!!");
 				return;
 			}
-			
-			/*if(result.pdfPath=="norecords"){
-				
-				$(".alert-msg1").show().delay(1000).fadeOut(); 
-				$(".alert-danger").html("No records availiable");
-				return;
-					
-				}
-			
-			else{
-			
-			var a = document.createElement('a');
-			 a.href = "/MitosisTimesheet/reports/"+result.pdfFileName;
-			console.log(a);
-			a.blank = "InvoiceReport.pdf";
-			a.target="_blank";
-			 document.body.appendChild(a);
-		        a.click();
-		        document.body.removeChild(a);
-		    $scope.filepath = a.href;
-		        console.log($scope.filepath);
-		        //$scope.deletepdfFile(result.pdfPath);
-			}*/
-
-		
 		});
-		
-		
-		
-		
-		
+		}
+		else
+			{
+			alert("Invoice Amount Mismatch");
+			}
 	}
-	
+	$scope.sumCost = function(){
+		   
+		var totalSum= 0;
+	  try{
+		for(var i = 0; i < $scope.invoiceList.length; i++){
+	        var revenue =  $scope.invoiceList[i].amount;
+	        totalSum += revenue;
+	    }
+	  }
+	  catch(err)
+	  {
+		  $scope.invoiceList=[];
+		  totalSum=0;
+	  }
+		console.log("Sum of amounts==>"+totalSum);
+	    return(totalSum);
+	}
 	$scope.logout = function(){
 
 		$http({
@@ -353,9 +332,4 @@ angular.module('myApp.controllers')
 			$state.go('login')
 		});
 	}
-
-	
-	
-
-
 }])

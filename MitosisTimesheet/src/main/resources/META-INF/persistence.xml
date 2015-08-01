@@ -16,12 +16,13 @@
 		<class>com.mitosis.timesheet.model.ProjectCostHdrModel</class>
 		<class>com.mitosis.timesheet.model.ProjectCostDetailsModel</class>
 		<class>com.mitosis.timesheet.model.CompanyInfoModel</class>	
-
+		<class>com.mitosis.timesheet.model.InvoiceHdrModel</class>
+		<class>com.mitosis.timesheet.model.CustomerPaymentModel</class>		
 		<properties>
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/mitosisTimesheetTest" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://182.74.202.178/mitosisTimesheetTest" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.user" value="root" />
-			<property name="javax.persistence.jdbc.password" value="" />
+			<property name="javax.persistence.jdbc.password" value="!MySql#123" />
 		</properties>
 	</persistence-unit>
 </persistence>

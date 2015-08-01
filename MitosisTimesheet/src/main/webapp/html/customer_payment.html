@@ -139,13 +139,13 @@
     <div class="container" style="width: 100%;">
 	<div class="pay-form-div form-inline">
     <div class="form-group" style="margin: 0;">
-      	<input class="form-control" type="text" placeholder="Receipt Number" required ng-model="payment.receiptNumber">
+      <input class="form-control" type="text" placeholder="Receipt Number" required ng-model="payment.receiptNumber" ng-blur="receiptCheck()">
     </div>
     <div ng-init="dates()" class="form-group" style="margin: 0;">
        <input type="text" required class="form-control" placeholder="Receipt Date" ui-date="dateOptions" ui-date-format="dd-mm-yy" ng-model="payment.receiptDate">
     </div>
     <div class="form-group" style="margin: 0;">
-       <input class="form-control" type="text" placeholder="Amount Paid" required ng-model="payment.paidAmount" onkeypress="return isNumber(event)">
+       <input class="form-control" type="text" placeholder="Amount Paid" required ng-model="payment.paidAmount" onkeypress="return isNumber(event)" ng-blur="zerocheck()">
     </div>
     
     <div class="form-group" style="margin: 0;">        
@@ -183,11 +183,9 @@
 			<th style="width: 90px;">Invoice No</th>
 			<th style="width: 100px;">Invoice Date</th>
 			<th style="width: 120px;">Invoice Amount</th>			
-			<th>Paid So far</th>
 			<th>Receipt No</th>
 			<th>Receipt Date</th>
 			<th>Amount Paid</th>
-			<th>Balance Amount</th>
 			<th></th>
 		</tr>
 	</thead>
@@ -208,9 +206,7 @@
 			<td>
 			<span ng-show="!showEdit">{{sheet.invoiceHdr.invoiceAmount}}</span>
 			</td>
-			<td>
-			<span ng-show="!showEdit">{{sheet.invoiceHdr.paidAmount}}</span>
-			</td>
+			
 			<td>
 			<span ng-show="!showEdit">{{sheet.receiptNumber}}</span>
 			</td>
@@ -220,9 +216,7 @@
 			<td>
 			<span ng-show="!showEdit">{{sheet.paidAmount}}</span>
 			</td>
-			<td>
-			<span ng-show="!showEdit">xxx</span>
-			</td>
+			
 			<td>
 
 			</td>

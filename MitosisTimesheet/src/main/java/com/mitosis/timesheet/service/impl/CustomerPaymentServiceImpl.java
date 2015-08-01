@@ -28,4 +28,8 @@ public class CustomerPaymentServiceImpl implements CustomerPaymentService{
 	public CustomerPaymentModel show(int id) {
 		return cp.show(id);
 	}
+	@Override
+	public boolean checkReceiptNo(String rno) {
+		return cp.checkReceiptNo(rno);
+	} 
 }
