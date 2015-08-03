@@ -1,10 +1,12 @@
 package com.mitosis.timesheet.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,14 +19,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @Entity
 @Table(name = "project_cost_hdr")
-public class ProjectCostHdrModel {
+public class ProjectCostHdrModel implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer id;
 
-	@OneToMany(mappedBy="projectCostHdr")
+	@OneToMany(mappedBy="projectCostHdr",fetch=FetchType.LAZY)
 	private List<ProjectCostDetailsModel> projectCostDetails;
 
 	@ManyToOne(targetEntity = ProjectModel.class)

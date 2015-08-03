@@ -85,7 +85,8 @@ public class ProjectCostDetailsDaoImpl extends BaseService implements ProjectCos
 		costModel = entityManager.createQuery(cq).getSingleResult();
 		
 	}catch(Exception e){
-			e.printStackTrace();
+			
+			System.out.println(e);
 		}finally{
 			close();
 		}

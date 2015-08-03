@@ -1,8 +1,9 @@
 package com.mitosis.timesheet.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @Entity
 @Table(name = "project_cost_details")
-public class ProjectCostDetailsModel{
+public class ProjectCostDetailsModel implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
