@@ -152,9 +152,9 @@ angular.module('myApp.controllers')
 	
 	
 	
-	$scope.projectBasedSelections = function(projectId){
+	$scope.projectBasedSelections = function(project){
 		
-		var menuJson = angular.toJson({"projectId":projectId});
+		var menuJson = angular.toJson({"project":project});
 		
 		$scope.invoice.projectType="";
 		
@@ -219,6 +219,7 @@ angular.module('myApp.controllers')
 			$scope.invoiceList =[];
 		}
 	
+	
 
 		invoice = {"fromdate":$scope.member.fromdate,"todate":$scope.member.todate,"description":$scope.member.description,"billablehours":$scope.member.billablehours,"amount":$scope.member.amount,"teammember":$scope.member.teamlist.employee.name,"amount":$scope.member.amount,"index":$scope.iterator,"rateperhour":$scope.member.rateperhour};
 		
@@ -274,9 +275,9 @@ angular.module('myApp.controllers')
 			}
 		if(val){
 		var menuJson = angular.toJson({
-			"customerid":$scope.invoice.customer.customerId,
+			"customer":$scope.invoice.customer,
 			"invoicedate":$scope.invoice.invoicedate,
-			"projectid":$scope.invoice.projectlist,
+			"project":$scope.invoice.projectlist,
 			"projecttype":$scope.invoice.projectType,
 			"invoiceamt":$scope.invoice.invoiceamt,
 			"currency":$scope.invoice.currency,
@@ -296,6 +297,17 @@ angular.module('myApp.controllers')
 				$scope.invoice.invoiceno=result.invoicenumber;
 				$(".alert-msg1").show().delay(1000).fadeOut(); 
 				$(".alert-danger").html("Invoice Details are successfully Inserted!!!!!");
+
+				var a = document.createElement('a');
+				 a.href = "/MitosisTimesheet/reports/"+result.pdfFileName;
+				console.log(a);
+				//a.download = "individualDetailReport.pdf";
+				a.target="_blank";
+				 document.body.appendChild(a);
+			        a.click();
+			        document.body.removeChild(a);
+			    $scope.filepath = a.href;
+			        console.log($scope.filepath);
 				return;
 			}
 		});
@@ -310,7 +322,7 @@ angular.module('myApp.controllers')
 		var totalSum= 0;
 	  try{
 		for(var i = 0; i < $scope.invoiceList.length; i++){
-	        var revenue =  $scope.invoiceList[i].amount;
+	        var revenue = parseInt($scope.invoiceList[i].amount);
 	        totalSum += revenue;
 	    }
 	  }

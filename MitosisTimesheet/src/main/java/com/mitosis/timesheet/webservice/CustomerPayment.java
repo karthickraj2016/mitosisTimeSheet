@@ -117,6 +117,9 @@ public class CustomerPayment {
 		@Produces(MediaType.APPLICATION_JSON)
 		public Object getProjects(JSONObject jsonObject) throws JSONException, ParseException {
 			ProjectService p=new ProjectServiceImpl();
+			
+			JSONObject project = new JSONObject();
+			
 			int cusId=jsonObject.getInt("customerId");
 			List<ProjectModel> projects=p.getProjectList(cusId);
 			return projects;
@@ -128,7 +131,10 @@ public class CustomerPayment {
 		@Produces(MediaType.APPLICATION_JSON)
 		public Object getInvoices(JSONObject jsonObject) throws JSONException, ParseException {
 			InvoiceDetailsService i=new InvoiceDetailsServiceImpl();
-			int projectId=jsonObject.getInt("projectId");
+				JSONObject project = new JSONObject();
+			
+			project=(JSONObject) project.get("project");
+			int projectId=project.getInt("projectId");
 			List<InvoiceHdrModel> invoiceList=i.getInvoiceList(projectId);
 			return invoiceList;
 		}

@@ -75,7 +75,7 @@
     <div class="form-group">
       <label class="control-label col-sm-4 textleft" >Project<span>:</span></label>
       <div class="col-sm-8">          
-        <select  class="form-control empdet-form"  ng-model="invoice.projectlist" ng-options="option.projectId as option.projectName for option in projectList" ng-change="projectBasedSelections(invoice.projectlist);" required style="color: #777777;">
+        <select  class="form-control empdet-form"  ng-model="invoice.projectlist" ng-options="option as option.projectName for option in projectList" ng-change="projectBasedSelections(invoice.projectlist);" required style="color: #777777;">
 	    <option value="" ng-selected="true">Project</option>
 		</select> 
       </div>

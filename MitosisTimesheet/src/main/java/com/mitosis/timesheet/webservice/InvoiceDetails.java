@@ -33,6 +33,7 @@ import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -163,12 +164,29 @@ public class InvoiceDetails {
 
 
 		}
-
-
 		ProjectModel projectModel = new ProjectModel();
-		projectModel.setProjectId(Integer.parseInt(jsonObject.get("projectid").toString()));
 		CustomerDetailsModel customerModel = new CustomerDetailsModel();
-		customerModel.setCustomerId(Integer.parseInt(jsonObject.get("customerid").toString()));
+		
+		JSONObject project = new JSONObject();
+		
+		JSONObject customer = new JSONObject();
+		
+		
+		System.out.println(jsonObject.get("project"));
+		
+		project=(JSONObject) jsonObject.get("project");
+		
+		customer = (JSONObject) jsonObject.get("customer");
+		
+		projectModel.setProjectId(Integer.parseInt(project.get("projectId").toString()));
+		
+		projectModel.setProjectName(project.getString("projectName"));
+	
+		customerModel.setCustomerId(Integer.parseInt(customer.get("customerId").toString()));
+		
+		customerModel.setCustomerName(customer.getString("customerName"));
+		
+		/*customerModel.setCustomerId(Integer.parseInt(jsonObject.get("customerid").toString()));*/
 
 		invoiceHdrModel.setInvoiceDate(invoiceDate);
 		BigDecimal invoiceAmt = new BigDecimal(jsonObject.getInt("invoiceamt"));
@@ -206,16 +224,17 @@ public class InvoiceDetails {
 			
 			companyinfoModel = InvoiceService.getCompanyInfo();
 
-			List<InvoiceDetailsReport> invoiceReportList = new ArrayList<InvoiceDetailsReport>();
+		
 		
 				InvoiceDetailsReport invoiceDetailsReport = new InvoiceDetailsReport();
 				
 				
 				invoiceDetailsReport.setInvoiceHdr(invoiceHdrModel);
 				invoiceDetailsReport.setCompanyInfo(companyinfoModel);
-				invoiceDetailsReport.setInvoiceDetailsModel(invoiceDetailList);
 				
-				invoiceReportList.add(invoiceDetailsReport);
+				  byte[] imageByteArray = decodeImage(companyinfoModel.getLogo());
+				/*invoiceDetailsReport.setInvoiceDetailsModel(invoiceDetailList);*/
+			
 				
 
 			JasperDesign jasperDesign = JRXmlLoader.load(request.getSession().getServletContext()
@@ -226,11 +245,12 @@ public class InvoiceDetails {
 			// JREmptyDataSource jrEmptyDatasource = new JREmptyDataSource();
 			Map<String, Object> parameters = new HashMap<String, Object>();
 			
-			 parameters.put("invoiceDetailsList", invoiceDetailsReport.getInvoiceDetailsModel());
+			 parameters.put("invoiceDetailsList", invoiceDetailsReport);
+			 parameters.put("logoimage",imageByteArray);
 
 
 
-			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(invoiceReportList);
+			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(invoiceDetailList);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, ds);
 
 			String path = this.getClass().getClassLoader().getResource("/").getPath();
@@ -408,6 +428,10 @@ public class InvoiceDetails {
 
 
 	}
+	
+	public static byte[] decodeImage(String imageDataString) {
+        return Base64.decodeBase64(imageDataString);
+    }
 
 
 	@Path("/getCustomerList")
@@ -415,6 +439,8 @@ public class InvoiceDetails {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<CustomerDetailsModel> getCustomerList() throws JSONException, ParseException{
+	
+	
 
 
 
@@ -435,7 +461,15 @@ public class InvoiceDetails {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<ProjectCostHdrModel> getProjectTypeList(JSONObject jsonObject) throws JSONException, ParseException{
 
-		int id = jsonObject.getInt("projectId");
+
+		JSONObject project = new JSONObject();
+		
+	
+		project=(JSONObject) jsonObject.get("project");
+
+	
+		
+		int id = project.getInt("projectId");
 
 		List<ProjectCostHdrModel> projectCostHdrList = new ArrayList<ProjectCostHdrModel>();
 
@@ -455,13 +489,18 @@ public class InvoiceDetails {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<ProjectCostDetailsModel> getTeamMembers(JSONObject jsonObject) throws JSONException, ParseException{
 
-
+		JSONObject project = new JSONObject();
+		
+	
 
 		List<ProjectCostDetailsModel> memberList = new ArrayList<ProjectCostDetailsModel>();
+		
+	/*	*customerModel.setCustomerId(Integer.parseInt(jsonObject.get("customerid").toString()));*/
+		
+		
+		project=(JSONObject) jsonObject.get("project");
 
-		int projectId=jsonObject.getInt("projectId");
-
-		memberList = InvoiceService.getTeamList(projectId);
+		memberList = InvoiceService.getTeamList(project.getInt("projectId"));
 
 		return memberList;	
 
