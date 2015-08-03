@@ -3,6 +3,8 @@ package com.mitosis.timesheet.webservice;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,6 +32,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.util.FileResolver;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -232,7 +235,24 @@ public class InvoiceDetails {
 				invoiceDetailsReport.setInvoiceHdr(invoiceHdrModel);
 				invoiceDetailsReport.setCompanyInfo(companyinfoModel);
 				
-				  byte[] imageByteArray = decodeImage(companyinfoModel.getLogo());
+				/* FileResolver fileResolver = new FileResolver() {
+					 
+					 
+
+				        @Override
+				        public File resolveFile(String fileName) {
+				           URI uri;
+				           try {
+				             uri = new URI(this.getClass().getResource("images/LineChart.png").getPath());
+				             return new File(uri.getPath());
+				           } catch (URISyntaxException e) {
+				             e.printStackTrace();
+				             return null;
+				           }
+				       }
+				   };
+*/
+			       
 				/*invoiceDetailsReport.setInvoiceDetailsModel(invoiceDetailList);*/
 			
 				
@@ -246,8 +266,8 @@ public class InvoiceDetails {
 			Map<String, Object> parameters = new HashMap<String, Object>();
 			
 			 parameters.put("invoiceDetailsList", invoiceDetailsReport);
-			 parameters.put("logoimage",imageByteArray);
-
+			/* parameters.put("reportlogo", fileResolver);
+*/
 
 
 			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(invoiceDetailList);
@@ -274,6 +294,9 @@ public class InvoiceDetails {
 
 
 	}
+		
+		
+		
 
 
 	@Path("/updateInvoice")
@@ -526,4 +549,7 @@ public class InvoiceDetails {
 
 
 	}
+	
+	
+	
 }
