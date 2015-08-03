@@ -1,3 +1,12 @@
+<script>
+
+$('.btn-ok').click(function(){
+	$('.emp-det-show').fadeOut(200);
+	$('.overlay').fadeOut(200);
+})
+
+</script>
+
 <div ng-init="list()">
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid top-header-fixed">
@@ -160,7 +169,7 @@
 <div class="row">
 <div class="col-xs-12 col-md-2">
 <div class="form-group"> 
-       <input type="text"  id="name" required class="form-control" style="width: 170px;"  ng-model="inrRate" placeholder="INR Rate"></input>
+       <input type="text"  id="inr" required class="form-control" style="width: 170px;"  ng-model="inrRate" placeholder="INR Rate"></input>
    </div> </div>
 <div class="col-xs-12 col-md-3">
 <button class="btn btn-primary" ng-click="calculateAndUpdateEstimation()">Compute</button>
@@ -173,5 +182,34 @@
  </div>
 
 
-
+<div class="emp-det-show">
+<h4 class="text-center">Employee Details</h4>
+ <table class="table" style="margin-bottom: 10px;">
+ 				<thead>
+			    <tr>
+               	<th>Emp Id</th><th>First Name</th><th>Last Name</th><th>Level</th>                
+               	</tr>
+			    </thead>
+			            
+			    <tbody>
+        <tr>
+        <td colspan="4">
+        <div class="scrollit">
+            <table>
+             <tr ng-repeat="sheet in empDetList">
+                <td class="dettd">{{sheet.employeeId}}</td>
+                <td class="dettd lm">{{sheet.firstName}}</td>
+                <td class="dettd lm">{{sheet.lastName}}</td>
+                <td class="dettd lm">{{sheet.level}}</td>
+		    </tr>
+			      </table>
+			        </div>
+			        </td>
+			        </tr>
+			    </tbody>
+                
+                </table>
+  				<button type="submit" style="float: right; margin-right: 30px;" class="btn-ok btn btn-primary">Ok</button>
+ </div>
+<div class="overlay"></div>
  

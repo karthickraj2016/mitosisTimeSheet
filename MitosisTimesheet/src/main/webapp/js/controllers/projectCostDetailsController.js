@@ -72,12 +72,15 @@ angular.module('myApp.controllers')
 			}
 		}).success(function(result, status, headers) {
 
-			if(result.value=="already exist"){
-
-				$(".alert-msg1").show().delay(1000).fadeOut(); 
-				$(".alert-danger").html("Project Already Entered");
-				$scope.project="Project";
-			}
+			$scope.cost=result;
+			$scope.id=result.id;
+		/*	if(result.projectType=="Fixed"){
+			$scope.cost.projectType=result.projectType;
+			$scope.cost.projectCost=result.projectCost;
+			$scope.cost.currency=result.currencyCode;
+			}else{
+				
+			}*/
 		});
 	},
 
@@ -86,8 +89,15 @@ angular.module('myApp.controllers')
 		var projectType=$scope.cost.projectType;
 
 		if(projectType=="Fixed"){
+			
+			if($scope.cost.projectCost==undefined){
+				$(".alert-msg1").show().delay(1000).fadeOut(); 
+				$(".alert-danger").html("Please Enter Project Cost");
+				$("#costdet").focus();	
+				return;
+			}
 
-			var menuJson=angular.toJson({"projectId":$scope.project.projectId,"projectType":$scope.cost.projectType,
+			var menuJson=angular.toJson({"id":$scope.id,"projectId":$scope.project.projectId,"projectType":$scope.cost.projectType,
 				"projectCost":$scope.cost.projectCost,"currencyCode":$scope.cost.currency});			
 
 			$http({

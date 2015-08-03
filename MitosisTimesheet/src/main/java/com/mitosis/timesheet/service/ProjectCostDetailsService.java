@@ -14,7 +14,7 @@ public interface ProjectCostDetailsService {
 
 	public boolean addFixedProjectCostDetails(ProjectCostHdrModel hdrModel);
 
-	public boolean projectValidation(int projectId);
+	public ProjectCostHdrModel projectValidation(int projectId);
 
 	public List<ProjectModel> getProjectList();
 

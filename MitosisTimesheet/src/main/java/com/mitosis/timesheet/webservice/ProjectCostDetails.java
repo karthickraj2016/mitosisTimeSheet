@@ -105,6 +105,10 @@ public class ProjectCostDetails {
 		ProjectCostHdrModel hdrModel=new ProjectCostHdrModel();
 
 		ProjectModel projectModel=new ProjectModel();
+		
+		if(jsonObject.has("id")){
+			hdrModel.setId(jsonObject.getInt("id"));
+		}
 
 		projectModel.setProjectId(jsonObject.getInt("projectId"));
 		hdrModel.setProject(projectModel);
@@ -137,21 +141,15 @@ public class ProjectCostDetails {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	
-	public JSONObject projectValidation(JSONObject jsonObject)throws JSONException {
-		
-	JSONObject json=new JSONObject();
+	public ProjectCostHdrModel projectValidation(JSONObject jsonObject)throws JSONException {
+	
+		ProjectCostHdrModel hdrModel=new ProjectCostHdrModel();
 	
 	int projectId=jsonObject.getInt("projectId");
 	
-	boolean project=false;
+	hdrModel=costService.projectValidation(projectId);
 	
-	project=costService.projectValidation(projectId);
-	
-	if(project){
-		
-		json.put("value", "already exist");
-	}
-		return json;
+	return hdrModel;
 	}
 	
 	@Path("/getProjectList")

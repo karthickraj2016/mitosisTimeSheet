@@ -1,6 +1,8 @@
 package com.mitosis.timesheet.model;
 
 import java.math.BigDecimal;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,33 +10,34 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-
-
 
 @XmlRootElement
 @Entity
 @Table(name = "project_cost_hdr")
-public class ProjectCostHdrModel{
+public class ProjectCostHdrModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id")
+	@Column(name = "id")
 	private Integer id;
+
+	@OneToMany(mappedBy="projectCostHdr")
+	private List<ProjectCostDetailsModel> projectCostDetails;
 
 	@ManyToOne(targetEntity = ProjectModel.class)
 	@JoinColumn(name = "project_id", nullable = false, referencedColumnName = "id")
 	private ProjectModel project;
 
-	@Column(name="project_type")
+	@Column(name = "project_type")
 	private String projectType;
-	
 
-	@Column(name="project_cost")
+	@Column(name = "project_cost")
 	private BigDecimal projectCost;
 
-	@Column(name="currency_code")
+	@Column(name = "currency_code")
 	private String currencyCode;
 
 	public int getId() {
@@ -77,7 +80,14 @@ public class ProjectCostHdrModel{
 		this.currencyCode = currencyCode;
 	}
 
+	public List<ProjectCostDetailsModel> getProjectCostDetails() {
+		return projectCostDetails;
+	}
+
+	public void setProjectCostDetails(
+			List<ProjectCostDetailsModel> projectCostDetails) {
+		this.projectCostDetails = projectCostDetails;
+	}
+
 
 }
-
-

@@ -1,8 +1,11 @@
 package com.mitosis.timesheet.model;
 
 import java.math.BigDecimal;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,8 +26,8 @@ public class ProjectCostDetailsModel{
 	@Column(name="id")
 	private int id;
 
-	@ManyToOne(targetEntity = ProjectCostHdrModel.class)
-	@JoinColumn(name = "project_cost_hdr_id", nullable = false, referencedColumnName = "id")
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name = "project_cost_hdr_id")
 	private ProjectCostHdrModel projectCostHdr;
 
 	@ManyToOne(targetEntity = UserDetailsModel.class)

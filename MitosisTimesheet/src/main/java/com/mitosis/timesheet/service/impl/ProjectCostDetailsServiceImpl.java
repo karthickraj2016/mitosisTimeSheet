@@ -45,13 +45,13 @@ public class ProjectCostDetailsServiceImpl implements ProjectCostDetailsService 
 	}
 
 	@Override
-	public boolean projectValidation(int projectId) {
+	public ProjectCostHdrModel projectValidation(int projectId) {
      
-		boolean project=false;
+		ProjectCostHdrModel hdrModel=new ProjectCostHdrModel();
 		
-		project=costDao.projectValidation(projectId);
+		hdrModel=costDao.projectValidation(projectId);
 		
-		return project;
+		return hdrModel;
 	}
 
 	@Override

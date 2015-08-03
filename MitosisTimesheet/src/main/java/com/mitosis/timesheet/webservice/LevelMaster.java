@@ -149,9 +149,9 @@ public class LevelMaster {
 		
 		int amount=jsonObject.getInt("amount");
 		int totAmount=amount*numberOfEmployees;
-		int inrRate=jsonObject.getInt("inrRate");
+		double inrRate=jsonObject.getDouble("inrRate");
 
-		int totAmountInr=totAmount*inrRate; 
+		double totAmountInr=totAmount*inrRate; 
 		
 		BigDecimal totalAmount=new BigDecimal(totAmount);
 		BigDecimal totalAmountINR=new BigDecimal(totAmountInr);		

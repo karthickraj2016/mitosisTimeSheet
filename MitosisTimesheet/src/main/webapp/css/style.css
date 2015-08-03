@@ -56,6 +56,10 @@ a {
 	
 }
 /*MItosis Timesheet*/
+.emp-tab tbody{
+	height: 300px;
+	overflow-y: auto;	
+}
 @font-face {
     font-family: myFirstFont;
     src: url('../css/font-awesome-4.3.0/fonts/HUMANST521-BT-ROMAN-11929.TTF');
@@ -1804,4 +1808,19 @@ transform:scale(1);
   width: 600px;
   margin: 22% auto;
 }
+}
+
+.dettd{
+	width: 120px;
+}
+.lm{
+	padding-left: 20px;
+}
+.emp-det-show{
+	width: 500px; height: auto; display: none; top: 30%; left: 30%; z-index: 105; background: white; position: fixed; padding: 8px; box-shadow: 0px 0px 2px rgba(0,0,0,0.2); 
+	border-radius: 3px;
+}
+tbody .scrollit{
+    overflow-y: auto;
+    height:80px;
 }

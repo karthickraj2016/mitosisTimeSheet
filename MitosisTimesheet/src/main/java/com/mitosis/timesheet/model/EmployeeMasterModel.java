@@ -24,6 +24,7 @@ public class EmployeeMasterModel {
 	@Column(name="id")
 	private int id;
 	
+	
 	@ManyToOne(targetEntity = UserDetailsModel.class)
 	@JoinColumn(name = "user_id", nullable = false, referencedColumnName = "id")
 	private UserDetailsModel employee;

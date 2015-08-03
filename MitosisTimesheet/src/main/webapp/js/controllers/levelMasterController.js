@@ -5,11 +5,14 @@ angular.module('myApp.controllers')
 
 .controller('levelMasterController', ['$scope', '$http', '$state','$localStorage','$rootScope', '$dialogs', function($scope, $http, $state,$localStorage, $rootScope,$dialogs) {
 	
-	$scope.launch = function(){	
+	/*$scope.launch = function(){	
 	var	dlg = $dialogs.create('html/empdet.html','levelController',{},{key: false,back: 'static'});
         
-	};
-	  
+	};*/
+	  $scope.viewdet = function (){
+			$('.emp-det-show').fadeIn(200);
+			$('.overlay').fadeIn(200);
+		}
      $scope.employeeDetails = function(level) {
     	     	   	
     	 $http({
@@ -21,8 +24,8 @@ angular.module('myApp.controllers')
     			}
     		}).success(function(result, status, headers) {
     		
-    			$rootScope.employeeList=result;
-    			$scope.launch();
+    			$scope.empDetList=result;
+    			$scope.viewdet();
     		})
 
      };
@@ -188,6 +191,13 @@ angular.module('myApp.controllers')
 	
 	$scope.calculateAndUpdateEstimation = function(){
 		
+		if($scope.inrRate==undefined){
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("Please Enter INR Rate");
+			$('#inr').focus();
+			return;
+		}
+		
 		var levelList=$scope.levelEntryList;
 		
 		for(var i=0;i<=levelList.length;i++){
@@ -269,7 +279,7 @@ angular.module('myApp.controllers')
 	
 }])
 
-.controller('levelController', ['$scope','$modalInstance' ,'$rootScope', function($scope, $modalInstance, $rootScope) {
+/*.controller('levelController', ['$scope','$modalInstance' ,'$rootScope', function($scope, $modalInstance, $rootScope) {
 	
 	$scope.empDetList=$rootScope.employeeList;
 	$scope.cancel = function(){
@@ -277,3 +287,4 @@ angular.module('myApp.controllers')
 	  };
 	
 }])
+*/

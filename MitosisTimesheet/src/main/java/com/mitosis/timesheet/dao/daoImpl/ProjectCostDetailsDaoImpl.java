@@ -22,7 +22,7 @@ public class ProjectCostDetailsDaoImpl extends BaseService implements ProjectCos
 		int hdrId=0;
 		try{
 			begin();
-			persist(hdrModel);
+			merge(hdrModel);
 			commit();
 			hdrId=hdrModel.getId();
 		}catch(Exception e){
@@ -40,7 +40,7 @@ public class ProjectCostDetailsDaoImpl extends BaseService implements ProjectCos
 		
 		try{
 			begin();
-			persist(detailsModel);
+			merge(detailsModel);
 			commit();
 			insert=true;
 		}catch(Exception e){
@@ -58,7 +58,7 @@ public class ProjectCostDetailsDaoImpl extends BaseService implements ProjectCos
 		
 		try{
 			begin();
-			persist(hdrModel);
+			merge(hdrModel);
 			commit();
 			insert=true;
 		}catch(Exception e){
@@ -70,9 +70,7 @@ public class ProjectCostDetailsDaoImpl extends BaseService implements ProjectCos
 	}
 
 	@Override
-	public boolean projectValidation(int projectId) {
-		
-		boolean project=false;
+	public ProjectCostHdrModel projectValidation(int projectId) {
 		
 		ProjectCostHdrModel costModel=null;
 		
@@ -85,15 +83,13 @@ public class ProjectCostDetailsDaoImpl extends BaseService implements ProjectCos
 		cq.where(qb.equal(root.get("project"), projectId));
 		cq.select(root);
 		costModel = entityManager.createQuery(cq).getSingleResult();
-		if(costModel!=null){
-			project=true;
-		}
+		
 	}catch(Exception e){
 			e.printStackTrace();
 		}finally{
 			close();
 		}
-		return project;
+		return costModel;
 	}
 
 	@Override
