@@ -176,6 +176,8 @@ public class InvoiceDetails {
 		invoiceHdrModel.setProject(projectModel);
 		invoiceHdrModel.setCustomer(customerModel);
 		invoiceHdrModel.setInvoiceStatus("unpaid");
+		invoiceHdrModel.setBalanceAmount(new BigDecimal(0));
+		invoiceHdrModel.setPaidAmount(new BigDecimal(0));
 		
 		
 		if(jsonObject.has("projecttype")){
@@ -200,7 +202,7 @@ public class InvoiceDetails {
 			json.put("invoicenumber",invoicenumber);
 			json.put("value", "inserted");
 			
-			/*CompanyInfoModel companyinfoModel = new CompanyInfoModel();
+			CompanyInfoModel companyinfoModel = new CompanyInfoModel();
 			
 			companyinfoModel = InvoiceService.getCompanyInfo();
 
@@ -242,7 +244,7 @@ public class InvoiceDetails {
 
 			json.put("pdfFileName","InvoiceReport"+employeeId+".pdf");
 			json.put("pdfPath",pdfFilePath);
-*/
+
 		}
 		return json;
 	
