@@ -98,12 +98,17 @@ public class InvoiceDetails {
 		DateFormat sdf2 = new SimpleDateFormat("dd-MM-yyyy");
 
 		String invoiceNumber = InvoiceService.getInvoiceNumber();
+		
+		int id;
 
 		if(invoiceNumber == null){
 
 			invoiceNumber ="MIT-"+1;
+			
+			id=1;
 
 			invoiceHdrModel.setInvoiceNumber(invoiceNumber);
+			invoiceHdrModel.setId(id);
 
 
 		}
@@ -113,6 +118,8 @@ public class InvoiceDetails {
 			System.out.println(invoiceNumbersplit);
 			nextNumber += Integer.parseInt(invoiceNumbersplit[1]);
 			invoiceHdrModel.setInvoiceNumber(invoiceNumbersplit[0]+"-"+nextNumber);
+			invoiceHdrModel.setId(nextNumber);
+			System.out.println(invoiceHdrModel);
 
 		}
 
@@ -227,34 +234,11 @@ public class InvoiceDetails {
 			
 			companyinfoModel = InvoiceService.getCompanyInfo();
 
-		
-		
 				InvoiceDetailsReport invoiceDetailsReport = new InvoiceDetailsReport();
 				
 				
 				invoiceDetailsReport.setInvoiceHdr(invoiceHdrModel);
 				invoiceDetailsReport.setCompanyInfo(companyinfoModel);
-				
-				/* FileResolver fileResolver = new FileResolver() {
-					 
-					 
-
-				        @Override
-				        public File resolveFile(String fileName) {
-				           URI uri;
-				           try {
-				             uri = new URI(this.getClass().getResource("images/LineChart.png").getPath());
-				             return new File(uri.getPath());
-				           } catch (URISyntaxException e) {
-				             e.printStackTrace();
-				             return null;
-				           }
-				       }
-				   };
-*/
-			       
-				/*invoiceDetailsReport.setInvoiceDetailsModel(invoiceDetailList);*/
-			
 				
 
 			JasperDesign jasperDesign = JRXmlLoader.load(request.getSession().getServletContext()
@@ -264,17 +248,19 @@ public class InvoiceDetails {
 			JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
 			// JREmptyDataSource jrEmptyDatasource = new JREmptyDataSource();
 			Map<String, Object> parameters = new HashMap<String, Object>();
+			String path = this.getClass().getClassLoader().getResource("/").getPath();
+			String pdfPath = path.replaceAll("WEB-INF/classes/", "");
+			String imagePath = this.getClass().getClassLoader().getResource("/").getPath().replaceAll("WEB-INF/classes/", "");
 			
 			 parameters.put("invoiceDetailsList", invoiceDetailsReport);
-			/* parameters.put("reportlogo", fileResolver);
-*/
+			 parameters.put("logoimage",imagePath+"/images");
+
 
 
 			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(invoiceDetailList);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, ds);
 
-			String path = this.getClass().getClassLoader().getResource("/").getPath();
-			String pdfPath = path.replaceAll("WEB-INF/classes/", "");
+			
 			String pdfFilePath = pdfPath
 					+ "reports/InvoiceReport" + employeeId + ".pdf";
 
@@ -451,10 +437,7 @@ public class InvoiceDetails {
 
 
 	}
-	
-	public static byte[] decodeImage(String imageDataString) {
-        return Base64.decodeBase64(imageDataString);
-    }
+
 
 
 	@Path("/getCustomerList")

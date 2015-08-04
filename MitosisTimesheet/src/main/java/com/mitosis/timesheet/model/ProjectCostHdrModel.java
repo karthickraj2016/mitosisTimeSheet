@@ -19,15 +19,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @Entity
 @Table(name = "project_cost_hdr")
-public class ProjectCostHdrModel implements Serializable{
+public class ProjectCostHdrModel{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer id;
 
-	@OneToMany(mappedBy="projectCostHdr",fetch=FetchType.LAZY)
-	private List<ProjectCostDetailsModel> projectCostDetails;
+	/*@OneToMany(mappedBy="projectCostHdr",fetch=FetchType.LAZY)
+	private List<ProjectCostDetailsModel> projectCostDetails;*/
 
 	@ManyToOne(targetEntity = ProjectModel.class)
 	@JoinColumn(name = "project_id", nullable = false, referencedColumnName = "id")
@@ -82,7 +82,7 @@ public class ProjectCostHdrModel implements Serializable{
 		this.currencyCode = currencyCode;
 	}
 
-	public List<ProjectCostDetailsModel> getProjectCostDetails() {
+	/*public List<ProjectCostDetailsModel> getProjectCostDetails() {
 		return projectCostDetails;
 	}
 
@@ -90,6 +90,6 @@ public class ProjectCostHdrModel implements Serializable{
 			List<ProjectCostDetailsModel> projectCostDetails) {
 		this.projectCostDetails = projectCostDetails;
 	}
-
+*/
 
 }

@@ -20,15 +20,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @Entity
 @Table(name = "project_cost_details")
-public class ProjectCostDetailsModel implements Serializable{
+public class ProjectCostDetailsModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
 	private int id;
 
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name = "project_cost_hdr_id")
+	@ManyToOne(targetEntity = ProjectCostHdrModel.class)
+	@JoinColumn(name = "project_cost_hdr_id", nullable = false, referencedColumnName = "id")
 	private ProjectCostHdrModel projectCostHdr;
 
 	@ManyToOne(targetEntity = UserDetailsModel.class)

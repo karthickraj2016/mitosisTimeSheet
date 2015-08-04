@@ -112,11 +112,13 @@ public class InvoiceDetailsDaoImpl extends BaseService implements InvoiceDetails
 			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 			CriteriaQuery<InvoiceHdrModel> cq = qb.createQuery(InvoiceHdrModel.class);
 			Root<InvoiceHdrModel> root = cq.from(InvoiceHdrModel.class);
+			
+			cq.orderBy(qb.desc(root.get("id")));
 	
 			cq.select(root);		
 			invoiceHdrModel = entityManager.createQuery(cq).getResultList();
 			if(invoiceHdrModel.size()>0){
-			InvoiceNumber =invoiceHdrModel.get(invoiceHdrModel.size()-1).getInvoiceNumber();
+			InvoiceNumber =invoiceHdrModel.get(0).getInvoiceNumber();
 			}
 		
 		}catch(Exception e){

@@ -27,6 +27,9 @@ public class InvoiceHdrModel {
 	@Id
 	@Column(name="invoice_number")
 	private String invoiceNumber;
+	
+	@Column(name="id")
+	private int id;
 
 	@ManyToOne(targetEntity = ProjectModel.class)
 	@JoinColumn(name = "project_id", nullable = false, referencedColumnName = "id")
@@ -157,6 +160,15 @@ public class InvoiceHdrModel {
 
 	public void setProject(ProjectModel project) {
 		this.project = project;
+	}
+	
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	public String getInvoiceNumber() {
