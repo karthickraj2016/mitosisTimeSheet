@@ -161,11 +161,14 @@ public class InvoiceDetails {
 			invoicehdrmodel.setInvoiceNumber(invoiceHdrModel.getInvoiceNumber());
 			invoicedetail.setInvoice(invoicehdrmodel);
 			
+			BigDecimal rateperhour = new BigDecimal(Integer.parseInt(jsonobject.getJSONObject("value").get("rateperhour").toString()));
+			
 
 
 			invoicedetail.setInvoiceToDate(invoiceToDate);
 			invoicedetail.setDescription((String) jsonobject.getJSONObject("value").get("description"));
 			invoicedetail.setTeamMember((String) jsonobject.getJSONObject("value").get("teammember"));
+			invoicedetail.setRatePerHour(rateperhour);
 			invoicedetail.setBillableHours(Integer.parseInt(jsonobject.getJSONObject("value").get("billablehours").toString()));
 			BigDecimal Amt = new BigDecimal(amt);
 			invoicedetail.setTotalAmount(Amt);
@@ -203,6 +206,7 @@ public class InvoiceDetails {
 		invoiceHdrModel.setInvoiceAmount(invoiceAmt);
 		invoiceHdrModel.setProject(projectModel);
 		invoiceHdrModel.setCustomer(customerModel);
+		invoiceHdrModel.setCurrencyCode(jsonObject.getString("currency"));
 		invoiceHdrModel.setInvoiceStatus("unpaid");
 		invoiceHdrModel.setBalanceAmount(new BigDecimal(0));
 		invoiceHdrModel.setPaidAmount(new BigDecimal(0));
@@ -273,10 +277,6 @@ public class InvoiceDetails {
 
 		}
 		return json;
-	
-
-
-
 
 
 	}

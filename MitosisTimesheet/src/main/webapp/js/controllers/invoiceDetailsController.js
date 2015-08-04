@@ -235,13 +235,6 @@ angular.module('myApp.controllers')
 	$scope.addTeamMember = function (){
 		
 		console.log($scope.member);
-		
-		if($scope.invoice.projectType=="Monthly"){
-			
-			
-			
-			
-		}
 	
 		
 		
@@ -309,6 +302,7 @@ angular.module('myApp.controllers')
 			$scope.member.description='';
 			$scope.member.billablehours='';
 			$scope.member.amount='';
+			$scope.member.rateperhour='';
 
 
 
@@ -356,7 +350,8 @@ angular.module('myApp.controllers')
 					"projecttype":$scope.invoice.projectType,
 					"invoiceamt":$scope.invoice.invoiceamt,
 					"currency":$scope.invoice.currency,
-					"invoicelist":$scope.invoiceList
+					"invoicelist":$scope.invoiceList,
+					"currency":$scope.invoice.currency
 
 				});
 				$http({
