@@ -59,6 +59,8 @@ angular.module('myApp.controllers')
 	});
 
 	$scope.projectValidation= function(project){
+		
+		$scope.emp=undefined;
 
 		var menuJson = angular.toJson({"projectId":project.projectId})
 
@@ -71,16 +73,40 @@ angular.module('myApp.controllers')
 				'Content-Type': 'application/json'
 			}
 		}).success(function(result, status, headers) {
+			
+			if(result.projectType=="Fixed"){
+				$('#h-show').hide();
+				$('#hr-show').hide();
+				$('#buttons').hide();
+				$('#rateTable').hide();
+				$scope.cost=result;
+				$scope.hdrid=result.id;
+				
+				}else{
+				
+				 $('#h-show').show();
+		            $('#hr-show').show();
+		            $('#buttons').show();
+		            $('#rateTable').show();
 
 			$scope.cost=result;
-			$scope.id=result.id;
-		/*	if(result.projectType=="Fixed"){
-			$scope.cost.projectType=result.projectType;
-			$scope.cost.projectCost=result.projectCost;
-			$scope.cost.currency=result.currencyCode;
-			}else{
+			$scope.hdrid=result.id;
+		
+			for(var i=0;i<result.projectCostDetails.length;i++){
 				
-			}*/
+				if(angular.isUndefined($scope.emp)){
+					$scope.emp= new Array();
+				}
+				
+				var empRate=[];
+
+				empRate={"member":result.projectCostDetails[i].employee,"rate":result.projectCostDetails[i].rate,"id":result.projectCostDetails[i].id};
+			  
+				$scope.emp.push(empRate);
+			}
+			
+			$scope.empList=$scope.emp;
+			}
 		});
 	},
 
@@ -97,8 +123,8 @@ angular.module('myApp.controllers')
 				return;
 			}
 
-			var menuJson=angular.toJson({"id":$scope.id,"projectId":$scope.project.projectId,"projectType":$scope.cost.projectType,
-				"projectCost":$scope.cost.projectCost,"currencyCode":$scope.cost.currency});			
+			var menuJson=angular.toJson({"id":$scope.hdrid,"projectId":$scope.project.projectId,"projectType":$scope.cost.projectType,
+				"projectCost":$scope.cost.projectCost,"currencyCode":$scope.cost.currencyCode});			
 
 			$http({
 
@@ -119,12 +145,13 @@ angular.module('myApp.controllers')
 				}
 				$scope.cost='';
 				$scope.project="Project";
+				$scope.hdrid="";
 			});
 
 		}else{
 
-			var menuJson=angular.toJson({"projectId":$scope.project.projectId,"projectType":$scope.cost.projectType,
-				"projectCost":$scope.cost.projectCost,"currencyCode":$scope.cost.currency,
+			var menuJson=angular.toJson({"id":$scope.hdrid,"projectId":$scope.project.projectId,"projectType":$scope.cost.projectType,
+				"projectCost":$scope.cost.projectCost,"currencyCode":$scope.cost.currencyCode,
 				"empList":$scope.empList});			
 
 
@@ -148,10 +175,13 @@ angular.module('myApp.controllers')
 					$scope.cost='';
 					$scope.project="Project";
 					$scope.empList=undefined;
+					$scope.emp=undefined;
 				}else{
 					$(".alert-msg1").show().delay(1000).fadeOut(); 
 					$(".alert-danger").html("Process Failed");
 				}
+				$scope.hdrid="";
+				$scope.emp=undefined;
 			});
 		}
 	},

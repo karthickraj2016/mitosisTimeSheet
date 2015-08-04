@@ -5,10 +5,6 @@ angular.module('myApp.controllers')
 
 .controller('levelMasterController', ['$scope', '$http', '$state','$localStorage','$rootScope', '$dialogs', function($scope, $http, $state,$localStorage, $rootScope,$dialogs) {
 	
-	/*$scope.launch = function(){	
-	var	dlg = $dialogs.create('html/empdet.html','levelController',{},{key: false,back: 'static'});
-        
-	};*/
 	  $scope.viewdet = function (){
 			$('.emp-det-show').fadeIn(200);
 			$('.overlay').fadeIn(200);
@@ -279,12 +275,3 @@ angular.module('myApp.controllers')
 	
 }])
 
-/*.controller('levelController', ['$scope','$modalInstance' ,'$rootScope', function($scope, $modalInstance, $rootScope) {
-	
-	$scope.empDetList=$rootScope.employeeList;
-	$scope.cancel = function(){
-	    $modalInstance.dismiss('canceled');  
-	  };
-	
-}])
-*/

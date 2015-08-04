@@ -183,11 +183,11 @@ $('.btn-ok').click(function(){
 
 
 <div class="emp-det-show">
-<h4 class="text-center"><strong>Employee Details</strong></h4>
- <table class="table" style="margin-bottom: 10px;">
- 				<thead>
+<h4 class="text-center popuph4"><strong>Employee Details</strong></h4>
+ <table class="table popup" style="margin-bottom: 5px;">
+ 				<thead style="background: #C9D4D7;">
 			    <tr>
-               	<th>Emp Id</th><th>First Name</th><th>Last Name</th><th>Level</th>                
+               	<th>S.no</th><th>Emp Id</th><th>First Name</th><th>Last Name</th>                
                	</tr>
 			    </thead>
 			            
@@ -195,13 +195,13 @@ $('.btn-ok').click(function(){
         <tr>
         <td colspan="4">
         <div class="scrollit">
-            <table>
+            <table class="table-striped">
              <tr ng-repeat="sheet in empDetList">
+                <td class="dettd"></td>
                 <td class="dettd">{{sheet.employeeId}}</td>
                 <td class="dettd lm">{{sheet.firstName}}</td>
                 <td class="dettd lm">{{sheet.lastName}}</td>
-                <td class="dettd lm">{{sheet.level}}</td>
-		    </tr>
+              </tr>
 			      </table>
 			        </div>
 			        </td>
@@ -209,7 +209,7 @@ $('.btn-ok').click(function(){
 			    </tbody>
                 
                 </table>
-  				<button type="submit" style="float: right; margin-right: 30px;" class="btn-ok btn btn-primary">Ok</button>
+  				<button type="submit" style="float: right; margin-right: 30px;" class="btn-ok btn btn-primary btn-xs">Ok</button>
  </div>
 <div class="overlay"></div>
  

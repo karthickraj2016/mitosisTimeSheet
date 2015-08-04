@@ -72,7 +72,7 @@ public class ProjectCostDetailsDaoImpl extends BaseService implements ProjectCos
 	@Override
 	public ProjectCostHdrModel projectValidation(int projectId) {
 		
-		ProjectCostHdrModel costModel=null;
+		ProjectCostHdrModel costModel=new ProjectCostHdrModel();
 		
 	try{
 		begin();
@@ -83,7 +83,8 @@ public class ProjectCostDetailsDaoImpl extends BaseService implements ProjectCos
 		cq.where(qb.equal(root.get("project"), projectId));
 		cq.select(root);
 		costModel = entityManager.createQuery(cq).getSingleResult();
-		
+		commit();
+		flush();
 	}catch(Exception e){
 			
 			System.out.println(e);

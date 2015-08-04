@@ -97,7 +97,8 @@
 </div>
 <div class="container" style="width: 100%;">
 <div class="table-responsive">
-<div class="row len_show" style="padding: 20px;">
+<div class="row">
+<div class="col-sm-6 len_show" style="padding: 20px;">
 <span>Show
 <select ng-model="numPerPage" >
 <option>15</option>
@@ -105,8 +106,9 @@
 <option>35</option>
 <option>50</option>
 </select> Entries</span></div>
-<div class="search-tab"> 
-	       <input type="text" id="search" required class="form-control" ng-change="filter()"  ng-model="search" placeholder="Search"></input>
+<div class="col-sm-6 search-tab"> 
+	       <input type="text" id="search" required class="form-control" ng-change="filter()" ng-model="search" placeholder="Search"></input>
+</div>
 </div>
 
 <table class="table">

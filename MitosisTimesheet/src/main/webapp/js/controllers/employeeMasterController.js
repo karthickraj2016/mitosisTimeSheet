@@ -71,7 +71,7 @@ angular.module('myApp.controllers')
 	$scope.filteredParticipantsResults = []
 	,$scope.currentPage = 1
 	,$scope.numPerPage = 8
-	,$scope.maxSize = 5;
+	,$scope.maxSize = 8;
 
 	$scope.check = function(sheet){
 		if(sheet.employeeId == '' || sheet.employeeId == undefined){
@@ -119,8 +119,29 @@ angular.module('myApp.controllers')
 				$scope.totalItems =	$scope.employeeEntryList.length;
 
 			});
+			$scope.noOfPages = Math.ceil($scope.employeeEntryList.length/$scope.maxSize);
+			
+			 $scope.setPage = function(pageNo) {
+			        $scope.currentPage = pageNo;
+			    };
+			
+			    $scope.filter = function() {
+			 $scope.$watch('search', function(term) {
+				 if(term==undefined){
+					 $scope.totalItems =	$scope.employeeEntryList.length; 
+					 
+					 
+				 }
+				  window.setTimeout(function() {
+					  $scope.totalItems = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
+				 
+			        $scope.noOfPages = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
+				  }, 10);
+			    });
+			 
+			    };
 
-		})
+		});
 	},
 	
 	$scope.validateEmployee = function(employee){
@@ -360,3 +381,4 @@ angular.module('myApp.controllers')
 	};
 	 
 }])
+

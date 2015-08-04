@@ -74,7 +74,7 @@ public class EmployeeMasterDaoImpl extends BaseService implements EmployeeMaster
 			CriteriaQuery<EmployeeMasterModel> cq = qb.createQuery(EmployeeMasterModel.class);
 			Root<EmployeeMasterModel> root = cq.from(EmployeeMasterModel.class);
 			cq.select(root);
-			cq.orderBy(qb.desc(root.get("id")));
+			cq.orderBy(qb.asc(root.get("employeeId")));
 			masterModel = entityManager.createQuery(cq).getResultList();
 		}catch(Exception e){
 			e.printStackTrace();
