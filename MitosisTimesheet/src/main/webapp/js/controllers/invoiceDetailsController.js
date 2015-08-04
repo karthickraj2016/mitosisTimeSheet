@@ -384,8 +384,8 @@ angular.module('myApp.controllers')
 			}
 			else
 			{
-				 $(".alert-msg").show().delay(1000).fadeOut(); 
-				 $(".alert-success").html("Invoice Amount should be equal to the total amount of members !!!!");
+				$(".alert-msg1").show().delay(1000).fadeOut(); 
+				$(".alert-danger").html("Invoice Amount should be equal to the total amount of members !!!!");
 			}
 		}
 		$scope.sumCost = function(){
