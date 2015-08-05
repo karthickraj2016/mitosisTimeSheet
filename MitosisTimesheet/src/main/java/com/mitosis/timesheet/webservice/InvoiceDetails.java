@@ -161,15 +161,31 @@ public class InvoiceDetails {
 			invoicehdrmodel.setInvoiceNumber(invoiceHdrModel.getInvoiceNumber());
 			invoicedetail.setInvoice(invoicehdrmodel);
 			
-			BigDecimal rateperhour = new BigDecimal(Integer.parseInt(jsonobject.getJSONObject("value").get("rateperhour").toString()));
+		
 			
 
 
 			invoicedetail.setInvoiceToDate(invoiceToDate);
 			invoicedetail.setDescription((String) jsonobject.getJSONObject("value").get("description"));
+			
+			if(jsonobject.getJSONObject("value").has("teammember") && jsonobject.getJSONObject("value").get("teammember")!=""){
 			invoicedetail.setTeamMember((String) jsonobject.getJSONObject("value").get("teammember"));
-			invoicedetail.setRatePerHour(rateperhour);
-			invoicedetail.setBillableHours(Integer.parseInt(jsonobject.getJSONObject("value").get("billablehours").toString()));
+			}		
+			
+			if(jsonobject.getJSONObject("value").has("billablehours") && !jsonobject.getJSONObject("value").get("billablehours").toString().equals("")){
+				
+				invoicedetail.setBillableHours(Integer.parseInt(jsonobject.getJSONObject("value").get("billablehours").toString()));
+				
+		
+			}
+			
+			if(jsonobject.getJSONObject("value").has("rateperhour")){
+				
+				BigDecimal rateperhour = new BigDecimal(Integer.parseInt(jsonobject.getJSONObject("value").get("rateperhour").toString()));
+				invoicedetail.setRatePerHour(rateperhour);
+				
+			}
+			
 			BigDecimal Amt = new BigDecimal(amt);
 			invoicedetail.setTotalAmount(Amt);
 
@@ -488,7 +504,7 @@ public class InvoiceDetails {
 	}
 
 
-
+/*
 	@Path("/getTeamMembers")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -501,7 +517,7 @@ public class InvoiceDetails {
 
 		List<ProjectCostDetailsModel> memberList = new ArrayList<ProjectCostDetailsModel>();
 		
-	/*	*customerModel.setCustomerId(Integer.parseInt(jsonObject.get("customerid").toString()));*/
+		*customerModel.setCustomerId(Integer.parseInt(jsonObject.get("customerid").toString()));
 		
 		
 		project=(JSONObject) jsonObject.get("project");
@@ -513,7 +529,7 @@ public class InvoiceDetails {
 
 
 	}
-
+*/
 
 	@Path("/deleteInvoice")
 	@POST
