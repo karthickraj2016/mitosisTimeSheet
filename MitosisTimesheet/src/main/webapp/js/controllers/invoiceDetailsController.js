@@ -267,7 +267,7 @@ angular.module('myApp.controllers')
 
 		console.log($scope.member);
 		
-		if($scope.invoice.invoiceamount==undefined || isNaN($scope.invoice.invoiceamount) ||$scope.invoice.invoiceamount==""){
+		if($scope.invoice.invoiceamt==undefined || isNaN($scope.invoice.invoiceamt) ||$scope.invoice.invoiceamt==""){
 			
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("please enter the invoice amount");
