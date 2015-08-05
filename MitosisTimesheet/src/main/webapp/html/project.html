@@ -20,9 +20,8 @@
          <li><a ui-sref="company_info">Company Information</a></li>
         <li><a ui-sref="projectCostDetails">Project Cost </a></li>
             <li><a ui-sref="invoice">Invoice</a></li>
-          <!--   <li><a ui-sref="">Receipt</a></li>
-             <li><a ui-sref="">Bank Reconcile</a></li>
-              <li><a ui-sref="">Company Info</a></li> -->
+          <li><a ui-sref="customer_payment">Receipt</a></li>
+                 <!--   <li><a ui-sref="">Bank Reconcile</a></li>  -->
           </ul>
         </li>
           <li ng-show="manageCustomer" ng-class="{ active: isActive('/customerDetails')}"><a ui-sref="customerDetails">Customer Details</a></li>
@@ -124,7 +123,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="sheet in filteredParticipantsResults =(projectlist | filter:search) | startFrom:(currentPage-1)*maxSize | limitTo:maxSize| orderBy:asc">
+		<tr ng-repeat="sheet in filteredParticipantsResults =(projectlist | filter:search) | startFrom:(currentPage-1)*numPerPage | limitTo:numPerPage| orderBy:asc">
 			<td >
 				<span ng-show="!showEdit">{{sheet.projectName}}</span>
 				<span ng-show="showEdit" ><input class="form-control" id={{sheet.projectId}} type="text" ng-model="sheet.projectName"  ng-blur="onBlur(sheet.projectId)"></span>

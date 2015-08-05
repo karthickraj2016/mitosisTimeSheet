@@ -114,6 +114,27 @@ angular.module('myApp.controllers')
 	},
 
 	$scope.addProjectCostDetails = function(){
+		
+		$('#addDet').hide();
+		
+		if(($scope.cost.projectCost).length>8){
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("Invalid Cost");
+			$('#costdet').val('');
+			$('#costdet').focus();
+			$('#addDet').show();
+			return;
+		}
+		
+		if(($scope.cost.currencyCode).length>3){
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("Invalid Currency Code");
+			$('#currency').val('');
+			$('#currency').focus();
+			$('#addDet').show();
+			return;
+		}
+		
 
 		var projectType=$scope.cost.projectType;
 
@@ -149,6 +170,7 @@ angular.module('myApp.controllers')
 				$scope.cost='';
 				$scope.project="Project";
 				$scope.hdrid=undefined;
+				$('#addDet').show();
 			});
 
 		}else{
@@ -183,6 +205,7 @@ angular.module('myApp.controllers')
 					$(".alert-msg1").show().delay(1000).fadeOut(); 
 					$(".alert-danger").html("Process Failed");
 				}
+				$('#addDet').show();
 				$scope.hdrid=undefined;
 				$scope.emp=undefined;
 			});
@@ -200,8 +223,14 @@ angular.module('myApp.controllers')
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("Please Enter Rate");
 			return;
+		}else if(($scope.cost.costOfEmp).length>4){
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("Invalid Rate");
+			$('#rate').val('');
+			$('#rate').focus();
+			return;
 		}
-		
+						
 		if(angular.isUndefined($scope.empList)){
 			$scope.empList= new Array();
 			$scope.iterator=0;
