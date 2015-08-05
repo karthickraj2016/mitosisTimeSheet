@@ -11,7 +11,7 @@ angular.module('myApp.controllers')
 	var hoursallowed;
 
 
-	var invoice = [];
+	var invoice= new Array();
 
 
 
@@ -227,38 +227,7 @@ angular.module('myApp.controllers')
 
 			console.log($scope.invoice.teammembers);
 
-
-
-			/*for(i=0;i<result[0].projectCostDetails.length;i++){
-
-				console.log(result[0]);
-				$scope.invoice.teammembers=[];
-			$scope.invoice.teammembers.push(result[0].projectCostDetails[i]);
-
-
-
-			}
-
-			console.log($scope.invoice.teammembers);*/
-
 		});
-
-
-		/*	$http({
-
-			url: 'rest/invoiceDetails/getTeamMembers',
-			method: 'POST',
-			data: menuJson,
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		}).success(function(result, status, headers) {
-
-			console.log(result);
-
-			$scope.invoice.teammembers=result;
-
-		});*/
 
 	}
 
@@ -346,20 +315,21 @@ angular.module('myApp.controllers')
 
 			if($scope.member.teamlist==undefined || $scope.member.teamlist==null || $scope.member.teamlist==""){
 
-				if($scope.member.teamlist){
-					$scope.member.teamlist.employee.name=null;
+				if($scope.member.teamlist.member.name){
+					$scope.member.teamlist.member.name=null;
 				}
 			}
 
-			else if($scope.member.teamlist.employee){
-				invoice["teammember"]=$scope.member.teamlist.member.name;
+			else if($scope.member.teamlist.member.name){
+				var memberobj=$scope.member.teamlist.member.name;
 			}
-
-			invoice = {"fromdate":$scope.member.fromdate,"todate":$scope.member.todate,"description":$scope.member.description,"billablehours":$scope.member.billablehours,"amount":$scope.member.amount,"amount":$scope.member.amount,"index":$scope.iterator,"rateperhour":$scope.member.rateperhour};
-
-
+			invoice = {"fromdate":$scope.member.fromdate,"todate":$scope.member.todate,"description":$scope.member.description,"billablehours":$scope.member.billablehours,"amount":$scope.member.amount,"index":$scope.iterator,"rateperhour":$scope.member.rateperhour};
+			invoice["teammember"]=memberobj;
+			console.log(invoice);
 			var copiedarray=[];
 			$scope.invoiceList.push(invoice);
+			
+			console.log($scope.invoiceList);
 			$(".alert-msg").show().delay(1000).fadeOut(); 
 			$(".alert-success").html("Member Details added successfully!!!!!");
 			$scope.iterator++;
@@ -377,8 +347,14 @@ angular.module('myApp.controllers')
 	}
 
 	$scope.updateteammembers= function(sheet){
+		
+
+
 
 		$scope.invoiceList[sheet.index]=sheet;
+		
+		
+		
 		$(".alert-msg").show().delay(1000).fadeOut(); 
 		$(".alert-success").html("Member Details updated successfully!!!!!");
 
@@ -393,6 +369,7 @@ angular.module('myApp.controllers')
 	}
 
 	$scope.teammemberslist= function(){
+
 		$scope.invoiceList[invoice.index]=invoice;
 	}
 

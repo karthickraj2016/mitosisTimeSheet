@@ -171,6 +171,7 @@
 		<tr ng-repeat="sheet in invoiceList">
 			
 			<td>
+
 				<span ng-show="!showEdit">{{sheet.fromdate}}</span>
 				<span ng-show="showEdit"><input class="form-control" ui-date="dateOptions" ui-date-format="dd-mm-yy" type="text" ng-model="sheet.fromdate" ></span>
 				<span style="color:red" ng-show="sheet.fromdate == '' || sheet.fromdate == undefined">Required</span> 
@@ -188,8 +189,8 @@
 			</td>
 			<td>
 				<span ng-show="!showEdit">{{sheet.teammember}}</span>
-				<span id="{{sheet.employee.id}}" ng-show="showEdit"><select class="form-control" ng-model="sheet.teammember" ng-options="item as item.employee.name for item in invoice.teammembers" style="color: #777777;">
-				<option value="">{{sheet.teammember}}</option>
+				<span id="{{sheet.employee.id}}" ng-show="showEdit"><select class="form-control" ng-model="sheet.teammember" ng-options="item.member.name as item.member.name for item in invoice.teammembers" style="color: #777777;">
+				<option value="">Team Members</option>
 				</select> 
 				</span>
 			</td>
