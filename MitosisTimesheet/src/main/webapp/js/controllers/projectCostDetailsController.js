@@ -74,7 +74,10 @@ angular.module('myApp.controllers')
 			}
 		}).success(function(result, status, headers) {
 			
-			if(result.projectType=="Fixed"){
+			if(result.projectType==null){
+				$scope.hdrid=undefined;
+				return;
+			}else if(result.projectType=="Fixed"){
 				$('#h-show').hide();
 				$('#hr-show').hide();
 				$('#buttons').hide();
@@ -145,7 +148,7 @@ angular.module('myApp.controllers')
 				}
 				$scope.cost='';
 				$scope.project="Project";
-				$scope.hdrid="";
+				$scope.hdrid=undefined;
 			});
 
 		}else{
@@ -180,7 +183,7 @@ angular.module('myApp.controllers')
 					$(".alert-msg1").show().delay(1000).fadeOut(); 
 					$(".alert-danger").html("Process Failed");
 				}
-				$scope.hdrid="";
+				$scope.hdrid=undefined;
 				$scope.emp=undefined;
 			});
 		}

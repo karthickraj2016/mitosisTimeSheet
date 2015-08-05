@@ -20,11 +20,16 @@ public class ProjectCostDetailsDaoImpl extends BaseService implements ProjectCos
 	public int addDetailsInHdr(ProjectCostHdrModel hdrModel) {
 
 		int hdrId=0;
+	
 		try{
 			begin();
-			merge(hdrModel);
+			if(hdrModel.getId()==null){
+				persist(hdrModel);
+			}else{
+				merge(hdrModel);
+			}
 			commit();
-			hdrId=hdrModel.getId();
+			hdrId=hdrModel.getId();	
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{
