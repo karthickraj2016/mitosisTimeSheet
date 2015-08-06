@@ -12,7 +12,7 @@ angular.module('myApp.controllers')
 			maxDate:'0d'
 	};
 
-	
+
 	$http({
 		url: 'rest/account/getName',
 		method: 'GET',
@@ -126,6 +126,7 @@ angular.module('myApp.controllers')
 		}).success(function(result, status, headers) {
 
 			$scope.employeeEntryList=result; 
+			$scope.asOnDate=result[0].asOnEntryDate;
 
 			$scope.$watch('currentPage + numPerPage', function() {
 				var begin = (($scope.currentPage - 1) * $scope.numPerPage)

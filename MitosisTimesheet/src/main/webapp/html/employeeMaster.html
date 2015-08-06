@@ -179,11 +179,16 @@
 	</tbody>
 </table>
 <div class="row">
-<div class="col-xs-12 col-md-2">
+<div class="col-xs-12 col-md-6">
 <div class="form-group"> 
-       <input type="text" class="form-control" style="width: 140px;"  ng-model="asOnDate" placeholder="" readonly></input>
-   </div> </div><button class="btn btn-primary" ng-click="calculateAndUpdateExp()">Update Experience</button>
+	<button class="btn btn-primary" style="float: left;" ng-click="calculateAndUpdateExp()">Update Experience</button>
+	<span style="float: left; padding: 5px 0 0 15px; font-size: 18px;">Last Updated Date: {{asOnDate}}</span>
+
+</div> 
+</div>
+<div class="col-xs-12 col-md-6">
 <pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="numPerPage" class="pagination-sm" boundary-links="true"></pagination>
+</div>
 </div>
 </div>
 </div>

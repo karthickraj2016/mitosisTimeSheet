@@ -57,7 +57,7 @@ public class EmployeeMasterModel {
 	private Date asOnDate;
 	
 	@ManyToOne(targetEntity = LobModel.class)
-	@JoinColumn(name = "lob_id", nullable = false, referencedColumnName = "id")
+	@JoinColumn(name = "lob_id", referencedColumnName = "id")
 	private LobModel lob;
 	  
 	@Column(name="billable")

@@ -76,9 +76,9 @@ public class EmployeeMaster {
 		Date asOnDate=sdf.parse(asOndateInString);
 		masterModel.setAsOnDate(asOnDate);
 		
-		LobModel lobModel=new LobModel();
-		lobModel.setId(12);
-		masterModel.setLob(lobModel);
+	/*	LobModel lobModel=new LobModel();
+		lobModel.setId();
+		masterModel.setLob(lobModel);*/
 				
 		masterModel.setBillable(jsonObject.getString("billable"));
 				
