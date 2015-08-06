@@ -108,7 +108,7 @@
 			<th style="width: 70px;">Exp Yrs</th>
 			<th style="width: 70px;">Exp Mon</th>
 			<th style="width: 60px;">Level</th>
-			<th>As on Date</th>
+			<th>LOB</th>
 			<th style="width: 80px;">Billable</th>
 			<th></th>
 		</tr>
@@ -154,9 +154,11 @@
 				
 			</td>
 			<td>
-				<span ng-show="!showEdit">{{sheet.asOnEntryDate }}</span>
-				<span  ng-show="showEdit"><input class="form-control"  type="text" onkeypress="return isNumber(event)"  ng-model="sheet.asOnEntryDate" readonly></span>
-				<span style="color:red" ng-show="sheet.asOnEntryDate == '' || sheet.asOnEntryDate == undefined">Required</span>
+				<span ng-show="!showEdit">{{sheet.lob.lobName}}</span>
+				<span ng-show="showEdit"><select class="form-control" ng-model="sheet.lob" ng-options="item as item.lobName for item in lobList" style="color: #777777;">
+				<option value="">{{sheet.lob.lobName}}</option>
+				</select> 
+				</span>
 			</td>
 			<td>
 				<span ng-show="!showEdit">{{sheet.billable}}</span>
@@ -176,8 +178,13 @@
 		</tr>
 	</tbody>
 </table>
-<button class="btn btn-primary" ng-click="calculateAndUpdateExp()">Update Experience</button>
+<div class="row">
+<div class="col-xs-12 col-md-2">
+<div class="form-group"> 
+       <input type="text" class="form-control" style="width: 140px;"  ng-model="asOnDate" placeholder="" readonly></input>
+   </div> </div><button class="btn btn-primary" ng-click="calculateAndUpdateExp()">Update Experience</button>
 <pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="numPerPage" class="pagination-sm" boundary-links="true"></pagination>
+</div>
 </div>
 </div>
  <div class="alert-msg col-xs-12 col-sm-6"><p class="alert-success"></p></div>

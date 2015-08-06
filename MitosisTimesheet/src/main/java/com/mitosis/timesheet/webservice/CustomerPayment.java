@@ -17,7 +17,6 @@ import javax.ws.rs.core.MediaType;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import com.mitosis.timesheet.model.CompanyInfoModel;
 import com.mitosis.timesheet.model.CustomerDetailsModel;
 import com.mitosis.timesheet.model.CustomerPaymentModel;
 import com.mitosis.timesheet.model.InvoiceHdrModel;
@@ -131,10 +130,10 @@ public class CustomerPayment {
 		@Produces(MediaType.APPLICATION_JSON)
 		public Object getInvoices(JSONObject jsonObject) throws JSONException, ParseException {
 			InvoiceDetailsService i=new InvoiceDetailsServiceImpl();
-				JSONObject project = new JSONObject();
+				/*JSONObject project = new JSONObject();*/
 			
-			project=(JSONObject) project.get("project");
-			int projectId=project.getInt("projectId");
+		/*	project=(JSONObject) project.get("project");*/
+			int projectId=jsonObject.getInt("projectId");
 			List<InvoiceHdrModel> invoiceList=i.getInvoiceList(projectId);
 			return invoiceList;
 		}

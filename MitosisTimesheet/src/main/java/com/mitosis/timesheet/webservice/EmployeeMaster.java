@@ -19,6 +19,7 @@ import org.codehaus.jettison.json.JSONObject;
 
 import com.mitosis.timesheet.model.EmployeeMasterModel;
 import com.mitosis.timesheet.model.LevelMasterModel;
+import com.mitosis.timesheet.model.LobModel;
 import com.mitosis.timesheet.model.UserDetailsModel;
 import com.mitosis.timesheet.service.EmployeeMasterService;
 import com.mitosis.timesheet.service.impl.EmployeeMasterServiceImpl;
@@ -28,6 +29,21 @@ public class EmployeeMaster {
 	
 	EmployeeMasterService masterService=new EmployeeMasterServiceImpl();
 	EmployeeMasterModel masterModel=new EmployeeMasterModel();
+	
+	@Path("/getLobList")
+	@GET
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	
+	public List<LobModel> getLobList()throws JSONException{
+		
+		List<LobModel> lobList=new ArrayList<LobModel>();
+		
+		lobList=masterService.getLobList();
+		
+		return lobList;
+		
+	}
 	
 	@Path("/addEmployeeDetails")
 	@POST
@@ -59,6 +75,10 @@ public class EmployeeMaster {
 		String asOndateInString = jsonObject.getString("asOnDate");
 		Date asOnDate=sdf.parse(asOndateInString);
 		masterModel.setAsOnDate(asOnDate);
+		
+		LobModel lobModel=new LobModel();
+		lobModel.setId(12);
+		masterModel.setLob(lobModel);
 				
 		masterModel.setBillable(jsonObject.getString("billable"));
 				
@@ -146,6 +166,10 @@ public class EmployeeMaster {
 		masterModel.setAsOnDate(asOnDate);
 		
 		masterModel.setLevel(jsonObject.getInt("level"));
+		
+		LobModel lobModel=new LobModel();
+		lobModel.setId(jsonObject.getInt("lobId"));
+		masterModel.setLob(lobModel);
 				
 		masterModel.setBillable(jsonObject.getString("billable"));
 		
@@ -207,6 +231,10 @@ public class EmployeeMaster {
 		masterModel.setAsOnDate(asOnDate);
 		
 		masterModel.setLevel(level);
+		
+		LobModel lobModel=new LobModel();
+		lobModel.setId(jsonObject.getInt("lobId"));
+		masterModel.setLob(lobModel);
 				
 		masterModel.setBillable(jsonObject.getString("billable"));
 		

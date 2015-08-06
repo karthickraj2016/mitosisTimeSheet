@@ -1,7 +1,6 @@
 package com.mitosis.timesheet.dao.daoImpl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -13,10 +12,33 @@ import javax.persistence.criteria.Root;
 import com.mitosis.timesheet.dao.EmployeeMasterDao;
 import com.mitosis.timesheet.model.EmployeeMasterModel;
 import com.mitosis.timesheet.model.LevelMasterModel;
+import com.mitosis.timesheet.model.LobModel;
 import com.mitosis.timesheet.util.BaseService;
 
 public class EmployeeMasterDaoImpl extends BaseService implements EmployeeMasterDao {
 
+	@Override
+	public List<LobModel> getLobList() {
+		
+		List<LobModel> lobList=new ArrayList<LobModel>();
+		try{
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<LobModel> cq = qb.createQuery(LobModel.class);
+			Root<LobModel> root = cq.from(LobModel.class);
+			cq.select(root);
+			cq.orderBy(qb.asc(root.get("id")));
+			lobList = entityManager.createQuery(cq).getResultList();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close();
+		}
+
+		return lobList;
+	}
+		
 	@Override
 	public boolean addEmployeeDetails(EmployeeMasterModel masterModel) {
 		

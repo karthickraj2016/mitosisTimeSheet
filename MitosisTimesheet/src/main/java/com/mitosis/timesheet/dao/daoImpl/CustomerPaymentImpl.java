@@ -8,7 +8,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import com.mitosis.timesheet.dao.CustomerPaymentDao;
-import com.mitosis.timesheet.model.CompanyInfoModel;
 import com.mitosis.timesheet.model.CustomerPaymentModel;
 import com.mitosis.timesheet.model.InvoiceHdrModel;
 import com.mitosis.timesheet.util.BaseService;
@@ -156,6 +155,7 @@ public class CustomerPaymentImpl extends BaseService implements
 			cq.where(qb.equal(root.get("invoiceNumber"), id));
 			cq.select(root);
 			invoice = entityManager.createQuery(cq).getSingleResult();
+			System.out.println(invoice);
 			BigDecimal oldBalance = invoice.getBalanceAmount();
 			BigDecimal oldPaid = invoice.getPaidAmount();
 			BigDecimal newBalance;

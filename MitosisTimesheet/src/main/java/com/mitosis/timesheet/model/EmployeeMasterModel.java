@@ -55,6 +55,10 @@ public class EmployeeMasterModel {
 
 	@Column(name="as_on_date")
 	private Date asOnDate;
+	
+	@ManyToOne(targetEntity = LobModel.class)
+	@JoinColumn(name = "lob_id", nullable = false, referencedColumnName = "id")
+	private LobModel lob;
 	  
 	@Column(name="billable")
 	private String billable;
@@ -176,7 +180,13 @@ public class EmployeeMasterModel {
 	public void setAsOnDate(Date asOnDate) {
 		this.asOnDate = asOnDate;
 	}
-
+	
+	public LobModel getLob() {
+		return lob;
+	}
+	public void setLob(LobModel lob) {
+		this.lob = lob;
+	}
 	public String getBillable() {
 		return billable;
 	}

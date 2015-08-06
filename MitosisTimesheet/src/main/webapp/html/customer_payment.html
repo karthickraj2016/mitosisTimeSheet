@@ -192,33 +192,43 @@
 		<tr ng-repeat="sheet in filteredParticipantsResults ">
 			<td>
 				<span ng-show="!showEdit">{{sheet.invoiceHdr.project.customer.customerName}}</span>
+			<span  ng-show="showEdit"><input class="form-control"  type="text"  ng-model="sheet.invoiceHdr.project.customer.customerName" readonly></span>
 			</td>
 			<td>
 				<span ng-show="!showEdit">{{sheet.invoiceHdr.project.projectName}}</span>
+			<span  ng-show="showEdit"><input class="form-control"  type="text"  ng-model="sheet.invoiceHdr.project.projectName" readonly></span>
 			</td>
 			<td>
 			<span ng-show="!showEdit">{{sheet.invoiceHdr.invoiceNumber}}</span>
+			<span  ng-show="showEdit"><input class="form-control"  type="text"  ng-model="sheet.invoiceHdr.invoiceNumber" readonly></span>
 			</td>
 			<td>
 			<span ng-show="!showEdit">{{sheet.invoiceHdr.invoiceDateStr}}</span>
+			<span  ng-show="showEdit"><input class="form-control"  type="text"  ng-model="sheet.invoiceHdr.invoiceDateStr" readonly></span>
 			</td>
 			<td>
 			<span ng-show="!showEdit">{{sheet.invoiceHdr.invoiceAmount}}</span>
+			<span  ng-show="showEdit"><input class="form-control"  type="text"  ng-model="sheet.invoiceHdr.invoiceAmount" readonly></span>
 			</td>
-			
 			<td>
 			<span ng-show="!showEdit">{{sheet.receiptNumber}}</span>
+			<span  ng-show="showEdit"><input class="form-control"  type="text" ng-model="sheet.receiptNumber"></span>
 			</td>
 			<td>
 			<span ng-show="!showEdit">{{sheet.receiptDateStr}}</span>
+			<span  ng-show="showEdit"><input class="form-control"  type="text"  ng-model="sheet.receiptDateStr"></span>
 			</td>
 			<td>
 			<span ng-show="!showEdit">{{sheet.paidAmount}}</span>
+			<span  ng-show="showEdit"><input class="form-control"  type="text"  ng-model="sheet.paidAmount"></span>
 			</td>
 			
-			<td>
-
-			</td>
+			<td style="word-spacing: 15px;">
+				<a><span class="glyphicon glyphicon-pencil" ng-click="showEdit = !showEdit" ng-show="!showEdit"></span></a>
+				<a><span class="glyphicon glyphicon-remove" ng-click="confirmDelete(sheet.id)" ng-show="!showEdit"></span></a>
+				<a><span class="glyphicon glyphicon-ok" ng-click="showEdit = !showEdit;updateEmployeeMasterDetails(sheet)" ng-show="showEdit" ng-disabled="checkRequired(sheet);"></span></a>
+				<a><span class="glyphicon glyphicon-ban-circle" ng-click="showEdit = !showEdit" ng-show="showEdit"></span></a>
+     		</td>
 		</tr>
 	</tbody>
 </table>

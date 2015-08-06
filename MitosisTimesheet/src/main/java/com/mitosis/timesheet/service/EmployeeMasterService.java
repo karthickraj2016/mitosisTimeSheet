@@ -4,8 +4,11 @@ import java.util.List;
 
 import com.mitosis.timesheet.model.EmployeeMasterModel;
 import com.mitosis.timesheet.model.LevelMasterModel;
+import com.mitosis.timesheet.model.LobModel;
 
 public interface EmployeeMasterService {
+	
+	public List<LobModel> getLobList();
 
 	public boolean addEmployeeDetails(EmployeeMasterModel masterModel);
 

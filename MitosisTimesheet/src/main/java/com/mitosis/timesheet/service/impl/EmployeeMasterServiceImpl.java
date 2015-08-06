@@ -7,11 +7,22 @@ import com.mitosis.timesheet.dao.EmployeeMasterDao;
 import com.mitosis.timesheet.dao.daoImpl.EmployeeMasterDaoImpl;
 import com.mitosis.timesheet.model.EmployeeMasterModel;
 import com.mitosis.timesheet.model.LevelMasterModel;
+import com.mitosis.timesheet.model.LobModel;
 import com.mitosis.timesheet.service.EmployeeMasterService;
 
 public class EmployeeMasterServiceImpl implements EmployeeMasterService {
 
 	EmployeeMasterDao masterDao=new EmployeeMasterDaoImpl();
+	
+	@Override
+	public List<LobModel> getLobList() {
+		
+		List<LobModel> lobList=new ArrayList<LobModel>();
+		
+		lobList=masterDao.getLobList();
+		
+		return lobList;
+	}
 	
 	@Override
 	public boolean addEmployeeDetails(EmployeeMasterModel masterModel) {
@@ -80,5 +91,4 @@ public class EmployeeMasterServiceImpl implements EmployeeMasterService {
 		return empId;
 	}
 
-	
 }

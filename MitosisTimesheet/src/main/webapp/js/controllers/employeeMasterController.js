@@ -30,6 +30,19 @@ angular.module('myApp.controllers')
 	});
 
 	$http({
+		url: 'rest/employeeMaster/getLobList',
+		method: 'GET',
+		/*data: menuJson,*/
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	}).success(function(result, status, headers) {
+		
+		$scope.lobList=result;
+		
+	});
+	
+	$http({
 		url: 'rest/timesheet/getUserDetails',
 		method: 'GET',
 		/*data: menuJson,*/
@@ -91,6 +104,8 @@ angular.module('myApp.controllers')
 		}else if(sheet.level == '' || sheet.level == undefined) {
 			return true;
 		}else if(sheet.asOnEntryDate == '' || sheet.asOnEntryDate == undefined) {
+			return true;
+		}else if(sheet.lob.lobName == '' || sheet.lob.lobName == undefined) {
 			return true;
 		}else if(sheet.billable == '' || sheet.billable == undefined) {
 			return true;
@@ -260,7 +275,7 @@ angular.module('myApp.controllers')
 	       }
 				
 		var menuJson=angular.toJson({"id":reqParam.id,"userId":reqParam.employee.id,"employeeId":reqParam.employeeId,"firstName":reqParam.firstName,"lastName":reqParam.lastName,"joiningDate":reqParam.joiningEntryDate,"expStartDate":reqParam.expStartEntryDate,
-			"yearsOfExp":reqParam.yearsOfExperience,"monthsOfExp":reqParam.monthsOfExperience,"level":reqParam.level,"asOnDate":reqParam.asOnEntryDate,"billable":reqParam.billable});
+			"yearsOfExp":reqParam.yearsOfExperience,"monthsOfExp":reqParam.monthsOfExperience,"level":reqParam.level,"asOnDate":reqParam.asOnEntryDate,"lobId":reqParam.lob.id,"billable":reqParam.billable});
 
 		$http({
 			url: 'rest/employeeMaster/updateEmployeeDetails',
@@ -320,7 +335,7 @@ angular.module('myApp.controllers')
 		var mm = ("0"+ (dt.getMonth()+1)).slice(-2); 
 		var yyyy = dt.getFullYear();
 		dt=dd+"-"+mm+"-"+yyyy;
-		var asOnDate=dt;
+		$scope.asOnDate=dt;
 
 		for(var i=0;i<employeelist.length;i++){
 
@@ -344,7 +359,7 @@ angular.module('myApp.controllers')
 			var monthsOfExp=m2-expStartDate[1];
 							
 			var menuJson=angular.toJson({"id":employeelist[i].id,"userId":employeelist[i].employee.id,"employeeId":employeelist[i].employeeId,"firstName":employeelist[i].firstName,"lastName":employeelist[i].lastName,"joiningDate":employeelist[i].joiningEntryDate,
-					"expStartDate":employeelist[i].expStartEntryDate,"yearsOfExp":yearsOfExp,"monthsOfExp":monthsOfExp,"asOnDate":asOnDate,"billable":employeelist[i].billable});
+					"expStartDate":employeelist[i].expStartEntryDate,"yearsOfExp":yearsOfExp,"monthsOfExp":monthsOfExp,"asOnDate":$scope.asOnDate,"lobId":employeelist[i].lob.id,"billable":employeelist[i].billable});
 
 					
 			$http({

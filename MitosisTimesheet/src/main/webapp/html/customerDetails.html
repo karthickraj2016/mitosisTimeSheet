@@ -53,13 +53,13 @@
 <div class="row">
 <div class="col-xs-12 col-lg-12">
 <div class="project-form-div">
-<form class="form-inline project-form" role="form" id="addEntry" ng-submit="addCustomerDetails(customer)">		
+<form class="form-inline project-form" role="form" id="addEntry" ng-submit="nameValidation(customer)">		
 
 	<div class="form-group">
-       <input type="text" id="customerName" required class="form-control"  ng-model="customer.customerName" ng-blur="nameValidation()" placeholder="Customer Name">
+       <input type="text" id="customerName" required class="form-control"  ng-model="customer.customerName" placeholder="Customer Name">
     </div>
 	<div class="form-group">
-       <input type="text"  id="customerMail" class="form-control" ng-model="customer.email" ng-blur="mailValidation()" placeholder="Email">
+       <input type="text"  id="customerMail" class="form-control" ng-model="customer.email" placeholder="Email">
     </div>
     <div class="form-group" style="word-spacing: 0;">
        <textarea rows="1" class="form-control" ng-model="customer.address" placeholder="Address"></textarea>
@@ -90,6 +90,7 @@
 	<div class="form-group btn-formproject">
 	<button type="submit" class="btn btn-primary">Add</button>
 	<button type="reset" style="margin-left: 10px;"  class="btn btn-primary">Clear</button>
+	<button type="button" style="margin-left: 10px;"  class="btn btn-primary" ng-click="searchRecords(customer)">Search</button>
 	</div>
 	</form>
 </div>
