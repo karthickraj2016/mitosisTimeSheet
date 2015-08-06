@@ -24,10 +24,18 @@
                  <!--   <li><a ui-sref="">Bank Reconcile</a></li>  -->
           </ul>
           </li>
-          <li ng-show="manageCustomer" ng-class="{ active: isActive('/customerDetails')}"><a ui-sref="customerDetails">Customer Details</a></li>
-     <li ng-show="manageProject" ng-class="{ active: isActive('/project')}"><a ui-sref="project">Project Details</a></li>
+              <li ng-show="manageProject" ng-class="{ active: isActive('/projects')}"><a class="dropdown-toggle" data-toggle="dropdown"> Project<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li><a ui-sref="customerDetails">Customer Details</a></li>
+            <li><a ui-sref="project">Project Details</a></li>
+          </ul>
+        </li>
         <li ng-show="manageTeam" ng-class="{ active: isActive('/teamAssignment')}"><a ui-sref="teamAssignment">Team Assignment</a></li>
-         <li ng-show="manageEmployees" ng-class="{ active: isActive('/employeeMaster')}"><a ui-sref="employeeMaster">Employee Master</a></li>
+           <li ng-show="manageEmployees" ng-class="{ active: isActive('/HR')}"><a class="dropdown-toggle" data-toggle="dropdown"> HR<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li><a ui-sref="employeeMaster">Employee Master</a></li>
+            </ul>
+            </li>
        <li ng-class="{ active: isActive('/reports')}"><a class="dropdown-toggle" data-toggle="dropdown"> Reports<span class="caret"></span></a>
         <ul class="dropdown-menu">
             <li><a ui-sref="individualreport" >Individual Reports</a></li>

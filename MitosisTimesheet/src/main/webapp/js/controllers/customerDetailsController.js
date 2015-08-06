@@ -35,18 +35,10 @@ angular.module('myApp.controllers')
 		$scope.manageTeam=result.manageTeam;
 		$scope.manageCustomer=result.manageCustomer;
 		$scope.manageEmployees=result.manageEmployees;
-		$scope.accessRights();
+		
 	});
 
-	$scope.accessRights=function(){
-
-		if(!$scope.manageCustomer){
-
-			$state.go('timesheet')
-		}
-
-	};
-
+	
 	$scope.filteredParticipantsResults = []
 	,$scope.currentPage = 1
 	,$scope.numPerPage = 8
