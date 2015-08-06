@@ -224,7 +224,8 @@ public class InvoiceDetails {
 		invoiceHdrModel.setCustomer(customerModel);
 		invoiceHdrModel.setCurrencyCode(jsonObject.getString("currency"));
 		invoiceHdrModel.setInvoiceStatus("unpaid");
-		invoiceHdrModel.setBalanceAmount(new BigDecimal(0));
+		BigDecimal balanceAmt = new BigDecimal(jsonObject.getInt("invoiceamt"));
+		invoiceHdrModel.setBalanceAmount(balanceAmt);
 		invoiceHdrModel.setPaidAmount(new BigDecimal(0));
 		
 		

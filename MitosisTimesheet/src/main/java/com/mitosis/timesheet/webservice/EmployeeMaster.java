@@ -5,14 +5,21 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -23,12 +30,15 @@ import com.mitosis.timesheet.model.LobModel;
 import com.mitosis.timesheet.model.UserDetailsModel;
 import com.mitosis.timesheet.service.EmployeeMasterService;
 import com.mitosis.timesheet.service.impl.EmployeeMasterServiceImpl;
+import com.mitosis.timesheet.util.JasperUtil;
 
 @Path("employeeMaster")
-public class EmployeeMaster {
+public class EmployeeMaster extends JasperUtil{
 	
 	EmployeeMasterService masterService=new EmployeeMasterServiceImpl();
 	EmployeeMasterModel masterModel=new EmployeeMasterModel();
+	
+	@Context private HttpServletRequest request;
 	
 	@Path("/getLobList")
 	@GET
@@ -295,4 +305,52 @@ public class EmployeeMaster {
     	}
      	return json;
      }
- }
+    
+    
+    	@Path("/employeeReport")
+    	@GET
+    	@Consumes(MediaType.APPLICATION_JSON)
+    	@Produces(MediaType.APPLICATION_JSON)
+    	
+    	public JSONObject employeeReport() throws Exception {
+    	
+    	
+    	HttpSession session= request.getSession(true);
+    
+  	if(session.getAttribute("userId")==null){
+    		return null;
+    	}
+    	Object userId = session.getAttribute("userId");
+    
+    	int employeeId =(Integer) request.getSession().getAttribute("userId");
+    
+    	
+    	JSONObject jsonObject = new JSONObject();
+    	
+    	
+    	
+    	String reportFilePath = request.getSession().getServletContext()
+    			.getRealPath("/")
+    			+ "reports/employeeDetailsReport.jrxml";
+    
+    
+    	Map<String, Object> parameters = new HashMap<String, Object>();
+    	String path = this.getClass().getClassLoader().getResource("/").getPath();
+    	String pdfPath = path.replaceAll("WEB-INF/classes/", "");
+    	String imagePath = this.getClass().getClassLoader().getResource("/").getPath().replaceAll("WEB-INF/classes/", "");
+    	
+    	String pdfFilePath = pdfPath
+    			+ "reports/employeeDetailsReport" + employeeId + ".pdf";
+    	
+    	RenderJr(reportFilePath, parameters,pdfFilePath);
+    	
+    
+    	JRBeanCollectionDataSource ds = null;
+    	
+    	jsonObject.put("report","report successful");
+    	
+    	
+    	return jsonObject;
+    }
+    }
+ 

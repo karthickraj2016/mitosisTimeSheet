@@ -12,6 +12,9 @@ angular.module('myApp.controllers')
 
 
 	var invoice= new Array();
+	
+	var dt1;
+	var dt2;
 
 
 
@@ -46,12 +49,12 @@ angular.module('myApp.controllers')
 		var mm = dt.getMonth()+1; 
 		var yyyy = dt.getFullYear();
 		dt=dd+"-"+mm+"-"+yyyy;
-		var dt1 = new Date();
+		dt1 = new Date();
 		var dd1 = dt1.getDate();
 		var mm1 = dt1.getMonth()+1; 
 		var yyyy1 = dt1.getFullYear();
 		dt1=dd1+"-"+mm1+"-"+yyyy1;
-		var dt2= new Date();
+		dt2= new Date();
 		var dd2 = dt2.getDate();
 		var mm2 = dt2.getMonth()+1;
 		var yyyy2 = dt2.getFullYear();
@@ -94,6 +97,8 @@ angular.module('myApp.controllers')
 		var cusid = angular.toJson({
 			"customerId": $scope.invoice.customer.customerId
 		});
+		
+		$scope.invoice.invoiceno="";
 		$http({
 			url: 'rest/payment/projectList',
 			method: 'POST',
@@ -192,8 +197,16 @@ angular.module('myApp.controllers')
 	$scope.projectBasedSelections = function(project){
 
 		var menuJson = angular.toJson({"project":project});
-
+		
+		$scope.invoice.invoiceno="";
+		$scope.invoiceList=[];
 		$scope.invoice.projectType="";
+		$scope.invoice.currency="";
+		$scope.invoice.invoiceamt="";
+		$scope.invoice.teammembers=[];
+		
+		
+		
 
 
 		$http({
@@ -234,54 +247,6 @@ angular.module('myApp.controllers')
 
 	$scope.addTeamMember = function (){
 
-		console.log($scope.member);
-		
-		if($scope.invoice.invoiceamt==undefined || isNaN($scope.invoice.invoiceamt) ||$scope.invoice.invoiceamt==""){
-			
-			$(".alert-msg1").show().delay(1000).fadeOut(); 
-			$(".alert-danger").html("please enter the invoice amount");
-			return;
-			
-			
-		}
-
-
-
-		if($scope.member.fromdate==undefined||$scope.member.todate==undefined){
-
-			$(".alert-msg1").show().delay(1000).fadeOut(); 
-			$(".alert-danger").html("please enter the member details of from date and todate");
-			return;
-		}
-
-		else if($scope.member.description==undefined||$scope.member.description==""){
-			$(".alert-msg1").show().delay(1000).fadeOut(); 
-			$(".alert-danger").html("please enter the member details for description");
-			return;	
-
-
-		}
-
-
-		else if($scope.member.rateperhour==undefined || isNaN($scope.member.amount) ||$scope.member.rateperhour==""){
-
-			$(".alert-msg1").show().delay(1000).fadeOut(); 
-			$(".alert-danger").html("please enter the member details for rate");
-			return;	
-
-		}
-
-		else if($scope.member.amount==undefined || isNaN($scope.member.amount)){
-
-			$(".alert-msg1").show().delay(1000).fadeOut(); 
-			$(".alert-danger").html("please enter the member details for amount");
-			return;	
-
-		}
-
-
-
-
 		var fromdate = new Date($scope.member.fromdate.split('-')[2],$scope.member.fromdate.split('-')[1],$scope.member.fromdate.split('-')[0]);
 		var todate = new Date($scope.member.todate.split('-')[2],$scope.member.todate.split('-')[1],$scope.member.todate.split('-')[0]);
 
@@ -300,6 +265,62 @@ angular.module('myApp.controllers')
 			return;
 
 		}
+		
+
+
+		if($scope.member.fromdate==undefined||$scope.member.todate==undefined){
+
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("please enter the member details of from date and todate");
+			return;
+		}
+
+		else if($scope.member.description==undefined||$scope.member.description==""){
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("please enter the member details for description");
+			return;	
+
+
+		}
+
+
+		else if($scope.member.rateperhour==undefined || isNaN($scope.member.rateperhour) ||$scope.member.rateperhour==""){
+
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("please enter the member details for rate");
+			return;	
+
+		}
+		
+
+		else if($scope.member.billablehours==undefined || isNaN($scope.member.billablehours) ||$scope.member.billablehours==""){
+			
+			
+			if( $scope.invoice.projectType=="Hourly"){
+
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("please enter the member details for billable hours");
+			return;	
+			}
+			else{
+				
+				$scope.member.billablehours='';
+			}
+		}
+
+
+		else if($scope.member.amount==undefined || isNaN($scope.member.amount)){
+
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("please enter the member details for amount");
+			return;	
+
+		}
+
+
+	
+
+		
 
 
 		else{
@@ -333,8 +354,8 @@ angular.module('myApp.controllers')
 			$(".alert-msg").show().delay(1000).fadeOut(); 
 			$(".alert-success").html("Member Details added successfully!!!!!");
 			$scope.iterator++;
-			$scope.member.fromdate='';
-			$scope.member.todate='';
+			$scope.member.fromdate=dt1;
+			$scope.member.todate=dt2;
 			$scope.member.teamlist='';
 			$scope.member.description='';
 			$scope.member.billablehours='';

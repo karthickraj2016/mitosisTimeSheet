@@ -135,6 +135,8 @@ angular.module('myApp', ['ui.router','myApp.controllers','ngStorage','ui.bootstr
 					     controller :'projectCostDetailsController'
 					 })
 					 
+					 
+					 
 				 }]);
 
 angular.module('myApp.controllers',[])
