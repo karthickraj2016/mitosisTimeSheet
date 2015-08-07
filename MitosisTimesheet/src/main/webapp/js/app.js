@@ -32,10 +32,7 @@ angular.module('myApp', ['ui.router','myApp.controllers','ngStorage','ui.bootstr
 						 url: '/login',
 						 templateUrl: 'html/Signin_mit.html'
 					 })
-					 /*  .state('signup', {
-                  url: '/signup',
-                  templateUrl: 'html/signup.html',
-              })*/
+					
 					 .state('access.success', {
 						 url: '/success',
 						 templateUrl: 'html/success.html'
@@ -133,6 +130,11 @@ angular.module('myApp', ['ui.router','myApp.controllers','ngStorage','ui.bootstr
 						 url: '/projectCostDetails',
 						 templateUrl: 'html/projectCost.html',
 					     controller :'projectCostDetailsController'
+					 })
+					 .state('bankReconcile', {
+						 url: '/bankReconcile',
+						 templateUrl: 'html/bank_reconcile.html',
+					     controller :'bankReconcileController'
 					 })
 					 
 					 

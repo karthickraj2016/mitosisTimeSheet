@@ -191,7 +191,9 @@ public class CustomerPaymentImpl extends BaseService implements
 			// System.out.println("NEW=="+newBalance);
 			invoice.setBalanceAmount(newBalance);
 			invoice.setPaidAmount(newPaid);
-			if (invoice.getInvoiceAmount().equals(invoice.getPaidAmount())) {
+			if(invoice.getPaidAmount().equals(0)){
+				invoice.setInvoiceStatus("UNPAID");
+			}else if (invoice.getInvoiceAmount().equals(invoice.getPaidAmount())) {
 				invoice.setInvoiceStatus("PAID");
 			} else {
 				invoice.setInvoiceStatus("PARTIALLY-PAID");
