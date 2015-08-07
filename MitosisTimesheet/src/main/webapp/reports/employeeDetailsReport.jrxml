@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="93"/>
-	<property name="ireport.y" value="62"/>
+	<property name="ireport.y" value="0"/>
 	<queryString>
 		<![CDATA[SELECT employee_master.id,employee_master.first_name, employee_master.last_name, lob_master.lob_name
 FROM employee_master
@@ -13,7 +13,9 @@ ON employee_master.lob_id=lob_master.id;]]>
 	<field name="first_name" class="java.lang.String"/>
 	<field name="last_name" class="java.lang.String"/>
 	<field name="lob_name" class="java.lang.String"/>
-	<variable name="totalemployees" class="java.lang.Integer" resetType="Group" resetGroup="lob" calculation="Sum"/>
+	<variable name="totalemployees" class="java.lang.Integer" resetType="Group" resetGroup="lob" calculation="Count">
+		<variableExpression><![CDATA[$F{id}]]></variableExpression>
+	</variable>
 	<group name="lob">
 		<groupExpression><![CDATA[$F{lob_name}]]></groupExpression>
 		<groupHeader>
@@ -71,7 +73,7 @@ ON employee_master.lob_id=lob_master.id;]]>
 					<reportElement x="355" y="0" width="1" height="27"/>
 				</line>
 				<textField>
-					<reportElement x="407" y="5" width="127" height="20"/>
+					<reportElement x="407" y="7" width="114" height="16"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
 					<textFieldExpression class="java.lang.String"><![CDATA[$V{totalemployees}]]></textFieldExpression>
 				</textField>
