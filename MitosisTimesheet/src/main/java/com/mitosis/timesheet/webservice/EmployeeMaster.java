@@ -348,6 +348,7 @@ public class EmployeeMaster extends JasperUtil{
     	JRBeanCollectionDataSource ds = null;
     	
     	jsonObject.put("report","report successful");
+    	jsonObject.put("pdfFileName", "employeeDetailsReport"+employeeId+".pdf");
     	
     	
     	return jsonObject;
