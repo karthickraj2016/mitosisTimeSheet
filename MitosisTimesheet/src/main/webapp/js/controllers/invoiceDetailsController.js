@@ -9,6 +9,7 @@ angular.module('myApp.controllers')
 	$scope.iterator=0;
 
 	var hoursallowed;
+	var memberobj;
 
 
 	var invoice= new Array();
@@ -293,19 +294,15 @@ angular.module('myApp.controllers')
 		}
 		
 
-		else if($scope.member.billablehours==undefined || isNaN($scope.member.billablehours) ||$scope.member.billablehours==""){
+		else if(($scope.member.billablehours==undefined || isNaN($scope.member.billablehours) ||$scope.member.billablehours=="")&&($scope.invoice.projectType=="Hourly")){
 			
 			
-			if( $scope.invoice.projectType=="Hourly"){
+			
 
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("please enter the member details for billable hours");
 			return;	
-			}
-			else{
-				
-				$scope.member.billablehours='';
-			}
+			
 		}
 
 
@@ -336,13 +333,11 @@ angular.module('myApp.controllers')
 
 			if($scope.member.teamlist==undefined || $scope.member.teamlist==null || $scope.member.teamlist==""){
 
-				if($scope.member.teamlist.member.name){
-					$scope.member.teamlist.member.name=null;
-				}
+				memberobj ="";
 			}
 
 			else if($scope.member.teamlist.member.name){
-				var memberobj=$scope.member.teamlist.member.name;
+				memberobj=$scope.member.teamlist.member.name;
 			}
 			invoice = {"fromdate":$scope.member.fromdate,"todate":$scope.member.todate,"description":$scope.member.description,"billablehours":$scope.member.billablehours,"amount":$scope.member.amount,"index":$scope.iterator,"rateperhour":$scope.member.rateperhour};
 			invoice["teammember"]=memberobj;

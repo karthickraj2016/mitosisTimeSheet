@@ -47,7 +47,7 @@ public class InvoiceDetailsModel {
 	private BigDecimal ratePerHour;
 	
 	@Column(name="billable_hours")
-	private int billableHours;
+	private Integer billableHours;
 	
 	@Column(name="total_amount")
 	private BigDecimal totalAmount;
@@ -147,12 +147,12 @@ public class InvoiceDetailsModel {
 	}
 
 
-	public int getBillableHours() {
+	public Integer getBillableHours() {
 		return billableHours;
 	}
 
 
-	public void setBillableHours(int billableHours) {
+	public void setBillableHours(Integer billableHours) {
 		this.billableHours = billableHours;
 	}
 
