@@ -92,11 +92,16 @@ public class CustomerPayment {
 		@POST
 		@Consumes(MediaType.APPLICATION_JSON)
 		@Produces(MediaType.APPLICATION_JSON)
-		public Object remove(JSONObject jsonObject) throws JSONException, ParseException {
+		public JSONObject remove(JSONObject jsonObject) throws JSONException, ParseException {
 			int companyId=jsonObject.getInt("id");
 			boolean c=paymentservice.remove(companyId);
-			return c;
-
+			JSONObject json=new JSONObject();
+			if(c){
+				json.put("value", "success");
+			}else{
+				json.put("value", "error");
+			}
+			return json;
 		}
 		@Path("/showCustomerlist")
 		@GET

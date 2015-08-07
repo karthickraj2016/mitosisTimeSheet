@@ -158,7 +158,6 @@ public class CustomerPaymentImpl extends BaseService implements
 			System.out.println(invoice);
 			BigDecimal oldBalance = invoice.getBalanceAmount();
 			BigDecimal oldPaid = invoice.getPaidAmount();
-			BigDecimal invoiceAmount=invoice.getInvoiceAmount();
 			BigDecimal newBalance;
 			BigDecimal newPaid;
 			System.out.println("OLD==" + oldBalance);
@@ -186,7 +185,7 @@ public class CustomerPaymentImpl extends BaseService implements
 				newPaid = oldPaid.subtract(amt);
 			} else {
 				// System.out.println("==>ACTION Insertion<==");
-				newBalance = invoiceAmount.subtract(amt);
+				newBalance = oldBalance.subtract(amt);
 				newPaid = oldPaid.add(amt);
 			}
 			// System.out.println("NEW=="+newBalance);

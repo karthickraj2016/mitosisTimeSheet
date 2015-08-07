@@ -234,7 +234,7 @@
 			<td style="word-spacing: 15px;">
 				<a><span class="glyphicon glyphicon-pencil" ng-click="showEdit = !showEdit" ng-show="!showEdit"></span></a>
 				<a><span class="glyphicon glyphicon-remove" ng-click="confirmDelete(sheet.id)" ng-show="!showEdit"></span></a>
-				<a><span class="glyphicon glyphicon-ok" ng-click="showEdit = !showEdit;updateEmployeeMasterDetails(sheet)" ng-show="showEdit" ng-disabled="checkRequired(sheet);"></span></a>
+				<a><span class="glyphicon glyphicon-ok" ng-click="showEdit = !showEdit;updateReceipt(sheet)" ng-show="showEdit" ng-disabled="checkRequired(sheet);"></span></a>
 				<a><span class="glyphicon glyphicon-ban-circle" ng-click="showEdit = !showEdit" ng-show="showEdit"></span></a>
      		</td>
 		</tr>
@@ -244,3 +244,5 @@
 <pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="numPerPage" class="pagination-sm" boundary-links="true"></pagination>
 </div>
 </div>
+<div class="alert-msg col-xs-12 col-sm-6" style="margin-left: 23%; margin-top: 0%; display: b"><p class="alert-success"></p></div>
+<div class="alert-msg1 col-xs-12 col-sm-6" style="margin-left: 23%; margin-top: 0%;"><p class="alert-danger"></p></div>
