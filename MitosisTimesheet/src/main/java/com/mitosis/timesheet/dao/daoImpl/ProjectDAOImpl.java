@@ -163,7 +163,7 @@ public class ProjectDAOImpl extends BaseService implements ProjectDAO {
 			Root<ProjectModel> root = cq.from(ProjectModel.class);
 			cq.where(qb.equal(root.get("customer").get("customerId"), cusid),qb.equal(root.get("billable"), "Yes"));
 			cq.select(root);
-			cq.orderBy(qb.desc(root.get("projectId")));
+			cq.orderBy(qb.desc(root.get("projectName")));
 			projectlist = entityManager.createQuery(cq).getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();

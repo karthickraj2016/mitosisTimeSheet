@@ -124,17 +124,80 @@ angular.module('myApp.controllers')
 			"invoiceNumber": $scope.invoices.invoiceNumber
 		});
 		$http({
-			url: 'rest/bankReconcile/getReceiptDetails',
+			url: 'rest/bankReconcile/getPaymentDetails',
 			method: 'POST',
 			data:ino,
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		}).success(function(result, status, headers) {			
+		}).success(function(result, status, headers) {
+			
+			$scope.paymentDetails = result;
 			console.log(result);
 			
 		});
 
+	}
+	
+	
+	$scope.getReceiptDetails = function(){
+		
+		
+		
+		
+		var menuJson = angular.toJson({
+			"receiptNumber": $scope.receipt.receiptNumber
+		});
+		$http({
+			url: 'rest/bankReconcile/getReceiptDetails',
+			method: 'POST',
+			data:menuJson,
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).success(function(result, status, headers) {
+			
+			$scope.receiptDetails = result;
+			console.log(result);
+			
+		});
+		
+		
+		
+		
+		
+	}
+	
+	
+	$scope.insertPaymentInfo = function(){
+		
+		
+		var menuJson = angular.toJson({
+			"receiptNumber": $scope.receipt.receiptNumber,"recieveddate":$scope.recievedDate,"bankcommission":$scope.bankcommision,"exchangerate":$scope.exchangerate,"amount":amount
+		});
+		
+		
+		$http({
+			url: 'rest/bankReconcile/insertReconcile',
+			method: 'POST',
+			data:menuJson,
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).success(function(result, status, headers) {
+			
+			
+			
+		});
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 
 }])

@@ -1,6 +1,12 @@
 package com.mitosis.timesheet.webservice;
 
+import java.math.BigDecimal;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -11,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import com.mitosis.timesheet.model.CustomerPaymentModel;
 import com.mitosis.timesheet.service.BankReconcileService;
 import com.mitosis.timesheet.service.impl.BankReconcileServiceImpl;
 
@@ -19,15 +26,71 @@ public class BankReconcile {
 	
 	BankReconcileService reconcileService=new BankReconcileServiceImpl();
 	
+	@Path("/getPaymentDetails")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<CustomerPaymentModel> getPaymentDetails(JSONObject jsonObject) throws JSONException, ParseException {
+		
+		System.out.println(jsonObject);
+		
+		String invoiceNumber=jsonObject.getString("invoiceNumber");
+		
+		List<CustomerPaymentModel> customerPayment = new ArrayList<CustomerPaymentModel>();
+		
+		customerPayment=reconcileService.getPaymentDetails(invoiceNumber);
+		
+		System.out.println(customerPayment);
+		
+		return customerPayment;
+	}
+	
+
 	@Path("/getReceiptDetails")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Object getReceiptDetails(JSONObject jsonObject) throws JSONException, ParseException {
+	public CustomerPaymentModel getReceiptDetails(JSONObject jsonObject) throws JSONException, ParseException {
 		
-		String ino=jsonObject.getString("invoiceNumber");
-		return reconcileService.getReceiptDetails(ino);
+		System.out.println(jsonObject);
+		
+		String receiptNumber=jsonObject.getString("receiptNumber");
+		
+		CustomerPaymentModel customerPayment = new CustomerPaymentModel();
+		
+		customerPayment=reconcileService.getReceiptDetails(receiptNumber);
+		
+		System.out.println(customerPayment);
+		
+		return customerPayment;
 	}
+	
+
+	@Path("/insertReconcile")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public CustomerPaymentModel insertReconcile(JSONObject jsonObject) throws JSONException, ParseException {
+		
+		CustomerPaymentModel customerPaymentModel = new CustomerPaymentModel();
+		
+		DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		Date date=sdf.parse(jsonObject.getString("receiptDate"));
+	
+		customerPaymentModel.setReceiptNumber(jsonObject.getString("receiptNumber"));
+		
+		BigDecimal exchangeRate = new BigDecimal(jsonObject.getInt("exchangerate"));
+		customerPaymentModel.setExchangeRate(exchangeRate);
+		customerPaymentModel.setReceiptDate(date);
+		BigDecimal commissionamount = new BigDecimal(jsonObject.getInt("commisionamount"));
+		customerPaymentModel.setCommisionAmount(commissionamount);
+		BigDecimal recievedamount = new BigDecimal(	jsonObject.getInt("receivedAmount"));
+		customerPaymentModel.setReceivedAmount(recievedamount);
+		customerPaymentModel.setCurrencyCode(jsonObject.getString("currencycode"));
+		return null;
+		
+	}
+	;
 	
 
 }
