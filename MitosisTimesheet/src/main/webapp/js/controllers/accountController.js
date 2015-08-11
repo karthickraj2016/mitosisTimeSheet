@@ -5,6 +5,8 @@ angular.module('myApp.controllers')
 
 .controller('accountController', ['$scope', '$http', '$state','$localStorage','$rootScope', function($scope, $http, $state,$localStorage, $rootScope) {
 
+	
+	$rootScope.navbar=true;
     $scope.accountList = function(){
     	
     	$http({
@@ -17,7 +19,7 @@ angular.module('myApp.controllers')
     		
     		console.log(result);
     		
-    		$scope.name=result.name;
+    		$rootScope.name=result.name;
     		$scope.eMail=result.eMail;
     		$scope.username = result.userName;
     		    		
@@ -230,7 +232,6 @@ angular.module('myApp.controllers')
 			url: 'rest/accountdetails/logout',
 			method: 'GET',
 		}).success(function(result, status, headers) {
-
 			$state.go('login')
 		})
 	}

@@ -9,6 +9,8 @@ angular.module('myApp.controllers')
 	,$scope.currentPage = 1
 	,$scope.numPerPage = 8
 	,$scope.maxSize = 5;
+   	
+   	$rootScope.navbar=true;
 	
    	var hoursallowed;
 

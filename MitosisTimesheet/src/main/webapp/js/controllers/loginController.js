@@ -5,6 +5,9 @@ angular.module('myApp.controllers')
 
 .controller('loginController', ['$scope', '$http', '$state','$localStorage','$rootScope', function($scope, $http, $state,$localStorage, $rootScope) {
 
+	
+	
+	$rootScope.navbar=false;
 	/*if ( angular.isDefined( $localStorage.settings) ) {
 			   $rootScope.app =  $localStorage.settings;
 		      } */

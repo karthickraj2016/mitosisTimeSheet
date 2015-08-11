@@ -173,7 +173,18 @@ angular.module('myApp.controllers')
 		
 		
 		var menuJson = angular.toJson({
-			"receiptNumber": $scope.receipt.receiptNumber,"recieveddate":$scope.recievedDate,"bankcommission":$scope.bankcommision,"exchangerate":$scope.exchangerate,"amount":amount
+			"receiptNumber": $scope.receipt.receiptNumber,
+			"recieveddate":$scope.recievedDate,
+			"commisionamount":$scope.commisionamount,
+			"exchangerate":$scope.exchangerate,
+			"receivedamount":$scope.receivedamount,
+			"paidAmountInr":$scope.paidAmountInr,
+			"invoiceNumber":$scope.invoices.invoiceNumber,
+			"invoiceAmount":$scope.invoices.invoiceAmount,
+			"paidAmount":$scope.invoices.paidAmount,
+			"receiptdate":$scope.receiptDetails.receiptDateStr
+			
+			
 		});
 		
 		
@@ -185,6 +196,13 @@ angular.module('myApp.controllers')
 				'Content-Type': 'application/json'
 			}
 		}).success(function(result, status, headers) {
+			
+			if(result=="inserted"){
+
+				alert("inserted suceess");
+
+			}
+				
 			
 			
 			

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,8 +25,8 @@ public class CustomerPaymentModel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
 	private Integer id;
-	@ManyToOne(targetEntity = InvoiceHdrModel.class)
-	@JoinColumn(name = "invoice_number", nullable = false, referencedColumnName = "invoice_number")
+	@ManyToOne(targetEntity = InvoiceHdrModel.class,  cascade = CascadeType.ALL)
+	@JoinColumn(name = "invoice_number", nullable = false, updatable=true, referencedColumnName = "invoice_number")
 	private InvoiceHdrModel invoiceHdr;
 	
 	@Column(name="receipt_date")

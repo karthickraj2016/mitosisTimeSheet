@@ -125,8 +125,22 @@ angular.module('myApp.controllers')
 			}
 		}).success(function(result, status, headers) {
 
-			$scope.employeeEntryList=result; 
-			$scope.asOnDate=result[0].asOnEntryDate;
+			 	var a=result; 
+				var emp;
+				$scope.asOnDate=a[0].asOnEntryDate;
+				
+				for(var i=0;i<a.length;i++){
+					
+					if(angular.isUndefined(emp)){
+						emp = new Array();
+					}				
+					
+					var empRate={"id":a[i].id,"userId":a[i].employee.id,"employeeId":a[i].employeeId,"firstName":a[i].firstName,"lastName":a[i].lastName, "joiningEntryDate":a[i].joiningEntryDate, "expStartEntryDate":a[i].expStartEntryDate,"yearsOfExperience":a[i].yearsOfExperience, "monthsOfExperience":a[i].monthsOfExperience, "level":a[i].level, "lobName":a[i].lob.lobName, "billable":a[i].billable};
+				  
+					emp.push(empRate);
+				}
+				
+	    		$scope.employeeEntryList=emp;
 
 			$scope.$watch('currentPage + numPerPage', function() {
 				var begin = (($scope.currentPage - 1) * $scope.numPerPage)
