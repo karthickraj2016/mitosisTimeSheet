@@ -5,40 +5,7 @@ angular.module('myApp.controllers')
 
 .controller('customerDetailsController', ['$scope', '$http', '$state','$localStorage','$rootScope', function($scope, $http, $state,$localStorage, $rootScope) {
 
-	$http({
-		url: 'rest/account/getName',
-		method: 'GET',
-		/*data: menuJson,*/
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	}).success(function(result, status, headers) {
-		if(result==""){
-			$state.go('login')
 
-		}else{
-			$scope.name=result;
-		}
-	});
-
-	$http({
-		url: 'rest/timesheet/getUserDetails',
-		method: 'GET',
-		/*data: menuJson,*/
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	}).success(function(result, status, headers) {
-
-		$scope.manageFinance=result.manageFinance;
-		$scope.manageProject=result.manageProject;
-		$scope.manageTeam=result.manageTeam;
-		$scope.manageCustomer=result.manageCustomer;
-		$scope.manageEmployees=result.manageEmployees;
-		
-	});
-
-	
 	$scope.filteredParticipantsResults = []
 	,$scope.currentPage = 1
 	,$scope.numPerPage = 8
@@ -92,7 +59,7 @@ angular.module('myApp.controllers')
 	$scope.nameValidation = function(customer){
 
 		var name=$('#customerName').val();
-		
+
 		if(name!=""){
 
 			var menuJson=angular.toJson({"name":name});
@@ -118,11 +85,11 @@ angular.module('myApp.controllers')
 			})
 		}
 	},
-			
+
 	$scope.mailValidation = function(customer){
 
 		var mail=$('#customerMail').val();
-		
+
 		if(mail!=""){
 
 			var menuJson=angular.toJson({"mail":mail});
@@ -143,24 +110,24 @@ angular.module('myApp.controllers')
 					$(".alert-msg1").show().delay(1000).fadeOut(); 
 					$(".alert-danger").html("MailId Already Exists");
 				}else{
-					
-				$scope.validateEmail = function(mail) {
 
-					var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-					return emailReg.test( mail );
-				}
+					$scope.validateEmail = function(mail) {
 
-				var lstIndex = mail.lastIndexOf('@');
-				if( !$scope.validateEmail(mail)) {
-					$(".alert-msg1").show().delay(1000).fadeOut(); 
-					$(".alert-danger").html("EmailId is not valid");
-					$('#customerMail').val('');
-					$('#customerMail').focus();
-					return;
-				} else{
-					$scope.addCustomerDetails(customer);
+						var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+						return emailReg.test( mail );
+					}
+
+					var lstIndex = mail.lastIndexOf('@');
+					if( !$scope.validateEmail(mail)) {
+						$(".alert-msg1").show().delay(1000).fadeOut(); 
+						$(".alert-danger").html("EmailId is not valid");
+						$('#customerMail').val('');
+						$('#customerMail').focus();
+						return;
+					} else{
+						$scope.addCustomerDetails(customer);
+					}
 				}
-			  }
 			})
 		}
 	}
@@ -174,7 +141,7 @@ angular.module('myApp.controllers')
 			$('#phoneNumber').focus();
 		}
 	})
-	
+
 	$('#mobileNumber').blur(function(){
 		var phone=$('#mobileNumber').val();
 		if(phone.length>10){
@@ -213,9 +180,9 @@ angular.module('myApp.controllers')
 	},
 
 	$scope.updateCustomerDetails = function(reqParam){
-		
+
 		var mail=reqParam.email;
-		
+
 		$scope.validateEmail = function(mail) {
 
 			var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
@@ -231,32 +198,32 @@ angular.module('myApp.controllers')
 		}
 		else{
 
-		$http({
-			url: 'rest/customerDetails/updateCustomer',
-			method: 'POST',
-			data: reqParam,
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		}).success(function(result, status, headers) {
+			$http({
+				url: 'rest/customerDetails/updateCustomer',
+				method: 'POST',
+				data: reqParam,
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).success(function(result, status, headers) {
 
-			if(result.value=="updated"){
-				$(".alert-msg").show().delay(1000).fadeOut(); 
-				$(".alert-success").html("Customer Detail Updated Successfully");
-			}
-			else if(result.value=="InActive"){
-				
-				$(".alert-msg1").show().delay(1000).fadeOut(); 
-				$(".alert-danger").html("Some Projects for this customer is open...Please Kindly close and then change Status");
-				
-				
-			}
-			else{
-				$(".alert-msg1").show().delay(1000).fadeOut(); 
-				$(".alert-danger").html("Customer Detail updating Failed");
-			}
-			$scope.list();	
-		});
+				if(result.value=="updated"){
+					$(".alert-msg").show().delay(1000).fadeOut(); 
+					$(".alert-success").html("Customer Detail Updated Successfully");
+				}
+				else if(result.value=="InActive"){
+
+					$(".alert-msg1").show().delay(1000).fadeOut(); 
+					$(".alert-danger").html("Some Projects for this customer is open...Please Kindly close and then change Status");
+
+
+				}
+				else{
+					$(".alert-msg1").show().delay(1000).fadeOut(); 
+					$(".alert-danger").html("Customer Detail updating Failed");
+				}
+				$scope.list();	
+			});
 		}
 
 	},
@@ -289,16 +256,16 @@ angular.module('myApp.controllers')
 			$scope.list();	
 		})
 	},
-	
+
 	$scope.searchRecords = function(customer){
-		
+
 		var searchValue={"customerName":$scope.customer.customerName,"email":$scope.customer.email,"address":$scope.customer.address,"skypeId":$scope.customer.skypeId,
 				"phone":$scope.customer.phone,"mobile":$scope.customer.mobile,"website":$scope.customer.website,"fax":$scope.customer.fax,"status":$scope.customer.status};
 		console.log(searchValue);
 		var a=$scope.customerlist;
 		var b=[];
 		for(var i=0;i<a.length;i++){
-	
+
 			if(searchValue.customerName==a[i].customerName){
 				b.push(a[i]);
 			}else if(searchValue.email==a[i].email){
@@ -321,7 +288,7 @@ angular.module('myApp.controllers')
 		}
 		$scope.customerlist=b;
 		b=undefined;
-	
+
 		$scope.$watch('currentPage + numPerPage', function() {
 			var begin = (($scope.currentPage - 1) * $scope.numPerPage)
 			, end = begin + $scope.numPerPage;

@@ -4,52 +4,18 @@ angular.module('myApp.controllers')
 
 .controller('teamAssignmentController', ['$scope', '$http', '$state','$rootScope', function($scope, $http, $state, $rootScope) {
 
-
-	$http({
-		url: 'rest/account/getName',
-		method: 'GET',
-		/*data: menuJson,*/
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	}).success(function(result, status, headers) {
-		if(result==""){
-			$state.go('login')
-		}else{
-			$scope.name=result;
-		}
-	});
-	
-
-	$http({
-		url: 'rest/timesheet/getUserDetails',
-		method: 'GET',
-		/*data: menuJson,*/
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	}).success(function(result, status, headers) {
-		
-		$scope.manageFinance=result.manageFinance;
-		$scope.manageProject=result.manageProject;
-		$scope.manageTeam=result.manageTeam;
-		$scope.manageCustomer=result.manageCustomer;
-		$scope.manageEmployees=result.manageEmployees;
-		$scope.accessRights();
-	});
-	
 	$scope.accessRights=function(){
-		
-   if(!$scope.manageTeam){
-			
+
+		if(!$scope.manageTeam){
+
 			$state.go('timesheet')
-		
+
 		}else{
 			$scope.teamList();
 		}
-		
+
 	}
-	
+
 	$http({
 
 		url: 'rest/teamAssignment/getMemberList',
@@ -65,14 +31,14 @@ angular.module('myApp.controllers')
 		$scope.memberlist=result;
 
 		for(var i=0;i<$scope.memberlist.length;i++){
-		    if($scope.memberlist[i].adminFlag >= 1){
-		     $scope.memberlist.splice(i,1);
-		   }
+			if($scope.memberlist[i].adminFlag >= 1){
+				$scope.memberlist.splice(i,1);
+			}
 		}
 		console.log($scope.memberlist);
 	});
 
-   
+
 	$http({
 
 		url: 'rest/teamAssignment/getRoleList',
@@ -87,8 +53,8 @@ angular.module('myApp.controllers')
 
 		$scope.rolelist=result;
 	});
-	
-		
+
+
 	$scope.filteredParticipantsResults = []
 	,$scope.currentPage = 1
 	,$scope.numPerPage = 8
@@ -108,115 +74,41 @@ angular.module('myApp.controllers')
 		}
 
 	}
-	
+
 	$scope.teamList = function(){
-			
+
 		if($scope.manageProject && $scope.manageTeam ){
-			
+
 			$scope.getListByAllProjects();
-			
+
 		}else{
-			
+
 			$scope.getListByProject();
 		}
 	}
-	
-	
-	
-			
-		$scope.getListByAllProjects = function(){
-		
-			$http({
-		
-				url: 'rest/teamAssignment/getProjectList',
-				method: 'GET',
-				/*data: menuJson,*/
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			}).success(function(result, status, headers) {
 
-				console.log(result);
+	$scope.getListByAllProjects = function(){
 
-				$scope.projectlist=result;
-			});
-			
-		
-			$http({
-					url: 'rest/teamAssignment/showAssignedTeamList',
-					method: 'GET',
-					/* data: menuJson,*/
-					headers: {
-						'Content-Type': 'application/json'
-					}
-				}).success(function(result, status, headers) {
+		$http({
 
-					$scope.teamLists=result; 
+			url: 'rest/teamAssignment/getProjectList',
+			method: 'GET',
+			/*data: menuJson,*/
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).success(function(result, status, headers) {
 
-					$scope.$watch('currentPage + numPerPage', function() {
-						var begin = (($scope.currentPage - 1) * $scope.numPerPage)
-						, end = begin + $scope.numPerPage;
-						$scope.filteredParticipantsResults = $scope.teamLists.slice(begin, end);
-						$scope.totalItems =	$scope.teamLists.length;
-					});
-					$scope.noOfPages = Math.ceil($scope.teamLists.length/$scope.maxSize);
-					
-					 $scope.setPage = function(pageNo) {
-					        $scope.currentPage = pageNo;
-					    };
-					
-					    $scope.filter = function() {
-					 $scope.$watch('search', function(term) {
-						 if(term==undefined){
-							 $scope.totalItems =	$scope.teamLists.length; 
-							 
-							 
-						 }
-						  window.setTimeout(function() {
-							  $scope.totalItems = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
-						 
-					        $scope.noOfPages = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
-						  }, 10);
-					    });
-					 
-					    };
+			console.log(result);
 
-				});
-	    	}
-			
-		
-		 $scope.getListByProject = function(){  
-			 
+			$scope.projectlist=result;
+		});
 
-				$http({
-					
-					url: 'rest/timesheet/getprojectlist',
-					method: 'GET',
-					/*data: menuJson,*/
-					headers: {
-						'Content-Type': 'application/json'
-					}
-				}).success(function(result, status, headers) {
-					
-					$scope.projectlist=result;
-					
-					$scope.projectIds=[];
-				
-					for(var i=0;i<($scope.projectlist).length;i++){
-						
-						$scope.projectIds.push($scope.projectlist[i].projectId);
-					
-					}
-								
-         	var menuJson = angular.toJson({"projectIds":$scope.projectIds
-	          });
-	        console.log(menuJson);
-	
-	
-	  $http({
-			url: 'rest/teamAssignment/showAssignedTeamListByUserProjects',
-			method: 'POST',
-			 data: menuJson,
+
+		$http({
+			url: 'rest/teamAssignment/showAssignedTeamList',
+			method: 'GET',
+			/* data: menuJson,*/
 			headers: {
 				'Content-Type': 'application/json'
 			}
@@ -229,42 +121,113 @@ angular.module('myApp.controllers')
 				, end = begin + $scope.numPerPage;
 				$scope.filteredParticipantsResults = $scope.teamLists.slice(begin, end);
 				$scope.totalItems =	$scope.teamLists.length;
-
-			     });
-
+			});
 			$scope.noOfPages = Math.ceil($scope.teamLists.length/$scope.maxSize);
-			
-			 $scope.setPage = function(pageNo) {
-			        $scope.currentPage = pageNo;
-			    };
-			
-			    $scope.filter = function() {
-			 $scope.$watch('search', function(term) {
-				 if(term==undefined){
-					 $scope.totalItems =	$scope.teamLists.length; 
-					 
-					 
-				 }
-				  window.setTimeout(function() {
-					  $scope.totalItems = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
-				 
-			        $scope.noOfPages = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
-				  }, 10);
-			    });	
-			 
-			    };
+
+			$scope.setPage = function(pageNo) {
+				$scope.currentPage = pageNo;
+			};
+
+			$scope.filter = function() {
+				$scope.$watch('search', function(term) {
+					if(term==undefined){
+						$scope.totalItems =	$scope.teamLists.length; 
+
+
+					}
+					window.setTimeout(function() {
+						$scope.totalItems = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
+
+						$scope.noOfPages = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
+					}, 10);
+				});
+
+			};
 
 		});
-	})
-},
-    
-	
+	}
+
+
+	$scope.getListByProject = function(){  
+
+
+		$http({
+
+			url: 'rest/timesheet/getprojectlist',
+			method: 'GET',
+			/*data: menuJson,*/
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).success(function(result, status, headers) {
+
+			$scope.projectlist=result;
+
+			$scope.projectIds=[];
+
+			for(var i=0;i<($scope.projectlist).length;i++){
+
+				$scope.projectIds.push($scope.projectlist[i].projectId);
+
+			}
+
+			var menuJson = angular.toJson({"projectIds":$scope.projectIds
+			});
+			console.log(menuJson);
+
+
+			$http({
+				url: 'rest/teamAssignment/showAssignedTeamListByUserProjects',
+				method: 'POST',
+				data: menuJson,
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).success(function(result, status, headers) {
+
+				$scope.teamLists=result; 
+
+				$scope.$watch('currentPage + numPerPage', function() {
+					var begin = (($scope.currentPage - 1) * $scope.numPerPage)
+					, end = begin + $scope.numPerPage;
+					$scope.filteredParticipantsResults = $scope.teamLists.slice(begin, end);
+					$scope.totalItems =	$scope.teamLists.length;
+
+				});
+
+				$scope.noOfPages = Math.ceil($scope.teamLists.length/$scope.maxSize);
+
+				$scope.setPage = function(pageNo) {
+					$scope.currentPage = pageNo;
+				};
+
+				$scope.filter = function() {
+					$scope.$watch('search', function(term) {
+						if(term==undefined){
+							$scope.totalItems =	$scope.teamLists.length; 
+
+
+						}
+						window.setTimeout(function() {
+							$scope.totalItems = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
+
+							$scope.noOfPages = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
+						}, 10);
+					});	
+
+				};
+
+			});
+		})
+	},
+
+
 	$scope.validateAssignment = function(){
 
 		var menuJson = angular.toJson({
 			"projectId":$scope.project.projectId,"memberId":$scope.member.id,"roleId":$scope.role.id
 		});
-		
+
 		$http({
 			url: 'rest/teamAssignment/validateAssignment',
 			method: 'POST',
@@ -273,28 +236,28 @@ angular.module('myApp.controllers')
 				'Content-Type': 'application/json'
 			}
 		}).success(function(result, status, headers) {
-			
+
 			if(result=="false"){
-				
+
 				$scope.assignTeam();
-													
+
 			}else{
-				
+
 				$(".alert-msg1").show().delay(1000).fadeOut(); 
 				$(".alert-danger").html("This Member is Already Assigned to this Project");
 				$scope.teamList();
 			}
-		
+
 		})
 
 	};
 
 	$scope.assignTeam = function(){
-		
+
 		var menuJson = angular.toJson({
 			"projectId":$scope.project.projectId,"memberId":$scope.member.id,"roleId":$scope.role.id
 		});
-		
+
 		$http({
 			url: 'rest/teamAssignment/insertTeamDetails',
 			method: 'POST',
@@ -317,76 +280,76 @@ angular.module('myApp.controllers')
 
 		})
 	},
-	
+
 	$scope.projectChange=function(){
-		
+
 		$scope.projectchange="true";
-		
+
 	},
 
 	$scope.memberChange=function(){
-		
+
 		$scope.memberchange="true";
-		
+
 	},
 
 
 	$scope.roleChange=function(){
-		
+
 		$scope.rolechange="true";
-		
+
 	},
 
 
 	$scope.validateUpdate = function(reqParam){
-		
+
 		var projectChange=$scope.projectchange;
 		var memberChange=$scope.memberchange;
 		var roleChange=$scope.rolechange;
-	
-		
+
+
 		if(projectChange == undefined && memberChange == undefined && roleChange=="true"){
-		
+
 			$scope.updateTeamAssignment(reqParam);
 			$scope.projectchange=undefined;
 			$scope.memberchange=undefined;
 			$scope.rolechange=undefined;
-			
+
 		}else{
 
-		var menuJson = angular.toJson({
-			"projectId":reqParam.project.projectId,"memberId":reqParam.member.id,"roleId":reqParam.role.id
-		});
-		
-		$http({
-			url: 'rest/teamAssignment/validateAssignment',
-			method: 'POST',
-			data: menuJson,
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		}).success(function(result, status, headers) {
-			
-			if(result=="false"){
-				
-				$scope.updateTeamAssignment(reqParam);
-				$scope.projectchange=undefined;
-				$scope.memberchange=undefined;
-				$scope.rolechange=undefined;
-													
-			}else{
-				
-				$(".alert-msg1").show().delay(1000).fadeOut(); 
-				$(".alert-danger").html("This Member is Already Assigned to this Project");
-				$scope.teamList();
-				$scope.projectchange=undefined;
-				$scope.memberchange=undefined;
-				$scope.rolechange=undefined;
-			}
-		
-		})
-	}
-};
+			var menuJson = angular.toJson({
+				"projectId":reqParam.project.projectId,"memberId":reqParam.member.id,"roleId":reqParam.role.id
+			});
+
+			$http({
+				url: 'rest/teamAssignment/validateAssignment',
+				method: 'POST',
+				data: menuJson,
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).success(function(result, status, headers) {
+
+				if(result=="false"){
+
+					$scope.updateTeamAssignment(reqParam);
+					$scope.projectchange=undefined;
+					$scope.memberchange=undefined;
+					$scope.rolechange=undefined;
+
+				}else{
+
+					$(".alert-msg1").show().delay(1000).fadeOut(); 
+					$(".alert-danger").html("This Member is Already Assigned to this Project");
+					$scope.teamList();
+					$scope.projectchange=undefined;
+					$scope.memberchange=undefined;
+					$scope.rolechange=undefined;
+				}
+
+			})
+		}
+	};
 
 	$scope.updateTeamAssignment = function(reqParam){
 
@@ -442,8 +405,7 @@ angular.module('myApp.controllers')
 			$scope.teamList();	
 		})
 	},
-	
-	
+
 
 	$scope.logout = function(){
 

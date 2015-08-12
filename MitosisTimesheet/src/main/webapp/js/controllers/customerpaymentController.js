@@ -31,22 +31,6 @@ angular.module('myApp.controllers')
 	};
 
 	$http({
-		url: 'rest/timesheet/getUserDetails',
-		method: 'GET',
-		/*data: menuJson,*/
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	}).success(function(result, status, headers) {
-
-		$scope.manageFinance=result.manageFinance;
-		$scope.manageProject=result.manageProject;
-		$scope.manageTeam=result.manageTeam;
-		$scope.manageCustomer=result.manageCustomer;
-		$scope.manageEmployees=result.manageEmployees;
-	});
-
-	$http({
 		url: 'rest/payment/showCustomerlist',
 		method: 'GET',
 		headers: {
@@ -167,9 +151,9 @@ angular.module('myApp.controllers')
 			$scope.deleteReceipt(id);
 		}
 	},
-	
+
 	$scope.deleteReceipt = function(id){
-		
+
 		$http({
 			url: 'rest/payment/removePayment',
 			method: 'POST',
@@ -178,21 +162,21 @@ angular.module('myApp.controllers')
 				'Content-Type': 'application/json'
 			}
 		}).success(function(result, status, headers) {
-			
+
 			if(result.value="success"){
 				$(".alert-msg").show().delay(1000).fadeOut(); 
 				$(".alert-success").html("Receipt Deleted Successfully");
-			$scope.list();			
+				$scope.list();			
 			}
 		})
 	}
 
 	$scope.updateReceipt =function(reqParam){
-		
+
 		var payment = angular.toJson({"id":reqParam.id,
 			"invoiceNumber": reqParam.invoiceHdr.invoiceNumber,"currencyCode":reqParam.currencyCode,"receiptDate":reqParam.receiptDateStr,"receiptNumber":reqParam.receiptNumber,"paidAmount":reqParam.paidAmount
 		});
-	
+
 		$http({
 			url: 'rest/payment/addPayment',
 			method: 'POST',
@@ -201,14 +185,14 @@ angular.module('myApp.controllers')
 				'Content-Type': 'application/json'
 			}
 		}).success(function(result, status, headers) {
-			
+
 			if(result=="true"){
 				$(".alert-msg").show().delay(1000).fadeOut(); 
 				$(".alert-success").html("Receipt Updated Successfully");
-			$scope.list();			
+				$scope.list();			
 			}
 		})
-		
+
 	}
 
 	$scope.zerocheck = function(){

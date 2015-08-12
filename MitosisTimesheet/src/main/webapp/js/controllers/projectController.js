@@ -49,25 +49,6 @@ angular.module('myApp.controllers')
 				$scope.toDate = fromDate;
 			};
 			
-			
-	$http({
-		url: 'rest/timesheet/getUserDetails',
-		method: 'GET',
-		/*data: menuJson,*/
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	}).success(function(result, status, headers) {
-
-		$scope.manageFinance=result.manageFinance;
-		$scope.manageProject=result.manageProject;
-		$scope.manageTeam=result.manageTeam;
-		$scope.manageCustomer=result.manageCustomer;
-		$scope.manageEmployees=result.manageEmployees;
-		$scope.accessRights();
-	});
-
-
 	$scope.accessRights=function(){
 
 		if(!$scope.manageProject){
@@ -76,23 +57,6 @@ angular.module('myApp.controllers')
 		}
 
 	}
-
-
-	$http({
-		url: 'rest/account/getName',
-		method: 'GET',
-		/*data: menuJson,*/
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	}).success(function(result, status, headers) {
-		if(result==""){
-			$state.go('login')
-
-		}else{
-			$scope.name=result;
-		}
-	});
 
 	$('#name').blur(function(){
 		var projectName=$('#name').val();

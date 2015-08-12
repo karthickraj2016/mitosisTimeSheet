@@ -4,22 +4,7 @@ angular.module('myApp.controllers')
 
 .controller('userRightsController', ['$scope', '$http', '$state','$rootScope', function($scope, $http, $state, $rootScope) {
 
-	$http({
-		url: 'rest/account/getName',
-		method: 'GET',
-	/*	data: menuJson,*/
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	}).success(function(result, status, headers) {
-		if(result==""){
-			$state.go('login')
-		}else{
-			$scope.name=result;
-		}
-	});
-	
-			
+
 	$scope.filteredParticipantsResults = []
 	,$scope.currentPage = 1
 	,$scope.numPerPage = 8
@@ -73,7 +58,7 @@ angular.module('myApp.controllers')
 
 		})
 	},
-	
+
 	$scope.update = function(reqParam){
 
 
@@ -96,8 +81,8 @@ angular.module('myApp.controllers')
 		})
 
 	},
-	
-	
+
+
 	$scope.logout = function(){
 
 		$http({
@@ -108,5 +93,5 @@ angular.module('myApp.controllers')
 			$state.go('login')
 		})
 	}
-	
+
 }])

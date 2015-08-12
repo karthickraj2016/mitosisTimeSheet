@@ -13,7 +13,7 @@ angular.module('myApp.controllers')
 
 
 	var invoice= new Array();
-	
+
 	var dt1;
 	var dt2;
 
@@ -77,28 +77,12 @@ angular.module('myApp.controllers')
 	};
 
 
-	$http({
-		url: 'rest/timesheet/getUserDetails',
-		method: 'GET',
-		/*data: menuJson,*/
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	}).success(function(result, status, headers) {
-
-		$scope.manageFinance=result.manageFinance;
-		$scope.manageProject=result.manageProject;
-		$scope.manageTeam=result.manageTeam;
-		$scope.manageCustomer=result.manageCustomer;
-		$scope.manageEmployees=result.manageEmployees;
-	});
-
 	$scope.loadProjects=function()
 	{
 		var cusid = angular.toJson({
 			"customerId": $scope.invoice.customer.customerId
 		});
-		
+
 		$scope.invoice.invoiceno="";
 		$http({
 			url: 'rest/payment/projectList',
@@ -198,16 +182,16 @@ angular.module('myApp.controllers')
 	$scope.projectBasedSelections = function(project){
 
 		var menuJson = angular.toJson({"project":project});
-		
+
 		$scope.invoice.invoiceno="";
 		$scope.invoiceList=[];
 		$scope.invoice.projectType="";
 		$scope.invoice.currency="";
 		$scope.invoice.invoiceamt="";
 		$scope.invoice.teammembers=[];
-		
-		
-		
+
+
+
 
 
 		$http({
@@ -266,7 +250,7 @@ angular.module('myApp.controllers')
 			return;
 
 		}
-		
+
 
 
 		if($scope.member.fromdate==undefined||$scope.member.todate==undefined){
@@ -292,17 +276,17 @@ angular.module('myApp.controllers')
 			return;	
 
 		}
-		
+
 
 		else if(($scope.member.billablehours==undefined || isNaN($scope.member.billablehours) ||$scope.member.billablehours=="")&&($scope.invoice.projectType=="Hourly")){
-			
-			
-			
+
+
+
 
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("please enter the member details for billable hours");
 			return;	
-			
+
 		}
 
 
@@ -315,9 +299,9 @@ angular.module('myApp.controllers')
 		}
 
 
-	
 
-		
+
+
 
 
 		else{
@@ -344,7 +328,7 @@ angular.module('myApp.controllers')
 			console.log(invoice);
 			var copiedarray=[];
 			$scope.invoiceList.push(invoice);
-			
+
 			console.log($scope.invoiceList);
 			$(".alert-msg").show().delay(1000).fadeOut(); 
 			$(".alert-success").html("Member Details added successfully!!!!!");
@@ -363,14 +347,14 @@ angular.module('myApp.controllers')
 	}
 
 	$scope.updateteammembers= function(sheet){
-		
+
 
 
 
 		$scope.invoiceList[sheet.index]=sheet;
-		
-		
-		
+
+
+
 		$(".alert-msg").show().delay(1000).fadeOut(); 
 		$(".alert-success").html("Member Details updated successfully!!!!!");
 

@@ -78,7 +78,7 @@ angular.module('myApp.controllers')
 	//$scope.user = {};
 	$scope.signup = function() {
 		// Try to login
-		
+
 		if($scope.email!=$scope.username){
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("EmailId and Username should be same");
@@ -86,13 +86,13 @@ angular.module('myApp.controllers')
 		}
 
 		var emailId = $scope.email;
-		
+
 		$scope.validateEmail = function($email) {
 
 			var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
 			return emailReg.test( $email );
 		}
-		
+
 		var lstIndex = emailId.lastIndexOf('@');
 		if( !$scope.validateEmail(emailId)) {
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
@@ -103,13 +103,13 @@ angular.module('myApp.controllers')
 			$(".alert-danger").html("Invalid domain name, use only mitosistech.com");
 			return;
 		}
-		
-		
+
+
 		if(!($scope.password.indexOf(" ")<0)){
 			$(".alert-msg1").show().delay(1500).fadeOut(); 
 			$(".alert-danger").html("Invalid Password....clear spaces in password");
 			return;
-			
+
 		}
 
 		$scope.loader=true;
@@ -122,9 +122,9 @@ angular.module('myApp.controllers')
 			"name": $scope.name,"username":$scope.username,"password":$scope.password,"email":$scope.email
 		});
 
-		  
 
-		
+
+
 		$http({
 			url: 'rest/account/signup',
 			method: 'POST',

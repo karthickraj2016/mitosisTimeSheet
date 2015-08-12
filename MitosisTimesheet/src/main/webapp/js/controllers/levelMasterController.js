@@ -4,66 +4,33 @@ angular.module('myApp.controllers')
 
 
 .controller('levelMasterController', ['$scope', '$http', '$state','$localStorage','$rootScope', '$dialogs', function($scope, $http, $state,$localStorage, $rootScope,$dialogs) {
-	
-	  $scope.viewdet = function (){
-			$('.emp-det-show').fadeIn(200);
-			$('.overlay').fadeIn(200);
-		}
-     $scope.employeeDetails = function(level) {
-    	     	   	
-    	 $http({
-    			url: 'rest/levelMaster/getEmployeesByLevel',
-    			method: 'POST',
-    			data: {"level":level},
-    			headers: {
-    				'Content-Type': 'application/json'
-    			}
-    		}).success(function(result, status, headers) {
-    		
-    			$scope.empDetList=result;
-    			$scope.viewdet();
-    		})
 
-     };
-	
-	$http({
-		url: 'rest/account/getName',
-		method: 'GET',
-		/*data: menuJson,*/
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	}).success(function(result, status, headers) {
-		if(result==""){
-			$state.go('login')
+	$scope.viewdet = function (){
+		$('.emp-det-show').fadeIn(200);
+		$('.overlay').fadeIn(200);
+	}
+	$scope.employeeDetails = function(level) {
 
-		}else{
-			$scope.name=result;
-		}
-	});
-	
-	$http({
-		url: 'rest/timesheet/getUserDetails',
-		method: 'GET',
-		/*data: menuJson,*/
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	}).success(function(result, status, headers) {
+		$http({
+			url: 'rest/levelMaster/getEmployeesByLevel',
+			method: 'POST',
+			data: {"level":level},
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).success(function(result, status, headers) {
 
-		$scope.manageFinance=result.manageFinance;
-		$scope.manageProject=result.manageProject;
-		$scope.manageTeam=result.manageTeam;
-		$scope.manageCustomer=result.manageCustomer;
-		$scope.manageEmployees=result.manageEmployees;
-	
-	});
-	
+			$scope.empDetList=result;
+			$scope.viewdet();
+		})
+
+	};
+
 	$scope.filteredParticipantsResults = []
 	,$scope.currentPage = 1
 	,$scope.numPerPage = 8
 	,$scope.maxSize = 5;
-	
+
 	$scope.check = function(sheet){
 		if(sheet.yearFrom == '' || sheet.yearFrom == undefined){
 			return true;
@@ -83,7 +50,7 @@ angular.module('myApp.controllers')
 			return false;
 		}
 	},
-	
+
 	$scope.list = function() {
 
 		$http({
@@ -107,9 +74,9 @@ angular.module('myApp.controllers')
 
 		})
 	},
-	
+
 	$scope.addLevelMasterDetails = function(){
-		
+
 		var menuJson=angular.toJson({"yearFrom":$scope.levelDetail.yearFrom,"yearTo":$scope.levelDetail.yearTo,
 			"level":$scope.levelDetail.level,"ratePerHour":$scope.levelDetail.ratePerHour,"hoursPerMonth":$scope.levelDetail.hoursPerMonth});
 
@@ -133,9 +100,9 @@ angular.module('myApp.controllers')
 			$scope.levelDetail="";
 		})
 	},
-	
-   $scope.updateLevelMasterDetails = function(reqParam){
-		
+
+	$scope.updateLevelMasterDetails = function(reqParam){
+
 		$http({
 			url: 'rest/levelMaster/updateLevelDetails',
 			method: 'POST',
@@ -155,7 +122,7 @@ angular.module('myApp.controllers')
 			$scope.list();	
 		})
 	},
-	
+
 	$scope.confirmDelete = function(id){
 
 		if(confirm('Are you sure you want to delete?')){
@@ -184,29 +151,29 @@ angular.module('myApp.controllers')
 			$scope.list();	
 		})
 	},
-	
+
 	$scope.calculateAndUpdateEstimation = function(){
-		
+
 		if($scope.inrRate==undefined){
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("Please Enter INR Rate");
 			$('#inr').focus();
 			return;
 		}
-		
+
 		var levelList=$scope.levelEntryList;
-		
+
 		for(var i=0;i<=levelList.length;i++){
-			
+
 			var ratePerHour=levelList[i].ratePerHour;
 			var hoursPerMonth=levelList[i].hoursPerMonth;
 			var amount=ratePerHour*hoursPerMonth;
-		    			
+
 			var menuJson=angular.toJson({"id":levelList[i].id,"yearFrom":levelList[i].yearFrom,"yearTo":levelList[i].yearTo,
 				"level":levelList[i].level,"ratePerHour":levelList[i].ratePerHour,"hoursPerMonth":levelList[i].hoursPerMonth,"amount":amount,
 				"inrRate":$scope.inrRate});
-		
-				
+
+
 			$http({
 				url: 'rest/levelMaster/calculateAndUpdateEstimation',
 				method: 'POST',
@@ -228,40 +195,40 @@ angular.module('myApp.controllers')
 			})
 		}
 	},
-	
+
 	$scope.getEstimatedRevenue = function(){
-	   
+
 		var estimatedRevenue = 0;
-	  
+
 		for(var i = 0; i < $scope.filteredParticipantsResults.length; i++){
-	        var revenue =  $scope.filteredParticipantsResults[i].totalAmount;
-	        estimatedRevenue += revenue;
-	    }
-	    return estimatedRevenue;
+			var revenue =  $scope.filteredParticipantsResults[i].totalAmount;
+			estimatedRevenue += revenue;
+		}
+		return estimatedRevenue;
 	},
-	
+
 	$scope.getCountOfEmp = function(){
-		   
+
 		var numOfEmp = 0;
-	  
+
 		for(var i = 0; i < $scope.filteredParticipantsResults.length; i++){
-	        var emp =  $scope.filteredParticipantsResults[i].numberOfEmployees;
-	        numOfEmp += emp;
-	    }
-	    return numOfEmp;
+			var emp =  $scope.filteredParticipantsResults[i].numberOfEmployees;
+			numOfEmp += emp;
+		}
+		return numOfEmp;
 	},
-	
+
 	$scope.getEstimatedRevenueINR = function(){
-		   
+
 		var estimatedRevenueINR = 0;
-	  
+
 		for(var i = 0; i < $scope.filteredParticipantsResults.length; i++){
-	        var revenue =  $scope.filteredParticipantsResults[i].totalAmountINR;
-	        estimatedRevenueINR += revenue;
-	    }
-	    return estimatedRevenueINR;
+			var revenue =  $scope.filteredParticipantsResults[i].totalAmountINR;
+			estimatedRevenueINR += revenue;
+		}
+		return estimatedRevenueINR;
 	},
-	
+
 	$scope.logout = function(){
 
 		$http({
@@ -272,6 +239,6 @@ angular.module('myApp.controllers')
 			$state.go('login')
 		})
 	}; 
-	
+
 }])
 

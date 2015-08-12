@@ -177,9 +177,11 @@ public class EmployeeMaster extends JasperUtil{
 		
 		masterModel.setLevel(jsonObject.getInt("level"));
 		
+		if(jsonObject.has("lobId")){
 		LobModel lobModel=new LobModel();
 		lobModel.setId(jsonObject.getInt("lobId"));
 		masterModel.setLob(lobModel);
+		}
 				
 		masterModel.setBillable(jsonObject.getString("billable"));
 		

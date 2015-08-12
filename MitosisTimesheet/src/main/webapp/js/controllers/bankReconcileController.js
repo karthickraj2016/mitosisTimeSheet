@@ -5,44 +5,11 @@ angular.module('myApp.controllers')
 
 .controller('bankReconcileController', ['$scope', '$http', '$state','$localStorage','$rootScope', function($scope, $http, $state,$localStorage, $rootScope) {
 
-	$http({
-		url: 'rest/account/getName',
-		method: 'GET',
-		/*data: menuJson,*/
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	}).success(function(result, status, headers) {
-		if(result==""){
-			$state.go('login')
-
-		}else{
-			$scope.name=result;
-		}
-	});
-
-	$http({
-		url: 'rest/timesheet/getUserDetails',
-		method: 'GET',
-		/*data: menuJson,*/
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	}).success(function(result, status, headers) {
-
-		$scope.manageFinance=result.manageFinance;
-		$scope.manageProject=result.manageProject;
-		$scope.manageTeam=result.manageTeam;
-		$scope.manageCustomer=result.manageCustomer;
-		$scope.manageEmployees=result.manageEmployees;
-		
-	});
-	
 	$scope.filteredParticipantsResults = []
 	,$scope.currentPage = 1
 	,$scope.numPerPage = 8
 	,$scope.maxSize = 5;
-	
+
 	$scope.check = function(sheet){
 		if(sheet.customerName == '' || sheet.customerName == undefined){
 			return true;
@@ -66,7 +33,7 @@ angular.module('myApp.controllers')
 			return false;
 		}
 	}
-	
+
 	$http({
 		url: 'rest/payment/showCustomerlist',
 		method: 'GET',
@@ -98,7 +65,7 @@ angular.module('myApp.controllers')
 		});
 
 	}
-	
+
 	$scope.projectChanged = function() {
 		var pid = angular.toJson({
 			"projectId": $scope.projects.projectId
@@ -117,9 +84,9 @@ angular.module('myApp.controllers')
 		});
 
 	}
-	
+
 	$scope.invoiceChanged = function() {
-		
+
 		var ino = angular.toJson({
 			"invoiceNumber": $scope.invoices.invoiceNumber
 		});
@@ -131,20 +98,17 @@ angular.module('myApp.controllers')
 				'Content-Type': 'application/json'
 			}
 		}).success(function(result, status, headers) {
-			
+
 			$scope.paymentDetails = result;
 			console.log(result);
-			
+
 		});
 
 	}
-	
-	
+
+
 	$scope.getReceiptDetails = function(){
-		
-		
-		
-		
+
 		var menuJson = angular.toJson({
 			"receiptNumber": $scope.receipt.receiptNumber
 		});
@@ -156,22 +120,16 @@ angular.module('myApp.controllers')
 				'Content-Type': 'application/json'
 			}
 		}).success(function(result, status, headers) {
-			
+
 			$scope.receiptDetails = result;
 			console.log(result);
-			
+
 		});
-		
-		
-		
-		
-		
+
 	}
-	
-	
+
 	$scope.insertPaymentInfo = function(){
-		
-		
+
 		var menuJson = angular.toJson({
 			"receiptNumber": $scope.receipt.receiptNumber,
 			"recieveddate":$scope.recievedDate,
@@ -183,11 +141,9 @@ angular.module('myApp.controllers')
 			"invoiceAmount":$scope.invoices.invoiceAmount,
 			"paidAmount":$scope.invoices.paidAmount,
 			"receiptdate":$scope.receiptDetails.receiptDateStr
-			
-			
+
 		});
-		
-		
+
 		$http({
 			url: 'rest/bankReconcile/insertReconcile',
 			method: 'POST',
@@ -196,69 +152,50 @@ angular.module('myApp.controllers')
 				'Content-Type': 'application/json'
 			}
 		}).success(function(result, status, headers) {
-			
+
 			if(result=="inserted"){
 
 				alert("inserted suceess");
 
 			}
-				
-			
-			
-			
+
 		});
-		
+
 	}
-		
-		
-		
-		$scope.updatePaymentInfo = function(sheet){
-			
-			
-			var menuJson = angular.toJson({
-				"receiptNumber": $scope.receipt.receiptNumber,
-				"recieveddate":$scope.recievedDate,
-				"commisionamount":$scope.commisionamount,
-				"exchangerate":$scope.exchangerate,
-				"receivedamount":$scope.receivedamount,
-				"paidAmountInr":$scope.paidAmountInr,
-				"invoiceNumber":$scope.invoices.invoiceNumber,
-				"invoiceAmount":$scope.invoices.invoiceAmount,
-				"paidAmount":$scope.invoices.paidAmount,
-				"receiptdate":$scope.receiptDetails.receiptDateStr
-				
-				
-			});
-			
-			
-			$http({
-				url: 'rest/bankReconcile/insertReconcile',
-				method: 'POST',
-				data:menuJson,
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			}).success(function(result, status, headers) {
-				
-				if(result=="inserted"){
 
-					alert("inserted suceess");
+	$scope.updatePaymentInfo = function(sheet){
 
-				}
-					
-				
-				
-				
-			});
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		var menuJson = angular.toJson({
+			"receiptNumber": $scope.receipt.receiptNumber,
+			"recieveddate":$scope.recievedDate,
+			"commisionamount":$scope.commisionamount,
+			"exchangerate":$scope.exchangerate,
+			"receivedamount":$scope.receivedamount,
+			"paidAmountInr":$scope.paidAmountInr,
+			"invoiceNumber":$scope.invoices.invoiceNumber,
+			"invoiceAmount":$scope.invoices.invoiceAmount,
+			"paidAmount":$scope.invoices.paidAmount,
+			"receiptdate":$scope.receiptDetails.receiptDateStr
+
+		});
+
+		$http({
+			url: 'rest/bankReconcile/insertReconcile',
+			method: 'POST',
+			data:menuJson,
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).success(function(result, status, headers) {
+
+			if(result=="inserted"){
+
+				alert("inserted suceess");
+
+			}
+
+		});
+
 	}
 
 }])

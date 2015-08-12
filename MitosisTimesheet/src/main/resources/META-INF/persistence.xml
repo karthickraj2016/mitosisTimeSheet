@@ -17,7 +17,8 @@
 		<class>com.mitosis.timesheet.model.ProjectCostDetailsModel</class>
 		<class>com.mitosis.timesheet.model.CompanyInfoModel</class>	
 		<class>com.mitosis.timesheet.model.InvoiceHdrModel</class>
-		<class>com.mitosis.timesheet.model.CustomerPaymentModel</class>		
+		<class>com.mitosis.timesheet.model.CustomerPaymentModel</class>	
+		<class>com.mitosis.timesheet.model.LobModel</class>	
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/mitosisTimesheetTest" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />

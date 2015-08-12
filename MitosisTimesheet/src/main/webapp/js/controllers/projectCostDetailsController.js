@@ -6,22 +6,6 @@ angular.module('myApp.controllers')
 
 
 	$http({
-		url: 'rest/timesheet/getUserDetails',
-		method: 'GET',
-		/*data: menuJson,*/
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	}).success(function(result, status, headers) {
-
-		$scope.manageFinance=result.manageFinance;
-		$scope.manageProject=result.manageProject;
-		$scope.manageTeam=result.manageTeam;
-		$scope.manageCustomer=result.manageCustomer;
-		$scope.manageEmployees=result.manageEmployees;
-	});
-
-	$http({
 
 		url: 'rest/teamAssignment/getMemberList',
 		method: 'GET',
@@ -59,7 +43,7 @@ angular.module('myApp.controllers')
 	});
 
 	$scope.projectValidation= function(project){
-		
+
 		$scope.emp=undefined;
 
 		var menuJson = angular.toJson({"projectId":project.projectId})
@@ -73,7 +57,7 @@ angular.module('myApp.controllers')
 				'Content-Type': 'application/json'
 			}
 		}).success(function(result, status, headers) {
-			
+
 			if(result.projectType==null){
 				$scope.hdrid=undefined;
 				return;
@@ -84,39 +68,37 @@ angular.module('myApp.controllers')
 				$('#rateTable').hide();
 				$scope.cost=result;
 				$scope.hdrid=result.id;
-				
-				}else{
-				
-				 $('#h-show').show();
-		            $('#hr-show').show();
-		            $('#buttons').show();
-		            $('#rateTable').show();
 
-			$scope.cost=result;
-			$scope.hdrid=result.id;
-		
-			for(var i=0;i<result.projectCostDetails.length;i++){
-				
-				if(angular.isUndefined($scope.emp)){
-					$scope.emp= new Array();
+			}else{
+
+				$('#h-show').show();
+				$('#hr-show').show();
+				$('#buttons').show();
+				$('#rateTable').show();
+
+				$scope.cost=result;
+				$scope.hdrid=result.id;
+
+				for(var i=0;i<result.projectCostDetails.length;i++){
+
+					if(angular.isUndefined($scope.emp)){
+						$scope.emp= new Array();
+					}
+
+					var empRate=[];
+
+					empRate={"member":result.projectCostDetails[i].employee,"rate":result.projectCostDetails[i].rate,"id":result.projectCostDetails[i].id};
+
+					$scope.emp.push(empRate);
 				}
-				
-				var empRate=[];
 
-				empRate={"member":result.projectCostDetails[i].employee,"rate":result.projectCostDetails[i].rate,"id":result.projectCostDetails[i].id};
-			  
-				$scope.emp.push(empRate);
-			}
-			
-			$scope.empList=$scope.emp;
+				$scope.empList=$scope.emp;
 			}
 		});
 	},
 
 	$scope.addProjectCostDetails = function(){
-		
-		$('#addDet').hide();
-		
+
 		if(($scope.cost.projectCost).length>8){
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("Invalid Cost");
@@ -125,7 +107,7 @@ angular.module('myApp.controllers')
 			$('#addDet').show();
 			return;
 		}
-		
+
 		if(($scope.cost.currencyCode).length>3){
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("Invalid Currency Code");
@@ -134,13 +116,13 @@ angular.module('myApp.controllers')
 			$('#addDet').show();
 			return;
 		}
-		
+
 
 		var projectType=$scope.cost.projectType;
 
 		if(projectType=="Fixed"){
-			
-			if($scope.cost.projectCost==undefined){
+
+			if($scope.cost.projectCost==undefined | $scope.cost.projectCost==''){
 				$(".alert-msg1").show().delay(1000).fadeOut(); 
 				$(".alert-danger").html("Please Enter Project Cost");
 				$("#costdet").focus();	
@@ -149,6 +131,8 @@ angular.module('myApp.controllers')
 
 			var menuJson=angular.toJson({"id":$scope.hdrid,"projectId":$scope.project.projectId,"projectType":$scope.cost.projectType,
 				"projectCost":$scope.cost.projectCost,"currencyCode":$scope.cost.currencyCode});			
+
+			$('#addDet').hide();
 
 			$http({
 
@@ -214,7 +198,7 @@ angular.module('myApp.controllers')
 
 
 	$scope.addEmployeeRate = function(){
-		
+
 		if($scope.member==undefined | $scope.member=="Member" ){
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("Please Select Employee");
@@ -230,7 +214,7 @@ angular.module('myApp.controllers')
 			$('#rate').focus();
 			return;
 		}
-						
+
 		if(angular.isUndefined($scope.empList)){
 			$scope.empList= new Array();
 			$scope.iterator=0;

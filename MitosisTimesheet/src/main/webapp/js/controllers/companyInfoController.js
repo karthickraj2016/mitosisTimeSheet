@@ -5,81 +5,64 @@ angular.module('myApp.controllers')
 
 .controller('companyInfoController', ['$scope', '$http', '$state','$localStorage','$rootScope', function($scope, $http, $state,$localStorage, $rootScope) {
 
-	
-	$http({
-		url: 'rest/timesheet/getUserDetails',
-		method: 'GET',
-		/*data: menuJson,*/
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	}).success(function(result, status, headers) {
 
-		$scope.manageFinance=result.manageFinance;
-		$scope.manageProject=result.manageProject;
-		$scope.manageTeam=result.manageTeam;
-		$scope.manageCustomer=result.manageCustomer;
-		$scope.manageEmployees=result.manageEmployees;
-	});
-	
+	$scope.list = function(){
+		$http({
+			url: 'rest/company/showCompany',
+			method: 'GET',
+			/*data: menuJson,*/
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).success(function(result, status, headers) {
+			$scope.comp={};
+			if(result==""){
+				console.log("====>No Result Found");
+			}else{
+				console.log("Result====>"+result.companyName);
+				$scope.comp.companyName=result.companyName;
+				$scope.comp.companyAddress=result.companyAddress;
+				$scope.comp.phoneNumber=result.phoneNumber;
+				$scope.comp.mobileNumber=result.mobileNumber;
+				$scope.comp.faxNo=result.faxNo;
+				$scope.comp.accountNumber=result.accountNumber;
+				$scope.comp.bankName=result.bankName;
+				$scope.comp.bankAddress=result.bankAddress;
+				$scope.comp.ifscCode=result.ifscCode;
+				$scope.comp.micrCode=result.micrCode;
+				$scope.comp.swiftCode=result.swiftCode;
+				$scope.comp.logo="data:image/jpeg;base64,"+result.logo;
+				$scope.oldlogo=result.logo;
+				$scope.comp.id=result.id;
 
-$scope.list = function(){
-	$http({
-		url: 'rest/company/showCompany',
-		method: 'GET',
-		/*data: menuJson,*/
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	}).success(function(result, status, headers) {
-		$scope.comp={};
-		if(result==""){
-			console.log("====>No Result Found");
-		}else{
-			console.log("Result====>"+result.companyName);
-			$scope.comp.companyName=result.companyName;
-			$scope.comp.companyAddress=result.companyAddress;
-			$scope.comp.phoneNumber=result.phoneNumber;
-			$scope.comp.mobileNumber=result.mobileNumber;
-			$scope.comp.faxNo=result.faxNo;
-			$scope.comp.accountNumber=result.accountNumber;
-			$scope.comp.bankName=result.bankName;
-			$scope.comp.bankAddress=result.bankAddress;
-			$scope.comp.ifscCode=result.ifscCode;
-			$scope.comp.micrCode=result.micrCode;
-			$scope.comp.swiftCode=result.swiftCode;
-			$scope.comp.logo="data:image/jpeg;base64,"+result.logo;
-			$scope.oldlogo=result.logo;
-			$scope.comp.id=result.id;
-			
-		}
+			}
 
-	});
-	
-}
-	
+		});
+
+	}
+
 	$rootScope.handleFileSelect = function(evt) {
-			var files = evt.files;
-		    var file = files[0];
-		    if(file.type == "image/png"){
-		    if (files && file) {
-		        var reader = new FileReader();
-		        reader.onload = function(readerEvt) {
-		            var binaryString = readerEvt.target.result;
-		            $rootScope.base64Content = btoa(binaryString);
-		            $scope.res=btoa(binaryString);
-		            $scope.comp.logo="data:image/jpeg;base64,"+btoa(binaryString);
-		            $scope.$apply();
-		           };
-		        reader.readAsBinaryString(file);
-		    }
-		    }else {
-		    	alert("Import image with .png format");
-		    	$('#img1').val('');
-		    }
-		} 
-	
-	
+		var files = evt.files;
+		var file = files[0];
+		if(file.type == "image/png"){
+			if (files && file) {
+				var reader = new FileReader();
+				reader.onload = function(readerEvt) {
+					var binaryString = readerEvt.target.result;
+					$rootScope.base64Content = btoa(binaryString);
+					$scope.res=btoa(binaryString);
+					$scope.comp.logo="data:image/jpeg;base64,"+btoa(binaryString);
+					$scope.$apply();
+				};
+				reader.readAsBinaryString(file);
+			}
+		}else {
+			alert("Import image with .png format");
+			$('#img1').val('');
+		}
+	} 
+
+
 	$scope.addCompany = function(){
 		if($scope.res==null){
 			$scope.res=$scope.oldlogo;}
@@ -125,7 +108,7 @@ $scope.list = function(){
 			$state.go('login')
 		})
 	};
-	
-	
-	
+
+
+
 }])

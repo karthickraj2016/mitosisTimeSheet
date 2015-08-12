@@ -14,22 +14,6 @@ angular.module('myApp.controllers')
 
 
 	$http({
-		url: 'rest/account/getName',
-		method: 'GET',
-		/*data: menuJson,*/
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	}).success(function(result, status, headers) {
-		if(result==""){
-			$state.go('login')
-
-		}else{
-			$scope.name=result;
-		}
-	});
-
-	$http({
 		url: 'rest/employeeMaster/getLobList',
 		method: 'GET',
 		/*data: menuJson,*/
@@ -37,26 +21,11 @@ angular.module('myApp.controllers')
 			'Content-Type': 'application/json'
 		}
 	}).success(function(result, status, headers) {
-		
+
 		$scope.lobList=result;
-		
+
 	});
-	
-	$http({
-		url: 'rest/timesheet/getUserDetails',
-		method: 'GET',
-		/*data: menuJson,*/
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	}).success(function(result, status, headers) {
-		
-		$scope.manageFinance=result.manageFinance;
-		$scope.manageProject=result.manageProject;
-		$scope.manageTeam=result.manageTeam;
-		$scope.manageCustomer=result.manageCustomer;
-		$scope.manageEmployees=result.manageEmployees;
-	});
+
 
 	$http({
 
@@ -125,22 +94,22 @@ angular.module('myApp.controllers')
 			}
 		}).success(function(result, status, headers) {
 
-			 	var a=result; 
-				var emp;
-				$scope.asOnDate=a[0].asOnEntryDate;
-				
-				for(var i=0;i<a.length;i++){
-					
-					if(angular.isUndefined(emp)){
-						emp = new Array();
-					}				
-					
-					var empRate={"id":a[i].id,"userId":a[i].employee.id,"employeeId":a[i].employeeId,"firstName":a[i].firstName,"lastName":a[i].lastName, "joiningEntryDate":a[i].joiningEntryDate, "expStartEntryDate":a[i].expStartEntryDate,"yearsOfExperience":a[i].yearsOfExperience, "monthsOfExperience":a[i].monthsOfExperience, "level":a[i].level, "lobName":a[i].lob.lobName, "billable":a[i].billable};
-				  
-					emp.push(empRate);
-				}
-				
-	    		$scope.employeeEntryList=emp;
+			var a=result; 
+			var emp;
+			$scope.asOnDate=a[0].asOnEntryDate;
+
+			for(var i=0;i<a.length;i++){
+
+				if(angular.isUndefined(emp)){
+					emp = new Array();
+				}				
+
+				var empRate={"id":a[i].id,"userId":a[i].employee.id,"employeeId":a[i].employeeId,"firstName":a[i].firstName,"lastName":a[i].lastName, "joiningEntryDate":a[i].joiningEntryDate, "expStartEntryDate":a[i].expStartEntryDate,"yearsOfExperience":a[i].yearsOfExperience, "monthsOfExperience":a[i].monthsOfExperience, "level":a[i].level, "lob":a[i].lob, "billable":a[i].billable};
+
+				emp.push(empRate);
+			}
+
+			$scope.employeeEntryList=emp;
 
 			$scope.$watch('currentPage + numPerPage', function() {
 				var begin = (($scope.currentPage - 1) * $scope.numPerPage)
@@ -150,37 +119,37 @@ angular.module('myApp.controllers')
 
 			});
 			$scope.noOfPages = Math.ceil($scope.employeeEntryList.length/$scope.maxSize);
-			
-			 $scope.setPage = function(pageNo) {
-			        $scope.currentPage = pageNo;
-			    };
-			
-			    $scope.filter = function() {
-			 $scope.$watch('search', function(term) {
-				 if(term==undefined){
-					 $scope.totalItems =	$scope.employeeEntryList.length; 
-					 
-					 
-				 }
-				  window.setTimeout(function() {
-					  $scope.totalItems = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
-				 
-			        $scope.noOfPages = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
-				  }, 10);
-			    });
-			 
-			    };
+
+			$scope.setPage = function(pageNo) {
+				$scope.currentPage = pageNo;
+			};
+
+			$scope.filter = function() {
+				$scope.$watch('search', function(term) {
+					if(term==undefined){
+						$scope.totalItems =	$scope.employeeEntryList.length; 
+
+
+					}
+					window.setTimeout(function() {
+						$scope.totalItems = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
+
+						$scope.noOfPages = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
+					}, 10);
+				});
+
+			};
 
 		});
 	},
-	
+
 	$scope.validateEmployee = function(employee){
-		
+
 		var userId=employee.id;
 		var id=$('#userId').val();
-		
+
 		if(id!=""){
-			
+
 			$http({
 				url: 'rest/employeeMaster/employeeValidation',
 				method: 'POST',
@@ -197,18 +166,18 @@ angular.module('myApp.controllers')
 					$(".alert-danger").html("Employee Details Already Entered");
 				}
 			})
-			
+
 		}
 	}
-	
-	
+
+
 	$('#empId').blur(function(){
-		
+
 		var employeeId=$('#empId').val();
-	 
+
 		if(employeeId!=""){
-		 
-		   $http({
+
+			$http({
 				url: 'rest/employeeMaster/employeeIdValidation',
 				method: 'POST',
 				data: {"employeeId":employeeId},
@@ -224,10 +193,10 @@ angular.module('myApp.controllers')
 					$(".alert-danger").html("Employee ID Already Exist");
 				}
 			})
-	    }
+		}
 	})
-	
-	
+
+
 	$scope.addEmployeeMasterDetails = function(){
 
 		var dt = new Date();
@@ -236,19 +205,19 @@ angular.module('myApp.controllers')
 		var yyyy = dt.getFullYear();
 		dt=dd+"-"+mm+"-"+yyyy;
 		var asOnDate=dt;
-		
+
 		var joinDate=($scope.employeeDetail.joiningDate).split("-");
 		var startDate=($scope.employeeDetail.expStartDate).split("-");
-        var joinedDate=new Date(joinDate[1]+"-"+joinDate[0]+"-"+joinDate[2]);
-        var startedDate=new Date(startDate[1]+"-"+startDate[0]+"-"+startDate[2]);
-		
-        if(joinedDate<startedDate){
-			
-    	   $(".alert-msg1").show().delay(1000).fadeOut(); 
-		   $(".alert-danger").html("ExpStartDate cannot be after JoinedDate!");
-		  return;
-       }
-		
+		var joinedDate=new Date(joinDate[1]+"-"+joinDate[0]+"-"+joinDate[2]);
+		var startedDate=new Date(startDate[1]+"-"+startDate[0]+"-"+startDate[2]);
+
+		if(joinedDate<startedDate){
+
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("ExpStartDate cannot be after JoinedDate!");
+			return;
+		}
+
 		var menuJson=angular.toJson({"userId":$scope.employee.id,"employeeId":$scope.employeeDetail.employeeId,"firstName":$scope.employeeDetail.firstName,"lastName":$scope.employeeDetail.lastName,"joiningDate":$scope.employeeDetail.joiningDate,
 			"expStartDate":$scope.employeeDetail.expStartDate,"asOnDate":asOnDate,"billable":$scope.employeeDetail.billable});
 
@@ -272,25 +241,25 @@ angular.module('myApp.controllers')
 			$scope.employeeDetail="";
 		})
 	},
-	
-		
+
+
 	$scope.updateEmployeeMasterDetails = function(reqParam){
 
-		
+
 		var joinDate=(reqParam.joiningEntryDate).split("-");
 		var startDate=(reqParam.expStartEntryDate).split("-");
-	    var joinedDate=new Date(joinDate[1]+"-"+joinDate[0]+"-"+joinDate[2]);
-	    var startedDate=new Date(startDate[1]+"-"+startDate[0]+"-"+startDate[2]);
-			
-	    if(joinedDate<startedDate){
-	    	   $(".alert-msg1").show().delay(1000).fadeOut(); 
-			   $(".alert-danger").html("Process Failed");
-			 $scope.list();
-			 return;
-	       }
-				
-		var menuJson=angular.toJson({"id":reqParam.id,"userId":reqParam.employee.id,"employeeId":reqParam.employeeId,"firstName":reqParam.firstName,"lastName":reqParam.lastName,"joiningDate":reqParam.joiningEntryDate,"expStartDate":reqParam.expStartEntryDate,
-			"yearsOfExp":reqParam.yearsOfExperience,"monthsOfExp":reqParam.monthsOfExperience,"level":reqParam.level,"asOnDate":reqParam.asOnEntryDate,"lobId":reqParam.lob.id,"billable":reqParam.billable});
+		var joinedDate=new Date(joinDate[1]+"-"+joinDate[0]+"-"+joinDate[2]);
+		var startedDate=new Date(startDate[1]+"-"+startDate[0]+"-"+startDate[2]);
+
+		if(joinedDate<startedDate){
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("Process Failed");
+			$scope.list();
+			return;
+		}
+
+		var menuJson=angular.toJson({"id":reqParam.id,"userId":reqParam.userId,"employeeId":reqParam.employeeId,"firstName":reqParam.firstName,"lastName":reqParam.lastName,"joiningDate":reqParam.joiningEntryDate,"expStartDate":reqParam.expStartEntryDate,
+			"yearsOfExp":reqParam.yearsOfExperience,"monthsOfExp":reqParam.monthsOfExperience,"level":reqParam.level,"asOnDate":$scope.asOnDate,"lobId":reqParam.lob.id,"billable":reqParam.billable});
 
 		$http({
 			url: 'rest/employeeMaster/updateEmployeeDetails',
@@ -358,25 +327,25 @@ angular.module('myApp.controllers')
 			var d2=currentDate.getDate();
 			var m2=currentDate.getMonth()+1;
 			var y2=currentDate.getFullYear();
-			
+
 			if( d2 < (expStartDate[0])){
-								
+
 				m2=m2-1;
 			}
-	
+
 			if(m2< (expStartDate[1])){
-				
+
 				y2=y2-1;
 				m2=m2+12;
 			}
-		
+
 			var yearsOfExp=y2-expStartDate[2];
 			var monthsOfExp=m2-expStartDate[1];
-							
-			var menuJson=angular.toJson({"id":employeelist[i].id,"userId":employeelist[i].employee.id,"employeeId":employeelist[i].employeeId,"firstName":employeelist[i].firstName,"lastName":employeelist[i].lastName,"joiningDate":employeelist[i].joiningEntryDate,
-					"expStartDate":employeelist[i].expStartEntryDate,"yearsOfExp":yearsOfExp,"monthsOfExp":monthsOfExp,"asOnDate":$scope.asOnDate,"lobId":employeelist[i].lob.id,"billable":employeelist[i].billable});
 
-					
+			var menuJson=angular.toJson({"id":employeelist[i].id,"userId":employeelist[i].userId,"employeeId":employeelist[i].employeeId,"firstName":employeelist[i].firstName,"lastName":employeelist[i].lastName,"joiningDate":employeelist[i].joiningEntryDate,
+				"expStartDate":employeelist[i].expStartEntryDate,"yearsOfExp":yearsOfExp,"monthsOfExp":monthsOfExp,"asOnDate":$scope.asOnDate,"lobId":employeelist[i].lob.id,"billable":employeelist[i].billable});
+
+
 			$http({
 				url: 'rest/employeeMaster/findEmployeeExpAndUpdate',
 				method: 'POST',
@@ -396,12 +365,11 @@ angular.module('myApp.controllers')
 				$scope.list();	
 			})
 		}
-			
+
 	},
-	
-	
-$scope.employeeDetailsReport = function(){
-		
+
+	$scope.employeeDetailsReport = function(){
+
 		$http({
 			url: 'rest/employeeMaster/employeeReport',
 			method: 'GET',
@@ -419,14 +387,8 @@ $scope.employeeDetailsReport = function(){
 			console.log($scope.filepath);
 			return;
 		})
-		
-		
-		
-		
-		
 	},
 
-	
 	$scope.logout = function(){
 
 		$http({
@@ -437,6 +399,6 @@ $scope.employeeDetailsReport = function(){
 			$state.go('login')
 		})
 	};
-	 
+
 }])
 

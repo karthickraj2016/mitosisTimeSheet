@@ -87,7 +87,7 @@ public class CustomerDetailsDaoImpl extends BaseService implements CustomerDetai
 			CriteriaQuery<CustomerDetailsModel> cq = qb.createQuery(CustomerDetailsModel.class);
 			Root<CustomerDetailsModel> root = cq.from(CustomerDetailsModel.class);
 			cq.select(root);
-			cq.orderBy(qb.desc(root.get("customerName")));
+			cq.orderBy(qb.asc(root.get("customerName")));
 			customerlist = entityManager.createQuery(cq).getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
