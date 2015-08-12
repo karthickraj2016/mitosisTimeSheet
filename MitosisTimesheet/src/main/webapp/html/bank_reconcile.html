@@ -154,37 +154,39 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="sheet in filteredParticipantsResults ">
+		<tr ng-repeat="sheet in filteredParticipantsResults">
 			<td>
-			1	
+				<span ng-show="!showEdit">{{sheet.	}}</span>
+				<span ng-show="showEdit"><input class="form-control" ui-date="dateOptions" ui-date-format="dd-mm-yy" type="text" ng-model="sheet.entryDate"></span>
+				<span style="color:red" ng-show="sheet.entryDate == '' || sheet.entryDate == undefined">Required</span>
 			</td>
 			<td>
-			2	
+				<span ng-show="!showEdit">{{sheet.project.projectName}}</span>
+				<span id="{{sheet.project.id}}" ng-show="showEdit"><select class="form-control" ng-model="sheet.project" ng-options="item as item.projectName for item in projectList" style="color: #777777;">
+				<option value="">{{sheet.project.projectName}}</option>
+				</select> 
+				</span>
 			</td>
 			<td>
-			3	
+				<span ng-show="!showEdit">{{sheet.hours}}</span>
+				<span id="{{sheet.id}}" ng-show="showEdit"><input class="form-control" id="{{sheet.id}}" type="text" onkeypress="return isNumber(event)" ng-model="sheet.hours"></span>
+				<span style="color:red" ng-show="sheet.hours == '' || sheet.hours == undefined">Required</span>
 			</td>
 			<td>
-			4	
+				<span ng-show="!showEdit">{{sheet.issueNumber}}</span>
+				<span ng-show="showEdit"><input class="form-control" type="text" ng-model="sheet.issueNumber"></span>
 			</td>
-			<td>
-			5	
+			<td >
+				<span ng-show="!showEdit">{{sheet.description}}</span>
+				<span ng-show="showEdit"><textarea rows="1" class="form-control" type="text" ng-model="sheet.description"></textarea></span>
+				<span style="color:red" ng-show="sheet.description == '' || sheet.description == undefined">Required</span>
 			</td>
-			<td>
-			6	
-			</td>
-			<td>
-			7	
-			</td>
-			<td>
-			8	
-			</td>
-			<td>
-			9	
-			</td>
-			<td>
-				
-
+			<td style="word-spacing: 15px;">
+		
+	            <a><span class="glyphicon glyphicon-pencil" ng-click="showEdit = !showEdit" ng-show="!showEdit"></span></a>
+				<a><span class="glyphicon glyphicon-remove" ng-click="confirmDelete(sheet.id)" ng-show="!showEdit"></span></a>
+				<a><span class="glyphicon glyphicon-ok" ng-click="showEdit = !showEdit;updatetimesheet(sheet)" ng-show="showEdit" ng-disabled="checkRequired(sheet);"></span></a> 
+				<a><span class="glyphicon glyphicon-ban-circle" ng-click="showEdit = !showEdit;list()" ng-show="showEdit"></span></a> 			
 			</td>
 		</tr>
 	</tbody>
