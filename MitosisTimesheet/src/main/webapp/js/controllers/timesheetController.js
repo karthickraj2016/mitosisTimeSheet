@@ -40,7 +40,6 @@ angular.module('myApp.controllers')
 		$scope.timesheet.date=dt;			
 	};
 
-
 	$scope.dateOptions = {
 			changeYear: true,
 			changeMonth: true,
@@ -50,7 +49,6 @@ angular.module('myApp.controllers')
 
 			/* yearRange: '1900:-0'*/
 	};
-
 
 
 	$http({
@@ -211,32 +209,29 @@ angular.module('myApp.controllers')
 					$scope.list();
 					return;
 
-				}
-
-
-				else if(result.value=="err_total"){
+				}else if(result.value=="err_total"){
 
 					hoursallowed = result.hoursallowed.toFixed(1);
 					$(".alert-msg1").show().delay(2000).fadeOut(); 
 					$(".alert-danger").html('you can maximize upto ' +hoursallowed+ ' only ');
 					$scope.list();
 					return;
-				}
-				else if(result.value=="inserted"){
+
+				}else if(result.value=="inserted"){
 
 					$(".alert-msg").show().delay(1000).fadeOut(); 
 					$(".alert-success").html("Timesheet Entry updated successfully");
 					$scope.list();
 					return;
 
-				}
-				else{
+				}else{
 
 					$(".alert-msg1").show().delay(1000).fadeOut(); 
 					$(".alert-danger").html("updation failed");
 				}
 				$state.go('timesheet')
 			})
+
 		}else{
 
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
@@ -257,7 +252,6 @@ angular.module('myApp.controllers')
 	},
 
 	$scope.deleteTimesheet = function(id){
-
 
 		$http({
 			url: 'rest/timesheet/deleteTimesheet',
@@ -280,22 +274,7 @@ angular.module('myApp.controllers')
 			}
 			$scope.list();	
 		})
-	},
-
-
-	$scope.logout = function(){
-
-		$http({
-			url: 'rest/account/logout',
-			method: 'GET',
-		}).success(function(result, status, headers) {
-
-			$state.go('login')
-		})
-
 	}
-
-
 
 }])
 

@@ -5,8 +5,6 @@ angular.module('myApp.controllers')
 
 .controller('loginController', ['$scope', '$http', '$state','$localStorage','$rootScope', function($scope, $http, $state,$localStorage, $rootScope) {
 
-
-
 	$rootScope.navbar=false;
 	/*if ( angular.isDefined( $localStorage.settings) ) {
 			   $rootScope.app =  $localStorage.settings;
@@ -21,8 +19,6 @@ angular.module('myApp.controllers')
 		$(".alert-msg1").show().delay(2000).fadeOut(); 
 		$(".alert-danger").html("your activation session is over!!!..please click reset password again");
 		$rootScope.passwordmsg='';
-
-
 	}
 
 	$scope.login = function() {
@@ -55,7 +51,7 @@ angular.module('myApp.controllers')
 					$state.go('userRights');
 				}
 				else{
-
+					$rootScope.accountList();
 					$state.go('timesheet');
 
 				}
@@ -64,8 +60,6 @@ angular.module('myApp.controllers')
 				$(".alert-msg1").show().delay(1000).fadeOut(); 
 				$(".alert-danger").html("UserName or password is incorrect !!!");
 			}
-
 		})
-
 	}
 }])

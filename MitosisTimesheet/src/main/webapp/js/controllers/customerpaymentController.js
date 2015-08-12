@@ -41,6 +41,8 @@ angular.module('myApp.controllers')
 		$scope.customerList=result;
 
 	});
+	
+	
 
 
 	$scope.customerChanged = function() {
@@ -215,22 +217,11 @@ angular.module('myApp.controllers')
 			console.log("Result==>"+result);
 			if(result!="true")
 			{
-				alert("ReceiptNumber already exists");
+				$(".alert-msg1").show().delay(1000).fadeOut(); 
+				$(".alert-danger").html("ReceiptNumber already exists");
 				$scope.payment.receiptNumber="";
+			$('#repNum').focus();
 			}
 		})
 	}
-
-
-	$scope.logout = function(){
-
-		$http({
-			url: 'rest/account/logout',
-			method: 'GET',
-		}).success(function(result, status, headers) {
-
-			$state.go('login')
-		})
-	}
-
 }])

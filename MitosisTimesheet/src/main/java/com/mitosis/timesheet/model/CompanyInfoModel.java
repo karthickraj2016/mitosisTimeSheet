@@ -30,8 +30,8 @@ public class CompanyInfoModel {
 	@Column(name="mobile_number")
 	private String mobileNumber;
 
-	@Column(name="fax_no")
-	private String faxNo;
+	@Column(name="company_url")
+	private String companyUrl;
 	
 	@Column(name="logo")
 	private String logo;
@@ -53,6 +53,15 @@ public class CompanyInfoModel {
 	
 	@Column(name="swift_code")
 	private String swiftCode;
+	
+	@Column(name="tax_id")
+	private String taxId;
+	
+	@Column(name="branch")
+	private String branch;
+	
+	@Column(name="account_name")
+	private String accountName;
 	
 	public int getId() {
 		return Id;
@@ -92,14 +101,6 @@ public class CompanyInfoModel {
 
 	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
-	}
-
-	public String getFaxNo() {
-		return faxNo;
-	}
-
-	public void setFaxNo(String faxNo) {
-		this.faxNo = faxNo;
 	}
 
 	public String getLogo() {
@@ -156,6 +157,38 @@ public class CompanyInfoModel {
 
 	public void setSwiftCode(String swiftCode) {
 		this.swiftCode = swiftCode;
+	}
+
+	public String getCompanyUrl() {
+		return companyUrl;
+	}
+
+	public void setCompanyUrl(String companyUrl) {
+		this.companyUrl = companyUrl;
+	}
+
+	public String getTaxId() {
+		return taxId;
+	}
+
+	public void setTaxId(String taxId) {
+		this.taxId = taxId;
+	}
+
+	public String getBranch() {
+		return branch;
+	}
+
+	public void setBranch(String branch) {
+		this.branch = branch;
+	}
+
+	public String getAccountName() {
+		return accountName;
+	}
+
+	public void setAccountName(String accountName) {
+		this.accountName = accountName;
 	}
 
 }

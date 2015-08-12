@@ -83,7 +83,7 @@
     <div class="container" style="width: 100%;">
 	<div class="pay-form-div form-inline">
     <div class="form-group" style="margin: 0;">
-      <input class="form-control" type="text" placeholder="Receipt Number" required ng-model="payment.receiptNumber" ng-blur="receiptCheck()">
+      <input class="form-control" id="repNum" type="text" placeholder="Receipt Number" required ng-model="payment.receiptNumber" ng-blur="receiptCheck()">
     </div>
     <div ng-init="dates()" class="form-group" style="margin: 0;">
        <input type="text" required class="form-control" placeholder="Receipt Date" ui-date="dateOptions" ui-date-format="dd-mm-yy" ng-model="payment.receiptDate">

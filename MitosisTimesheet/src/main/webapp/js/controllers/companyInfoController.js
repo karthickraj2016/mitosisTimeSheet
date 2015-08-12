@@ -24,9 +24,12 @@ angular.module('myApp.controllers')
 				$scope.comp.companyAddress=result.companyAddress;
 				$scope.comp.phoneNumber=result.phoneNumber;
 				$scope.comp.mobileNumber=result.mobileNumber;
-				$scope.comp.faxNo=result.faxNo;
 				$scope.comp.accountNumber=result.accountNumber;
 				$scope.comp.bankName=result.bankName;
+				$scope.comp.branch=result.branch;
+				$scope.comp.taxId=result.taxId;
+				$scope.comp.accountName=result.accountName;
+				$scope.comp.companyUrl=result.companyUrl;
 				$scope.comp.bankAddress=result.bankAddress;
 				$scope.comp.ifscCode=result.ifscCode;
 				$scope.comp.micrCode=result.micrCode;
@@ -70,9 +73,10 @@ angular.module('myApp.controllers')
 			$scope.comp.phoneNumber="";}
 		if($scope.comp.mobileNumber==null){
 			$scope.comp.mobileNumber="";}
-		if($scope.comp.faxNo==null){
-			$scope.comp.faxNo="";}
-		var menuJson=angular.toJson({"id":$scope.comp.id,"companyName":$scope.comp.companyName,"companyAddress":$scope.comp.companyAddress,"phoneNumber":$scope.comp.phoneNumber,"mobileNumber":$scope.comp.mobileNumber,"logo":$scope.res,"faxNo":$scope.comp.faxNo,"accountNumber":$scope.comp.accountNumber,"bankName":$scope.comp.bankName,"bankAddress":$scope.comp.bankAddress,"ifscCode":$scope.comp.ifscCode,"micrCode":$scope.comp.micrCode,"swiftCode":$scope.comp.swiftCode});
+		if($scope.comp.taxId==null){
+			$scope.comp.taxId="";}
+		var menuJson=angular.toJson({"id":$scope.comp.id,"companyName":$scope.comp.companyName,"companyAddress":$scope.comp.companyAddress,"phoneNumber":$scope.comp.phoneNumber,"mobileNumber":$scope.comp.mobileNumber,"logo":$scope.res,"accountNumber":$scope.comp.accountNumber,"bankName":$scope.comp.bankName,"bankAddress":$scope.comp.bankAddress,"ifscCode":$scope.comp.ifscCode,"micrCode":$scope.comp.micrCode,
+			"branch":$scope.comp.branch,"taxId":$scope.comp.taxId,"accountName":$scope.comp.accountName,"companyUrl":$scope.comp.companyUrl,"swiftCode":$scope.comp.swiftCode});
 		$http({
 			url: 'rest/company/addcompany',
 			method: 'POST',
@@ -98,17 +102,5 @@ angular.module('myApp.controllers')
 			$('.btn-profile-cancel').hide();
 		})
 	}
-	$scope.logout = function(){
-
-		$http({
-			url: 'rest/account/logout',
-			method: 'GET',
-		}).success(function(result, status, headers) {
-
-			$state.go('login')
-		})
-	};
-
-
-
+	
 }])

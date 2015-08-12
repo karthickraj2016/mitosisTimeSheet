@@ -4,7 +4,6 @@ angular.module('myApp.controllers')
 
 .controller('projectCostDetailsController', ['$scope', '$http', '$state','$rootScope', function($scope, $http, $state, $rootScope) {
 
-
 	$http({
 
 		url: 'rest/teamAssignment/getMemberList',
@@ -117,7 +116,6 @@ angular.module('myApp.controllers')
 			return;
 		}
 
-
 		var projectType=$scope.cost.projectType;
 
 		if(projectType=="Fixed"){
@@ -196,7 +194,6 @@ angular.module('myApp.controllers')
 		}
 	},
 
-
 	$scope.addEmployeeRate = function(){
 
 		if($scope.member==undefined | $scope.member=="Member" ){
@@ -267,16 +264,5 @@ angular.module('myApp.controllers')
 			$(".alert-success").html("Employee Cost Detail Deleted");
 		}
 
-	},
-
-	$scope.logout = function(){
-
-		$http({
-			url: 'rest/individualreport/logout',
-			method: 'GET',
-		}).success(function(result, status, headers) {
-
-			$state.go('login')
-		})
 	}
 }])

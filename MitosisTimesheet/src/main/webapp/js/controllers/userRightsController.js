@@ -32,7 +32,6 @@ angular.module('myApp.controllers')
 		}else{
 			return false;
 		}
-
 	}
 
 	$scope.list = function() {
@@ -61,7 +60,6 @@ angular.module('myApp.controllers')
 
 	$scope.update = function(reqParam){
 
-
 		$http({
 			url: 'rest/userRights/updateRights',
 			method: 'POST',
@@ -78,19 +76,6 @@ angular.module('myApp.controllers')
 				$(".alert-danger").html("Updating Failed");
 			}
 			$scope.list();
-		})
-
-	},
-
-
-	$scope.logout = function(){
-
-		$http({
-			url: 'rest/account/logout',
-			method: 'GET',
-		}).success(function(result, status, headers) {
-
-			$state.go('login')
 		})
 	}
 

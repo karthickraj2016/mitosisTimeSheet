@@ -12,22 +12,22 @@ angular.module('myApp.controllers')
 	$scope.passwordhide = true;
 	$rootScope.blocker='none';
 	$rootScope.isReset;
-	
+
 	$scope.mailvalidation = function(){
-	
-var emailId = $scope.resetemailid;
-		
+
+		var emailId = $scope.resetemailid;
+
 		var email = angular.toJson({
 			"emailid": $scope.resetemailid
 
 		});
-		
+
 		$scope.validateEmail = function($email) {
 
 			var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
 			return emailReg.test( $email );
 		}
-		
+
 		var lstIndex = emailId.lastIndexOf('@');
 		if( !$scope.validateEmail(emailId)) {
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
@@ -38,9 +38,6 @@ var emailId = $scope.resetemailid;
 			$(".alert-danger").html("Invalid domain name, use only mitosistech.com");
 			return;
 		}
-		
-	
-		
 
 		$http({
 			url: 'rest/forgotpassword/mailvalidation',
@@ -59,21 +56,12 @@ var emailId = $scope.resetemailid;
 				$('#auth_container').css("border-bottom",'2px solid #ccc');
 				$state.go('login');
 				return;
+			}else{
 
-		}
-			else{
-				
-			 $scope.forgotpassword();
-				
+				$scope.forgotpassword();
 			}
-		
-		
-	});
-
+		});
 	}
-	
-
-
 
 	$scope.forgotpassword = function() {
 
@@ -87,7 +75,7 @@ var emailId = $scope.resetemailid;
 		$('#auth_container').css("background",'none');
 		$('#auth_container').css("border-bottom",'none');
 		$rootScope.blocker='block';
-		
+
 		$http({
 			url: 'rest/forgotpassword/changepassword',
 			method: 'POST',
@@ -98,82 +86,66 @@ var emailId = $scope.resetemailid;
 		}).success(function(result, status, headers) {
 
 			if(result.eMail!=null){
-				
+
 				$scope.loader= false;
 				$scope.passwordhide = true;		
 				$rootScope.blocker='none';
-			
+
 				$(".alert-msg").show().delay(2000).fadeOut(); 
 				$(".alert-success").html("Please check the resetpassword link in your mail id to reset your password");
 				$('#auth_container').css("background",'#C9D4D7');
 				$('#auth_container').css("border-bottom",'2px solid #ccc');
 				$state.go('login');
-				
+
 			}
-			
+
 		});
 	}
-	
+
 	$scope.resetpassword = function(){
-		
+
 		$scope.resetpassword=true;
 		var url = document.URL;
 		var index = url.substring(url.lastIndexOf('?') + 1);
 		var id = parseInt(index.slice(3));
 
 		$scope.id=id;
-		
+
 		console.log($rootScope.isReset);
-	
-		
-		
-		
+
 		var menuJson = angular.toJson({
 			"id": $scope.id,"password":$scope.newpassword, "resetpasswordflag" : $rootScope.isReset
 
 		});
-		
-		if($scope.newpassword==$scope.confirmpassword){
-		$http({
-			url: 'rest/forgotpassword/resetpassword',
-			method: 'POST',
-			data: menuJson,
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		}).success(function(result, status, headers) {
-			
-			console.log(result);
-			
-			
 
-			if(result=="false"){
-				$rootScope.passwordmsg = false;	
-				$state.go('login');
-			
-			
-				return;
-			}
-			else{
-				
-				
-				$rootScope.passwordmsg = true;	
-				$state.go('login');
-				
-				return;
-				
-				
-			}
-			
-		})
-		
-		}
-		
-		else{
+		if($scope.newpassword==$scope.confirmpassword){
+			$http({
+				url: 'rest/forgotpassword/resetpassword',
+				method: 'POST',
+				data: menuJson,
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).success(function(result, status, headers) {
+
+				console.log(result);
+
+				if(result=="false"){
+					$rootScope.passwordmsg = false;	
+					$state.go('login');
+					return;
+
+				}else{
+
+					$rootScope.passwordmsg = true;	
+					$state.go('login');
+					return;
+				}
+			})
+
+		}else{
 			$(".alert-msg1").show().delay(2000).fadeOut(); 
 			$(".alert-danger").html("new password and confirm password is not matched...!!!");
-			
 		}
-		
 	}
 }])

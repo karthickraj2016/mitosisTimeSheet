@@ -2,7 +2,6 @@ angular.module('myApp.controllers')
 
 .controller('invoiceDetailsController', ['$scope', '$http', '$state','$rootScope', function($scope, $http, $state, $rootScope) {
 
-
 	$scope.currentPage = 1
 	,$scope.numPerPage = 8
 	,$scope.maxSize = 5;
@@ -11,13 +10,9 @@ angular.module('myApp.controllers')
 	var hoursallowed;
 	var memberobj;
 
-
 	var invoice= new Array();
-
 	var dt1;
 	var dt2;
-
-
 
 	$scope.checkRequired = function(sheet){
 		if(sheet.entryDate == '' || sheet.entryDate == undefined){
@@ -35,7 +30,6 @@ angular.module('myApp.controllers')
 		else{
 			return false;
 		}
-
 	}
 
 	$scope.dates = function() {
@@ -44,18 +38,19 @@ angular.module('myApp.controllers')
 		$scope.invoice='';
 		$scope.invoice={};
 
-
 		var dt = new Date();
 		var dd =dt.getDate();
 		var mm = dt.getMonth()+1; 
 		var yyyy = dt.getFullYear();
 		dt=dd+"-"+mm+"-"+yyyy;
 		dt1 = new Date();
+
 		var dd1 = dt1.getDate();
 		var mm1 = dt1.getMonth()+1; 
 		var yyyy1 = dt1.getFullYear();
 		dt1=dd1+"-"+mm1+"-"+yyyy1;
 		dt2= new Date();
+
 		var dd2 = dt2.getDate();
 		var mm2 = dt2.getMonth()+1;
 		var yyyy2 = dt2.getFullYear();
@@ -64,7 +59,6 @@ angular.module('myApp.controllers')
 		$scope.member.fromdate=dt1;	
 		$scope.member.todate=dt2;
 	};
-
 
 	$scope.dateOptions = {
 			changeYear: true,
@@ -75,7 +69,6 @@ angular.module('myApp.controllers')
 
 				/* yearRange: '1900:-0'*/
 	};
-
 
 	$scope.loadProjects=function()
 	{
@@ -113,12 +106,9 @@ angular.module('myApp.controllers')
 			$scope.customerList=result;
 		});
 
-
 	}
 
-
 	$scope.amountCalForinsert = function(){
-
 
 		/*	if($scope.member.billablehours==undefined || $scope.member.billablehours==''){
 
@@ -134,20 +124,15 @@ angular.module('myApp.controllers')
 
 
 			$scope.member.amount=parseFloat(1.0*$scope.member.rateperhour);
-		}
 
-		else {
-
+		}	else {
 
 			$scope.member.rateperhour =parseFloat($scope.member.rateperhour);
 
 			$scope.member.billablehours = parseFloat($scope.member.billablehours);
 
 			$scope.member.amount=parseFloat($scope.member.billablehours*$scope.member.rateperhour);
-
-
 		}
-
 	}
 
 	$scope.amountCalForUpdate = function (sheet){
@@ -158,26 +143,17 @@ angular.module('myApp.controllers')
 
 			sheet.rateperhour =parseFloat(sheet.rateperhour);
 
-
 			sheet.amount=parseFloat(1.0*sheet.rateperhour);
-		}
 
-		else {
-
+		}else {
 
 			sheet.rateperhour =parseFloat(sheet.rateperhour);
 
 			sheet.billablehours = parseFloat(sheet.billablehours);
 
 			sheet.amount=parseFloat(sheet.billablehours*sheet.rateperhour);
-
-
 		}
-
 	}
-
-
-
 
 	$scope.projectBasedSelections = function(project){
 
@@ -189,10 +165,6 @@ angular.module('myApp.controllers')
 		$scope.invoice.currency="";
 		$scope.invoice.invoiceamt="";
 		$scope.invoice.teammembers=[];
-
-
-
-
 
 		$http({
 
@@ -229,7 +201,6 @@ angular.module('myApp.controllers')
 
 	}
 
-
 	$scope.addTeamMember = function (){
 
 		var fromdate = new Date($scope.member.fromdate.split('-')[2],$scope.member.fromdate.split('-')[1],$scope.member.fromdate.split('-')[0]);
@@ -238,73 +209,48 @@ angular.module('myApp.controllers')
 		var datevalidationfromDate =new Date(($scope.member.fromdate).split("-")[1]+"-"+($scope.member.fromdate).split("-")[0]+"-"+($scope.member.fromdate).split("-")[2]);	
 		var datevalidationtoDate = new Date(($scope.member.todate).split("-")[1]+"-"+($scope.member.todate).split("-")[0]+"-"+($scope.member.todate).split("-")[2]);;
 
-
 		if (datevalidationfromDate > datevalidationtoDate) {
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("FromDate cannot be after ToDate!");
 			return;
-		}
-		else if(fromdate.getDay()===2 || fromdate.getDay()===3 || todate.getDay()===2 || todate.getDay()===3){
+
+		}else if(fromdate.getDay()===2 || fromdate.getDay()===3 || todate.getDay()===2 || todate.getDay()===3){
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("FromDate or Todate cannot be on Saturdays or Sundays!!!!");
 			return;
 
 		}
 
-
-
 		if($scope.member.fromdate==undefined||$scope.member.todate==undefined){
 
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("please enter the member details of from date and todate");
 			return;
-		}
 
-		else if($scope.member.description==undefined||$scope.member.description==""){
+		}else if($scope.member.description==undefined||$scope.member.description==""){
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("please enter the member details for description");
 			return;	
 
-
-		}
-
-
-		else if($scope.member.rateperhour==undefined || isNaN($scope.member.rateperhour) ||$scope.member.rateperhour==""){
+		}else if($scope.member.rateperhour==undefined || isNaN($scope.member.rateperhour) ||$scope.member.rateperhour==""){
 
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("please enter the member details for rate");
 			return;	
 
-		}
-
-
-		else if(($scope.member.billablehours==undefined || isNaN($scope.member.billablehours) ||$scope.member.billablehours=="")&&($scope.invoice.projectType=="Hourly")){
-
-
-
+		}else if(($scope.member.billablehours==undefined || isNaN($scope.member.billablehours) ||$scope.member.billablehours=="")&&($scope.invoice.projectType=="Hourly")){
 
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("please enter the member details for billable hours");
 			return;	
 
-		}
-
-
-		else if($scope.member.amount==undefined || isNaN($scope.member.amount)){
+		}else if($scope.member.amount==undefined || isNaN($scope.member.amount)){
 
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("please enter the member details for amount");
 			return;	
 
-		}
-
-
-
-
-
-
-
-		else{
+		}else{
 			if(angular.isUndefined($scope.invoiceList)){
 				$scope.invoiceList =[];
 			}
@@ -340,26 +286,16 @@ angular.module('myApp.controllers')
 			$scope.member.billablehours='';
 			$scope.member.amount='';
 			$scope.member.rateperhour='';
-
-
-
 		}
 	}
 
 	$scope.updateteammembers= function(sheet){
 
-
-
-
 		$scope.invoiceList[sheet.index]=sheet;
-
-
 
 		$(".alert-msg").show().delay(1000).fadeOut(); 
 		$(".alert-success").html("Member Details updated successfully!!!!!");
-
 	}
-
 
 	$scope.deleteteammembers = function(sheet){
 
@@ -449,14 +385,5 @@ angular.module('myApp.controllers')
 		console.log("Sum of amounts==>"+totalSum);
 		return(totalSum);
 	}
-	$scope.logout = function(){
 
-		$http({
-			url: 'rest/individualreport/logout',
-			method: 'GET',
-		}).success(function(result, status, headers) {
-
-			$state.go('login')
-		});
-	}
 }])

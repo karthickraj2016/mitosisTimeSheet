@@ -3,10 +3,8 @@ angular.module('myApp.controllers')
 
 .controller('headerController', ['$scope', '$http', '$state','$localStorage','$rootScope', function($scope, $http, $state,$localStorage, $rootScope) {
 
-
 	$scope.homebutton = function (){
-		
-		
+
 		$http({
 			url: 'rest/headercontrols/homebutton',
 			method: 'GET',
@@ -17,43 +15,23 @@ angular.module('myApp.controllers')
 
 			if(result.adminFlag==2){
 				$state.go('leaveDetails');
-			}
-			else if(result.adminFlag==1){
-				
+
+			}else if(result.adminFlag==1){
+
 				$state.go('userRights');
-			}
-			else{
-				
+
+			}else{
+
 				$state.go('timesheet');
-				
 			}
-			
 		});
-		
-		
-		
 	}
-	
-	$scope.logout = function(){
 
-		$http({
-			url: 'rest/account/logout',
-			method: 'GET',
-		}).success(function(result, status, headers) {
-
-			$state.go('login')
-		})
-	};
-	
-	
 	function HeaderController($scope, $location) 
 	{ 
-	    $scope.isActive = function (viewLocation) { 
-	        return viewLocation === $location.path();
-	    };
+		$scope.isActive = function (viewLocation) { 
+			return viewLocation === $location.path();
+		};
 	}
-	
-	
-	
-	
+
 }]);

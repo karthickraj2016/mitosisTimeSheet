@@ -26,8 +26,6 @@ angular.module('myApp.controllers')
 
 	}
 
-
-
 	$scope.dates = function() {
 		$scope.leave = '';
 		$scope.leave={};
@@ -58,9 +56,7 @@ angular.module('myApp.controllers')
 			onSelect: function(selected) {
 				/*$scope.leave.todate=selected;*/
 			}
-
 	};
-
 
 	$scope.leavereport = function(){
 
@@ -78,6 +74,7 @@ angular.module('myApp.controllers')
 			return;
 		}
 
+
 		$http({
 			url: 'rest/leavereport/detailreport',
 			method: 'POST',
@@ -93,9 +90,7 @@ angular.module('myApp.controllers')
 				$(".alert-danger").html("No records availiable");
 				return;
 
-			}
-
-			else{
+			}else{
 
 				var a = document.createElement('a');
 				a.href = "/MitosisTimesheet/reports/"+result.pdfFileName;
@@ -109,9 +104,7 @@ angular.module('myApp.controllers')
 				console.log($scope.filepath);
 				scope.deletepdfFile(result.pdfPath);
 			}
-
 		});
-
 	},
 
 	$scope.deletepdfFile= function(pdfPath){
@@ -128,19 +121,5 @@ angular.module('myApp.controllers')
 		}).success(function(result, status, headers) {
 
 		});
-
 	}
-
-	$scope.logout = function(){
-
-		$http({
-			url: 'rest/account/logout',
-			method: 'GET',
-		}).success(function(result, status, headers) {
-
-			$state.go('login')
-		})
-
-	};
-
 }])

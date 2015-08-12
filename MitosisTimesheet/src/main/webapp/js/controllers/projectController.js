@@ -4,6 +4,7 @@ angular.module('myApp.controllers')
 
 
 .controller('projectController', ['$scope', '$http', '$state','$localStorage','$rootScope','filterFilter', function($scope, $http, $state,$localStorage, $rootScope,filterFilter) {
+
 	$scope.filteredParticipantsResults = []
 	,$scope.currentPage = 1,
 	$scope.numPerPage = 8
@@ -25,30 +26,28 @@ angular.module('myApp.controllers')
 		}else{
 			return false;
 		}
-
 	}
 
-	
 	$scope.dates = function() {
-				var dt = new Date();
-				var dd = ("0"+ (dt.getDate()-1)).slice(-2);
-				var mm = ("0"+ (dt.getMonth()+1)).slice(-2); 
-				var yyyy = dt.getFullYear();
-				dt=dd+"-"+mm+"-"+yyyy;
-				$scope.startDate=dt;
-				$scope.endDate=dt;
-			};
-		
-			$scope.dateOptions = {
-					changeYear: true,
-					changeMonth: true,
-					dateFormat: 'dd-mm-yy',
-			};
-		
-			$scope.startdatechange = function(fromDate){
-				$scope.toDate = fromDate;
-			};
-			
+		var dt = new Date();
+		var dd = ("0"+ (dt.getDate()-1)).slice(-2);
+		var mm = ("0"+ (dt.getMonth()+1)).slice(-2); 
+		var yyyy = dt.getFullYear();
+		dt=dd+"-"+mm+"-"+yyyy;
+		$scope.startDate=dt;
+		$scope.endDate=dt;
+	};
+
+	$scope.dateOptions = {
+			changeYear: true,
+			changeMonth: true,
+			dateFormat: 'dd-mm-yy',
+	};
+
+	$scope.startdatechange = function(fromDate){
+		$scope.toDate = fromDate;
+	};
+
 	$scope.accessRights=function(){
 
 		if(!$scope.manageProject){
@@ -92,7 +91,7 @@ angular.module('myApp.controllers')
 	});
 
 	$scope.list = function() {
-		
+
 		$http({
 			url: 'rest/project/showProjectlist',
 			method: 'GET',
@@ -110,31 +109,30 @@ angular.module('myApp.controllers')
 				$scope.filteredParticipantsResults = $scope.projectlist.slice(begin, end);
 				$scope.totalItems =	$scope.projectlist.length;
 			});
-			
-			 $scope.setPage = function(pageNo) {
-			        $scope.currentPage = pageNo;
-			    };
+
+			$scope.setPage = function(pageNo) {
+				$scope.currentPage = pageNo;
+			};
 			$scope.noOfPages = Math.ceil($scope.projectlist.length/$scope.maxSize);
-			
-			
-			  $scope.filter = function() {
-		 			 $scope.$watch('search', function(term) {
-						 if(term==undefined){
-							 $scope.totalItems =	$scope.projectlist.length; 
-							 
-							
-						 }
-						  window.setTimeout(function() {
-							  $scope.totalItems = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
-							  $scope.noOfPages = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
-		}, 10);
-		 			 });
-	}
+
+
+			$scope.filter = function() {
+				$scope.$watch('search', function(term) {
+					if(term==undefined){
+						$scope.totalItems =	$scope.projectlist.length; 
+
+
+					}
+					window.setTimeout(function() {
+						$scope.totalItems = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
+						$scope.noOfPages = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
+					}, 10);
+				});
+			}
 		});
 	}
 
-	
-	
+
 	$http({
 
 		url: 'rest/project/getCustomerList',
@@ -149,23 +147,21 @@ angular.module('myApp.controllers')
 
 		$scope.customerlist=result;
 	});
-	
-		
-	
+
 	$scope.addproject = function(projectname,customer,billable,startDate,endDate,taskstatus){
-				var startdate=$scope.project.startDate;
-				var enddate=$scope.project.endDate;
-				
-				var menuJson = angular.toJson({
-					"projectname": $scope.project.projectname,"customerId":$scope.customer.customerId,"billable":$scope.project.billable,"startdate":$scope.project.startDate,"enddate":$scope.project.endDate,"status":$scope.project.status});
-				
-				if (startdate > enddate) {
-					$(".alert-danger").html("End Date cannot be Before Start Date...!");
-					return;
-							
-		          }	
-				
-				else{
+		var startdate=$scope.project.startDate;
+		var enddate=$scope.project.endDate;
+
+		var menuJson = angular.toJson({
+			"projectname": $scope.project.projectname,"customerId":$scope.customer.customerId,"billable":$scope.project.billable,"startdate":$scope.project.startDate,"enddate":$scope.project.endDate,"status":$scope.project.status});
+
+		if (startdate > enddate) {
+			$(".alert-danger").html("End Date cannot be Before Start Date...!");
+			return;
+
+		}	
+
+		else{
 			$http({
 				url: 'rest/project/addproject',
 				method: 'POST',
@@ -219,26 +215,26 @@ angular.module('myApp.controllers')
 		}
 	}
 
-	
+
 	$scope.updateproject = function(reqParam){
-		
+
 		var menuJson=angular.toJson({"projectId":reqParam.projectId,"projectName":reqParam.projectName,"customerId":reqParam.customer.customerId,
-						"billable":reqParam.billable,"startdate":reqParam.startEntryDate,"enddate":reqParam.endEntryDate,"status":reqParam.status});
-		
-			$http({
-				url: 'rest/project/updateproject',
-				method: 'POST',
-				data: menuJson,
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			}).success(function(result, status, headers) {
-				if(result){
-					$(".alert-msg").show().delay(1000).fadeOut(); 
-					$(".alert-success").html("Project Entry Updated Successfully");
-					$state.go('project')
-				}
-			})
+			"billable":reqParam.billable,"startdate":reqParam.startEntryDate,"enddate":reqParam.endEntryDate,"status":reqParam.status});
+
+		$http({
+			url: 'rest/project/updateproject',
+			method: 'POST',
+			data: menuJson,
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).success(function(result, status, headers) {
+			if(result){
+				$(".alert-msg").show().delay(1000).fadeOut(); 
+				$(".alert-success").html("Project Entry Updated Successfully");
+				$state.go('project')
+			}
+		})
 	},
 
 	$scope.confirmDelete = function(projectId){
@@ -268,18 +264,6 @@ angular.module('myApp.controllers')
 			}
 			$scope.list();	
 		})
-	},
-
-	$scope.logout = function(){
-
-		$http({
-			url: 'rest/account/logout',
-			method: 'GET',
-		}).success(function(result, status, headers) {
-	
-
-			$state.go('login')
-		})
 	}
 
 }])
@@ -296,11 +280,11 @@ angular.module('myApp.controllers')
 	};
 })
 .filter('startFrom', function() {
-    return function(input, start) {
-        if(input) {
-            start = +start; //parse to int
-            return input.slice(start);
-        }
-        return [];
-    }
+	return function(input, start) {
+		if(input) {
+			start = +start; //parse to int
+			return input.slice(start);
+		}
+		return [];
+	}
 });

@@ -69,10 +69,7 @@ angular.module('myApp.controllers')
 			$(".alert-msg1").show().delay(1500).fadeOut(); 
 			$(".alert-danger").html("You have entered an invalid email address!");   
 			return false;  
-
 		}
-
-
 	});
 
 	//$scope.user = {};
@@ -121,8 +118,6 @@ angular.module('myApp.controllers')
 		var menuJson = angular.toJson({
 			"name": $scope.name,"username":$scope.username,"password":$scope.password,"email":$scope.email
 		});
-
-
 
 
 		$http({

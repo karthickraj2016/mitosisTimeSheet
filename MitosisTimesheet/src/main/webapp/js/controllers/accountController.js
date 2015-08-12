@@ -6,9 +6,7 @@ angular.module('myApp.controllers')
 .controller('accountController', ['$scope', '$http', '$state','$localStorage','$rootScope', function($scope, $http, $state,$localStorage, $rootScope) {
 
 	
-	$rootScope.navbar=true;
-    $scope.accountList = function(){
-    	
+	   	
     	$http({
     		url: 'rest/accountdetails/getaccountdetails',
     		method: 'GET',
@@ -18,50 +16,17 @@ angular.module('myApp.controllers')
     	}).success(function(result, status, headers) {
     		
     		console.log(result);
-    		
-    		$rootScope.name=result.name;
+    		if(result.name==""){
+    		$state.go('login')
+		}else{
+    		$scope.name=result.name;
     		$scope.eMail=result.eMail;
     		$scope.username = result.userName;
+    	}
     		    		
     	});
     
-    },
-    
-    $http({
-		url: 'rest/account/getName',
-		method: 'GET',
-		/*data: menuJson,*/
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	}).success(function(result, status, headers) {
-		if(result==""){
-			$state.go('login')
-			}else{
-			$rootScope.name=result;
-			
-		}
-	})
-    
-    
-    $http({
-		url: 'rest/timesheet/getUserDetails',
-		method: 'GET',
-		/*data: menuJson,*/
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	}).success(function(result, status, headers) {
-		
-		$scope.manageFinance=result.manageFinance;
-		$scope.manageProject=result.manageProject;
-		$scope.manageTeam=result.manageTeam;
-		$scope.manageCustomer=result.manageCustomer;
-		$scope.manageEmployees=result.manageEmployees;
-		$scope.mail=result.eMail;
-	});
-    
-    $scope.changepassword = function(){
+      $scope.changepassword = function(){
     	
     	$scope.currentpassword=$('#password').val();
     	$scope.newpassword=$('#newpassword').val();
@@ -224,16 +189,6 @@ angular.module('myApp.controllers')
 	 	$('.btn-profile-cancel').hide();
 	   $scope.accountList();	
   
-    },
-    
-    $scope.logout = function(){
-
-		$http({
-			url: 'rest/accountdetails/logout',
-			method: 'GET',
-		}).success(function(result, status, headers) {
-			$state.go('login')
-		})
-	}
-	
+    }    
+   
 }])

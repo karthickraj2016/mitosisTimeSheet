@@ -295,17 +295,6 @@ angular.module('myApp.controllers')
 			$scope.filteredParticipantsResults = $scope.customerlist.slice(begin, end);
 			$scope.totalItems =	$scope.customerlist.length;
 		});
-	},
-
-	$scope.logout = function(){
-
-		$http({
-			url: 'rest/account/logout',
-			method: 'GET',
-		}).success(function(result, status, headers) {
-
-			$state.go('login')
-		})
-	};
+	}
 
 }])

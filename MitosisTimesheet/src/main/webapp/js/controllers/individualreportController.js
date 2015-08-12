@@ -22,7 +22,6 @@ angular.module('myApp.controllers')
 		$scope.timesheet.todate=dt1;
 	};
 
-
 	$scope.dateOptions = {
 			changeYear: true,
 			changeMonth: true,
@@ -32,7 +31,6 @@ angular.module('myApp.controllers')
 
 				/* yearRange: '1900:-0'*/
 	};
-
 
 	$scope.detailreport = function(){
 
@@ -54,9 +52,7 @@ angular.module('myApp.controllers')
 				$(".alert-danger").html("No records availiable");
 				return;
 
-			}
-
-			else{
+			}else{
 
 				var a = document.createElement('a');
 				a.href = "/MitosisTimesheet/reports/"+result.pdfFileName;
@@ -74,7 +70,6 @@ angular.module('myApp.controllers')
 		});
 
 	},
-
 
 	$scope.summaryreport = function(){
 
@@ -96,9 +91,7 @@ angular.module('myApp.controllers')
 				$(".alert-danger").html("No records availiable");
 				return;
 
-			}
-
-			else{
+			}else{
 
 				var a = document.createElement('a');
 				a.href = "/MitosisTimesheet/reports/"+result.pdfFileName;
@@ -139,18 +132,6 @@ angular.module('myApp.controllers')
 			return viewLocation === $location.path();
 		};
 	}
-
-	$scope.logout = function(){
-
-		$http({
-			url: 'rest/individualreport/logout',
-			method: 'GET',
-		}).success(function(result, status, headers) {
-
-			$state.go('login')
-		})
-	}
-
 
 }])
 

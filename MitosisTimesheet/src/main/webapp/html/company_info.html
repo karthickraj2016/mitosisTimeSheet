@@ -38,10 +38,17 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="control-label col-sm-3 textleft">Fax No<span>:</span></label>
+      <label class="control-label col-sm-3 textleft">Company URL<span>:</span></label>
       <div class="col-sm-9 profile-value">  
-        <span class="span-profile"> {{comp.faxNo}}</span>        
-        <input class="form-control edit-profile" type="text" ng-model="comp.faxNo" onkeypress="return isNumber(event)">
+        <span class="span-profile"> {{comp.companyUrl}}</span>        
+        <input class="form-control edit-profile" type="text" ng-model="comp.companyUrl">
+      </div>
+    </div>
+     <div class="form-group">
+      <label class="control-label col-sm-3 textleft">Tax ID<span>:</span></label>
+      <div class="col-sm-9 profile-value">  
+        <span class="span-profile"> {{comp.taxId}}</span>        
+        <input class="form-control edit-profile" type="text" ng-model="comp.taxId">
       </div>
     </div>
     <div class="form-group">
@@ -61,6 +68,13 @@
       </div>
     </div>
     <div class="form-group">
+      <label class="control-label col-sm-3 textleft">Account Name<span>:</span></label>
+      <div class="col-sm-9 profile-value">  
+        <span class="span-profile"> {{comp.accountName}}</span>        
+        <input class="form-control edit-profile" type="text" required ng-model="comp.accountName">
+      </div>
+    </div>
+    <div class="form-group">
       <label class="control-label col-sm-3 textleft">Bank Name<span>:</span></label>
       <div class="col-sm-9 profile-value">  
         <span class="span-profile"> {{comp.bankName}}</span>        
@@ -72,6 +86,13 @@
       <div class="col-sm-9 profile-value">  
         <span class="span-profile"> {{comp.bankAddress}}</span>        
         <input class="form-control edit-profile" type="text" required ng-model="comp.bankAddress">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-3 textleft">Branch Name<span>:</span></label>
+      <div class="col-sm-9 profile-value">  
+        <span class="span-profile"> {{comp.branch}}</span>        
+        <input class="form-control edit-profile" type="text" required ng-model="comp.branch">
       </div>
     </div>
     <div class="form-group">
