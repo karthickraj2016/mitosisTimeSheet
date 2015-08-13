@@ -77,7 +77,7 @@ angular.module('myApp.controllers')
 
 	$scope.teamList = function(){
 
-		if($scope.manageProject && $scope.manageTeam ){
+		if($rootScope.manageProject && $rootScope.manageTeam ){
 
 			$scope.getListByAllProjects();
 

@@ -58,7 +58,14 @@ angular.module('myApp.controllers')
 		}).success(function(result, status, headers) {
 
 			if(result.projectType==null){
+				$('#h-show').hide();
+				$('#hr-show').hide();
+				$('#buttons').hide();
+				$('#rateTable').hide();
+				$scope.cost=undefined;
 				$scope.hdrid=undefined;
+				$scope.empList=undefined;
+				$scope.emp=undefined;
 				return;
 			}else if(result.projectType=="Fixed"){
 				$('#h-show').hide();
@@ -98,15 +105,7 @@ angular.module('myApp.controllers')
 
 	$scope.addProjectCostDetails = function(){
 
-		if(($scope.cost.projectCost).length>8){
-			$(".alert-msg1").show().delay(1000).fadeOut(); 
-			$(".alert-danger").html("Invalid Cost");
-			$('#costdet').val('');
-			$('#costdet').focus();
-			$('#addDet').show();
-			return;
-		}
-
+		
 		if(($scope.cost.currencyCode).length>3){
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("Invalid Currency Code");
@@ -125,7 +124,15 @@ angular.module('myApp.controllers')
 				$(".alert-danger").html("Please Enter Project Cost");
 				$("#costdet").focus();	
 				return;
+			}else if(($scope.cost.projectCost).length>8){
+				$(".alert-msg1").show().delay(1000).fadeOut(); 
+				$(".alert-danger").html("Invalid Cost");
+				$('#costdet').val('');
+				$('#costdet').focus();
+				$('#addDet').show();
+				return;
 			}
+
 
 			var menuJson=angular.toJson({"id":$scope.hdrid,"projectId":$scope.project.projectId,"projectType":$scope.cost.projectType,
 				"projectCost":$scope.cost.projectCost,"currencyCode":$scope.cost.currencyCode});			
@@ -156,6 +163,12 @@ angular.module('myApp.controllers')
 			});
 
 		}else{
+			
+			if($scope.empList==undefined){
+				$(".alert-msg1").show().delay(1000).fadeOut(); 
+				$(".alert-danger").html("Please Add Employees");
+				return;
+			}
 
 			var menuJson=angular.toJson({"id":$scope.hdrid,"projectId":$scope.project.projectId,"projectType":$scope.cost.projectType,
 				"projectCost":$scope.cost.projectCost,"currencyCode":$scope.cost.currencyCode,
@@ -235,7 +248,7 @@ angular.module('myApp.controllers')
 		if(listLength!=0){
 
 			for(var i=0;i<$scope.empList.length;i++){
-				if($scope.empList[i].member==member){  
+				if($scope.empList[i].member.id==member.id){  
 					$(".alert-msg1").show().delay(1000).fadeOut(); 
 					$(".alert-danger").html("Employee Name Already Entered");
 					$scope.member='Member';

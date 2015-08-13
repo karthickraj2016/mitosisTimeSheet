@@ -21,10 +21,10 @@ public class CustomerPaymentImpl extends BaseService implements
 		try {
 			begin();
 			InvoiceHdrModel i = c.getInvoiceHdr();
-			i = updateInvoice(i.getInvoiceNumber(), c.getPaidAmount(),
+			i	 = updateInvoice(i.getInvoiceNumber(), c.getPaidAmount(),
 					c.getId());
+			c.setInvoiceHdr(i);
 			merge(c);
-			merge(i);
 			commit();
 			flag = true;
 		} catch (Exception e) {
@@ -54,14 +54,16 @@ public class CustomerPaymentImpl extends BaseService implements
 			BigDecimal pamt = payment.getPaidAmount();
 			InvoiceHdrModel i = payment.getInvoiceHdr();
 			String invoicenumber = i.getInvoiceNumber();
-			i = updateInvoice(invoicenumber, pamt, -1); // updation of Invoice
+			i = updateInvoice(invoicenumber, pamt, -1);
+			payment.setInvoiceHdr(null);
+			// updation of Invoice
 														// table
 			remove(payment);
-			merge(i);
-			commit();
+		/*	merge(i);
+			commit();*/
 			flag = true;
 		} catch (Exception e) {
-			return flag;
+			e.printStackTrace();
 		} finally {
 			close();
 		}
@@ -191,9 +193,13 @@ public class CustomerPaymentImpl extends BaseService implements
 			// System.out.println("NEW=="+newBalance);
 			invoice.setBalanceAmount(newBalance);
 			invoice.setPaidAmount(newPaid);
-			 if (invoice.getInvoiceAmount().equals(invoice.getPaidAmount())) {
+			if(newPaid.equals(0.00)){
+				invoice.setInvoiceStatus("UNPAID");
+			}else if (invoice.getInvoiceAmount().equals(invoice.getPaidAmount())) {
 				invoice.setInvoiceStatus("PAID");
-			} else {
+			} else if(newBalance.signum()<0){
+				invoice.setInvoiceStatus("PAID");
+			}else{
 				invoice.setInvoiceStatus("PARTIALLY-PAID");
 			}
 		} catch (Exception e) {

@@ -25,6 +25,7 @@ public class TeamAssignmentDAOImpl extends BaseService implements TeamAssignment
 			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 			CriteriaQuery<TeamAssignmentModel> cq = qb.createQuery(TeamAssignmentModel.class);
 			Root<TeamAssignmentModel> root = cq.from(TeamAssignmentModel.class);
+			cq.where(qb.equal(root.get("project").get("status"),"Open"));
 			cq.select(root);
 			cq.orderBy(qb.asc(root.get("project").get("projectName")),qb.desc(root.get("role").get("level")));
 			teamlist = entityManager.createQuery(cq).getResultList();
@@ -45,7 +46,10 @@ public class TeamAssignmentDAOImpl extends BaseService implements TeamAssignment
 			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 			CriteriaQuery<TeamAssignmentModel> cq = qb.createQuery(TeamAssignmentModel.class);
 			Root<TeamAssignmentModel> root = cq.from(TeamAssignmentModel.class);
-			cq.where(qb.equal(root.get("project").get("projectId"),projectId));
+			Predicate condition = qb.equal(root.get("project").get("projectId"),projectId);
+			Predicate condition2 = qb.equal(root.get("project").get("status"), "Open");
+			Predicate conditions = qb.and(condition, condition2);
+			cq.where(conditions);
 			cq.select(root);
 			cq.orderBy(qb.asc(root.get("project").get("projectName")),qb.desc(root.get("role").get("level")));
 			teamlist = entityManager.createQuery(cq).getResultList();

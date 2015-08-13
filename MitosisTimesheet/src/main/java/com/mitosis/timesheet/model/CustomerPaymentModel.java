@@ -26,7 +26,7 @@ public class CustomerPaymentModel {
 	@Column(name="id")
 	private Integer id;
 	@ManyToOne(targetEntity = InvoiceHdrModel.class,  cascade = CascadeType.ALL)
-	@JoinColumn(name = "invoice_number", nullable = false, updatable=true, referencedColumnName = "invoice_number")
+	@JoinColumn(name = "invoice_number", nullable = false,insertable=true, updatable=true, referencedColumnName = "invoice_number")
 	private InvoiceHdrModel invoiceHdr;
 	
 	@Column(name="receipt_date")
