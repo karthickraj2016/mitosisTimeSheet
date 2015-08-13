@@ -11,9 +11,8 @@ angular.module('myApp.controllers')
 	,$scope.maxSize = 5;
 
 	$scope.check = function(sheet){
-		if(sheet.customerName == '' || sheet.customerName == undefined){
-			return true;
-		} else if(sheet.project.projectName == '' || sheet.project.projectName == undefined) {
+		
+		if(sheet.project.projectName == '' || sheet.project.projectName == undefined) {
 			return true;
 		} else if(sheet.invoiceNumber == '' || sheet.invoiceNumber == undefined) {
 			return true;
@@ -33,7 +32,26 @@ angular.module('myApp.controllers')
 			return false;
 		}
 	}
+	
+	$scope.dateOptions = {
+			changeYear: true,
+			changeMonth: true,
+			dateFormat: 'dd-mm-yy',
 
+			/* yearRange: '1900:-0'*/
+	};
+	
+	$scope.dates = function() {
+		$scope.payment = '';
+		$scope.payment={};
+		var dt = new Date();
+		var dd = dt.getDate();
+		var mm = dt.getMonth()+1; 
+		var yyyy = dt.getFullYear();
+		dt=dd+"-"+mm+"-"+yyyy;
+		$scope.payment.recievedDate=dt;			
+	};
+	
 	$http({
 		url: 'rest/payment/showCustomerlist',
 		method: 'GET',
@@ -98,8 +116,22 @@ angular.module('myApp.controllers')
 				'Content-Type': 'application/json'
 			}
 		}).success(function(result, status, headers) {
-
+			
+			if(result.length==0){
+				$scope.invoice="";
+			    $scope.receiptDetails="";
+			    $scope.paymentDetails="";
+			}else{
 			$scope.paymentDetails = result;
+			$scope.invoice=result[0].invoiceHdr;
+			}
+			$scope.$watch('currentPage + numPerPage', function() {
+				var begin = (($scope.currentPage - 1) * $scope.numPerPage)
+				, end = begin + $scope.numPerPage;
+				$scope.filteredParticipantsResults = $scope.paymentDetails.slice(begin, end);
+				$scope.totalItems =	$scope.paymentDetails.length;
+				$scope.dates();
+			});
 			console.log(result);
 
 		});
@@ -123,24 +155,33 @@ angular.module('myApp.controllers')
 
 			$scope.receiptDetails = result;
 			console.log(result);
+			$scope.id=result.id;
 
 		});
 
+	}
+	
+	$scope.calculateAmount = function(){
+		
+		$scope.payment.paidAmountInr=$scope.payment.receivedamount*$scope.payment.exchangerate;
+	    $scope.payment.finalAmount=$scope.payment.paidAmountInr-$scope.payment.commisionamount;
+		
 	}
 
 	$scope.insertPaymentInfo = function(){
 
 		var menuJson = angular.toJson({
+			"id":$scope.id,
 			"receiptNumber": $scope.receipt.receiptNumber,
-			"recieveddate":$scope.recievedDate,
-			"commisionamount":$scope.commisionamount,
-			"exchangerate":$scope.exchangerate,
-			"receivedamount":$scope.receivedamount,
-			"paidAmountInr":$scope.paidAmountInr,
+			"recieveddate":$scope.payment.recievedDate,
+			"receivedAmount":$scope.payment.receivedamount,
+			"commisionAmount":$scope.payment.commisionamount,
+			"exchangeRate":$scope.payment.exchangerate,
+			"paidAmountInr":$scope.payment.paidAmountInr,
 			"invoiceNumber":$scope.invoices.invoiceNumber,
-			"invoiceAmount":$scope.invoices.invoiceAmount,
 			"paidAmount":$scope.invoices.paidAmount,
-			"receiptdate":$scope.receiptDetails.receiptDateStr
+			"receiptDate":$scope.receiptDetails.receiptDateStr,
+			"currencyCode":$scope.invoice.currencyCode
 
 		});
 
@@ -153,30 +194,41 @@ angular.module('myApp.controllers')
 			}
 		}).success(function(result, status, headers) {
 
-			if(result=="inserted"){
-
-				alert("inserted suceess");
-
+			if(result.value=="inserted"){
+				$(".alert-msg").show().delay(1000).fadeOut(); 
+				$(".alert-success").html("Inserted");
+				$scope.id="";
+				$scope.payment="";
+			}else{
+				$(".alert-msg1").show().delay(1000).fadeOut(); 
+				$(".alert-danger").html("Insertion Failed");
 			}
 
 		});
 
 	}
+	
+   $scope.calculateRate = function(sheet){
+		
+	sheet.paidAmountInr=sheet.receivedAmount*sheet.exchangeRate;
+	sheet.finalAmount=sheet.paidAmountInr-sheet.commisionAmount;
+	
+	}
 
-	$scope.updatePaymentInfo = function(sheet){
+	$scope.updatePaymentInfo = function(reqParam){
 
 		var menuJson = angular.toJson({
-			"receiptNumber": $scope.receipt.receiptNumber,
-			"recieveddate":$scope.recievedDate,
-			"commisionamount":$scope.commisionamount,
-			"exchangerate":$scope.exchangerate,
-			"receivedamount":$scope.receivedamount,
-			"paidAmountInr":$scope.paidAmountInr,
-			"invoiceNumber":$scope.invoices.invoiceNumber,
-			"invoiceAmount":$scope.invoices.invoiceAmount,
-			"paidAmount":$scope.invoices.paidAmount,
-			"receiptdate":$scope.receiptDetails.receiptDateStr
-
+			"id":reqParam.id,
+			"receiptNumber": reqParam.receiptNumber,
+			"recieveddate":reqParam.recievedDate,
+			"receivedAmount":reqParam.receivedAmount,
+			"commisionAmount":reqParam.commisionAmount,
+			"exchangeRate":reqParam.exchangeRate,
+			"paidAmountInr":reqParam.paidAmountInr,
+			"invoiceNumber":reqParam.invoiceHdr.invoiceNumber,
+			"paidAmount":reqParam.paidAmount,
+			"receiptDate":reqParam.receiptDateStr,
+			"currencyCode":reqParam.currencyCode
 		});
 
 		$http({
@@ -188,10 +240,12 @@ angular.module('myApp.controllers')
 			}
 		}).success(function(result, status, headers) {
 
-			if(result=="inserted"){
-
-				alert("inserted suceess");
-
+			if(result.value=="inserted"){
+				$(".alert-msg").show().delay(1000).fadeOut(); 
+				$(".alert-success").html("Updated");
+			}else{
+				$(".alert-msg1").show().delay(1000).fadeOut(); 
+				$(".alert-danger").html("Updating Failed");
 			}
 
 		});

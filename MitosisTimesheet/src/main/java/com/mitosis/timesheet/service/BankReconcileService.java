@@ -11,10 +11,8 @@ public interface BankReconcileService {
 
 	public List<CustomerPaymentModel> getPaymentDetails(String invoiceNumber);
 
-	public CustomerPaymentModel getCustomerDetail(String receiptNumber);
-
+	public InvoiceHdrModel getInvoiceHdrDetails(String invoiceNum);
+	
 	public boolean insert(CustomerPaymentModel customerPaymentModel);
-
-	public InvoiceHdrModel getInvoiceDetails(String invoiceNumber);
 
 }

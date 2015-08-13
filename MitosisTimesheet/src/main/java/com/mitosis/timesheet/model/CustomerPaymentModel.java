@@ -25,6 +25,7 @@ public class CustomerPaymentModel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
 	private Integer id;
+	
 	@ManyToOne(targetEntity = InvoiceHdrModel.class,  cascade = CascadeType.ALL)
 	@JoinColumn(name = "invoice_number", nullable = false,insertable=true, updatable=true, referencedColumnName = "invoice_number")
 	private InvoiceHdrModel invoiceHdr;

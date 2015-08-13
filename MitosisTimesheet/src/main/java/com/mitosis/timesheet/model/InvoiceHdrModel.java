@@ -28,7 +28,7 @@ public class InvoiceHdrModel {
 	private int id;
 
 	@ManyToOne(targetEntity = ProjectModel.class)
-	@JoinColumn(name = "project_id", nullable = false, referencedColumnName = "id")
+	@JoinColumn(name = "project_id",nullable=false, referencedColumnName = "id")
 	private ProjectModel project;
 
 	@Column(name="invoice_date")
@@ -51,7 +51,7 @@ public class InvoiceHdrModel {
 	private Date createdDate;
 	
 	@ManyToOne(targetEntity = CustomerDetailsModel.class)
-	@JoinColumn(name = "customer_id", nullable = false, referencedColumnName = "id")
+	@JoinColumn(name = "customer_id",nullable=false, referencedColumnName = "id")
 	private CustomerDetailsModel customer;
 
 	@Column(name="project_type")

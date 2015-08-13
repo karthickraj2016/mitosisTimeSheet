@@ -9,13 +9,10 @@ public interface BankReconcileDao {
 
 	public CustomerPaymentModel getReceiptDetails(String recieptNumber);
 
-	public InvoiceHdrModel getInvoiceDetails(String invoiceNumber);
-
 	public List<CustomerPaymentModel> getPaymentDetails(String invoiceNumber);
 
-	public boolean insert(CustomerPaymentModel customerPaymentModel);
-
-	public CustomerPaymentModel getCustomerDetail(String receiptNumber);
+	public InvoiceHdrModel getInvoiceHdrDetails(String invoiceNum);
 	
+	public boolean insert(CustomerPaymentModel customerPaymentModel);
 
 }

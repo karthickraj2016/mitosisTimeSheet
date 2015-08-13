@@ -17,6 +17,7 @@ import com.mitosis.timesheet.model.TimeSheetModel;
 import com.mitosis.timesheet.model.UserDetailsModel;
 import com.mitosis.timesheet.util.BaseService;
 
+@SuppressWarnings("rawtypes")
 public class TimeSheetDAOImpl extends BaseService implements TimeSheetDAO{
 
 	@Override

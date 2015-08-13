@@ -35,32 +35,19 @@ public class BankReconcileServiceImpl implements BankReconcileService {
 	}
 
 	@Override
-	public CustomerPaymentModel getCustomerDetail(String receiptNumber) {
-		CustomerPaymentModel customerPaymentModel = new CustomerPaymentModel();
+	public InvoiceHdrModel getInvoiceHdrDetails(String invoiceNum) {
 		
-		customerPaymentModel = reconcileDao.getCustomerDetail(receiptNumber);
-		// TODO Auto-generated method stub
-		return customerPaymentModel;
-	}
-
+		InvoiceHdrModel invoiceModel=reconcileDao.getInvoiceHdrDetails(invoiceNum);
 	
+		return invoiceModel;
+	}
 
 	@Override
 	public boolean insert(CustomerPaymentModel customerPaymentModel) {
-		// TODO Auto-generated method stub
+		
 		boolean insert = reconcileDao.insert(customerPaymentModel);
 		
 		return insert;
-	}
-
-	@Override
-	public InvoiceHdrModel getInvoiceDetails(String invoiceNumber) {
-		
-		InvoiceHdrModel invoicehdrModel = new InvoiceHdrModel();
-		
-		invoicehdrModel = reconcileDao.getInvoiceDetails(invoiceNumber);
-		// TODO Auto-generated method stub
-		return invoicehdrModel;
 	}
 
 }

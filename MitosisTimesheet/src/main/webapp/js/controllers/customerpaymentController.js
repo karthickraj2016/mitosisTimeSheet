@@ -29,7 +29,17 @@ angular.module('myApp.controllers')
 
 			/* yearRange: '1900:-0'*/
 	};
-
+	$scope.dates = function() {
+		$scope.payment = '';
+		$scope.payment={};
+		var dt = new Date();
+		var dd = dt.getDate();
+		var mm = dt.getMonth()+1; 
+		var yyyy = dt.getFullYear();
+		dt=dd+"-"+mm+"-"+yyyy;
+		$scope.payment.receiptDate=dt;			
+	};
+	
 	$http({
 		url: 'rest/payment/showCustomerlist',
 		method: 'GET',
@@ -142,7 +152,7 @@ angular.module('myApp.controllers')
 				$scope.filteredParticipantsResults = $scope.paymentList.slice(begin, end);
 				$scope.totalItems =	$scope.paymentList.length;
 			});
-
+			$scope.dates();
 		})
 	}
 
