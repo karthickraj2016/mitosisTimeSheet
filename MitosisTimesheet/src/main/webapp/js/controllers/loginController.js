@@ -44,11 +44,11 @@ angular.module('myApp.controllers')
 			}else if(result.message == "success"){
 
 				if(result.adminflag==2){
-					$rootScope.accountList();
+					
 					$state.go('leaveDetails');
 				}
 				else if(result.adminflag==1){
-					$rootScope.accountList();
+					
 					$state.go('userRights');
 				}
 				else{
