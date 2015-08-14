@@ -160,10 +160,6 @@ public class InvoiceDetails {
 			InvoiceHdrModel invoicehdrmodel = new InvoiceHdrModel();
 			invoicehdrmodel.setInvoiceNumber(invoiceHdrModel.getInvoiceNumber());
 			invoicedetail.setInvoice(invoicehdrmodel);
-			
-		
-			
-
 
 			invoicedetail.setInvoiceToDate(invoiceToDate);
 			invoicedetail.setDescription((String) jsonobject.getJSONObject("value").get("description"));
@@ -200,9 +196,6 @@ public class InvoiceDetails {
 		
 		JSONObject customer = new JSONObject();
 		
-		
-		System.out.println(jsonObject.get("project"));
-		
 		project=(JSONObject) jsonObject.get("project");
 		
 		customer = (JSONObject) jsonObject.get("customer");
@@ -214,6 +207,13 @@ public class InvoiceDetails {
 		customerModel.setCustomerId(Integer.parseInt(customer.get("customerId").toString()));
 		
 		customerModel.setCustomerName(customer.getString("customerName"));
+		
+		customerModel.setPhone(customer.getInt("phone"));
+		
+		customerModel.setMobile(customer.getInt("mobile"));
+		
+		customerModel.setAddress(customer.getString("address"));
+		
 		
 		/*customerModel.setCustomerId(Integer.parseInt(jsonObject.get("customerid").toString()));*/
 

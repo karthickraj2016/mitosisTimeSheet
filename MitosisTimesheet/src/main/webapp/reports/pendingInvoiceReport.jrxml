@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pendingInvoiceReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="firstday" class="java.lang.String"/>
+	<parameter name="lastday" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT cust.customer_name , project.project_name , pjtcost.project_type , pjtcost.project_cost
+FROM mitosisTimesheetTest.project_details project,customer_details cust,project_cost_hdr pjtcost
+where project.id = pjtcost.project_id
+and cust.id = project.customer_id
+and project.id not in (select project_id from invoice_hdr  where  invoice_date between $P{firstday} and $P{lastday})
+and project.status='Open']]>
+	</queryString>
+	<field name="customer_name" class="java.lang.String"/>
+	<field name="project_name" class="java.lang.String"/>
+	<field name="project_type" class="java.lang.String"/>
+	<field name="project_cost" class="java.math.BigDecimal"/>
+	<variable name="count" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$V{REPORT_COUNT}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="134" y="10" width="294" height="40"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pending Invoice Report]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="40" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="39"/>
+			</rectangle>
+			<line>
+				<reportElement x="44" y="1" width="1" height="39"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="1" width="45" height="38"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[S.no]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="0" width="130" height="38"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Customer Name]]></text>
+			</staticText>
+			<line>
+				<reportElement x="354" y="0" width="1" height="40"/>
+			</line>
+			<staticText>
+				<reportElement x="177" y="0" width="178" height="38"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Project Name]]></text>
+			</staticText>
+			<line>
+				<reportElement x="175" y="0" width="1" height="38"/>
+			</line>
+			<staticText>
+				<reportElement x="355" y="1" width="100" height="37"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Project Type]]></text>
+			</staticText>
+			<line>
+				<reportElement x="455" y="1" width="1" height="39"/>
+			</line>
+			<staticText>
+				<reportElement x="456" y="1" width="99" height="37"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Project Cost]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="51" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="50"/>
+			</rectangle>
+			<line>
+				<reportElement x="44" y="0" width="1" height="50"/>
+			</line>
+			<line>
+				<reportElement x="175" y="0" width="1" height="50"/>
+			</line>
+			<line>
+				<reportElement x="354" y="1" width="1" height="49"/>
+			</line>
+			<line>
+				<reportElement x="455" y="-2" width="1" height="52"/>
+			</line>
+			<textField>
+				<reportElement x="59" y="11" width="116" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{customer_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="192" y="11" width="135" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{project_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="361" y="11" width="94" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{project_type}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="11" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{project_cost}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="44" height="50"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{count}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="47" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

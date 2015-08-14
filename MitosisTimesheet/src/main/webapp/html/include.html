@@ -35,6 +35,8 @@
             <li><a ui-sref="invoice">Invoice</a></li>
           <li><a ui-sref="customer_payment">Receipt</a></li>
           <li><a ui-sref="bankReconcile">Bank Reconcile</a></li> 
+       	  <li><a ng-click="pendingInvoice()">Pending Invoice generation </a></li>
+          <li><a ng-click="pendingBalance()">Pending Balance From Customers</a></li>
           </ul>
         </li>
          <li ng-show="manageProject" ng-class="{ active: isActive('/projects')}"><a class="dropdown-toggle" data-toggle="dropdown"> Project<span class="caret"></span></a>
@@ -53,6 +55,7 @@
         <ul class="dropdown-menu">
             <li><a ui-sref="individualreport">Individual Reports</a></li>
             <li><a ui-sref="teamreport">Team Reports</a></li>
+             
           </ul>
         </li>
         </ul>
