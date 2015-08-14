@@ -123,6 +123,7 @@ angular.module('myApp.controllers')
 			    $scope.paymentDetails="";
 			}else{
 			$scope.paymentDetails = result;
+			$scope.receiptDetails="";
 			$scope.invoice=result[0].invoiceHdr;
 			}
 			$scope.$watch('currentPage + numPerPage', function() {
@@ -164,7 +165,7 @@ angular.module('myApp.controllers')
 	$scope.calculateAmount = function(){
 		
 		$scope.payment.paidAmountInr=$scope.payment.receivedamount*$scope.payment.exchangerate;
-	    $scope.payment.finalAmount=$scope.payment.paidAmountInr-$scope.payment.commisionamount;
+	    $scope.finalAmount=$scope.payment.paidAmountInr-$scope.payment.commisionamount;
 		
 	}
 
@@ -173,7 +174,7 @@ angular.module('myApp.controllers')
 		var menuJson = angular.toJson({
 			"id":$scope.id,
 			"receiptNumber": $scope.receipt.receiptNumber,
-			"recieveddate":$scope.payment.recievedDate,
+			"receivedDate":$scope.payment.recievedDate,
 			"receivedAmount":$scope.payment.receivedamount,
 			"commisionAmount":$scope.payment.commisionamount,
 			"exchangeRate":$scope.payment.exchangerate,
@@ -181,7 +182,8 @@ angular.module('myApp.controllers')
 			"invoiceNumber":$scope.invoices.invoiceNumber,
 			"paidAmount":$scope.invoices.paidAmount,
 			"receiptDate":$scope.receiptDetails.receiptDateStr,
-			"currencyCode":$scope.invoice.currencyCode
+			"currencyCode":$scope.invoice.currencyCode,
+			"finalAmount":$scope.finalAmount
 
 		});
 
@@ -199,6 +201,9 @@ angular.module('myApp.controllers')
 				$(".alert-success").html("Inserted");
 				$scope.id="";
 				$scope.payment="";
+				$scope.receiptDetails="";
+				$scope.invoiceChanged();
+				$scope.dates();
 			}else{
 				$(".alert-msg1").show().delay(1000).fadeOut(); 
 				$(".alert-danger").html("Insertion Failed");
@@ -220,7 +225,7 @@ angular.module('myApp.controllers')
 		var menuJson = angular.toJson({
 			"id":reqParam.id,
 			"receiptNumber": reqParam.receiptNumber,
-			"recieveddate":reqParam.recievedDate,
+			"receivedDate":reqParam.bankReceivedDateStr,
 			"receivedAmount":reqParam.receivedAmount,
 			"commisionAmount":reqParam.commisionAmount,
 			"exchangeRate":reqParam.exchangeRate,
@@ -228,7 +233,8 @@ angular.module('myApp.controllers')
 			"invoiceNumber":reqParam.invoiceHdr.invoiceNumber,
 			"paidAmount":reqParam.paidAmount,
 			"receiptDate":reqParam.receiptDateStr,
-			"currencyCode":reqParam.currencyCode
+			"currencyCode":reqParam.currencyCode,
+			"finalAmount":reqParam.finalAmount
 		});
 
 		$http({
@@ -243,6 +249,7 @@ angular.module('myApp.controllers')
 			if(result.value=="inserted"){
 				$(".alert-msg").show().delay(1000).fadeOut(); 
 				$(".alert-success").html("Updated");
+				$scope.invoiceChanged();
 			}else{
 				$(".alert-msg1").show().delay(1000).fadeOut(); 
 				$(".alert-danger").html("Updating Failed");

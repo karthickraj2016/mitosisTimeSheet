@@ -102,6 +102,12 @@ public class BankReconcile {
 		Date date=sdf.parse(jsonObject.getString("receiptDate"));
 		customerPaymentModel.setReceiptDate(date);
 		
+		Date date1=sdf.parse(jsonObject.getString("receivedDate"));
+		customerPaymentModel.setBankReceivedDate(date1);
+		
+		BigDecimal finalAmount=new BigDecimal(jsonObject.getInt("finalAmount"));
+		customerPaymentModel.setFianlAmount(finalAmount);
+		
 		customerPaymentModel.setCurrencyCode(jsonObject.getString("currencyCode"));
 		
 		String invoiceNum=jsonObject.getString("invoiceNumber");

@@ -51,11 +51,20 @@ public class CustomerPaymentModel {
 	@Column(name="commision_amount")
 	private BigDecimal commisionAmount;
 	
-	@Column(name="received_amount")
+	@Column(name="bank_received_amount")
 	private BigDecimal receivedAmount;
+	
+	@Column(name="bank_received_date")
+	private Date bankReceivedDate;
+	
+	@Column(name="final_amount")
+	private BigDecimal finalAmount;
 	
 	@Transient
 	private String receiptDateStr;
+	
+	@Transient
+	private String bankReceivedDateStr;
 			
 	public String getReceiptDateStr() {
 		Date d=getReceiptDate();
@@ -64,6 +73,19 @@ public class CustomerPaymentModel {
 	public void setReceiptDateStr(String receiptDateStr) {
 		this.receiptDateStr = receiptDateStr;
 	}
+	
+	public String getBankReceivedDateStr() {
+		if(getBankReceivedDate()==null){
+			
+			return "NotEntered";
+		}
+		Date d=getBankReceivedDate();
+		return new SimpleDateFormat("dd-MM-yyyy").format(d);		
+	}
+	public void setBankReceivedDateStr(String bankReceivedDateStr) {
+		this.bankReceivedDateStr = bankReceivedDateStr;
+	}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -142,6 +164,18 @@ public class CustomerPaymentModel {
 
 	public void setReceivedAmount(BigDecimal receivedAmount) {
 		this.receivedAmount = receivedAmount;
+	}
+	public Date getBankReceivedDate() {
+		return bankReceivedDate;
+	}
+	public void setBankReceivedDate(Date bankReceivedDate) {
+		this.bankReceivedDate = bankReceivedDate;
+	}
+	public BigDecimal getFinalAmount() {
+		return finalAmount;
+	}
+	public void setFianlAmount(BigDecimal finalAmount) {
+		this.finalAmount = finalAmount;
 	}
 
 	

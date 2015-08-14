@@ -2,7 +2,6 @@ package com.mitosis.timesheet.webservice;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,37 +31,25 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import com.mitosis.timesheet.model.LeaveDetailsModel;
-import com.mitosis.timesheet.model.TimeSheetModel;
-import com.mitosis.timesheet.pojo.SummaryReport;
-import com.mitosis.timesheet.service.IndividualReportService;
 import com.mitosis.timesheet.service.LeaveReportService;
-import com.mitosis.timesheet.service.impl.IndividualReportServiceImpl;
 import com.mitosis.timesheet.service.impl.LeaveReportServiceImpl;
-
-
 
 @Path("leavereport")
 public class LeaveReport {
 	
 	LeaveReportService leaveReportService  = new LeaveReportServiceImpl(); 
-		
-		
-	
 	
 	@Context private HttpServletRequest request;
-	
 	
 	@Path("/detailreport")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public JSONObject LeaveDetailReport(JSONObject jsonObject) throws JSONException, JRException, IOException, ParseException{
-		
 		
 		JSONObject jsonObj = new JSONObject();
 		HttpSession session= request.getSession(true);
@@ -88,20 +75,15 @@ public class LeaveReport {
 		
 		Date toDate = sdf.parse(todateInString);
 		
-		
 		LeaveDetailList = leaveReportService.LeaveDetailList(fromDate, toDate);
 		
-		
 		if(LeaveDetailList.size()==0){
-			
 			
 			jsonObj.put("pdfPath","norecords");
 			
 			return jsonObj;
 		}
-		
-		
-		
+
 		JasperDesign jasperDesign = JRXmlLoader.load(request.getSession().getServletContext()
 		          .getRealPath("/")
 		          + "reports/LeaveReport.jrxml");
@@ -130,14 +112,9 @@ public class LeaveReport {
 		      jsonObj.put("pdfFileName","LeaveReport"+employeeId+".pdf");
 		      jsonObj.put("pdfPath",pdfFilePath);
 		   
-		
-		return jsonObj;
-
+			return jsonObj;
 	}
-	
-
-	
-	
+		
 	@Path("/deletepdffile")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -154,24 +131,11 @@ public class LeaveReport {
 			file.delete();
 			
 			jsonobject.put("msg", "deleted");
-			
-		}
+	}else{
 		
-		else{
-			
-			jsonobject.put("msg", "doesntexist");
-			
-			
-		}
-		
-
+		jsonobject.put("msg", "doesntexist");
+	}
 		return jsonobject;
-		
-		
-		
-		
-		
-		
 	}
 	
 	@GET
@@ -183,9 +147,5 @@ public class LeaveReport {
 
 		return "success";
 	}
-	
-	
-	
-	
 
 }

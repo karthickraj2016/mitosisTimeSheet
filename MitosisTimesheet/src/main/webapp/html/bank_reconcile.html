@@ -177,8 +177,8 @@
 				<span ng-show="showEdit"><input class="form-control" type="text" ng-model="sheet.receiptNumber" readonly></span>
 			</td>
 			<td>
-				<span ng-show="!showEdit">{{sheet.receivedDate}}</span>
-				<span ng-show="showEdit"><input class="form-control" type="text" ng-model="sheet.receivedDate" ></span>
+				<span ng-show="!showEdit">{{sheet.bankReceivedDateStr}}</span>
+				<span ng-show="showEdit"><input class="form-control" type="text" ui-date="dateOptions" ui-date-format="dd-mm-yy" ng-model="sheet.bankReceivedDateStr" ></span>
 			</td>
 			<td>
 				<span ng-show="!showEdit">{{sheet.receivedAmount}}</span>
