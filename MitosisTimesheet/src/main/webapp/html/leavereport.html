@@ -1,44 +1,4 @@
-<script type="text/javascript">
-    $(document).ready(function() { 	   
-        $(".cp").on("click", function(){ 
-            $(".acc_optcls").toggle();
-        });    
-    });
-    $(document).on("click", function(event){    
-    	var $trigger = $(".cp");
-        if($trigger !== event.target && !$trigger.has(event.target).length){
-            $(".acc_optcls").hide();
-        } 
-    });
-</script>
 <div ng-init="list()">
-<nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container-fluid top-header-fixed">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      <div class="logo"><img src="images/logo2.png"></div>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar" ng-controller="HeaderController">
-      <ul class="nav navbar-nav" style="margin-left: 30px; margin-top: 8px;">
-        <li ng-class="{ active: isActive('/leaveDetails')}"><a ui-sref="leaveDetails">Home</a></li>
-         <li ng-class="{ active: isActive('/leaveReport')}"><a ui-sref="leavereport">Leave Report</a></li>
-        </ul>
-      
-    </div>
-    <section class="jtr">
-		<span class="cp">
-		<img class="opt" style="height: 50px; width: 50px; border-radius: 50%;" src="images/profile/user.jpg"></img></span> 
-		<section id="acc_opt" class="acc_optcls">
-		<span ng-model="name">{{name}}</span>
-		<a ui-sref="account">Account</a>
-		<a ng-click="logout();">Logout</a>
-		</section></section>
-  </div>
-</nav>
 <div ng-controller="leaveReportController" class="container" style="margin-top: 7%;">
 	<div class="row">
 	<div class="col-xs-12">

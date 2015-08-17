@@ -25,7 +25,7 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar" ng-controller="HeaderController">
       <ul class="nav navbar-nav" style="margin-left: 30px; margin-top: 8px;">
-        <li ng-class="{ active: isActive('/timesheet')}"><a ui-sref="timesheet">Home</a></li>
+        <li ng-class="{ active: isActive('/timesheet')}"><a href="{{test}}">Home</a></li>
         <li ng-show="manageFinance" ng-class="{ active: isActive('/finance')}"><a class="dropdown-toggle" data-toggle="dropdown"> Finance<span class="caret"></span></a>
         
         <ul class="dropdown-menu">
@@ -51,13 +51,14 @@
             <li><a ui-sref="employeeMaster">Employee Master</a></li>
             </ul>
             </li>
-         <li ng-class="{ active: isActive('/reports')}"><a class="dropdown-toggle" data-toggle="dropdown"> Reports<span class="caret"></span></a>
+         <li ng-show="recpt" ng-class="{ active: isActive('/reports')}"><a class="dropdown-toggle" data-toggle="dropdown"> Reports<span class="caret"></span></a>
         <ul class="dropdown-menu">
             <li><a ui-sref="individualreport">Individual Reports</a></li>
             <li><a ui-sref="teamreport">Team Reports</a></li>
              
           </ul>
         </li>
+           <li ng-show="leavereportlist" ng-class="{ active: isActive('/leaveReport')}"><a ui-sref="leavereport">Leave Report</a></li>
         </ul>
       
     </div>

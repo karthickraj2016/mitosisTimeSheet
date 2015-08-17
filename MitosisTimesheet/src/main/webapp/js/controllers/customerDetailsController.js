@@ -129,6 +129,8 @@ angular.module('myApp.controllers')
 					}
 				}
 			})
+		}else{
+			$scope.addCustomerDetails(customer);
 		}
 	}
 
@@ -182,6 +184,12 @@ angular.module('myApp.controllers')
 	$scope.updateCustomerDetails = function(reqParam){
 
 		var mail=reqParam.email;
+		
+		if(mail==null){
+			mail="";
+		}else{
+			mail=mail;
+		}
 
 		$scope.validateEmail = function(mail) {
 
@@ -195,8 +203,7 @@ angular.module('myApp.controllers')
 			$(".alert-danger").html("EmailId is not valid");
 			$scope.list();
 			return;
-		}
-		else{
+		}else{
 
 			$http({
 				url: 'rest/customerDetails/updateCustomer',

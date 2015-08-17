@@ -10,6 +10,8 @@ angular.module('myApp.controllers')
 	,$scope.maxSize = 5;
 	$scope.units;
 	var hoursallowed;
+	
+	$rootScope.navbar=true;
 
 	$scope.checkRequired = function(sheet){
 		if(sheet.name == '' || sheet.name == undefined){
@@ -78,15 +80,4 @@ angular.module('myApp.controllers')
 		})
 	}
 	
-	$scope.logout = function(){
-
-		$http({
-			url: 'rest/account/logout',
-			method: 'GET',
-		}).success(function(result, status, headers) {
-
-			$state.go('login')
-		})
-	};
-
 }])

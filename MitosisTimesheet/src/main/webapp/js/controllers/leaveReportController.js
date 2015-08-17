@@ -10,6 +10,8 @@ angular.module('myApp.controllers')
 	,$scope.numPerPage = 8
 	,$scope.maxSize = 5;
 	$scope.units;
+	
+	$rootScope.navbar=true;
 
 	$scope.checkRequired = function(sheet){
 		if(sheet.frmEntryDate == '' || sheet.frmEntryDate == undefined) {
@@ -144,14 +146,4 @@ angular.module('myApp.controllers')
 		})
 	}
 	
-	$scope.logout = function(){
-
-		$http({
-			url: 'rest/account/logout',
-			method: 'GET',
-		}).success(function(result, status, headers) {
-
-			$state.go('login')
-		})
-	};
 }])

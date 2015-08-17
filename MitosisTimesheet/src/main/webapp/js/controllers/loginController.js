@@ -43,19 +43,28 @@ angular.module('myApp.controllers')
 				$(".alert-danger").html("Click Your Activation Link In Your Mail")
 			}else if(result.message == "success"){
 
-				if(result.adminflag==2){
-					
-					$state.go('leaveDetails');
-				}
-				else if(result.adminflag==1){
-					
-					$state.go('userRights');
-				}
-				else{
-					$rootScope.accountList();
-					$state.go('timesheet');
-				}
-
+				 if(result.adminflag==2){
+						$rootScope.recpt="false";
+						$rootScope.leavereportlist="true";
+						$rootScope.test = '#/leaveDetails';
+						$rootScope.accountList();
+						$state.go('leaveDetails');
+					}
+					else if(result.adminflag==1){
+						$rootScope.recpt="false";
+						$rootScope.leavereportlist="false";
+						$rootScope.test = '#/userRights';
+						$rootScope.accountList();
+						$state.go('userRights');
+					}
+					else{
+						$rootScope.recpt="true";
+						$rootScope.leavereportlist="false";
+						$rootScope.test = '#/timesheet';
+						$rootScope.accountList();
+						$state.go('timesheet');
+					}
+				 
 			}else if(result.message =="signupunsuccessful"){
 				$(".alert-msg1").show().delay(1000).fadeOut(); 
 				$(".alert-danger").html("UserName or password is incorrect !!!");
