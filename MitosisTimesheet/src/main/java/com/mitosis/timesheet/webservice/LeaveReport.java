@@ -37,9 +37,10 @@ import org.codehaus.jettison.json.JSONObject;
 import com.mitosis.timesheet.model.LeaveDetailsModel;
 import com.mitosis.timesheet.service.LeaveReportService;
 import com.mitosis.timesheet.service.impl.LeaveReportServiceImpl;
+import com.mitosis.timesheet.util.JasperUtil;
 
 @Path("leavereport")
-public class LeaveReport {
+public class LeaveReport extends JasperUtil{
 	
 	LeaveReportService leaveReportService  = new LeaveReportServiceImpl(); 
 	
@@ -148,4 +149,37 @@ public class LeaveReport {
 		return "success";
 	}
 
+	@Path("/leaveSummaryReport")
+	@GET
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	
+	public JSONObject leaveSummaryReport() throws Exception {
+		
+	JSONObject jsonObject = new JSONObject();
+		
+	String reportFilePath = request.getSession().getServletContext()
+			.getRealPath("/")
+			+ "reports/LeaveSummaryReport.jrxml";
+
+
+	Map<String, Object> parameters = new HashMap<String, Object>();
+	String path = this.getClass().getClassLoader().getResource("/").getPath();
+	String pdfPath = path.replaceAll("WEB-INF/classes/", "");
+	String imagePath = this.getClass().getClassLoader().getResource("/").getPath().replaceAll("WEB-INF/classes/", "");
+	
+	String pdfFilePath = pdfPath
+			+ "reports/LeaveSummaryReport" + ".pdf";
+	
+	RenderJr(reportFilePath, parameters,pdfFilePath);
+	
+
+	JRBeanCollectionDataSource ds = null;
+	
+	jsonObject.put("report","report successful");
+	jsonObject.put("pdfFileName", "LeaveSummaryReport"+".pdf");
+	
+	
+	return jsonObject;
+ }
 }

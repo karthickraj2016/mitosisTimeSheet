@@ -25,7 +25,7 @@ angular.module('myApp.controllers')
 		}
 
 	}
-
+	
 	$scope.dates = function() {
 		$scope.leave = '';
 		$scope.leave={};
@@ -121,6 +121,27 @@ angular.module('myApp.controllers')
 		}).success(function(result, status, headers) {
 
 		});
+	}
+	
+	$scope.leaveSummaryReport =function(){
+		
+		$http({
+			url: 'rest/leavereport/leaveSummaryReport',
+			method: 'GET',
+		}).success(function(result, status, headers) {
+
+			var a = document.createElement('a');
+			a.href = "/MitosisTimesheet/reports/"+result.pdfFileName;
+			console.log(a);
+			//a.download = "individualDetailReport.pdf";
+			a.target="_blank";
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
+			$scope.filepath = a.href;
+			console.log($scope.filepath);
+			return;
+		})
 	}
 	
 	$scope.logout = function(){
