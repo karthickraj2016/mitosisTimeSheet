@@ -156,15 +156,6 @@ public class LeaveReport extends JasperUtil{
 
 	public JSONObject leaveSummaryReport(JSONObject jsonObject) throws Exception {
 
-		HttpSession session= request.getSession(true);
-
-		if(session.getAttribute("userId")==null){
-			return null;
-		}
-		Object userId = session.getAttribute("userId");
-
-		int employeeId =(Integer) request.getSession().getAttribute("userId");
-
 		String fromDateString = jsonObject.getString("fromdate");
         String fromDateReverse =fromDateString.split("-")[2]+"-"+fromDateString.split("-")[1]+"-"+fromDateString.split("-")[0];
 
@@ -175,29 +166,26 @@ public class LeaveReport extends JasperUtil{
 		
 		JSONObject jsonobject = new JSONObject();
 
-		String reportFilePath = request.getSession().getServletContext()
-				.getRealPath("/")
-				+ "reports/LeaveSummaryReport.jrxml";
+		String reportFilePath = request.getSession().getServletContext().getRealPath("/")+ "reports/LeaveSummaryReport.jrxml";
 
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		String path = this.getClass().getClassLoader().getResource("/").getPath();
 		String pdfPath = path.replaceAll("WEB-INF/classes/", "");
-		String imagePath = this.getClass().getClassLoader().getResource("/").getPath().replaceAll("WEB-INF/classes/", "");
+		
 		parameters.put("fromDate", fromDateString);
 		parameters.put("toDate",toDateString);
 		parameters.put("startDate",startDateString);
 		parameters.put("fromDateRev",fromDateReverse);
 		parameters.put("toDateRev",toDateReverse);
 
-		String pdfFilePath = pdfPath
-				+ "reports/LeaveSummaryReport" + employeeId + ".pdf";
+		String pdfFilePath = pdfPath+"reports/LeaveSummaryReport"+".pdf";
 
 		RenderJr(reportFilePath, parameters,pdfFilePath);
 
 		JRBeanCollectionDataSource ds = null;
 
 		jsonobject.put("report","report successful");
-		jsonobject.put("pdfFileName", "LeaveSummaryReport"+employeeId+".pdf");
+		jsonobject.put("pdfFileName", "LeaveSummaryReport"+".pdf");
 
 		return jsonobject;
 	}

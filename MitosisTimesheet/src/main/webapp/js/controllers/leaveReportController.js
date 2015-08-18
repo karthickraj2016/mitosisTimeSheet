@@ -104,7 +104,7 @@ angular.module('myApp.controllers')
 				document.body.removeChild(a);
 				$scope.filepath = a.href;
 				console.log($scope.filepath);
-				scope.deletepdfFile(result.pdfPath);
+				$scope.deletepdfFile(result.pdfPath);
 			}
 		});
 	},

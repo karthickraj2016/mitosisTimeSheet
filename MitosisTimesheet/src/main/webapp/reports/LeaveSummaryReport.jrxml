@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LeaveSummaryReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="76"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="fromDate" class="java.lang.String">
 		<defaultValueExpression><![CDATA[$P{fromDate}]]></defaultValueExpression>
@@ -23,12 +23,12 @@
 	<queryString>
 		<![CDATA[select T1.name, T1.totalLeave, T2.tot from
 (select name,sum(no_of_days) as totalLeave
-from mitosisTimesheetTest.leave_details leaveDet,user_details user
+from leave_details leaveDet,user_details user
 where (leaveDet.employee_id=user.id)
 and leaveDet.from_date>=$P{fromDateRev} and leaveDet.to_date<=$P{toDateRev}
 group by name) T1,
 (select name,sum(no_of_days) as tot
-from mitosisTimesheetTest.leave_details lea,user_details us
+from leave_details lea,user_details us
 where lea.employee_id=us.id and lea.from_date>=$P{startDate} and
 lea.to_date<=$P{toDateRev} group by name) T2
 where T1.name=T2.name;]]>
@@ -41,37 +41,37 @@ where T1.name=T2.name;]]>
 		<groupHeader>
 			<band height="56">
 				<rectangle>
-					<reportElement x="10" y="23" width="555" height="32"/>
+					<reportElement x="1" y="23" width="554" height="32"/>
 				</rectangle>
 				<line>
 					<reportElement x="128" y="23" width="1" height="33"/>
 				</line>
 				<line>
-					<reportElement x="286" y="23" width="1" height="33"/>
+					<reportElement x="277" y="23" width="1" height="33"/>
 				</line>
 				<line>
-					<reportElement x="418" y="23" width="1" height="33"/>
+					<reportElement x="409" y="23" width="1" height="33"/>
 				</line>
 				<staticText>
-					<reportElement x="19" y="31" width="100" height="20"/>
+					<reportElement x="10" y="31" width="100" height="20"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
 					<text><![CDATA[Name]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="157" y="30" width="100" height="20"/>
+					<reportElement x="150" y="30" width="100" height="20"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<text><![CDATA[No Of Days Taken
+					<text><![CDATA[No Of Days
 ]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="302" y="30" width="85" height="20"/>
+					<reportElement x="293" y="30" width="105" height="20"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<text><![CDATA[Total No of Days ]]></text>
+					<text><![CDATA[No of Days  (3 mon)]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="436" y="30" width="105" height="20"/>
+					<reportElement x="427" y="30" width="119" height="20"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<text><![CDATA[Balance Leave Days]]></text>
+					<text><![CDATA[Balance Leave (3 mon)]]></text>
 				</staticText>
 			</band>
 		</groupHeader>
@@ -92,22 +92,22 @@ where T1.name=T2.name;]]>
 				<text><![CDATA[Mitosis - Leave Summary Report]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="89" y="50" width="55" height="20"/>
+				<reportElement x="78" y="54" width="55" height="20"/>
 				<textElement/>
 				<text><![CDATA[FromDate:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="343" y="50" width="44" height="20"/>
+				<reportElement x="342" y="54" width="44" height="20"/>
 				<textElement/>
 				<text><![CDATA[ToDate:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="143" y="50" width="100" height="20"/>
+				<reportElement x="132" y="54" width="100" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{fromDate}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="387" y="50" width="100" height="20"/>
+				<reportElement x="386" y="54" width="100" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{toDate}]]></textFieldExpression>
 			</textField>
@@ -116,34 +116,34 @@ where T1.name=T2.name;]]>
 	<detail>
 		<band height="41" splitType="Stretch">
 			<rectangle>
-				<reportElement x="10" y="-1" width="555" height="41"/>
+				<reportElement x="1" y="-1" width="554" height="41"/>
 			</rectangle>
 			<line>
 				<reportElement x="128" y="-2" width="1" height="42"/>
 			</line>
 			<line>
-				<reportElement x="286" y="-1" width="1" height="42"/>
+				<reportElement x="277" y="-1" width="1" height="42"/>
 			</line>
 			<line>
-				<reportElement x="418" y="-1" width="1" height="41"/>
+				<reportElement x="409" y="-1" width="1" height="41"/>
 			</line>
 			<textField isBlankWhenNull="true">
-				<reportElement x="20" y="10" width="100" height="20"/>
+				<reportElement x="11" y="10" width="100" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{name}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="157" y="10" width="100" height="20"/>
+				<reportElement x="150" y="10" width="100" height="20"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{totalLeave}]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
-				<reportElement x="436" y="10" width="100" height="20"/>
+				<reportElement x="427" y="10" width="100" height="20"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[new BigDecimal("5").subtract($F{tot})]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="297" y="10" width="100" height="20"/>
+				<reportElement x="288" y="10" width="100" height="20"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{tot}]]></textFieldExpression>
 			</textField>
