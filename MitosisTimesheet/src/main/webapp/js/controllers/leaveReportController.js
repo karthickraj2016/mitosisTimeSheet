@@ -127,11 +127,31 @@ angular.module('myApp.controllers')
 	
 	$scope.leaveSummaryReport =function(){
 		
+		var monOfDate=($scope.leave.fromdate).split("-")[1];
+		var yearOfDate=($scope.leave.fromdate).split("-")[2];
+		var startDate;
+		
+		if(monOfDate<=3){
+			startDate=yearOfDate+"-01-01";
+		}else if(monOfDate>3 && monOfDate<=6){
+			startDate=yearOfDate+"-04-01";
+		}else if(monOfDate>6 && monOfDate<=9){
+			startDate=yearOfDate+"-07-01";
+		}else if(monOfDate>9 && monOfDate<=12){
+			startDate=yearOfDate+"-10-01";
+		}
+	
+		var menuJson = angular.toJson({"startDate":startDate,"fromdate":$scope.leave.fromdate,"todate":$scope.leave.todate});
+
 		$http({
 			url: 'rest/leavereport/leaveSummaryReport',
-			method: 'GET',
+			method: 'POST',
+			data:menuJson,
+			headers: {
+				'Content-Type': 'application/json'
+			}
 		}).success(function(result, status, headers) {
-
+			
 			var a = document.createElement('a');
 			a.href = "/MitosisTimesheet/reports/"+result.pdfFileName;
 			console.log(a);
@@ -142,8 +162,7 @@ angular.module('myApp.controllers')
 			document.body.removeChild(a);
 			$scope.filepath = a.href;
 			console.log($scope.filepath);
-			return;
-		})
+		});
 	}
 	
 }])

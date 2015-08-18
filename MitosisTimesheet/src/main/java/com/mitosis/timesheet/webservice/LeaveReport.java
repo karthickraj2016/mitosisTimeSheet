@@ -41,17 +41,17 @@ import com.mitosis.timesheet.util.JasperUtil;
 
 @Path("leavereport")
 public class LeaveReport extends JasperUtil{
-	
+
 	LeaveReportService leaveReportService  = new LeaveReportServiceImpl(); 
-	
+
 	@Context private HttpServletRequest request;
-	
+
 	@Path("/detailreport")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public JSONObject LeaveDetailReport(JSONObject jsonObject) throws JSONException, JRException, IOException, ParseException{
-		
+
 		JSONObject jsonObj = new JSONObject();
 		HttpSession session= request.getSession(true);
 
@@ -59,86 +59,86 @@ public class LeaveReport extends JasperUtil{
 			return null;
 		}
 		Object userId = session.getAttribute("userId");
-		
+
 		int employeeId =(Integer) request.getSession().getAttribute("userId");
-	
-				
+
+
 		String name = jsonObject.getString("name");
-		
+
 		List<LeaveDetailsModel> LeaveDetailList = new ArrayList<LeaveDetailsModel>();
-		
+
 		DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-		
+
 		String frmdateInString = jsonObject.getString("fromdate");
 		Date fromDate = sdf.parse(frmdateInString);
-		
+
 		String todateInString = jsonObject.getString("todate");
-		
+
 		Date toDate = sdf.parse(todateInString);
-		
+
 		LeaveDetailList = leaveReportService.LeaveDetailList(fromDate, toDate);
-		
+
 		if(LeaveDetailList.size()==0){
-			
+
 			jsonObj.put("pdfPath","norecords");
-			
+
 			return jsonObj;
 		}
 
 		JasperDesign jasperDesign = JRXmlLoader.load(request.getSession().getServletContext()
-		          .getRealPath("/")
-		          + "reports/LeaveReport.jrxml");
+				.getRealPath("/")
+				+ "reports/LeaveReport.jrxml");
 
-		      JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
-		     // JREmptyDataSource jrEmptyDatasource = new JREmptyDataSource();
-		      Map<String, Object> parameters = new HashMap<String, Object>();
-		      
-		      parameters.put("fromDate", frmdateInString);
-		      parameters.put("toDate", todateInString);
-		      parameters.put("name",name);
-		      
-		      JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(LeaveDetailList);
-		      JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, ds);
+		JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+		// JREmptyDataSource jrEmptyDatasource = new JREmptyDataSource();
+		Map<String, Object> parameters = new HashMap<String, Object>();
 
-		      String path = this.getClass().getClassLoader().getResource("/").getPath();
-		      String pdfPath = path.replaceAll("WEB-INF/classes/", "");
-		      String pdfFilePath = pdfPath
-			          + "reports/LeaveReport" + employeeId + ".pdf";
-		      
-		      new File(pdfFilePath).deleteOnExit();
+		parameters.put("fromDate", frmdateInString);
+		parameters.put("toDate", todateInString);
+		parameters.put("name",name);
 
-		      JasperExportManager.exportReportToPdfFile(jasperPrint,pdfFilePath);
+		JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(LeaveDetailList);
+		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, ds);
 
-		      
-		      jsonObj.put("pdfFileName","LeaveReport"+employeeId+".pdf");
-		      jsonObj.put("pdfPath",pdfFilePath);
-		   
-			return jsonObj;
+		String path = this.getClass().getClassLoader().getResource("/").getPath();
+		String pdfPath = path.replaceAll("WEB-INF/classes/", "");
+		String pdfFilePath = pdfPath
+				+ "reports/LeaveReport" + employeeId + ".pdf";
+
+		new File(pdfFilePath).deleteOnExit();
+
+		JasperExportManager.exportReportToPdfFile(jasperPrint,pdfFilePath);
+
+
+		jsonObj.put("pdfFileName","LeaveReport"+employeeId+".pdf");
+		jsonObj.put("pdfPath",pdfFilePath);
+
+		return jsonObj;
 	}
-		
+
 	@Path("/deletepdffile")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public JSONObject deletepdffile(JSONObject jsonObject) throws JSONException{
 		JSONObject jsonobject = new JSONObject();
-		
+
 		System.out.println(jsonObject);
-		
+
 		File file = new File(jsonObject.getString("filepath"));
-		
+
 		if(file.exists()){
-			
+
 			file.delete();
-			
+
 			jsonobject.put("msg", "deleted");
-	}else{
-		
-		jsonobject.put("msg", "doesntexist");
-	}
+		}else{
+
+			jsonobject.put("msg", "doesntexist");
+		}
 		return jsonobject;
 	}
-	
+
 	@GET
 	@Path("/logout")
 	public String logout() {
@@ -150,36 +150,55 @@ public class LeaveReport extends JasperUtil{
 	}
 
 	@Path("/leaveSummaryReport")
-	@GET
+	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	
-	public JSONObject leaveSummaryReport() throws Exception {
+
+	public JSONObject leaveSummaryReport(JSONObject jsonObject) throws Exception {
+
+		HttpSession session= request.getSession(true);
+
+		if(session.getAttribute("userId")==null){
+			return null;
+		}
+		Object userId = session.getAttribute("userId");
+
+		int employeeId =(Integer) request.getSession().getAttribute("userId");
+
+		String fromDateString = jsonObject.getString("fromdate");
+        String fromDateReverse =fromDateString.split("-")[2]+"-"+fromDateString.split("-")[1]+"-"+fromDateString.split("-")[0];
+
+		String toDateString = jsonObject.getString("todate");
+		String toDateReverse =toDateString.split("-")[2]+"-"+toDateString.split("-")[1]+"-"+toDateString.split("-")[0];
 		
-	JSONObject jsonObject = new JSONObject();
+		String startDateString = jsonObject.getString("startDate");
 		
-	String reportFilePath = request.getSession().getServletContext()
-			.getRealPath("/")
-			+ "reports/LeaveSummaryReport.jrxml";
+		JSONObject jsonobject = new JSONObject();
 
+		String reportFilePath = request.getSession().getServletContext()
+				.getRealPath("/")
+				+ "reports/LeaveSummaryReport.jrxml";
 
-	Map<String, Object> parameters = new HashMap<String, Object>();
-	String path = this.getClass().getClassLoader().getResource("/").getPath();
-	String pdfPath = path.replaceAll("WEB-INF/classes/", "");
-	String imagePath = this.getClass().getClassLoader().getResource("/").getPath().replaceAll("WEB-INF/classes/", "");
-	
-	String pdfFilePath = pdfPath
-			+ "reports/LeaveSummaryReport" + ".pdf";
-	
-	RenderJr(reportFilePath, parameters,pdfFilePath);
-	
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		String path = this.getClass().getClassLoader().getResource("/").getPath();
+		String pdfPath = path.replaceAll("WEB-INF/classes/", "");
+		String imagePath = this.getClass().getClassLoader().getResource("/").getPath().replaceAll("WEB-INF/classes/", "");
+		parameters.put("fromDate", fromDateString);
+		parameters.put("toDate",toDateString);
+		parameters.put("startDate",startDateString);
+		parameters.put("fromDateRev",fromDateReverse);
+		parameters.put("toDateRev",toDateReverse);
 
-	JRBeanCollectionDataSource ds = null;
-	
-	jsonObject.put("report","report successful");
-	jsonObject.put("pdfFileName", "LeaveSummaryReport"+".pdf");
-	
-	
-	return jsonObject;
- }
+		String pdfFilePath = pdfPath
+				+ "reports/LeaveSummaryReport" + employeeId + ".pdf";
+
+		RenderJr(reportFilePath, parameters,pdfFilePath);
+
+		JRBeanCollectionDataSource ds = null;
+
+		jsonobject.put("report","report successful");
+		jsonobject.put("pdfFileName", "LeaveSummaryReport"+employeeId+".pdf");
+
+		return jsonobject;
+	}
 }
