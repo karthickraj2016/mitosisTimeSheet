@@ -5,15 +5,19 @@
 	<property name="ireport.y" value="0"/>
 	<queryString>
 		<![CDATA[SELECT cust.customer_name,project.project_name,invoice.invoice_date,invoice.invoice_amount,invoice.paid_amount,invoice.balance_amount,invoice.invoice_number FROM invoice_hdr invoice,customer_details cust,project_details project
-where balance_amount>0 and invoice.project_id=project.id and cust.id=project.customer_id;]]>
+where balance_amount>0 and invoice.project_id=project.id and cust.id=project.customer_id
+order by invoice.id;]]>
 	</queryString>
 	<field name="customer_name" class="java.lang.String"/>
 	<field name="project_name" class="java.lang.String"/>
-	<field name="invoice_date" class="java.util.Date"/>
+	<field name="invoice_date" class="java.sql.Date"/>
 	<field name="invoice_amount" class="java.math.BigDecimal"/>
 	<field name="paid_amount" class="java.math.BigDecimal"/>
 	<field name="balance_amount" class="java.math.BigDecimal"/>
 	<field name="invoice_number" class="java.lang.String"/>
+	<variable name="total" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{balance_amount}]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -97,7 +101,7 @@ where balance_amount>0 and invoice.project_id=project.id and cust.id=project.cus
 				<reportElement x="0" y="-1" width="555" height="41"/>
 			</rectangle>
 			<line>
-				<reportElement x="84" y="2" width="1" height="38"/>
+				<reportElement x="84" y="-2" width="1" height="42"/>
 			</line>
 			<line>
 				<reportElement x="179" y="-3" width="1" height="43"/>
@@ -151,19 +155,36 @@ where balance_amount>0 and invoice.project_id=project.id and cust.id=project.cus
 			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="47" splitType="Stretch"/>
-	</columnFooter>
 	<pageFooter>
-		<band height="52" splitType="Stretch">
+		<band height="48" splitType="Stretch">
 			<textField>
-				<reportElement x="219" y="14" width="100" height="20"/>
+				<reportElement x="230" y="14" width="100" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="43" splitType="Stretch"/>
+		<band height="29" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="29"/>
+			</rectangle>
+			<textField>
+				<reportElement x="482" y="0" width="73" height="29"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="412" y="0" width="69" height="29"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="410" y="0" width="1" height="29"/>
+			</line>
+			<line>
+				<reportElement x="481" y="0" width="1" height="29"/>
+			</line>
+		</band>
 	</summary>
 </jasperReport>

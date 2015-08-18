@@ -2,11 +2,12 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.2396694214876067"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="192"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="invoiceDetailsList" class="java.lang.Object"/>
 	<parameter name="logoimage" class="java.lang.String">
 		<parameterDescription><![CDATA[]]></parameterDescription>
 	</parameter>
+	<parameter name="totalinvoice" class="java.lang.Integer"/>
 	<field name="teamMember" class="java.lang.String"/>
 	<field name="description" class="java.lang.String"/>
 	<field name="invoiceFromDate" class="java.util.Date"/>
@@ -17,145 +18,149 @@
 	<variable name="sumofhours" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{totalAmount}]]></variableExpression>
 	</variable>
+	<variable name="reportcount" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{invoiceFromDate}]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="25" splitType="Stretch">
+		<band height="297" splitType="Stretch">
 			<textField>
-				<reportElement x="159" y="0" width="242" height="25"/>
+				<reportElement x="159" y="106" width="242" height="25"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="16"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["Invoice"]]></textFieldExpression>
 			</textField>
-		</band>
-	</title>
-	<pageHeader>
-		<band height="302" splitType="Stretch">
 			<textField>
-				<reportElement x="320" y="86" width="48" height="20"/>
+				<reportElement x="461" y="64" width="33" height="17"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA["Ph:"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="368" y="-1" width="187" height="23"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<reportElement x="263" y="0" width="293" height="17"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="14" isBold="false"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[((com.mitosis.timesheet.model.CompanyInfoModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).companyInfo).getCompanyName()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="368" y="47" width="187" height="37"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<reportElement x="369" y="29" width="186" height="35"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[((com.mitosis.timesheet.model.CompanyInfoModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).companyInfo).getCompanyAddress()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="368" y="86" width="187" height="20"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<reportElement x="441" y="64" width="114" height="17"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[((com.mitosis.timesheet.model.CompanyInfoModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).companyInfo).getPhoneNumber()]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="22" y="16" width="143" height="57"/>
+				<reportElement x="87" y="5" width="168" height="68"/>
 				<imageExpression class="java.lang.String"><![CDATA[$P{logoimage}+"/logo2.png"]]></imageExpression>
 			</image>
-			<textField>
-				<reportElement x="368" y="25" width="187" height="20"/>
-				<textElement/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="368" y="16" width="187" height="13"/>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[((com.mitosis.timesheet.model.CompanyInfoModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).companyInfo).getTaxId()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="320" y="110" width="48" height="17"/>
+				<reportElement x="421" y="81" width="28" height="17"/>
 				<textElement textAlignment="Left"/>
 				<textFieldExpression class="java.lang.String"><![CDATA["URL:"]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="368" y="110" width="187" height="17"/>
-				<textElement/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="420" y="81" width="136" height="17"/>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[((com.mitosis.timesheet.model.CompanyInfoModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).companyInfo).getCompanyUrl()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="29" y="132" width="161" height="28"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<reportElement x="29" y="156" width="187" height="19"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="14" isBold="false"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["Customer:"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="28" y="160" width="188" height="26"/>
+				<reportElement x="29" y="173" width="187" height="26"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[((com.mitosis.timesheet.model.CustomerDetailsModel)((com.mitosis.timesheet.model.InvoiceHdrModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).invoiceHdr).getCustomer()).getCustomerName()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="29" y="186" width="188" height="63"/>
+				<reportElement x="29" y="198" width="187" height="35"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[((com.mitosis.timesheet.model.CustomerDetailsModel)((com.mitosis.timesheet.model.InvoiceHdrModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).invoiceHdr).getCustomer()).getAddress()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="27" y="249" width="189" height="26"/>
+				<reportElement x="29" y="233" width="187" height="22"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.Integer"><![CDATA[((com.mitosis.timesheet.model.CustomerDetailsModel)((com.mitosis.timesheet.model.InvoiceHdrModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).invoiceHdr).getCustomer()).getMobile()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="28" y="275" width="188" height="24"/>
+				<reportElement x="56" y="255" width="160" height="13"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.Integer"><![CDATA[((com.mitosis.timesheet.model.CustomerDetailsModel)((com.mitosis.timesheet.model.InvoiceHdrModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).invoiceHdr).getCustomer()).getPhone()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="1" y="275" width="28" height="26"/>
+				<reportElement x="29" y="255" width="27" height="13"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA["Ph:"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="305" y="160" width="102" height="26"/>
+				<reportElement x="325" y="175" width="96" height="15"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA["Invoice Number:"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="407" y="160" width="131" height="26"/>
+				<reportElement x="421" y="175" width="130" height="16"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[((com.mitosis.timesheet.model.InvoiceHdrModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).invoiceHdr).getInvoiceNumber()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="305" y="186" width="103" height="40"/>
+				<reportElement x="325" y="190" width="97" height="21"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA["Invoice Date:"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="408" y="186" width="130" height="40"/>
+				<reportElement x="421" y="190" width="129" height="21"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[new SimpleDateFormat("dd-MM-yyyy").format(((com.mitosis.timesheet.model.InvoiceHdrModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).invoiceHdr).getInvoiceDate())]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="305" y="226" width="103" height="26"/>
+				<reportElement x="325" y="211" width="97" height="19"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA["Invoice Amount:"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="408" y="226" width="130" height="26"/>
+				<reportElement x="421" y="211" width="129" height="19"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[((com.mitosis.timesheet.model.InvoiceHdrModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).invoiceHdr).getInvoiceAmount()]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="408" y="252" width="129" height="26"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="422" y="230" width="129" height="26"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[((com.mitosis.timesheet.model.InvoiceHdrModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).invoiceHdr).getCurrencyCode()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="304" y="249" width="103" height="26"/>
+				<reportElement x="325" y="230" width="101" height="26"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA["Invoice Currency:"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="305" y="275" width="103" height="26"/>
+				<reportElement x="325" y="255" width="97" height="13"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA["Project:"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="409" y="275" width="129" height="26"/>
+				<reportElement x="422" y="255" width="129" height="13"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[((com.mitosis.timesheet.model.ProjectModel)((com.mitosis.timesheet.model.InvoiceHdrModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).invoiceHdr).getProject()).getProjectName()]]></textFieldExpression>
 			</textField>
 		</band>
-	</pageHeader>
+	</title>
 	<columnHeader>
 		<band height="52" splitType="Stretch">
+			<printWhenExpression><![CDATA[$V{REPORT_COUNT}<$P{totalinvoice}]]></printWhenExpression>
 			<line>
 				<reportElement x="121" y="-1" width="1" height="51"/>
 			</line>
@@ -172,7 +177,7 @@
 				<reportElement x="406" y="-1" width="1" height="51"/>
 			</line>
 			<textField>
-				<reportElement x="2" y="-3" width="37" height="53"/>
+				<reportElement x="2" y="-5" width="37" height="53"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA["S.No"]]></textFieldExpression>
 			</textField>
@@ -218,7 +223,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA["Fromdate"]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement mode="Transparent" x="0" y="0" width="553" height="51"/>
+				<reportElement mode="Transparent" x="2" y="0" width="553" height="51"/>
 			</rectangle>
 		</band>
 	</columnHeader>
@@ -231,13 +236,13 @@
 				<reportElement x="195" y="0" width="1" height="44"/>
 			</line>
 			<line>
-				<reportElement x="489" y="0" width="1" height="45"/>
+				<reportElement x="488" y="0" width="1" height="45"/>
 			</line>
 			<line>
-				<reportElement x="553" y="2" width="1" height="43"/>
+				<reportElement x="555" y="-1" width="1" height="46"/>
 			</line>
 			<line>
-				<reportElement x="1" y="2" width="1" height="43"/>
+				<reportElement x="1" y="-1" width="1" height="46"/>
 			</line>
 			<textField isBlankWhenNull="true">
 				<reportElement x="265" y="8" width="76" height="26"/>
@@ -245,8 +250,8 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{teamMember}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="40" y="2" width="82" height="42"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<reportElement x="41" y="0" width="80" height="44"/>
+				<textElement textAlignment="Left" verticalAlignment="Top"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
@@ -260,7 +265,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[new SimpleDateFormat("dd-MM-yyyy").format($F{invoiceToDate})]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="490" y="8" width="64" height="26"/>
+				<reportElement x="490" y="8" width="63" height="26"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{totalAmount}]]></textFieldExpression>
 			</textField>
@@ -270,14 +275,9 @@
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{ratePerHour}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="408" y="8" width="82" height="26"/>
+				<reportElement x="408" y="8" width="74" height="26"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{billableHours}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="4" y="2" width="36" height="42"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="2" y="45" width="552" height="1"/>
@@ -292,11 +292,116 @@
 				<reportElement x="263" y="0" width="1" height="44"/>
 			</line>
 			<line>
-				<reportElement x="40" y="0" width="1" height="44"/>
+				<reportElement x="39" y="0" width="1" height="44"/>
 			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="3" y="0" width="37" height="44"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{reportcount}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
-	<columnFooter>
+	<pageFooter>
+		<band height="26">
+			<textField>
+				<reportElement x="216" y="5" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="192">
+			<textField>
+				<reportElement x="25" y="11" width="250" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="14" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Bank Details:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="25" y="65" width="64" height="14"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["IFSC Code:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="25" y="144" width="76" height="13"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["MICR Code:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="25" y="132" width="76" height="12"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Swift Code:"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="111" y="96" width="164" height="36"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[((com.mitosis.timesheet.model.CompanyInfoModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).companyInfo).getBankAddress()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="111" y="80" width="164" height="16"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[((com.mitosis.timesheet.model.CompanyInfoModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).companyInfo).getBankName()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="111" y="50" width="164" height="15"/>
+				<textElement textAlignment="Left" verticalAlignment="Top"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[((com.mitosis.timesheet.model.CompanyInfoModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).companyInfo).getAccountNumber()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="111" y="144" width="164" height="13"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[((com.mitosis.timesheet.model.CompanyInfoModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).companyInfo).getMicrCode()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="111" y="65" width="164" height="15"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[((com.mitosis.timesheet.model.CompanyInfoModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).companyInfo).getIfscCode()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="111" y="132" width="164" height="12"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[((com.mitosis.timesheet.model.CompanyInfoModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).companyInfo).getSwiftCode()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="111" y="31" width="164" height="19"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[((com.mitosis.timesheet.model.CompanyInfoModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).companyInfo).getAccountName()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="25" y="31" width="76" height="19"/>
+				<textElement/>
+				<text><![CDATA[AccountName:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="50" width="86" height="15"/>
+				<textElement/>
+				<text><![CDATA[AccountNumber:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="80" width="64" height="14"/>
+				<textElement/>
+				<text><![CDATA[Bank Name:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="389" y="59" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Regards,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="369" y="79" width="145" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[FInance Head]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="369" y="92" width="145" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Mitosis Technologies]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
+	<summary>
 		<band height="46">
 			<rectangle>
 				<reportElement x="2" y="0" width="553" height="21"/>
@@ -305,19 +410,19 @@
 				<reportElement x="39" y="1" width="1" height="21"/>
 			</line>
 			<line>
-				<reportElement x="122" y="1" width="1" height="20"/>
+				<reportElement x="121" y="0" width="1" height="21"/>
 			</line>
 			<line>
-				<reportElement x="196" y="2" width="1" height="19"/>
+				<reportElement x="196" y="0" width="1" height="21"/>
 			</line>
 			<line>
-				<reportElement x="341" y="-1" width="1" height="22"/>
+				<reportElement x="340" y="-1" width="1" height="22"/>
 			</line>
 			<line>
-				<reportElement x="264" y="2" width="1" height="20"/>
+				<reportElement x="263" y="2" width="1" height="20"/>
 			</line>
 			<line>
-				<reportElement x="407" y="2" width="1" height="20"/>
+				<reportElement x="408" y="1" width="1" height="21"/>
 			</line>
 			<staticText>
 				<reportElement x="411" y="2" width="72" height="19"/>
@@ -325,18 +430,18 @@
 				<text><![CDATA[Total]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="490" y="2" width="64" height="19"/>
+				<reportElement x="490" y="2" width="48" height="19"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumofhours}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="489" y="0" width="1" height="22"/>
+				<reportElement x="488" y="0" width="1" height="22"/>
 			</line>
 			<rectangle>
 				<reportElement x="2" y="21" width="553" height="24"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="4" y="21" width="32" height="24"/>
+				<reportElement x="3" y="21" width="33" height="24"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[Notes]]></text>
 			</staticText>
@@ -349,84 +454,5 @@
 				<text><![CDATA[Make all payments to Mitosis which is subject to Indian jurisdiction Only]]></text>
 			</staticText>
 		</band>
-	</columnFooter>
-	<lastPageFooter>
-		<band height="297">
-			<textField>
-				<reportElement x="68" y="30" width="110" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA["Bank Details:"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="22" y="129" width="86" height="14"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA["IFSC Code:"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="21" y="248" width="87" height="23"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA["MICR Code:"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="22" y="220" width="86" height="23"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA["Swift Code:"]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="108" y="173" width="165" height="43"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[((com.mitosis.timesheet.model.CompanyInfoModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).companyInfo).getBankAddress()]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="108" y="150" width="164" height="16"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[((com.mitosis.timesheet.model.CompanyInfoModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).companyInfo).getBankName()]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="108" y="104" width="164" height="20"/>
-				<textElement textAlignment="Left" verticalAlignment="Top"/>
-				<textFieldExpression class="java.lang.Integer"><![CDATA[((com.mitosis.timesheet.model.CompanyInfoModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).companyInfo).getAccountNumber()]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="108" y="248" width="164" height="23"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[((com.mitosis.timesheet.model.CompanyInfoModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).companyInfo).getMicrCode()]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="108" y="129" width="164" height="15"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[((com.mitosis.timesheet.model.CompanyInfoModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).companyInfo).getIfscCode()]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="108" y="220" width="165" height="23"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[((com.mitosis.timesheet.model.CompanyInfoModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).companyInfo).getSwiftCode()]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="108" y="79" width="164" height="19"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[((com.mitosis.timesheet.model.CompanyInfoModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).companyInfo).getAccountName()]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="22" y="79" width="86" height="19"/>
-				<textElement/>
-				<text><![CDATA[AccountName:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="22" y="104" width="86" height="20"/>
-				<textElement/>
-				<text><![CDATA[AccountNumber:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="21" y="150" width="87" height="16"/>
-				<textElement/>
-				<text><![CDATA[Bank Name:]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="178" y="277" width="100" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-		</band>
-	</lastPageFooter>
+	</summary>
 </jasperReport>

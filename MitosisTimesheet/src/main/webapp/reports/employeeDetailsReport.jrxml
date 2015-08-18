@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
 		<![CDATA[SELECT (SELECT count(*) from employee_master) as employee_count,employee_master.id,employee_master.first_name, employee_master.last_name, lob_master.lob_name
 FROM employee_master
 INNER JOIN lob_master
-ON employee_master.lob_id=lob_master.id;]]>
+ON employee_master.lob_id=lob_master.id
+order by lob_name,employee_master.id;]]>
 	</queryString>
 	<field name="employee_count" class="java.lang.Long"/>
 	<field name="id" class="java.lang.Integer"/>
@@ -22,12 +23,12 @@ ON employee_master.lob_id=lob_master.id;]]>
 		<groupHeader>
 			<band height="80">
 				<staticText>
-					<reportElement x="15" y="13" width="55" height="20"/>
+					<reportElement x="15" y="13" width="60" height="20"/>
 					<textElement/>
-					<text><![CDATA[lob name:]]></text>
+					<text><![CDATA[LOB Name:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="68" y="13" width="100" height="20"/>
+					<reportElement x="74" y="13" width="186" height="20"/>
 					<textElement/>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{lob_name}]]></textFieldExpression>
 				</textField>

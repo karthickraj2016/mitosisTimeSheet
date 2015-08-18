@@ -9,6 +9,7 @@ angular.module('myApp.controllers')
 
 	var hoursallowed;
 	var memberobj;
+	var previoussheet;
 
 	var invoice= new Array();
 	var dt1;
@@ -200,6 +201,16 @@ angular.module('myApp.controllers')
 		});
 
 	}
+	
+	
+	
+	$scope.pencilClick = function(sheet){
+	
+		
+		$scope.previoussheet=angular.copy(sheet);
+
+		
+	}
 
 	$scope.addTeamMember = function (){
 
@@ -244,7 +255,7 @@ angular.module('myApp.controllers')
 			$(".alert-danger").html("please enter the member details for billable hours");
 			return;	
 
-		}else if($scope.member.amount==undefined || isNaN($scope.member.amount)){
+		}else if($scope.member.amount==undefined || isNaN($scope.member.amount) || $scope.member.amount==""){
 
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("please enter the member details for amount");
@@ -290,11 +301,76 @@ angular.module('myApp.controllers')
 	}
 
 	$scope.updateteammembers= function(sheet){
+		
+		console.log("previoussheet:"+$scope.previoussheet);
+		
+		console.log("sheet:"+sheet);
+		
+		var fromdate = new Date(sheet.fromdate.split('-')[2],$scope.member.fromdate.split('-')[1],sheet.fromdate.split('-')[0]);
+		var todate = new Date(sheet.todate.split('-')[2],sheet.todate.split('-')[1],sheet.todate.split('-')[0]);
 
-		$scope.invoiceList[sheet.index]=sheet;
+		var datevalidationfromDate =new Date((sheet.fromdate).split("-")[1]+"-"+(sheet.fromdate).split("-")[0]+"-"+(sheet.fromdate).split("-")[2]);	
+		var datevalidationtoDate = new Date((sheet.todate).split("-")[1]+"-"+(sheet.todate).split("-")[0]+"-"+(sheet.todate).split("-")[2]);;
 
-		$(".alert-msg").show().delay(1000).fadeOut(); 
-		$(".alert-success").html("Member Details updated successfully!!!!!");
+		if (datevalidationfromDate > datevalidationtoDate) {
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("FromDate cannot be after ToDate!");
+			
+			$scope.invoiceList[sheet.index]=$scope.previoussheet;
+			return;
+
+		}else if(fromdate.getDay()===2 || fromdate.getDay()===3 || todate.getDay()===2 || todate.getDay()===3){
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("FromDate or Todate cannot be on Saturdays or Sundays!!!!");
+			$scope.invoiceList[sheet.index]=$scope.previoussheet;
+			return;
+
+		}
+
+		if(sheet.fromdate==undefined||sheet.todate==undefined){
+
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("please enter the member details of from date and todate");
+			$scope.invoiceList[sheet.index]=$scope.previoussheet;
+			return;
+
+		}else if(sheet.description==undefined||sheet.description==""){
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("please enter the member details for description");
+			$scope.invoiceList[sheet.index]=$scope.previoussheet;
+			return;	
+
+		}else if(sheet.rateperhour==undefined || isNaN(sheet.rateperhour) ||sheet.rateperhour==""){
+
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("please enter the member details for rate");
+			$scope.invoiceList[sheet.index]=$scope.previoussheet;
+			return;	
+
+		}else if((sheet.billablehours==undefined || isNaN(sheet.billablehours) ||sheet.billablehours=="")&&(sheet.projectType=="Hourly")){
+
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("please enter the member details for billable hours");
+			$scope.invoiceList[sheet.index]=$scope.previoussheet;
+			return;	
+
+		}else if(sheet.amount==undefined || isNaN(sheet.amount) || sheet.amount==""){
+
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("please enter the member details for amount");
+			$scope.invoiceList[sheet.index]=$scope.previoussheet;
+			return;	
+
+		}
+		
+		else{
+			$scope.invoiceList[sheet.index]=sheet;
+
+			$(".alert-msg").show().delay(1000).fadeOut(); 
+			$(".alert-success").html("Member Details updated successfully!!!!!");
+		}
+
+		
 	}
 
 	$scope.deleteteammembers = function(sheet){
@@ -304,9 +380,10 @@ angular.module('myApp.controllers')
 		$(".alert-success").html("Member Details deleted Successfully!!!!");
 	}
 
-	$scope.teammemberslist= function(){
+	$scope.teammemberslist= function(sheet){
 
-		$scope.invoiceList[invoice.index]=invoice;
+		$scope.invoiceList[sheet.index]=$scope.previoussheet;
+	
 	}
 
 	$scope.insert = function(){

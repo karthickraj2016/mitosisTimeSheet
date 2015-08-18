@@ -275,6 +275,7 @@ public class InvoiceDetails {
 			
 			 parameters.put("invoiceDetailsList", invoiceDetailsReport);
 			 parameters.put("logoimage",imagePath+"/images");
+			 parameters.put("totalinvoice", invoiceDetailList.size());
 
 
 
