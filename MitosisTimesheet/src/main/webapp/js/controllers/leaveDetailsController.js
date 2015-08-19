@@ -91,8 +91,23 @@ angular.module('myApp.controllers')
 				'Content-Type': 'application/json'
 			}
 		}).success(function(result, status, headers) {
+			
+			var a=result; 
+			var emp;
+			
+			for(var i=0;i<a.length;i++){
 
-			$scope.leaveEntryList=result; 
+				if(angular.isUndefined(emp)){
+					emp = new Array();
+				}				
+
+				var empRate={"id":a[i].id,"employee":{"id":a[i].employee.id,"name":a[i].employee.name},"frmEntryDate":a[i].frmEntryDate,"toEntryDate":a[i].toEntryDate,
+						"noOfDays":a[i].noOfDays, "reason":a[i].reason};
+
+				emp.push(empRate);
+			}
+
+			$scope.leaveEntryList=emp; 
 
 			$scope.$watch('currentPage + numPerPage', function() {
 				var begin = (($scope.currentPage - 1) * $scope.numPerPage)
@@ -101,7 +116,27 @@ angular.module('myApp.controllers')
 				$scope.totalItems =	$scope.leaveEntryList.length;
 				$scope.dates();
 			});
+			$scope.noOfPages = Math.ceil($scope.leaveEntryList.length/$scope.maxSize);
 
+			$scope.setPage = function(pageNo) {
+				$scope.currentPage = pageNo;
+			};
+
+			$scope.filter = function() {
+				$scope.$watch('search', function(term) {
+					if(term==undefined){
+						$scope.totalItems =	$scope.leaveEntryList.length; 
+
+
+					}
+					window.setTimeout(function() {
+						$scope.totalItems = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
+
+						$scope.noOfPages = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
+					}, 10);
+				});
+
+			}
 		})
 	},
 

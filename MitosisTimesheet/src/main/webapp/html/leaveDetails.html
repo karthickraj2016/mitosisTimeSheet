@@ -38,7 +38,10 @@
 <option>25</option>
 <option>35</option>
 <option>50</option>
-</select> Entries</span></div>
+</select> Entries</span>
+<div class="col-sm-6 search-tab"> 
+	       <input type="text" id="search" required class="form-control" ng-change="filter()" ng-model="search" placeholder="Search"></input>
+</div></div>
 <table class="table" style="">
 	<thead class="thead-mit-ts" >
 		<tr>
@@ -51,7 +54,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="sheet in filteredParticipantsResults">
+		<tr ng-repeat="sheet in filteredParticipantsResults=(leaveEntryList | filter:search) | startFrom:(currentPage-1)*numPerPage | limitTo:numPerPage"">
 			<td>
 				<span ng-show="!showEdit">{{sheet.employee.name}}</span>
 				<span ng-show="showEdit">
