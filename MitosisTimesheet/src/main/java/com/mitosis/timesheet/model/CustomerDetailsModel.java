@@ -1,5 +1,7 @@
 package com.mitosis.timesheet.model;
 
+import java.math.BigInteger;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,10 +34,10 @@ public class CustomerDetailsModel {
 	private String skypeId;
 	
 	@Column(name="phone")
-	private Integer phone;
+	private BigInteger phone;
 	
 	@Column(name="mobile")
-	private Integer mobile;
+	private BigInteger mobile;
 	
 	@Column(name="website")
 	private String website;
@@ -94,19 +96,19 @@ public class CustomerDetailsModel {
 		this.skypeId = skypeId;
 	}
 
-	public Integer getPhone() {
+	public BigInteger getPhone() {
 		return phone;
 	}
 
-	public void setPhone(Integer phone) {
+	public void setPhone(BigInteger phone) {
 		this.phone = phone;
 	}
 
-	public Integer getMobile() {
+	public BigInteger getMobile() {
 		return mobile;
 	}
 
-	public void setMobile(Integer mobile) {
+	public void setMobile(BigInteger mobile) {
 		this.mobile = mobile;
 	}
 

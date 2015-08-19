@@ -387,6 +387,24 @@ angular.module('myApp.controllers')
 	}
 
 	$scope.insert = function(){
+		
+		
+		if($scope.invoiceList.length<=0){
+			
+			
+
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("please enter atleast one member!!!!");
+			return;
+			
+			
+			
+			
+		}
+		
+		console.log($scope.invoiceList);
+		
+		
 		var jsonstring=JSON.stringify($rootScope.invoiceList);	
 		console.log($scope.invoice.customer+','+$scope.invoice.projectlist);
 		var sc=Number($scope.sumCost());

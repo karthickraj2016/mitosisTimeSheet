@@ -3,6 +3,7 @@ package com.mitosis.timesheet.webservice;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.DateFormat;
@@ -208,9 +209,17 @@ public class InvoiceDetails {
 		
 		customerModel.setCustomerName(customer.getString("customerName"));
 		
-		customerModel.setPhone(customer.getInt("phone"));
+
+		BigInteger phone = new BigInteger(String.valueOf(customer.getInt("phone")));
 		
-		customerModel.setMobile(customer.getInt("mobile"));
+		customerModel.setMobile(phone);
+		
+		BigInteger mobile = new BigInteger(String.valueOf(customer.getInt("mobile")));
+
+		
+		customerModel.setPhone(phone);
+		
+		customerModel.setMobile(mobile);
 		
 		customerModel.setAddress(customer.getString("address"));
 		

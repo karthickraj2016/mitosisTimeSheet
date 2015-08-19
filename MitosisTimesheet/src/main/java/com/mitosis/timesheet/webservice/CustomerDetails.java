@@ -1,5 +1,6 @@
 package com.mitosis.timesheet.webservice;
 
+import java.math.BigInteger;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,10 +48,12 @@ public class CustomerDetails {
 			customerModel.setSkypeId(jsonObject.getString("skypeId"));
 		}
 		if (jsonObject.has("phone")) {
-			customerModel.setPhone(jsonObject.getInt("phone"));
+			BigInteger phone = new BigInteger(jsonObject.getString("phone"));
+			customerModel.setPhone(phone);
 		}
 		if (jsonObject.has("mobile")) {
-			customerModel.setMobile(jsonObject.getInt("mobile"));
+			BigInteger mobile = new BigInteger(jsonObject.getString("mobile"));
+			customerModel.setMobile(mobile);
 		}
 		if (jsonObject.has("website")) {
 			customerModel.setWebsite(jsonObject.getString("website"));
@@ -96,10 +99,12 @@ public class CustomerDetails {
 			customerModel.setSkypeId(jsonObject.getString("skypeId"));
 		}
 		if (jsonObject.has("phone")) {
-			customerModel.setPhone(jsonObject.getInt("phone"));
+			BigInteger phone = new BigInteger(jsonObject.getString("phone"));
+			customerModel.setPhone(phone);
 		}
 		if (jsonObject.has("mobile")) {
-			customerModel.setMobile(jsonObject.getInt("mobile"));
+			BigInteger mobile = new BigInteger(jsonObject.getString("mobile"));
+			customerModel.setMobile(mobile);
 		}
 		if (jsonObject.has("website")) {
 			customerModel.setWebsite(jsonObject.getString("website"));
