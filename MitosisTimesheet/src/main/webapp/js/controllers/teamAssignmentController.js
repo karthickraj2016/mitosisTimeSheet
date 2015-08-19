@@ -114,8 +114,21 @@ angular.module('myApp.controllers')
 			}
 		}).success(function(result, status, headers) {
 
-			$scope.teamLists=result; 
+			var a=result; 
+			var emp;
+			
+			for(var i=0;i<a.length;i++){
 
+				if(angular.isUndefined(emp)){
+					emp = new Array();
+				}				
+
+				var empRate={"id":a[i].id,"member":{"id":a[i].member.id,"name":a[i].member.name},"project":{"projectId":a[i].project.projectId,"projectName":a[i].project.projectName},"role":{"id":a[i].role.id,"roleName":a[i].role.roleName}};
+
+				emp.push(empRate);
+			}
+			$scope.teamLists=emp;
+			
 			$scope.$watch('currentPage + numPerPage', function() {
 				var begin = (($scope.currentPage - 1) * $scope.numPerPage)
 				, end = begin + $scope.numPerPage;

@@ -43,7 +43,6 @@
 	<div class="form-group btn-formproject">
 	<button type="submit" class="btn btn-primary">Add</button>
 	<button type="reset" style="margin-left: 10px;"  class="btn btn-primary">Clear</button>
-	<button type="button" style="margin-left: 10px;"  class="btn btn-primary" ng-click="searchRecords(customer)">Search</button>
 	</div>
 	</form>
 </div>
@@ -58,7 +57,10 @@
 <option>25</option>
 <option>35</option>
 <option>50</option>
-</select> Entries</span></div>
+</select> Entries</span>
+<div class="col-sm-6 search-tab"> 
+	       <input type="text" id="search" required class="form-control" ng-change="filter()" ng-model="search" placeholder="Search"></input>
+</div></div>
 <div class="table-responsive">
 <table class="table">
 	<thead class="thead-mit-ts" >
@@ -76,7 +78,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="sheet in filteredParticipantsResults | orderBy:asc">
+		<tr ng-repeat="sheet in filteredParticipantsResults =(customerlist | filter:search) | startFrom:(currentPage-1)*numPerPage | limitTo:numPerPage| orderBy:asc">
 			<td>
 				<span ng-show="!showEdit">{{sheet.customerName}}</span>
 				<span ng-show="showEdit"><input class="form-control" type="text" ng-model="sheet.customerName" onkeypress="return ValidateAlpha(event)" ></span>

@@ -52,9 +52,32 @@ angular.module('myApp.controllers')
 				$scope.filteredParticipantsResults = $scope.customerlist.slice(begin, end);
 				$scope.totalItems =	$scope.customerlist.length;
 			});
+			$scope.noOfPages = Math.ceil($scope.customerlist.length/$scope.maxSize);
 
-		})
-	},
+			$scope.setPage = function(pageNo) {
+				$scope.currentPage = pageNo;
+			};
+
+			$scope.filter = function() {
+				$scope.$watch('search', function(term) {
+					if(term==undefined){
+						$scope.totalItems =	$scope.customerlist.length; 
+
+
+					}
+					window.setTimeout(function() {
+						$scope.totalItems = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
+
+						$scope.noOfPages = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
+					}, 10);
+				});
+
+			};
+
+		});
+
+		},
+	
 
 	$scope.nameValidation = function(customer){
 
@@ -132,7 +155,7 @@ angular.module('myApp.controllers')
 		}else{
 			$scope.addCustomerDetails(customer);
 		}
-	}
+	},
 
 	$('#phoneNumber').blur(function(){
 		var phone=$('#phoneNumber').val();
@@ -142,7 +165,7 @@ angular.module('myApp.controllers')
 			$('#phoneNumber').val('');
 			$('#phoneNumber').focus();
 		}
-	})
+	}),
 
 	$('#mobileNumber').blur(function(){
 		var phone=$('#mobileNumber').val();
@@ -152,7 +175,7 @@ angular.module('myApp.controllers')
 			$('#mobileNumber').val('');
 			$('#mobileNumber').focus();
 		}
-	})
+	}),
 
 	$scope.addCustomerDetails = function(customer){
 
@@ -262,8 +285,9 @@ angular.module('myApp.controllers')
 			}
 			$scope.list();	
 		})
-	},
-
+	}
+	
+/*
 	$scope.searchRecords = function(customer){
 
 		var searchValue={"customerName":$scope.customer.customerName,"email":$scope.customer.email,"address":$scope.customer.address,"skypeId":$scope.customer.skypeId,
@@ -302,6 +326,6 @@ angular.module('myApp.controllers')
 			$scope.filteredParticipantsResults = $scope.customerlist.slice(begin, end);
 			$scope.totalItems =	$scope.customerlist.length;
 		});
-	}
+	}*/
 
 }])

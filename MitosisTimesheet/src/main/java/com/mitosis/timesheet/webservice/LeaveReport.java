@@ -2,6 +2,7 @@ package com.mitosis.timesheet.webservice;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -163,6 +164,8 @@ public class LeaveReport extends JasperUtil{
 		String toDateReverse =toDateString.split("-")[2]+"-"+toDateString.split("-")[1]+"-"+toDateString.split("-")[0];
 		
 		String startDateString = jsonObject.getString("startDate");
+		String beginDate=jsonObject.getString("beginDate");
+		BigDecimal totalLeaveDays=new BigDecimal(jsonObject.getInt("totalLeaveDays"));
 		
 		JSONObject jsonobject = new JSONObject();
 
@@ -177,6 +180,8 @@ public class LeaveReport extends JasperUtil{
 		parameters.put("startDate",startDateString);
 		parameters.put("fromDateRev",fromDateReverse);
 		parameters.put("toDateRev",toDateReverse);
+		parameters.put("beginDate",beginDate);
+		parameters.put("totalLeaveDays", totalLeaveDays);
 
 		String pdfFilePath = pdfPath+"reports/LeaveSummaryReport"+".pdf";
 

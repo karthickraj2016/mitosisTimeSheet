@@ -101,8 +101,23 @@ angular.module('myApp.controllers')
 			}
 		}).success(function(result, status, headers) {
 
-			$scope.projectlist=result; 
+			var a=result; 
+			var emp;
+			
+			for(var i=0;i<a.length;i++){
 
+				if(angular.isUndefined(emp)){
+					emp = new Array();
+				}				
+
+				var empRate={"projectId":a[i].projectId,"customer":{"customerId":a[i].customer.customerId,"customerName":a[i].customer.customerName},
+						"billable":a[i].billable,"endEntryDate":a[i].endEntryDate,"projectName":a[i].projectName,"startEntryDate":a[i].startEntryDate,"status":a[i].status};
+
+				emp.push(empRate);
+			}
+			
+			$scope.projectlist=emp;
+			
 			$scope.$watch('currentPage + numPerPage', function() {
 				var begin = (($scope.currentPage - 1) * $scope.numPerPage)
 				, end = begin + $scope.numPerPage;

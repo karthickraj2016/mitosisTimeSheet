@@ -130,18 +130,23 @@ angular.module('myApp.controllers')
 		var monOfDate=($scope.leave.fromdate).split("-")[1];
 		var yearOfDate=($scope.leave.fromdate).split("-")[2];
 		var startDate;
-		
+		var totalLeaveDays;
 		if(monOfDate<=3){
 			startDate=yearOfDate+"-01-01";
+			totalLeaveDays=20;
 		}else if(monOfDate>3 && monOfDate<=6){
 			startDate=yearOfDate+"-04-01";
+			totalLeaveDays=15;
 		}else if(monOfDate>6 && monOfDate<=9){
 			startDate=yearOfDate+"-07-01";
+			totalLeaveDays=10;
 		}else if(monOfDate>9 && monOfDate<=12){
 			startDate=yearOfDate+"-10-01";
+			totalLeaveDays=5;
 		}
-	
-		var menuJson = angular.toJson({"startDate":startDate,"fromdate":$scope.leave.fromdate,"todate":$scope.leave.todate});
+		
+		var beginDate=yearOfDate+"-01-01";	
+		var menuJson = angular.toJson({"totalLeaveDays":totalLeaveDays,"startDate":startDate,"fromdate":$scope.leave.fromdate,"todate":$scope.leave.todate,"beginDate":beginDate});
 
 		$http({
 			url: 'rest/leavereport/leaveSummaryReport',
