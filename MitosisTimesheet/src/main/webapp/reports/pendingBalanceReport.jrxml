@@ -15,7 +15,7 @@ order by invoice.id;]]>
 	<field name="paid_amount" class="java.math.BigDecimal"/>
 	<field name="balance_amount" class="java.math.BigDecimal"/>
 	<field name="invoice_number" class="java.lang.String"/>
-	<variable name="total" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+	<variable name="total" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{balance_amount}]]></variableExpression>
 	</variable>
 	<background>
@@ -169,11 +169,6 @@ order by invoice.id;]]>
 			<rectangle>
 				<reportElement x="0" y="0" width="555" height="29"/>
 			</rectangle>
-			<textField>
-				<reportElement x="482" y="0" width="73" height="29"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{total}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="412" y="0" width="69" height="29"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
@@ -185,6 +180,11 @@ order by invoice.id;]]>
 			<line>
 				<reportElement x="481" y="0" width="1" height="29"/>
 			</line>
+			<textField>
+				<reportElement x="481" y="0" width="74" height="29"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{total}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>
