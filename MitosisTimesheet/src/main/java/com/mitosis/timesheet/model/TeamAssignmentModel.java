@@ -43,6 +43,11 @@ public class TeamAssignmentModel {
 	private String releaseEntryDate;
 
 	public String getReleaseEntryDate() {
+     
+		if(getReleaseDate()==null){
+			
+			return "NotMentioned";
+		}
 		Date d= getReleaseDate();
 		releaseEntryDate = new SimpleDateFormat("dd-MM-yyyy").format(d);
 		return releaseEntryDate;
@@ -84,6 +89,7 @@ public class TeamAssignmentModel {
 	}
 
 	public Date getReleaseDate() {
+
 		return releaseDate;
 	}
 
