@@ -16,6 +16,15 @@ angular.module('myApp.controllers')
 
 	}
 
+	$scope.dateOptions = {
+			changeYear: true,
+			changeMonth: true,
+			minDate:0,
+			dateFormat: 'dd-mm-yy',
+
+			/* yearRange: '1900:-0'*/
+	};
+	
 	$http({
 
 		url: 'rest/teamAssignment/getMemberList',
@@ -68,6 +77,8 @@ angular.module('myApp.controllers')
 		} else if(sheet.member.name == '' || sheet.member.name == undefined) {
 			return true;
 		} else if(sheet.role.roleName == '' || sheet.role.roleName == undefined) {
+			return true;
+		}else if(sheet.releaseEntryDate == '' || sheet.releaseEntryDate == undefined) {
 			return true;
 		} else{
 			return false;
@@ -123,7 +134,8 @@ angular.module('myApp.controllers')
 					emp = new Array();
 				}				
 
-				var empRate={"id":a[i].id,"member":{"id":a[i].member.id,"name":a[i].member.name},"project":{"projectId":a[i].project.projectId,"projectName":a[i].project.projectName},"role":{"id":a[i].role.id,"roleName":a[i].role.roleName}};
+				var empRate={"id":a[i].id,"member":{"id":a[i].member.id,"name":a[i].member.name},"project":{"projectId":a[i].project.projectId,"projectName":a[i].project.projectName},"role":{"id":a[i].role.id,"roleName":a[i].role.roleName},
+						"releaseEntryDate":a[i].releaseEntryDate};
 
 				emp.push(empRate);
 			}
@@ -198,8 +210,22 @@ angular.module('myApp.controllers')
 				}
 			}).success(function(result, status, headers) {
 
-				$scope.teamLists=result; 
+				var a=result; 
+				var emp;
+				
+				for(var i=0;i<a.length;i++){
 
+					if(angular.isUndefined(emp)){
+						emp = new Array();
+					}				
+
+					var empRate={"id":a[i].id,"member":{"id":a[i].member.id,"name":a[i].member.name},"project":{"projectId":a[i].project.projectId,"projectName":a[i].project.projectName},"role":{"id":a[i].role.id,"roleName":a[i].role.roleName},
+							"releaseEntryDate":a[i].releaseEntryDate};
+
+					emp.push(empRate);
+				}
+				$scope.teamLists=emp;
+			
 				$scope.$watch('currentPage + numPerPage', function() {
 					var begin = (($scope.currentPage - 1) * $scope.numPerPage)
 					, end = begin + $scope.numPerPage;
@@ -268,7 +294,7 @@ angular.module('myApp.controllers')
 	$scope.assignTeam = function(){
 
 		var menuJson = angular.toJson({
-			"projectId":$scope.project.projectId,"memberId":$scope.member.id,"roleId":$scope.role.id
+			"projectId":$scope.project.projectId,"memberId":$scope.member.id,"roleId":$scope.role.id,"releaseDate":$scope.releaseDate
 		});
 
 		$http({
@@ -285,6 +311,7 @@ angular.module('myApp.controllers')
 				$scope.project="";
 				$scope.member="";
 				$scope.role="";
+				$scope.releaseDate="";
 				$scope.teamList();
 			}else if(result.value=="error"){
 				$(".alert-msg1").show().delay(1000).fadeOut(); 
@@ -315,29 +342,35 @@ angular.module('myApp.controllers')
 
 
 	$scope.validateUpdate = function(reqParam){
+		
+		var menuJson = angular.toJson({"id":reqParam.id,
+			"project":reqParam.project,"member":reqParam.member,"role":reqParam.role,"releaseDate":reqParam.releaseEntryDate});
+
 
 		var projectChange=$scope.projectchange;
 		var memberChange=$scope.memberchange;
 		var roleChange=$scope.rolechange;
+		
+		if(projectChange == undefined && memberChange == undefined && roleChange==undefined){
+			
+			$scope.updateTeamAssignment(menuJson);
+			
+		}else if(projectChange == undefined && memberChange == undefined && roleChange=="true"){
 
-
-		if(projectChange == undefined && memberChange == undefined && roleChange=="true"){
-
-			$scope.updateTeamAssignment(reqParam);
+			$scope.updateTeamAssignment(menuJson);
 			$scope.projectchange=undefined;
 			$scope.memberchange=undefined;
 			$scope.rolechange=undefined;
 
 		}else{
 
-			var menuJson = angular.toJson({
-				"projectId":reqParam.project.projectId,"memberId":reqParam.member.id,"roleId":reqParam.role.id
-			});
+			var menu = angular.toJson({
+				"projectId":reqParam.project.projectId,"memberId":reqParam.member.id,"roleId":reqParam.role.id});
 
 			$http({
 				url: 'rest/teamAssignment/validateAssignment',
 				method: 'POST',
-				data: menuJson,
+				data: menu,
 				headers: {
 					'Content-Type': 'application/json'
 				}
@@ -345,7 +378,7 @@ angular.module('myApp.controllers')
 
 				if(result=="false"){
 
-					$scope.updateTeamAssignment(reqParam);
+					$scope.updateTeamAssignment(menuJson);
 					$scope.projectchange=undefined;
 					$scope.memberchange=undefined;
 					$scope.rolechange=undefined;
@@ -364,13 +397,12 @@ angular.module('myApp.controllers')
 		}
 	};
 
-	$scope.updateTeamAssignment = function(reqParam){
-
-
+	$scope.updateTeamAssignment = function(menuJson){
+		
 		$http({
 			url: 'rest/teamAssignment/updateTeamAssignment',
 			method: 'POST',
-			data: reqParam,
+			data: menuJson,
 			headers: {
 				'Content-Type': 'application/json'
 			}

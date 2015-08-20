@@ -22,6 +22,9 @@
     <option value="">Role</option>
     </select> 
     </div>
+    <div class="form-group">
+       <input type="text" class="form-control" ui-date="dateOptions" ui-date-format="dd-mm-yy" ng-model="releaseDate" placeholder="Release Date">
+    </div>
 	<div class="form-group btn-formproject">
 	<button type="submit" class="btn btn-primary">Add</button>
 	<button type="reset" style="margin-left: 10px;"  class="btn btn-primary">Clear</button>
@@ -50,6 +53,7 @@
 			<th class="">Project Name</th>
 			<th class="">Team Members</th>
 			<th class="">Role</th>
+			<th class="">Release Date</th>
 		    <th></th>
 		</tr>
 	</thead>
@@ -81,6 +85,11 @@
 				</select> 
 				</span>
 				<span style="color: red" ng-show="sheet.role.roleName == '' || sheet.role.roleName == undefined">Required</span>
+			</td>
+			<td>
+				<span ng-click="copyCurrentEntry(sheet)" ng-show="!showEdit">{{sheet.releaseEntryDate}}</span>
+				<span ng-show="showEdit"><input class="form-control" ui-date="dateOptions" ui-date-format="dd-mm-yy" type="text" ng-model="sheet.releaseEntryDate"></span>
+				<span style="color:red" ng-show="sheet.releaseEntryDate == '' || sheet.releaseEntryDate == undefined">Required</span>
 			</td>
 			<td style="word-spacing: 15px;">	
 			    

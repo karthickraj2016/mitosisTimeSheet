@@ -1,5 +1,8 @@
  package com.mitosis.timesheet.model;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
@@ -31,6 +35,21 @@ public class TeamAssignmentModel {
 	@ManyToOne(targetEntity = RoleDetailsModel.class)
 	@JoinColumn(name = "role_id", nullable = false, referencedColumnName = "id")
 	private RoleDetailsModel role;
+	
+	@Column(name="release_date")
+	private Date releaseDate;
+	
+	@Transient
+	private String releaseEntryDate;
+
+	public String getReleaseEntryDate() {
+		Date d= getReleaseDate();
+		releaseEntryDate = new SimpleDateFormat("dd-MM-yyyy").format(d);
+		return releaseEntryDate;
+	}
+	public void setReleaseEntryDate(String releaseEntryDate) {
+		this.releaseEntryDate = releaseEntryDate;
+	}
 	
 	public int getId() {
 		return id;
@@ -62,6 +81,14 @@ public class TeamAssignmentModel {
 
 	public void setRole(RoleDetailsModel role) {
 		this.role = role;
+	}
+
+	public Date getReleaseDate() {
+		return releaseDate;
+	}
+
+	public void setReleaseDate(Date releaseDate) {
+		this.releaseDate = releaseDate;
 	}
 	
 }

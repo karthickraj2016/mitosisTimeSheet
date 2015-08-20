@@ -1,7 +1,10 @@
 package com.mitosis.timesheet.webservice;
 
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -145,6 +148,12 @@ public class TeamAssignment {
 		teamAssignModel.setMember(member);
 		role.setId(jsonobject.getInt("roleId"));
 		teamAssignModel.setRole(role);
+		
+		DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		String dateInString = jsonobject.getString("releaseDate");
+		Date releaseDate = sdf.parse(dateInString); 
+		
+		teamAssignModel.setReleaseDate(releaseDate);
 
 		flag = teamService.insertTeamDetails(teamAssignModel);
 
@@ -191,7 +200,13 @@ public class TeamAssignment {
 		teamAssignModel.setMember(member);
 		role.setId(roleid);
 		teamAssignModel.setRole(role);
-
+		
+		DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		String dateInString = jsonObject.getString("releaseDate");
+		Date releaseDate = sdf.parse(dateInString); 
+		
+		teamAssignModel.setReleaseDate(releaseDate);
+		
 		update = teamService.insertTeamDetails(teamAssignModel);
 
 		if (update) {

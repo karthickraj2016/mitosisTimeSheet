@@ -149,6 +149,7 @@ angular.module('myApp.controllers')
 					$(".alert-msg").show().delay(1000).fadeOut(); 
 					$(".alert-success").html("Timesheet Entry Added Successfully.");
 					$scope.unit="";
+					$scope.projects="Project";
 					$scope.list();
 
 				}
@@ -274,6 +275,14 @@ angular.module('myApp.controllers')
 			}
 			$scope.list();	
 		})
+	}
+	
+	$scope.copyCurrentEntry = function(sheet){
+		
+		$scope.timesheet.hours=sheet.hours;
+		$scope.timesheet.issueNumber=sheet.issueNumber;
+		$scope.timesheet.description=sheet.description;
+		
 	}
 
 }])

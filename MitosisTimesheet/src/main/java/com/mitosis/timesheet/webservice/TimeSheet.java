@@ -23,7 +23,6 @@ import org.codehaus.jettison.json.JSONObject;
 import com.mitosis.timesheet.model.ProjectModel;
 import com.mitosis.timesheet.model.TimeSheetModel;
 import com.mitosis.timesheet.model.UserDetailsModel;
-import com.mitosis.timesheet.pojo.TimeSheetVo;
 import com.mitosis.timesheet.service.ProjectService;
 import com.mitosis.timesheet.service.TimeSheetService;
 import com.mitosis.timesheet.service.impl.ProjectServiceImpl;
