@@ -45,15 +45,15 @@ public class CustomerDetails {
 			customerModel.setAddress(jsonObject.getString("address"));
 		}
 		if (jsonObject.has("skypeId")) {
-			customerModel.setSkypeId(jsonObject.getString("skypeId"));
+			customerModel.setSkypeId(jsonObject.getString("skypeId"));	
 		}
 		if (jsonObject.has("phone")) {
-			BigInteger phone = new BigInteger(jsonObject.getString("phone"));
-			customerModel.setPhone(phone);
+			/*BigInteger phone = new BigInteger(jsonObject.getString("phone"));*/
+			customerModel.setPhone(Long.valueOf(jsonObject.getString("phone")));
 		}
 		if (jsonObject.has("mobile")) {
-			BigInteger mobile = new BigInteger(jsonObject.getString("mobile"));
-			customerModel.setMobile(mobile);
+			/*BigInteger mobile = new BigInteger(jsonObject.getString("mobile"));*/
+			customerModel.setMobile(Long.valueOf(jsonObject.getString("mobile")));
 		}
 		if (jsonObject.has("website")) {
 			customerModel.setWebsite(jsonObject.getString("website"));
@@ -99,12 +99,14 @@ public class CustomerDetails {
 			customerModel.setSkypeId(jsonObject.getString("skypeId"));
 		}
 		if (jsonObject.has("phone")) {
-			BigInteger phone = new BigInteger(jsonObject.getString("phone"));
-			customerModel.setPhone(phone);
+			/*BigInteger phone = new BigInteger(jsonObject.getString("phone"));*/
+			
+			customerModel.setPhone(Long.valueOf(jsonObject.getString("phone")));
+			
 		}
 		if (jsonObject.has("mobile")) {
-			BigInteger mobile = new BigInteger(jsonObject.getString("mobile"));
-			customerModel.setMobile(mobile);
+		/*	BigInteger mobile = new BigInteger(jsonObject.getString("mobile"));*/
+			customerModel.setMobile(Long.valueOf(jsonObject.getString("mobile")));
 		}
 		if (jsonObject.has("website")) {
 			customerModel.setWebsite(jsonObject.getString("website"));

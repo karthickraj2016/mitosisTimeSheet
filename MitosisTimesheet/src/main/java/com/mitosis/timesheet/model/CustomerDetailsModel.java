@@ -34,10 +34,10 @@ public class CustomerDetailsModel {
 	private String skypeId;
 	
 	@Column(name="phone")
-	private BigInteger phone;
+	private Long phone;
 	
 	@Column(name="mobile")
-	private BigInteger mobile;
+	private Long mobile;
 	
 	@Column(name="website")
 	private String website;
@@ -96,19 +96,19 @@ public class CustomerDetailsModel {
 		this.skypeId = skypeId;
 	}
 
-	public BigInteger getPhone() {
+	public Long getPhone() {
 		return phone;
 	}
 
-	public void setPhone(BigInteger phone) {
+	public void setPhone(Long phone) {
 		this.phone = phone;
 	}
 
-	public BigInteger getMobile() {
+	public Long getMobile() {
 		return mobile;
 	}
 
-	public void setMobile(BigInteger mobile) {
+	public void setMobile(Long mobile) {
 		this.mobile = mobile;
 	}
 

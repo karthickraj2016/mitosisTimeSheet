@@ -163,7 +163,8 @@ public class InvoiceDetailsDaoImpl extends BaseService implements InvoiceDetails
 			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 			CriteriaQuery<ProjectModel> cq = qb.createQuery(ProjectModel.class);
 			Root<ProjectModel> root = cq.from(ProjectModel.class);
-			cq.select(root);		
+			cq.select(root);	
+			cq.orderBy(qb.asc(root.get("projectName")));
 			projectList = entityManager.createQuery(cq).getResultList();
 		}catch(Exception e){
 			e.printStackTrace();
@@ -182,7 +183,8 @@ public class InvoiceDetailsDaoImpl extends BaseService implements InvoiceDetails
 			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 			CriteriaQuery<CustomerDetailsModel> cq = qb.createQuery(CustomerDetailsModel.class);
 			Root<CustomerDetailsModel> root = cq.from(CustomerDetailsModel.class);
-			cq.select(root);		
+			cq.select(root);	
+			cq.orderBy(qb.asc(root.get("customerName")));
 			customerList = entityManager.createQuery(cq).getResultList();
 		}catch(Exception e){
 			e.printStackTrace();

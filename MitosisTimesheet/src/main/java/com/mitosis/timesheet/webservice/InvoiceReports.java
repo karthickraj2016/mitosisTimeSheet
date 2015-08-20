@@ -2,8 +2,10 @@ package com.mitosis.timesheet.webservice;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +22,10 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 import org.codehaus.jettison.json.JSONObject;
 
+import com.mitosis.timesheet.model.InvoiceHdrModel;
+import com.mitosis.timesheet.model.ProjectModel;
+import com.mitosis.timesheet.service.InvoiceReportsService;
+import com.mitosis.timesheet.service.impl.InvoiceReportsServiceImpl;
 import com.mitosis.timesheet.util.JasperUtil;
 
 
@@ -28,6 +34,8 @@ public class InvoiceReports extends JasperUtil {
 	
 	
 	@Context private HttpServletRequest request;
+	
+	InvoiceReportsService invoiceReportService = new InvoiceReportsServiceImpl();
 	
 	@Path("pendingInvoiceReports")
 	@POST
@@ -57,9 +65,21 @@ public class InvoiceReports extends JasperUtil {
 
 	    	
 	    	JSONObject jsonobject = new JSONObject();
-	    
 	    	
+	    	List<ProjectModel> pendingProjectList = new ArrayList<ProjectModel>();
 	    	
+	    	pendingProjectList = invoiceReportService.pendingInvoiceProjectList(firstday,lastday);
+	    	
+	    	if(pendingProjectList.size()<=0){
+	    		
+	    		
+	    		jsonobject.put("report","norecords");
+	    		return jsonobject;
+	    		
+	    		
+	    	}
+	    	
+
 	    	
 	    	String reportFilePath = request.getSession().getServletContext()
 	    			.getRealPath("/")
@@ -70,8 +90,8 @@ public class InvoiceReports extends JasperUtil {
 	    	String path = this.getClass().getClassLoader().getResource("/").getPath();
 	    	String pdfPath = path.replaceAll("WEB-INF/classes/", "");
 	    	String imagePath = this.getClass().getClassLoader().getResource("/").getPath().replaceAll("WEB-INF/classes/", "");
-	    	 parameters.put("firstday", firstdayString);
-			 parameters.put("lastday",lastdayString);
+	    	parameters.put("firstday", firstdayString);
+			parameters.put("lastday",lastdayString);
 	    	
 	    	
 	    	String pdfFilePath = pdfPath
@@ -113,6 +133,21 @@ public class InvoiceReports extends JasperUtil {
 	    
 	    	int employeeId =(Integer) request.getSession().getAttribute("userId");
 	    	
+	    	
+	    	List<InvoiceHdrModel> pendingBalanceList = new ArrayList<InvoiceHdrModel>();
+	    	
+	    	pendingBalanceList = invoiceReportService.pendingBalanceList();
+	    	
+	    	
+	    	if(pendingBalanceList.size()<=0){
+	    		
+	    		jsonObject.put("report","norecords");	
+	    		
+	    		return jsonObject;
+	    		
+	    		
+	    		
+	    	}
 	    	
 
 	    	String reportFilePath = request.getSession().getServletContext()

@@ -82,9 +82,6 @@ public class InvoiceDetails {
 
 		int employeeId =(Integer) request.getSession().getAttribute("userId");
 
-
-		System.out.println(jsonObject);
-
 		InvoiceHdrModel invoiceHdrModel = new InvoiceHdrModel();
 
 		JSONObject json = new JSONObject();
@@ -116,11 +113,9 @@ public class InvoiceDetails {
 		else{
 			int nextNumber =1;
 			String[] invoiceNumbersplit= invoiceNumber.split("-");
-			System.out.println(invoiceNumbersplit);
 			nextNumber += Integer.parseInt(invoiceNumbersplit[1]);
 			invoiceHdrModel.setInvoiceNumber(invoiceNumbersplit[0]+"-"+nextNumber);
 			invoiceHdrModel.setId(nextNumber);
-			System.out.println(invoiceHdrModel);
 
 		}
 
@@ -133,10 +128,6 @@ public class InvoiceDetails {
 
 		JSONArray jsonarray = new JSONArray();
 		jsonarray =  jsonObject.getJSONArray("invoicelist");
-
-		System.out.println(jsonarray);
-
-
 
 		for(int i=0;i<jsonarray.length();i++){
 
@@ -209,22 +200,11 @@ public class InvoiceDetails {
 		
 		customerModel.setCustomerName(customer.getString("customerName"));
 		
-
-		BigInteger phone = new BigInteger(String.valueOf(customer.getInt("phone")));
+		customerModel.setPhone(Long.valueOf(customer.getString("phone")));
 		
-		customerModel.setMobile(phone);
-		
-		BigInteger mobile = new BigInteger(String.valueOf(customer.getInt("mobile")));
-
-		
-		customerModel.setPhone(phone);
-		
-		customerModel.setMobile(mobile);
+		customerModel.setMobile(Long.valueOf(customer.getString("mobile")));
 		
 		customerModel.setAddress(customer.getString("address"));
-		
-		
-		/*customerModel.setCustomerId(Integer.parseInt(jsonObject.get("customerid").toString()));*/
 
 		invoiceHdrModel.setInvoiceDate(invoiceDate);
 		BigDecimal invoiceAmt = new BigDecimal(jsonObject.getInt("invoiceamt"));

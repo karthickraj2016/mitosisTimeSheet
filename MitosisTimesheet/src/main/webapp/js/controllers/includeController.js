@@ -72,6 +72,18 @@ angular.module('myApp.controllers')
 			}
 		}).success(function(result, status, headers) {
 			
+			
+			if(result.report=="norecords"){
+				
+				
+				$(".alert-msg").show().delay(1000).fadeOut(); 
+				$(".alert-success").html("All Invoices are submitted in this month!!!!");
+				return;
+				
+			}
+			
+			else{
+			
 			var a = document.createElement('a');
 			a.href = "/MitosisTimesheet/reports/"+result.pdfFileName;
 			console.log(a);
@@ -83,7 +95,7 @@ angular.module('myApp.controllers')
 			$scope.filepath = a.href;
 			console.log($scope.filepath);
 
-
+			}
 
 		});
 		
@@ -105,6 +117,18 @@ angular.module('myApp.controllers')
 			}
 		}).success(function(result, status, headers) {
 			
+			if(result.report=="norecords"){
+				
+				$(".alert-msg").show().delay(1000).fadeOut(); 
+				$(".alert-success").html("No balance is pending from any customer!!!");
+				return;
+				
+				
+				
+			}
+			
+			else{
+			
 			var a = document.createElement('a');
 			a.href = "/MitosisTimesheet/reports/"+result.pdfFileName;
 			console.log(a);
@@ -115,7 +139,7 @@ angular.module('myApp.controllers')
 			document.body.removeChild(a);
 			$scope.filepath = a.href;
 			console.log($scope.filepath);
-
+			}
 
 
 		});
