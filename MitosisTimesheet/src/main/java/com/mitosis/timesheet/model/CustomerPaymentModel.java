@@ -174,7 +174,7 @@ public class CustomerPaymentModel {
 	public BigDecimal getFinalAmount() {
 		return finalAmount;
 	}
-	public void setFianlAmount(BigDecimal finalAmount) {
+	public void setFinalAmount(BigDecimal finalAmount) {
 		this.finalAmount = finalAmount;
 	}
 

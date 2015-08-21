@@ -29,21 +29,34 @@ public class InvoiceReportsDaoImpl  extends BaseService implements InvoiceReport
 		try{
 			begin();
 			entityManager.getEntityManagerFactory().getCache().evictAll();
+			
+			
 			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 			CriteriaQuery<ProjectModel> cq = qb.createQuery(ProjectModel.class);
-			Root<ProjectModel> root = cq.from(ProjectModel.class);
+			/*Root<ProjectModel> root = cq.from(ProjectModel.class);
 			cq.select(root);
 			
-			Subquery<InvoiceHdrModel> subquery = cq.subquery(InvoiceHdrModel.class);
+			Subquery<Integer> subquery = cq.subquery(Integer.class);
 			Root<InvoiceHdrModel> subRoot = subquery.from(InvoiceHdrModel.class);
 			Path<Date> invoiceDate = subRoot.get("invoiceDate");
+			Path<Integer> invoiceDate1 = subRoot.get("projectId");
 			Predicate condition = qb.between(invoiceDate,firstday,lastday);
 			Predicate conditions = qb.and(condition);
-			cq.where(conditions);
-			subquery.select(subRoot);
+			subquery.where(conditions);
+			subquery.select(invoiceDate1);
 			
-			cq.where(qb.not(qb.exists(subquery))); 
-
+			
+			
+			
+			 
+			cq.where(qb.not(qb.exists(subquery)));*/ 
+		/*	Root<ProjectModel> root = cq.from(ProjectModel.class);
+			Root<InvoiceHdrModel> invoiceRoot = cq.from(InvoiceHdrModel.class);
+			Path<Integer> invoiceDate1 = invoiceRoot.get("projectId");
+			cq.select(root);
+			subquery.where();*/
+			
+			
 			
 					
 			projectList = entityManager.createQuery(cq).getResultList();
@@ -76,7 +89,7 @@ public class InvoiceReportsDaoImpl  extends BaseService implements InvoiceReport
 			Root<InvoiceHdrModel> root = cq.from(InvoiceHdrModel.class);
 			Path<BigDecimal> balanceAmountpath =root.get("balanceAmount");
 			BigDecimal zero  = new BigDecimal(0);
-			Predicate condition = qb.lessThan(balanceAmountpath,zero);
+			Predicate condition = qb.greaterThan(balanceAmountpath,zero);
 			Predicate conditions = qb.and(condition);
 			cq.where(conditions);
 			cq.select(root);

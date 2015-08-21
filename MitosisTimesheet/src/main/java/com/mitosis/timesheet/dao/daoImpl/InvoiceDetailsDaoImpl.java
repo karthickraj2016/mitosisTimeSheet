@@ -31,8 +31,6 @@ public class InvoiceDetailsDaoImpl extends BaseService implements InvoiceDetails
 		
 		List<InvoiceHdrModel> invoicehdrModel = new ArrayList<InvoiceHdrModel>();
 		
-
-		
 		try{
 			begin();
 			entityManager.getEntityManagerFactory().getCache().evictAll();
@@ -269,6 +267,7 @@ public class InvoiceDetailsDaoImpl extends BaseService implements InvoiceDetails
 			CriteriaQuery<InvoiceHdrModel> cq = qb.createQuery(InvoiceHdrModel.class);
 			Root<InvoiceHdrModel> root = cq.from(InvoiceHdrModel.class);
 			cq.where(qb.equal(root.get("project").get("projectId"), projectId));
+			cq.orderBy(qb.asc(root.get("id")));
 			cq.select(root);
 			invoicelist = entityManager.createQuery(cq).getResultList();
 		} catch (Exception e) {

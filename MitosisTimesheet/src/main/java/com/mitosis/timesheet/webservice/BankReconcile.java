@@ -76,6 +76,11 @@ public class BankReconcile {
 		
 		CustomerPaymentModel customerPaymentModel = new CustomerPaymentModel();
 		
+		CustomerPaymentModel customerPayment = new CustomerPaymentModel();
+		
+		customerPayment=reconcileService.getReceiptDetails(jsonObject.getString("receiptNumber"));
+    	
+		
 		InvoiceHdrModel invoiceHdr=new InvoiceHdrModel();
 		
 		JSONObject jsonobject = new JSONObject();
@@ -92,8 +97,9 @@ public class BankReconcile {
     	BigDecimal exchangeRate=new BigDecimal(jsonObject.getInt("exchangeRate"));
     	customerPaymentModel.setExchangeRate(exchangeRate);
     	
-    	BigDecimal paidAmount=new BigDecimal(jsonObject.getInt("paidAmount"));
-    	customerPaymentModel.setPaidAmount(paidAmount);
+  /*  	BigDecimal paidAmount=new BigDecimal(jsonObject.getInt("paidAmount"));*/
+    	/*BigDecimal sum = paidAmount.add(customerPayment.getPaidAmount());*/
+    	customerPaymentModel.setPaidAmount(receivedAmount);
     	
     	BigDecimal paidAmountInr=new BigDecimal(jsonObject.getInt("paidAmountInr"));
     	customerPaymentModel.setPaidAmountInr(paidAmountInr);
@@ -106,7 +112,7 @@ public class BankReconcile {
 		customerPaymentModel.setBankReceivedDate(date1);
 		
 		BigDecimal finalAmount=new BigDecimal(jsonObject.getInt("finalAmount"));
-		customerPaymentModel.setFianlAmount(finalAmount);
+		customerPaymentModel.setFinalAmount(finalAmount);
 		
 		customerPaymentModel.setCurrencyCode(jsonObject.getString("currencyCode"));
 		
