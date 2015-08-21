@@ -94,7 +94,12 @@ public class TimeSheet {
 			timeSheetModel.setUserDetails(userDetailsModel);
 			
 			if (jsonobject.has("issueNumber")) {
+				if(jsonobject.getString("issueNumber")=="null"){
+					String issue="";
+					timeSheetModel.setIssueNumber(issue);
+				}else{
 				timeSheetModel.setIssueNumber(jsonobject.getString("issueNumber"));
+				}
 			}
 			if (jsonobject.has("id")) {
 				timeSheetModel.setId(jsonobject.getInt("id"));

@@ -54,7 +54,8 @@
 <table class="table">
 	<thead class="thead-mit-ts">
 		<tr>
-			<th>Emp Id</th>
+			<th style="width: 65px;"></th>
+			<th style="width: 90px;">Emp Id</th>
 			<th style="width: 150px;">First Name</th>
 			<th style="width: 150px;">Last Name</th>
 			<th>Joined Date</th>
@@ -69,52 +70,54 @@
 	</thead>
 	<tbody>
 		<tr ng-repeat="sheet in filteredParticipantsResults=(employeeEntryList | filter:search) | startFrom:(currentPage-1)*numPerPage | limitTo:numPerPage">
-			<td>
-			   <span ng-show="!showEdit">{{sheet.employeeId}}</span>
+			<td><span><img class="profimg" src="images/profile/{{sheet.userId.name}}.jpg" /></span>
+			</td>
+			<td class="emptd">
+				<span ng-show="!showEdit">{{sheet.employeeId}}</span>
 				<span ng-show="showEdit"><input class="form-control" ng-model="sheet.employeeId" style="color: #777777;">
 				</span>
 			</td>
-			<td>
+			<td class="emptd">
 				<span ng-show="!showEdit">{{sheet.firstName}}</span>
 				<span ng-show="showEdit"><input class="form-control" type="text" ng-model="sheet.firstName" onkeypress="return ValidateAlpha(event)" ></span>
 			</td>
-			<td>
+			<td class="emptd">
 				<span ng-show="!showEdit">{{sheet.lastName}}</span>
 				<span ng-show="showEdit"><input class="form-control" type="text" ng-model="sheet.lastName" onkeypress="return ValidateAlpha(event)" ></span>
 			</td>
-			<td>
+			<td class="emptd">
 			    <span ng-show="!showEdit">{{sheet.joiningEntryDate}}</span>
 				<span  ng-show="showEdit"><input class="form-control"  type="text" onkeypress="return isNumber(event)" ui-date="dateOptions" ui-date-format="dd-mm-yy" ng-model="sheet.joiningEntryDate"></span>
 				<span style="color:red" ng-show="sheet.joiningEntryDate == '' || sheet.joiningEntryDate == undefined">Required</span>
 			</td>
-			<td>
+			<td class="emptd">
 			   <span ng-show="!showEdit">{{sheet.expStartEntryDate}}</span>
 				<span  ng-show="showEdit"><input class="form-control"  type="text" onkeypress="return isNumber(event)" ui-date="dateOptions" ui-date-format="dd-mm-yy" ng-model="sheet.expStartEntryDate"></span>
 				<span style="color:red" ng-show="sheet.expStartEntryDate == '' || sheet.expStartEntryDate == undefined">Required</span>
 			</td>
-			<td>
+			<td class="emptd">
 			    <span ng-show="!showEdit">{{sheet.yearsOfExperience}}</span>
 				<span  ng-show="showEdit"><input class="form-control"  type="text" onkeypress="return isNumber(event)" ng-model="sheet.yearsOfExperience" readonly></span>
 				
 			</td>
-			<td>
+			<td class="emptd">
 		    	<span ng-show="!showEdit">{{sheet.monthsOfExperience}}</span>
 				<span  ng-show="showEdit"><input class="form-control"  type="text" onkeypress="return isNumber(event)" ng-model="sheet.monthsOfExperience" readonly></span>
 				
 			</td>
-			<td>
+			<td class="emptd">
 		    	<span ng-show="!showEdit">{{sheet.level}}</span>
 				<span  ng-show="showEdit"><input class="form-control"  type="text" onkeypress="return isNumber(event)" ng-model="sheet.level" readonly></span>
 				
 			</td>
-			<td>
+			<td class="emptd">
 				<span ng-show="!showEdit">{{sheet.lob.lobName}}</span>
 				<span ng-show="showEdit"><select class="form-control" ng-model="sheet.lob" ng-options="item as item.lobName for item in lobList" style="color: #777777;">
 				<option value="">{{sheet.lob.lobName}}</option>
 				</select> 
 				</span>
 			</td>
-			<td>
+			<td class="emptd">
 				<span ng-show="!showEdit">{{sheet.billable}}</span>
 				<span ng-show="showEdit">
 				<select style="margin-top: 7px;" ng-model="sheet.billable">
@@ -123,7 +126,7 @@
 				</select></span>
 				<span style="color: red" ng-show="sheet.billable == '' || sheet.billable == undefined">Required</span>
 			</td>
-			<td style="word-spacing: 15px;">
+			<td class="emptd" style="word-spacing: 15px;">
 				<a><span class="glyphicon glyphicon-pencil" ng-click="showEdit = !showEdit" ng-show="!showEdit"></span></a>
 				<a><span class="glyphicon glyphicon-remove" ng-click="confirmDelete(sheet.id)" ng-show="!showEdit"></span></a>
 				<a><span class="glyphicon glyphicon-ok" ng-click="showEdit = !showEdit;updateEmployeeMasterDetails(sheet)" ng-show="showEdit" ng-disabled="checkRequired(sheet);"></span></a>

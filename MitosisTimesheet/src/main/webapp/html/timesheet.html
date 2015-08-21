@@ -75,6 +75,7 @@
 			<td>
 				<span ng-click="copyCurrentEntry(sheet)" ng-show="!showEdit">{{sheet.issueNumber}}</span>
 				<span ng-show="showEdit"><input class="form-control" type="text" ng-model="sheet.issueNumber"></span>
+				<span ng-show="sheet.issueNumber == null"></span>
 			</td>
 			<td >
 				<span ng-click="copyCurrentEntry(sheet)" ng-show="!showEdit">{{sheet.description}}</span>

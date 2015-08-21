@@ -103,7 +103,7 @@ angular.module('myApp.controllers')
 					emp = new Array();
 				}				
 
-				var empRate={"id":a[i].id,"userId":a[i].employee.id,"employeeId":a[i].employeeId,"firstName":a[i].firstName,"lastName":a[i].lastName, "joiningEntryDate":a[i].joiningEntryDate, "expStartEntryDate":a[i].expStartEntryDate,"yearsOfExperience":a[i].yearsOfExperience, "monthsOfExperience":a[i].monthsOfExperience, "level":a[i].level, "lob":a[i].lob, "billable":a[i].billable};
+				var empRate={"id":a[i].id,"userId":{"userId":a[i].employee.id,"name":a[i].employee.name},"employeeId":a[i].employeeId,"firstName":a[i].firstName,"lastName":a[i].lastName, "joiningEntryDate":a[i].joiningEntryDate, "expStartEntryDate":a[i].expStartEntryDate,"yearsOfExperience":a[i].yearsOfExperience, "monthsOfExperience":a[i].monthsOfExperience, "level":a[i].level, "lob":a[i].lob, "billable":a[i].billable};
 
 				emp.push(empRate);
 			}

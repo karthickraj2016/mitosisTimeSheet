@@ -278,7 +278,7 @@ angular.module('myApp.controllers')
 	}
 	
 	$scope.copyCurrentEntry = function(sheet){
-		
+		$scope.projects=sheet.project.projectName;		
 		$scope.timesheet.hours=sheet.hours;
 		$scope.timesheet.issueNumber=sheet.issueNumber;
 		$scope.timesheet.description=sheet.description;

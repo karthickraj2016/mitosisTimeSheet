@@ -1969,3 +1969,9 @@ tbody .scrollit {
 	margin-top: 0;
 	margin-bottom: 8px;
 }
+.profimg{
+	width: 45px; height: 45px; border-radius: 50%; 
+}
+.table > tbody > tr > .emptd{
+	line-height: 3;
+}
