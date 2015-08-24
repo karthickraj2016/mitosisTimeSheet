@@ -79,6 +79,8 @@ public class InvoiceReports extends JasperUtil {
 	    		
 	    	}
 	    	
+	    	else{
+	    	
 
 	    	
 	    	String reportFilePath = request.getSession().getServletContext()
@@ -111,7 +113,7 @@ public class InvoiceReports extends JasperUtil {
 	
 		
 		
-		
+	    	}
 		
 	}
 	

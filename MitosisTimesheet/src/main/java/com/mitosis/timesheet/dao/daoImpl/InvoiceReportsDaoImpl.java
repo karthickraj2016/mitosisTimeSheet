@@ -13,6 +13,9 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
+import javax.persistence.metamodel.SingularAttribute;
+
+import org.springframework.security.access.method.P;
 
 import com.mitosis.timesheet.dao.InvoiceReportsDao;
 import com.mitosis.timesheet.model.InvoiceHdrModel;
@@ -21,6 +24,7 @@ import com.mitosis.timesheet.util.BaseService;
 
 public class InvoiceReportsDaoImpl  extends BaseService implements InvoiceReportsDao {
 
+
 	@Override
 	public List<ProjectModel> pendingInvoiceProjectList(Date firstday, Date lastday) {
 		
@@ -28,41 +32,26 @@ public class InvoiceReportsDaoImpl  extends BaseService implements InvoiceReport
 		
 		try{
 			begin();
-			entityManager.getEntityManagerFactory().getCache().evictAll();
-			
-			
+			entityManager.getEntityManagerFactory().getCache().evictAll();		
 			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 			CriteriaQuery<ProjectModel> cq = qb.createQuery(ProjectModel.class);
-			/*Root<ProjectModel> root = cq.from(ProjectModel.class);
+			Root<ProjectModel> root = cq.from(ProjectModel.class);
 			cq.select(root);
-			
-			Subquery<Integer> subquery = cq.subquery(Integer.class);
+			Subquery<InvoiceHdrModel> subquery = cq.subquery(InvoiceHdrModel.class);
 			Root<InvoiceHdrModel> subRoot = subquery.from(InvoiceHdrModel.class);
-			Path<Date> invoiceDate = subRoot.get("invoiceDate");
-			Path<Integer> invoiceDate1 = subRoot.get("projectId");
-			Predicate condition = qb.between(invoiceDate,firstday,lastday);
-			Predicate conditions = qb.and(condition);
-			subquery.where(conditions);
-			subquery.select(invoiceDate1);
-			
-			
-			
-			
-			 
-			cq.where(qb.not(qb.exists(subquery)));*/ 
-		/*	Root<ProjectModel> root = cq.from(ProjectModel.class);
-			Root<InvoiceHdrModel> invoiceRoot = cq.from(InvoiceHdrModel.class);
-			Path<Integer> invoiceDate1 = invoiceRoot.get("projectId");
-			cq.select(root);
-			subquery.where();*/
-			
-			
-			
-					
+			Path<Date> datepath=subRoot.get("invoiceDate");
+			Predicate condition1 = qb.equal(subRoot.get("project"),root);
+			Predicate condition2 = qb.between(datepath, firstday, lastday);
+			Predicate condition3 = qb.and(condition1,condition2);
+			subquery.where(condition3);
+			subquery.select(subRoot);
+			Predicate condition4 = qb.equal(root.get("billable"),"yes");
+			Predicate condition5 = qb.not(qb.exists(subquery));
+			Predicate condition6 = qb.and(condition4,condition5);
+			cq.where(condition6);
+				
 			projectList = entityManager.createQuery(cq).getResultList();
 			
-			
-		
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{
