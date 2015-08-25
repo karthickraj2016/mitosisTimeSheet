@@ -23,7 +23,7 @@
 	<parameter name="beginDate" class="java.lang.String"/>
 	<parameter name="totalLeaveDays" class="java.math.BigDecimal"/>
 	<queryString>
-		<![CDATA[select T1.name, T1.totalLeave, T2.tot, T3.total from
+		<![CDATA[select T1.name, T1.totalLeave, T2.tot from
 (select name,sum(no_of_days) as totalLeave
 from leave_details leaveDet,user_details user
 where (leaveDet.employee_id=user.id)
@@ -32,19 +32,14 @@ group by name) T1,
 (select name,sum(no_of_days) as tot
 from leave_details lea,user_details us
 where lea.employee_id=us.id and lea.from_date>=$P{startDate} and
-lea.to_date<=$P{toDateRev} group by name) T2,
-(select name,sum(no_of_days) as total
-from leave_details lea,user_details us
-where lea.employee_id=us.id and lea.from_date>=$P{beginDate} and
-lea.to_date<=$P{toDateRev} group by name) T3
-where T1.name=T2.name and T1.name=T3.name;]]>
+lea.to_date<=$P{toDateRev} group by name) T2
+where T1.name=T2.name;]]>
 	</queryString>
 	<field name="name" class="java.lang.String"/>
 	<field name="totalLeave" class="java.math.BigDecimal"/>
 	<field name="tot" class="java.math.BigDecimal"/>
-	<field name="total" class="java.math.BigDecimal"/>
 	<variable name="balance" class="java.math.BigDecimal">
-		<variableExpression><![CDATA[new BigDecimal("20").subtract($F{total})]]></variableExpression>
+		<variableExpression><![CDATA[($P{totalLeaveDays}.subtract($F{tot})).compareTo(new BigDecimal("5"))== 1 ? $P{totalLeaveDays}.subtract($F{tot}): $P{totalLeaveDays}.subtract(new BigDecimal("5"))]]></variableExpression>
 	</variable>
 	<variable name="monthlyBalance" class="java.math.BigDecimal">
 		<variableExpression><![CDATA[new BigDecimal("5").subtract($F{tot})]]></variableExpression>
@@ -167,14 +162,14 @@ where T1.name=T2.name and T1.name=T3.name;]]>
 				<reportElement x="456" y="0" width="1" height="39"/>
 			</line>
 			<textField>
-				<reportElement x="474" y="9" width="55" height="20"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{balance}.compareTo($P{totalLeaveDays}) == 1 ? $P{totalLeaveDays}.add($V{monthlyBalance}) : $P{totalLeaveDays}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement x="343" y="10" width="100" height="20"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{monthlyBalance}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="465" y="11" width="79" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{balance}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
