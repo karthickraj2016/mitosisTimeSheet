@@ -162,11 +162,16 @@ angular.module('myApp.controllers')
 
 	}
 	
+	$scope.calculateCommisionAmount=function(){
+		
+		$scope.payment.commisionamount=$scope.receiptDetails.paidAmount-$scope.payment.receivedamount;
+		
+	}
+	
 	$scope.calculateAmount = function(){
 		
 		$scope.payment.paidAmountInr=$scope.payment.receivedamount*$scope.payment.exchangerate;
-	    $scope.finalAmount=$scope.payment.paidAmountInr-$scope.payment.commisionamount;
-		
+	    		
 	}
 
 	$scope.insertPaymentInfo = function(){
@@ -180,11 +185,10 @@ angular.module('myApp.controllers')
 			"exchangeRate":$scope.payment.exchangerate,
 			"paidAmountInr":$scope.payment.paidAmountInr,
 			"invoiceNumber":$scope.invoices.invoiceNumber,
-			"paidAmount":$scope.invoices.paidAmount,
+			"paidAmount":$scope.receiptDetails.paidAmount,
 			"receiptDate":$scope.receiptDetails.receiptDateStr,
 			"currencyCode":$scope.invoice.currencyCode,
-			"finalAmount":$scope.finalAmount
-
+			
 		});
 
 		$http({
@@ -213,12 +217,16 @@ angular.module('myApp.controllers')
 
 	}
 	
+   $scope.calculateCommision=function(sheet){
+		
+	   sheet.commisionAmount=sheet.paidAmount-sheet.receivedAmount;
+		
+	}
+
    $scope.calculateRate = function(sheet){
 		
 	sheet.paidAmountInr=sheet.receivedAmount*sheet.exchangeRate;
-	sheet.finalAmount=sheet.paidAmountInr-sheet.commisionAmount;
-	
-	}
+   }
 
 	$scope.updatePaymentInfo = function(reqParam){
 

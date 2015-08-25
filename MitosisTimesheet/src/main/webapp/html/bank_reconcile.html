@@ -106,13 +106,13 @@
        <input type="text" required class="form-control" ui-date="dateOptions" ui-date-format="dd-mm-yy" ng-model="payment.recievedDate">
     </div>
     <div class="form-group" style="margin: 0;">
-      	<input class="form-control" type="text" onkeypress="return isNumber(event)" placeholder="Received Amount" ng-model="payment.receivedamount" required>
+      	<input class="form-control" type="text" onkeypress="return isNumber(event)" placeholder="Received Amount" ng-model="payment.receivedamount" ng-change="calculateCommisionAmount()" required>
     </div>
     <div class="form-group" style="margin: 0;">
        <input class="form-control" type="text" onkeypress="return isNumber(event)" placeholder="Exchange Rate" ng-model="payment.exchangerate" ng-change="calculateAmount()" required>
     </div>
     <div class="form-group" style="margin: 0;">
-       <input class="form-control" type="text" onkeypress="return isNumber(event)" placeholder="Bank Commission" ng-model="payment.commisionamount" ng-change="calculateAmount()" required>
+       <input class="form-control" type="text" onkeypress="return isNumber(event)" placeholder="Bank Commission" ng-model="payment.commisionamount" readonly>
     </div>
     <div class="form-group" style="margin: 0;">
        <input class="form-control" type="text"  placeholder="Amount in INR" ng-model="payment.paidAmountInr" readonly>
@@ -143,14 +143,14 @@
 			<th>Project</th>
 			<th>Invoice No</th>
 			<th>Invoice Date</th>
-			<th>Invoice Amt</th>			
+			<th>Invoice Amt($)</th>			
 			<th>Recpt No</th>
+			<th>Recpt Amt($)</th>
 			<th>Recvd Date</th>
-			<th>Recvd Amt</th>
+			<th>Recvd Amt($)</th>
 			<th>Exg Rate</th>
+			<th>commision($)</th>
 			<th>Amt(INR)</th>
-			<th>commision</th>
-			<th>Final Amt</th>
 			<th></th>
 		</tr>
 	</thead>
@@ -177,29 +177,30 @@
 				<span ng-show="showEdit"><input class="form-control" type="text" ng-model="sheet.receiptNumber" readonly></span>
 			</td>
 			<td>
+				<span ng-show="!showEdit">{{sheet.paidAmount}}</span>
+				<span ng-show="showEdit"><input class="form-control" type="text" ng-model="sheet.paidAmount" readonly></span>
+			</td>
+			<td>
 				<span ng-show="!showEdit">{{sheet.bankReceivedDateStr}}</span>
 				<span ng-show="showEdit"><input class="form-control" type="text" ui-date="dateOptions" ui-date-format="dd-mm-yy" ng-model="sheet.bankReceivedDateStr" ></span>
 			</td>
 			<td>
 				<span ng-show="!showEdit">{{sheet.receivedAmount}}</span>
-				<span ng-show="showEdit"><input class="form-control" type="text" ng-model="sheet.receivedAmount"></span>
+				<span ng-show="showEdit"><input class="form-control" type="text" ng-model="sheet.receivedAmount" ng-change="calculateCommision(sheet)"></span>
 			</td>
 			<td>
 				<span ng-show="!showEdit">{{sheet.exchangeRate}}</span>
 				<span ng-show="showEdit"><input class="form-control" type="text" ng-change="calculateRate(sheet)" ng-model="sheet.exchangeRate"></span>
 			</td>
 			<td>
+				<span ng-show="!showEdit">{{sheet.commisionAmount}}</span>
+				<span ng-show="showEdit"><input class="form-control" type="text"  ng-model="sheet.commisionAmount" readonly></span>
+			</td>
+			<td>
 				<span ng-show="!showEdit">{{sheet.paidAmountInr}}</span>
 				<span ng-show="showEdit"><input class="form-control" type="text" ng-model="sheet.paidAmountInr" readonly></span>
 			</td>
-			<td>
-				<span ng-show="!showEdit">{{sheet.commisionAmount}}</span>
-				<span ng-show="showEdit"><input class="form-control" type="text" ng-change="calculateRate(sheet)" ng-model="sheet.commisionAmount"></span>
-			</td>
-			<td>
-				<span ng-show="!showEdit">{{sheet.finalAmount}}</span>
-				<span ng-show="showEdit"><input class="form-control" type="text" ng-model="sheet.finalAmount" readonly></span>
-			</td>
+			
 			<td style="word-spacing: 15px;">
 		         <a><span class="glyphicon glyphicon-pencil" ng-click="showEdit = !showEdit" ng-show="!showEdit"></span></a>
 				<!-- <a><span class="glyphicon glyphicon-remove" ng-click="confirmDelete(sheet.id)" ng-show="!showEdit"></span></a> -->

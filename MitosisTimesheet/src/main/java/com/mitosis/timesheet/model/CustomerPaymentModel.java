@@ -57,9 +57,6 @@ public class CustomerPaymentModel {
 	@Column(name="bank_received_date")
 	private Date bankReceivedDate;
 	
-	@Column(name="final_amount")
-	private BigDecimal finalAmount;
-	
 	@Transient
 	private String receiptDateStr;
 	
@@ -171,12 +168,5 @@ public class CustomerPaymentModel {
 	public void setBankReceivedDate(Date bankReceivedDate) {
 		this.bankReceivedDate = bankReceivedDate;
 	}
-	public BigDecimal getFinalAmount() {
-		return finalAmount;
-	}
-	public void setFinalAmount(BigDecimal finalAmount) {
-		this.finalAmount = finalAmount;
-	}
-
-	
+		
 }
