@@ -10,32 +10,62 @@
 			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
-	<!-- <context:property-placeholder location="classpath:database.properties" /> -->
+	<!-- <context:property-placeholder location="classpath:database.properties" 
+		/> -->
 
 	<context:component-scan base-package="com.mitosis.timesheet"></context:component-scan>
 	<context:annotation-config />
-    <tx:annotation-driven />
-	
-	<!-- <bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-		p:driverClassName="com.mysql.jdbc.Driver" p:url="jdbc:mysql://localhost:3306/mitosisTimesheetTest"
+	<tx:annotation-driven />
+
+	<!-- <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" 
+		p:driverClassName="com.mysql.jdbc.Driver" p:url="jdbc:mysql://localhost:3306/mitosisTimesheetTest" 
 		p:username="root" p:password="root" /> -->
 	<!-- p:dataSource-ref="dataSource" -->
-	
-	<bean id="jpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
-		 p:database="MYSQL" p:showSql="true" />
-	
-	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
-		 p:jpaVendorAdapter-ref="jpaAdapter">
+
+	<bean id="jpaAdapter"
+		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
+		p:database="MYSQL" p:showSql="true" />
+
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+		p:jpaVendorAdapter-ref="jpaAdapter">
 		<property name="loadTimeWeaver">
-			<bean class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver" />
+			<bean
+				class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver" />
 		</property>
 	</bean>
-	
+
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
 		p:entityManagerFactory-ref="entityManagerFactory" />
-		
+	<bean id="myTask" class="com.mitosis.timesheet.util.MyTask" />
+
+	<bean id="myJob"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="myTask" />
+		<property name="targetMethod" value="printCurrentTime" />
+	</bean>
+	<bean id="simpleTrigger"
+		class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		<property name="jobDetail" ref="myJob" />
+		<property name="repeatInterval" value="86400000" />
+		<property name="startDelay" value="1000" />
+	</bean>
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="jobDetails">
+			<list>
+				<ref bean="myJob" />
+			</list>
+		</property>
+		<property name="triggers">
+			<list>
+				<ref bean="simpleTrigger" />
+			</list>
+		</property>
+	</bean>
+
+
+
 	<!-- <tx:annotation-driven transaction-manager="transactionManager"/> -->
-	
-  </beans>
+
+</beans>
  
