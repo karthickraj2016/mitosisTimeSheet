@@ -9,6 +9,7 @@ import com.mitosis.timesheet.model.EmployeeMasterModel;
 import com.mitosis.timesheet.model.LevelMasterModel;
 import com.mitosis.timesheet.model.LobModel;
 import com.mitosis.timesheet.service.EmployeeMasterService;
+import com.mitosis.timesheet.webservice.EmployeeMaster;
 
 public class EmployeeMasterServiceImpl implements EmployeeMasterService {
 
@@ -90,5 +91,6 @@ public class EmployeeMasterServiceImpl implements EmployeeMasterService {
 		
 		return empId;
 	}
+
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import com.mitosis.timesheet.model.EmployeeMasterModel;
 import com.mitosis.timesheet.model.LevelMasterModel;
 import com.mitosis.timesheet.model.LobModel;
+import com.mitosis.timesheet.webservice.EmployeeMaster;
 
 public interface EmployeeMasterService {
 	
@@ -23,5 +24,6 @@ public interface EmployeeMasterService {
 	public boolean employeeIdValidation(String employeeId, boolean empId);
 
 	public boolean employeeValidation(int userId, boolean empId);
+
 
 }
