@@ -46,7 +46,7 @@ public class TeamAssignmentModel {
      
 		if(getReleaseDate()==null){
 			
-			return "NotMentioned";
+			return "";
 		}
 		Date d= getReleaseDate();
 		releaseEntryDate = new SimpleDateFormat("dd-MM-yyyy").format(d);

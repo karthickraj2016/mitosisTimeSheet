@@ -89,7 +89,6 @@
 			<td>
 				<span ng-click="copyCurrentEntry(sheet)" ng-show="!showEdit">{{sheet.releaseEntryDate}}</span>
 				<span ng-show="showEdit"><input class="form-control" ui-date="dateOptions" ui-date-format="dd-mm-yy" type="text" ng-model="sheet.releaseEntryDate"></span>
-				<span style="color:red" ng-show="sheet.releaseEntryDate == '' || sheet.releaseEntryDate == undefined">Required</span>
 			</td>
 			<td style="word-spacing: 15px;">	
 			    
