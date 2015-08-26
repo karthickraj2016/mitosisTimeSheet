@@ -1,25 +1,17 @@
 package com.mitosis.timesheet.webservice;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
@@ -327,7 +319,6 @@ public class EmployeeMaster extends JasperUtil{
 
 	public JSONObject employeeReport() throws Exception {
 
-
 		HttpSession session= request.getSession(true);
 
 		if(session.getAttribute("userId")==null){
@@ -339,8 +330,6 @@ public class EmployeeMaster extends JasperUtil{
 
 
 		JSONObject jsonObject = new JSONObject();
-
-
 
 		String reportFilePath = request.getSession().getServletContext()
 				.getRealPath("/")
@@ -363,12 +352,41 @@ public class EmployeeMaster extends JasperUtil{
 		jsonObject.put("report","report successful");
 		jsonObject.put("pdfFileName", "employeeDetailsReport"+employeeId+".pdf");
 
-
 		return jsonObject;
 	}
+	
+	@Path("/employeesExperienceReport")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 
+	public JSONObject leaveSummaryReport(JSONObject jsonObject) throws Exception {
 
+		String date = jsonObject.getString("date");
+        String dateRev =jsonObject.getString("dateRev");
 
+        JSONObject jsonobject = new JSONObject();
+
+		String reportFilePath = request.getSession().getServletContext().getRealPath("/")+ "reports/EmployeeExperienceReport.jrxml";
+
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		String path = this.getClass().getClassLoader().getResource("/").getPath();
+		String pdfPath = path.replaceAll("WEB-INF/classes/", "");
+		
+		parameters.put("date", date);
+		parameters.put("dateRev",dateRev);
+		
+		String pdfFilePath = pdfPath+"reports/EmployeeExperienceReport"+".pdf";
+
+		RenderJr(reportFilePath, parameters,pdfFilePath);
+
+		JRBeanCollectionDataSource ds = null;
+
+		jsonobject.put("report","report successful");
+		jsonobject.put("pdfFileName", "EmployeeExperienceReport"+".pdf");
+
+		return jsonobject;
+	}
 
 
 	public void ExpMailToHr() throws ParseException{
@@ -397,16 +415,9 @@ public class EmployeeMaster extends JasperUtil{
 		 int daydifference =Integer.valueOf(crunchifyFormatter.format(daydiff));
 		
 		 int hourdifference = Integer.valueOf(crunchifyFormatter.format(hourdiff));
-		 
-		
-		 
-		 
-		
-		
+			
 		if(daydifference==365 && hourdifference<=24){
-			
-			 
-			
+	
 			
 		/*	final String username = "testingemail2016@gmail.com";
 			final String password = "Kart@2016";
@@ -451,14 +462,6 @@ public class EmployeeMaster extends JasperUtil{
 			
 			
 		}
-		
-
-		
-		
 	
-
-
-
-
 	}
 }

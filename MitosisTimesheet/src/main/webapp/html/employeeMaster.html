@@ -1,154 +1,197 @@
 <div ng-init="list()">
-<div class="container" style="margin-top: 8%;"><div class="row"><div class="col-xs-12 col-md-12"><h2 class="text-center">Employee Details</h2></div></div></div>
-<div class="container" style="width: 100%;">
-<div class="ts-form-div">
+	<div class="container" style="margin-top: 8%;">
+		<div class="row">
+			<div class="col-xs-12 col-md-12">
+				<h2 class="text-center">Employee Details</h2>
+			</div>
+		</div>
+	</div>
+	<div class="container" style="width: 100%;">
+		<div class="ts-form-div">
 
-<form   class="form-inline" role="form" id="addEntry" ng-submit="addEmployeeMasterDetails(joiningDate,expStartDate,billable)">
-    
-    <div class="form-group">
-    <select id="userId" class="form-control empdet-form" required ng-model="employee" ng-options="item as item.name for item in employeeNameList" ng-blur="validateEmployee(employee)">
-    <option value="">Employee Name</option>
-    </select> 
-    </div>
-     <div class="form-group"><input id="empId" type="text" required class="form-control empdet-form" placeholder="Employee Id" ng-model="employeeDetail.employeeId"></div>
-     <div class="form-group"><input type="text" required class="form-control empdet-form" placeholder="First Name" ng-model="employeeDetail.firstName"></div>
-       <div class="form-group"><input type="text" required class="form-control empdet-form" placeholder="Last Name" ng-model="employeeDetail.lastName"></div>
-    <div class="form-group">
-       <input type="text" id="joinDate" required class="form-control empdet-form" placeholder="Joining Date" ui-date="dateOptions" ui-date-format="dd-mm-yy" ng-model="employeeDetail.joiningDate">
-    </div>
-    
-    <div  class="form-group">
-       <input type="text" id="startDate" required class="form-control empdet-form" placeholder="Experience Start Date" ui-date="dateOptions" ui-date-format="dd-mm-yy" ng-model="employeeDetail.expStartDate">
-    </div>
-    <div class="form-group">
-    <select class="form-control select" required ng-model="employeeDetail.billable">
-     <option value="" selected disabled>Billable</option>
-	<option>Yes</option>
-	<option>No</option>
-	</select>
-    </div>
-	    
-    
-    <div class="form-group btn-formempdet">
-    <button type="submit" class="btn btn-primary">Add</button>
-	<button type="reset"  class="btn btn-primary">Clear</button>
-	</div> 
-  </form>
+			<form class="form-inline" role="form" id="addEntry"
+				ng-submit="addEmployeeMasterDetails(joiningDate,expStartDate,billable)">
+
+				<div class="form-group">
+					<select id="userId" class="form-control empdet-form" required
+						ng-model="employee"
+						ng-options="item as item.name for item in employeeNameList"
+						ng-blur="validateEmployee(employee)">
+						<option value="">Employee Name</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<input id="empId" type="text" required
+						class="form-control empdet-form" placeholder="Employee Id"
+						ng-model="employeeDetail.employeeId">
+				</div>
+				<div class="form-group">
+					<input type="text" required class="form-control empdet-form"
+						placeholder="First Name" ng-model="employeeDetail.firstName">
+				</div>
+				<div class="form-group">
+					<input type="text" required class="form-control empdet-form"
+						placeholder="Last Name" ng-model="employeeDetail.lastName">
+				</div>
+				<div class="form-group">
+					<input type="text" id="joinDate" required
+						class="form-control empdet-form" placeholder="Joining Date"
+						ui-date="dateOptions" ui-date-format="dd-mm-yy"
+						ng-model="employeeDetail.joiningDate">
+				</div>
+
+				<div class="form-group">
+					<input type="text" id="startDate" required
+						class="form-control empdet-form"
+						placeholder="Experience Start Date" ui-date="dateOptions"
+						ui-date-format="dd-mm-yy" ng-model="employeeDetail.expStartDate">
+				</div>
+				<div class="form-group">
+					<select class="form-control select" required
+						ng-model="employeeDetail.billable">
+						<option value="" selected disabled>Billable</option>
+						<option>Yes</option>
+						<option>No</option>
+					</select>
+				</div>
+
+
+				<div class="form-group btn-formempdet">
+					<button type="submit" class="btn btn-primary">Add</button>
+					<button type="reset" class="btn btn-primary">Clear</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="container" style="width: 100%;">
+		<div class="table-responsive">
+			<div class="row">
+				<div class="col-sm-6 len_show" style="padding: 20px;">
+					<span>Show <select ng-model="numPerPage">
+							<option>15</option>
+							<option>25</option>
+							<option>35</option>
+							<option>50</option>
+					</select> Entries
+					</span>
+				</div>
+				<div class="col-sm-6 search-tab">
+					<input type="text" id="search" required class="form-control"
+						ng-change="filter()" ng-model="search" placeholder="Search"></input>
+				</div>
+			</div>
+			<table class="table">
+				<thead class="thead-mit-ts">
+					<tr>
+						<th style="width: 65px;"></th>
+						<th style="width: 90px;">Emp Id</th>
+						<th style="width: 150px;">First Name</th>
+						<th style="width: 150px;">Last Name</th>
+						<th style="width: 130px;">Joined Date <span style="padding: 5px;"><img alt=""
+								src="images/pdf-icon.png" ng-click="employeesExperienceReport()" /></span></th>
+						<th style="width: 120px;">Exp Start Date</th>
+						<th style="width: 70px;">Exp Yrs</th>
+						<th style="width: 70px;">Exp Mon</th>
+						<th style="width: 60px;">Level</th>
+						<th>LOB <span style="padding: 5px;"><img alt=""
+								src="images/pdf-icon.png" ng-click="employeeDetailsReport()" /></span></th>
+						<th style="width: 80px;">Billable</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr
+						ng-repeat="sheet in filteredParticipantsResults=(employeeEntryList | filter:search) | startFrom:(currentPage-1)*numPerPage | limitTo:numPerPage">
+						<td><span><img class="profimg"
+								src="images/profile/{{sheet.userId.name}}.jpg" /></span></td>
+						<td class="emptd"><span ng-show="!showEdit">{{sheet.employeeId}}</span>
+							<span ng-show="showEdit"><input class="form-control"
+								ng-model="sheet.employeeId" style="color: #777777;"> </span></td>
+						<td class="emptd"><span ng-show="!showEdit">{{sheet.firstName}}</span>
+							<span ng-show="showEdit"><input class="form-control"
+								type="text" ng-model="sheet.firstName"
+								onkeypress="return ValidateAlpha(event)"></span></td>
+						<td class="emptd"><span ng-show="!showEdit">{{sheet.lastName}}</span>
+							<span ng-show="showEdit"><input class="form-control"
+								type="text" ng-model="sheet.lastName"
+								onkeypress="return ValidateAlpha(event)"></span></td>
+						<td class="emptd"><span ng-show="!showEdit">{{sheet.joiningEntryDate}}</span>
+							<span ng-show="showEdit"><input class="form-control"
+								type="text" onkeypress="return isNumber(event)"
+								ui-date="dateOptions" ui-date-format="dd-mm-yy"
+								ng-model="sheet.joiningEntryDate"></span> <span
+							style="color: red"
+							ng-show="sheet.joiningEntryDate == '' || sheet.joiningEntryDate == undefined">Required</span>
+						</td>
+						<td class="emptd"><span ng-show="!showEdit">{{sheet.expStartEntryDate}}</span>
+							<span ng-show="showEdit"><input class="form-control"
+								type="text" onkeypress="return isNumber(event)"
+								ui-date="dateOptions" ui-date-format="dd-mm-yy"
+								ng-model="sheet.expStartEntryDate"></span> <span
+							style="color: red"
+							ng-show="sheet.expStartEntryDate == '' || sheet.expStartEntryDate == undefined">Required</span>
+						</td>
+						<td class="emptd"><span ng-show="!showEdit">{{sheet.yearsOfExperience}}</span>
+							<span ng-show="showEdit"><input class="form-control"
+								type="text" onkeypress="return isNumber(event)"
+								ng-model="sheet.yearsOfExperience" readonly></span></td>
+						<td class="emptd"><span ng-show="!showEdit">{{sheet.monthsOfExperience}}</span>
+							<span ng-show="showEdit"><input class="form-control"
+								type="text" onkeypress="return isNumber(event)"
+								ng-model="sheet.monthsOfExperience" readonly></span></td>
+						<td class="emptd"><span ng-show="!showEdit">{{sheet.level}}</span>
+							<span ng-show="showEdit"><input class="form-control"
+								type="text" onkeypress="return isNumber(event)"
+								ng-model="sheet.level" readonly></span></td>
+						<td class="emptd"><span ng-show="!showEdit">{{sheet.lob.lobName}}</span>
+							<span ng-show="showEdit"><select class="form-control"
+								ng-model="sheet.lob"
+								ng-options="item as item.lobName for item in lobList"
+								style="color: #777777;">
+									<option value="">{{sheet.lob.lobName}}</option>
+							</select> </span></td>
+						<td class="emptd"><span ng-show="!showEdit">{{sheet.billable}}</span>
+							<span ng-show="showEdit"> <select style="margin-top: 7px;"
+								ng-model="sheet.billable">
+									<option>Yes</option>
+									<option>No</option>
+							</select></span> <span style="color: red"
+							ng-show="sheet.billable == '' || sheet.billable == undefined">Required</span>
+						</td>
+						<td class="emptd" style="word-spacing: 15px;"><a><span
+								class="glyphicon glyphicon-pencil"
+								ng-click="showEdit = !showEdit" ng-show="!showEdit"></span></a> <a><span
+								class="glyphicon glyphicon-remove"
+								ng-click="confirmDelete(sheet.id)" ng-show="!showEdit"></span></a> <a><span
+								class="glyphicon glyphicon-ok"
+								ng-click="showEdit = !showEdit;updateEmployeeMasterDetails(sheet)"
+								ng-show="showEdit" ng-disabled="checkRequired(sheet);"></span></a> <a><span
+								class="glyphicon glyphicon-ban-circle"
+								ng-click="showEdit = !showEdit" ng-show="showEdit"></span></a></td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="row">
+				<div class="col-xs-12 col-md-6">
+					<div class="form-group">
+						<button class="btn btn-primary" style="float: left;"
+							ng-click="calculateAndUpdateExp()">Update Experience</button>
+						<span style="float: left; padding: 5px 0 0 15px; font-size: 18px;">Last
+							Updated Date: {{asOnDate}}</span>
+					</div>
+				</div>
+				<div class="col-xs-12 col-md-6">
+					<pagination total-items="totalItems" ng-model="currentPage"
+						max-size="maxSize" items-per-page="numPerPage"
+						class="pagination-sm" boundary-links="true"></pagination>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="alert-msg col-xs-12 col-sm-6">
+		<p class="alert-success"></p>
+	</div>
+	<div class="alert-msg1 col-xs-12 col-sm-6">
+		<p class="alert-danger"></p>
+	</div>
 </div>
-</div>
-<div class="container" style="width: 100%;">
-<div class="table-responsive">
-<div class="row">
-<div class="col-sm-6 len_show" style="padding: 20px;">
-<span>Show
-<select ng-model="numPerPage" >
-<option>15</option>
-<option>25</option>
-<option>35</option>
-<option>50</option>
-</select> Entries</span></div>
-<div class="col-sm-6 search-tab"> 
-	       <input type="text" id="search" required class="form-control" ng-change="filter()" ng-model="search" placeholder="Search"></input>
-</div>
-</div>
-<table class="table">
-	<thead class="thead-mit-ts">
-		<tr>
-			<th style="width: 65px;"></th>
-			<th style="width: 90px;">Emp Id</th>
-			<th style="width: 150px;">First Name</th>
-			<th style="width: 150px;">Last Name</th>
-			<th>Joined Date</th>
-			<th>Exp Start Date</th>
-			<th style="width: 70px;">Exp Yrs</th>
-			<th style="width: 70px;">Exp Mon</th>
-			<th style="width: 60px;">Level</th>
-			<th>LOB</th>
-			<th style="width: 80px;">Billable</th>
-			<th></th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr ng-repeat="sheet in filteredParticipantsResults=(employeeEntryList | filter:search) | startFrom:(currentPage-1)*numPerPage | limitTo:numPerPage">
-			<td><span><img class="profimg" src="images/profile/{{sheet.userId.name}}.jpg" /></span>
-			</td>
-			<td class="emptd">
-				<span ng-show="!showEdit">{{sheet.employeeId}}</span>
-				<span ng-show="showEdit"><input class="form-control" ng-model="sheet.employeeId" style="color: #777777;">
-				</span>
-			</td>
-			<td class="emptd">
-				<span ng-show="!showEdit">{{sheet.firstName}}</span>
-				<span ng-show="showEdit"><input class="form-control" type="text" ng-model="sheet.firstName" onkeypress="return ValidateAlpha(event)" ></span>
-			</td>
-			<td class="emptd">
-				<span ng-show="!showEdit">{{sheet.lastName}}</span>
-				<span ng-show="showEdit"><input class="form-control" type="text" ng-model="sheet.lastName" onkeypress="return ValidateAlpha(event)" ></span>
-			</td>
-			<td class="emptd">
-			    <span ng-show="!showEdit">{{sheet.joiningEntryDate}}</span>
-				<span  ng-show="showEdit"><input class="form-control"  type="text" onkeypress="return isNumber(event)" ui-date="dateOptions" ui-date-format="dd-mm-yy" ng-model="sheet.joiningEntryDate"></span>
-				<span style="color:red" ng-show="sheet.joiningEntryDate == '' || sheet.joiningEntryDate == undefined">Required</span>
-			</td>
-			<td class="emptd">
-			   <span ng-show="!showEdit">{{sheet.expStartEntryDate}}</span>
-				<span  ng-show="showEdit"><input class="form-control"  type="text" onkeypress="return isNumber(event)" ui-date="dateOptions" ui-date-format="dd-mm-yy" ng-model="sheet.expStartEntryDate"></span>
-				<span style="color:red" ng-show="sheet.expStartEntryDate == '' || sheet.expStartEntryDate == undefined">Required</span>
-			</td>
-			<td class="emptd">
-			    <span ng-show="!showEdit">{{sheet.yearsOfExperience}}</span>
-				<span  ng-show="showEdit"><input class="form-control"  type="text" onkeypress="return isNumber(event)" ng-model="sheet.yearsOfExperience" readonly></span>
-				
-			</td>
-			<td class="emptd">
-		    	<span ng-show="!showEdit">{{sheet.monthsOfExperience}}</span>
-				<span  ng-show="showEdit"><input class="form-control"  type="text" onkeypress="return isNumber(event)" ng-model="sheet.monthsOfExperience" readonly></span>
-				
-			</td>
-			<td class="emptd">
-		    	<span ng-show="!showEdit">{{sheet.level}}</span>
-				<span  ng-show="showEdit"><input class="form-control"  type="text" onkeypress="return isNumber(event)" ng-model="sheet.level" readonly></span>
-				
-			</td>
-			<td class="emptd">
-				<span ng-show="!showEdit">{{sheet.lob.lobName}}</span>
-				<span ng-show="showEdit"><select class="form-control" ng-model="sheet.lob" ng-options="item as item.lobName for item in lobList" style="color: #777777;">
-				<option value="">{{sheet.lob.lobName}}</option>
-				</select> 
-				</span>
-			</td>
-			<td class="emptd">
-				<span ng-show="!showEdit">{{sheet.billable}}</span>
-				<span ng-show="showEdit">
-				<select style="margin-top: 7px;" ng-model="sheet.billable">
-    			<option>Yes</option>
-				<option>No</option>
-				</select></span>
-				<span style="color: red" ng-show="sheet.billable == '' || sheet.billable == undefined">Required</span>
-			</td>
-			<td class="emptd" style="word-spacing: 15px;">
-				<a><span class="glyphicon glyphicon-pencil" ng-click="showEdit = !showEdit" ng-show="!showEdit"></span></a>
-				<a><span class="glyphicon glyphicon-remove" ng-click="confirmDelete(sheet.id)" ng-show="!showEdit"></span></a>
-				<a><span class="glyphicon glyphicon-ok" ng-click="showEdit = !showEdit;updateEmployeeMasterDetails(sheet)" ng-show="showEdit" ng-disabled="checkRequired(sheet);"></span></a>
-				<a><span class="glyphicon glyphicon-ban-circle" ng-click="showEdit = !showEdit" ng-show="showEdit"></span></a>
-     		</td>
-		</tr>
-	</tbody>
-</table>
-<div class="row">
-<div class="col-xs-12 col-md-6">
-<div class="form-group"> 
-	<button class="btn btn-primary" style="float: left;" ng-click="calculateAndUpdateExp()">Update Experience</button>
-	<span style="float: left; padding: 5px 0 0 15px; font-size: 18px;">Last Updated Date: {{asOnDate}}</span>
-	<span style="padding: 5px;"><img alt="" src="images/pdf-icon.png" ng-click="employeeDetailsReport()"/></span>
-</div> 
-</div>
-<div class="col-xs-12 col-md-6">
-<pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="numPerPage" class="pagination-sm" boundary-links="true"></pagination>
-</div>
-</div>
-</div>
-</div>
- <div class="alert-msg col-xs-12 col-sm-6"><p class="alert-success"></p></div>
- <div class="alert-msg1 col-xs-12 col-sm-6"><p class="alert-danger"></p></div>
- </div>

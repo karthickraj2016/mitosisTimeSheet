@@ -114,7 +114,7 @@ angular.module('myApp.controllers')
 			}	
 
 			var menuJson = angular.toJson({
-				"date": $scope.timesheet.date,"hours":$scope.timesheet.hours,"issueNumber":$scope.timesheet.issueNumber,"description":$scope.timesheet.description,"projectId":$scope.projects.projectId
+				"date": $scope.timesheet.date,"hours":$scope.timesheet.hours,"issueNumber":$scope.timesheet.issueNumber,"description":$scope.timesheet.description,"projectId":$scope.projects
 			});
 
 
@@ -190,7 +190,7 @@ angular.module('myApp.controllers')
 				reqParam.hours=hour;
 			}	
 			var menuJson = angular.toJson({
-				"date": reqParam.entryDate,"hours":reqParam.hours,"issueNumber":reqParam.issueNumber,"description":reqParam.description,"id":reqParam.id,"ProjectId":reqParam.project.projectId
+				"date": reqParam.entryDate,"hours":reqParam.hours,"issueNumber":reqParam.issueNumber,"description":reqParam.description,"id":reqParam.id,"ProjectId":reqParam.project
 
 
 			});
@@ -278,7 +278,7 @@ angular.module('myApp.controllers')
 	}
 	
 	$scope.copyCurrentEntry = function(sheet){
-		$scope.projects=sheet.project.projectName;		
+		$scope.projects=sheet.project.projectId;		
 		$scope.timesheet.hours=sheet.hours;
 		$scope.timesheet.issueNumber=sheet.issueNumber;
 		$scope.timesheet.description=sheet.description;
