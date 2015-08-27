@@ -17,13 +17,19 @@
 	<input type="text" name="todate" required class="form-control" ui-date="dateOptions" ui-date-format="dd-mm-yy" ng-model="finance.todate">	
 	</div>
 	</div>
-	<div class="row" style="margin-top: 3%;">
-	<div class="col-xs-4 col-sm-4 col-lg-3 col-md-3">
-	<button type="submit" class="btn btn-primary btn-sm" ng-click="bankReconcileReport()" style="width: 135px; font-size: 15px;">Bank Reconcile</button>
+	<div class="row" style="margin-top: 5%;">
+	<div class="col-xs-4 col-sm-4 col-lg-2 col-md-3">
+	<button type="submit" class="btn btn-primary btn-sm" ng-click="pendingInvoice()" style="font-size: 15px;">Pending Invoice</button>
+	</div>
+	<div class="col-xs-4 col-sm-4 col-lg-3 col-md-3" style="width: 22%;">
+	<button type="submit" class="btn btn-primary btn-sm" ng-click="pendingBalance()" style="font-size: 15px;">Balance From Customer</button>
+	</div>
+	<div class="col-xs-4 col-sm-4 col-lg-2 col-md-3">
+	<button type="submit" class="btn btn-primary btn-sm" ng-click="bankReconcileReport()" style="font-size: 15px;">Bank Reconcile</button>
 	</div>
 	</div>
 	</form>
-   
+	  
 </div>
 
 </div>
