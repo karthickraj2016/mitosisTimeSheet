@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BankReconcileReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="80"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fromDate" class="java.lang.String"/>
+	<parameter name="toDate" class="java.lang.String"/>
+	<parameter name="dateFrom" class="java.util.Date">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="dateTo" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[select bank_received_date,receipt_number,invoice_number,currency_code,
+bank_received_amount,paid_amount_inr from customer_payment where bank_received_date>=$P{dateFrom} and bank_received_date<=$P{dateTo} order by bank_received_date]]>
+	</queryString>
+	<field name="bank_received_date" class="java.sql.Date"/>
+	<field name="receipt_number" class="java.lang.String"/>
+	<field name="invoice_number" class="java.lang.String"/>
+	<field name="currency_code" class="java.lang.String"/>
+	<field name="bank_received_amount" class="java.math.BigDecimal"/>
+	<field name="paid_amount_inr" class="java.math.BigDecimal"/>
+	<variable name="totalAmount" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{bank_received_amount}]]></variableExpression>
+	</variable>
+	<variable name="totalAmountINR" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{paid_amount_inr}]]></variableExpression>
+	</variable>
+	<group name="reconcileGroup">
+		<groupExpression><![CDATA[$V{PAGE_NUMBER}]]></groupExpression>
+		<groupHeader>
+			<band height="50">
+				<rectangle>
+					<reportElement x="0" y="18" width="555" height="32"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="2" y="25" width="106" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[Bank Received Date]]></text>
+				</staticText>
+				<line>
+					<reportElement x="109" y="18" width="1" height="32"/>
+				</line>
+				<staticText>
+					<reportElement x="142" y="25" width="100" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[Description]]></text>
+				</staticText>
+				<line>
+					<reportElement x="260" y="18" width="1" height="32"/>
+				</line>
+				<staticText>
+					<reportElement x="268" y="25" width="52" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[Currency]]></text>
+				</staticText>
+				<line>
+					<reportElement x="327" y="18" width="1" height="32"/>
+				</line>
+				<staticText>
+					<reportElement x="334" y="25" width="89" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[Credited Amount]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="440" y="26" width="113" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[Credited Amount(INR)]]></text>
+				</staticText>
+				<line>
+					<reportElement x="432" y="18" width="1" height="32"/>
+				</line>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="142" y="10" width="269" height="32"/>
+				<textElement textAlignment="Center">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Bank Reconcile Statement]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="95" y="50" width="55" height="20"/>
+				<textElement/>
+				<text><![CDATA[FromDate:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="368" y="50" width="46" height="20"/>
+				<textElement/>
+				<text><![CDATA[ToDate:]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement x="150" y="50" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{fromDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="414" y="50" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{toDate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="41" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="41"/>
+			</rectangle>
+			<line>
+				<reportElement x="109" y="0" width="1" height="41"/>
+			</line>
+			<line>
+				<reportElement x="260" y="0" width="1" height="41"/>
+			</line>
+			<line>
+				<reportElement x="327" y="0" width="1" height="41"/>
+			</line>
+			<line>
+				<reportElement x="432" y="0" width="1" height="41"/>
+			</line>
+			<textField>
+				<reportElement x="272" y="9" width="43" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{currency_code}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="343" y="9" width="68" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{bank_received_amount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="448" y="12" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{paid_amount_inr}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MM-yyyy">
+				<reportElement x="16" y="10" width="68" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{bank_received_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="128" y="9" width="50" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{invoice_number}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="185" y="9" width="48" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{receipt_number}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="178" y="9" width="7" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[,]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="221" y="16" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="29" splitType="Stretch">
+			<rectangle>
+				<reportElement x="260" y="0" width="295" height="29"/>
+			</rectangle>
+			<line>
+				<reportElement x="327" y="0" width="1" height="29"/>
+			</line>
+			<staticText>
+				<reportElement x="273" y="5" width="41" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<line>
+				<reportElement x="432" y="0" width="1" height="29"/>
+			</line>
+			<textField>
+				<reportElement x="339" y="5" width="84" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{totalAmount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="446" y="5" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{totalAmountINR}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
