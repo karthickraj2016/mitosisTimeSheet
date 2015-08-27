@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="EmployeeOverallExperienceReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="date" class="java.lang.String"/>
+	<parameter name="dateRev" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select employee_id,first_name,last_name, TIMESTAMPDIFF(MONTH, exp_start_date, $P{dateRev})%12 as Monthdiff,TIMESTAMPDIFF(YEAR, exp_start_date,$P{dateRev} ) as Yeardiff from employee_master order by employee_id]]>
+	</queryString>
+	<field name="employee_id" class="java.lang.String"/>
+	<field name="first_name" class="java.lang.String"/>
+	<field name="last_name" class="java.lang.String"/>
+	<field name="Monthdiff" class="java.lang.Long"/>
+	<field name="Yeardiff" class="java.lang.Long"/>
+	<group name="overallExperienceGroup">
+		<groupExpression><![CDATA[$V{PAGE_NUMBER}]]></groupExpression>
+		<groupHeader>
+			<band height="50">
+				<rectangle>
+					<reportElement x="0" y="17" width="555" height="33"/>
+				</rectangle>
+				<line>
+					<reportElement x="232" y="17" width="1" height="33"/>
+				</line>
+				<staticText>
+					<reportElement x="358" y="24" width="85" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[Years Of Exp]]></text>
+				</staticText>
+				<line>
+					<reportElement x="106" y="17" width="1" height="33"/>
+				</line>
+				<staticText>
+					<reportElement x="462" y="24" width="86" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[Months Of Exp]]></text>
+				</staticText>
+				<line>
+					<reportElement x="351" y="17" width="1" height="33"/>
+				</line>
+				<line>
+					<reportElement x="453" y="17" width="1" height="33"/>
+				</line>
+				<staticText>
+					<reportElement x="245" y="24" width="83" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[Last Name]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="120" y="24" width="100" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[First Name]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="7" y="24" width="84" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[Employee ID]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="216" y="54" width="33" height="15"/>
+				<textElement/>
+				<text><![CDATA[Date :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="249" y="54" width="100" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="76" y="13" width="382" height="32"/>
+				<textElement textAlignment="Center">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Employee Overall Experience Report ]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="39" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="39"/>
+			</rectangle>
+			<line>
+				<reportElement x="453" y="-1" width="1" height="40"/>
+			</line>
+			<line>
+				<reportElement x="351" y="-1" width="1" height="40"/>
+			</line>
+			<line>
+				<reportElement x="232" y="-1" width="1" height="40"/>
+			</line>
+			<line>
+				<reportElement x="106" y="-1" width="1" height="40"/>
+			</line>
+			<textField>
+				<reportElement x="9" y="10" width="84" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{employee_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="123" y="11" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{first_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="244" y="11" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{last_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="363" y="10" width="79" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{Yeardiff}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="464" y="9" width="79" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{Monthdiff}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

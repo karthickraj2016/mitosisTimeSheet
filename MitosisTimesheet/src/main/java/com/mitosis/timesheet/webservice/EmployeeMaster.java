@@ -362,6 +362,15 @@ public class EmployeeMaster extends JasperUtil{
 
 	public JSONObject leaveSummaryReport(JSONObject jsonObject) throws Exception {
 
+		HttpSession session= request.getSession(true);
+
+		if(session.getAttribute("userId")==null){
+			return null;
+		}
+		Object userId = session.getAttribute("userId");
+
+		int employeeId =(Integer) request.getSession().getAttribute("userId");
+		
 		String date = jsonObject.getString("date");
         String dateRev =jsonObject.getString("dateRev");
 
@@ -376,14 +385,56 @@ public class EmployeeMaster extends JasperUtil{
 		parameters.put("date", date);
 		parameters.put("dateRev",dateRev);
 		
-		String pdfFilePath = pdfPath+"reports/EmployeeExperienceReport"+".pdf";
+		String pdfFilePath = pdfPath+"reports/EmployeeExperienceReport"+employeeId+".pdf";
 
 		RenderJr(reportFilePath, parameters,pdfFilePath);
 
 		JRBeanCollectionDataSource ds = null;
 
 		jsonobject.put("report","report successful");
-		jsonobject.put("pdfFileName", "EmployeeExperienceReport"+".pdf");
+		jsonobject.put("pdfFileName", "EmployeeExperienceReport"+employeeId+".pdf");
+
+		return jsonobject;
+	}
+	
+	@Path("/employeeOverallExperienceReport")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+
+	public JSONObject employeeOverallExperienceReport(JSONObject jsonObject) throws Exception {
+
+		HttpSession session= request.getSession(true);
+
+		if(session.getAttribute("userId")==null){
+			return null;
+		}
+		Object userId = session.getAttribute("userId");
+
+		int employeeId =(Integer) request.getSession().getAttribute("userId");
+		
+		String date = jsonObject.getString("date");
+        String dateRev =jsonObject.getString("dateRev");
+
+        JSONObject jsonobject = new JSONObject();
+
+		String reportFilePath = request.getSession().getServletContext().getRealPath("/")+ "reports/EmployeeOverallExperienceReport.jrxml";
+
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		String path = this.getClass().getClassLoader().getResource("/").getPath();
+		String pdfPath = path.replaceAll("WEB-INF/classes/", "");
+		
+		parameters.put("date", date);
+		parameters.put("dateRev",dateRev);
+		
+		String pdfFilePath = pdfPath+"reports/EmployeeOverallExperienceReport"+employeeId+".pdf";
+
+		RenderJr(reportFilePath, parameters,pdfFilePath);
+
+		JRBeanCollectionDataSource ds = null;
+
+		jsonobject.put("report","report successful");
+		jsonobject.put("pdfFileName", "EmployeeOverallExperienceReport"+employeeId+".pdf");
 
 		return jsonobject;
 	}

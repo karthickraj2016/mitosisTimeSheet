@@ -422,6 +422,42 @@ angular.module('myApp.controllers')
 			return;
 		})
 
+	},
+	
+	$scope.employeeOverallExperienceReport = function(){
+		
+		var date = new Date();
+		var currentDate=new Date();
+		var dd = ("0"+ (date.getDate())).slice(-2);
+		var mm = ("0"+ (date.getMonth()+1)).slice(-2); 
+		var yyyy = date.getFullYear();
+		date=dd+"-"+mm+"-"+yyyy;
+		var dateRev=yyyy+"-"+mm+"-"+dd;
+		
+		var menuJson=angular.toJson({"date":date,"dateRev":dateRev})
+		
+		$http({
+			url: 'rest/employeeMaster/employeeOverallExperienceReport',
+			method: 'POST',
+			data:menuJson,
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).success(function(result, status, headers) {
+
+			var a = document.createElement('a');
+			a.href = "/MitosisTimesheet/reports/"+result.pdfFileName;
+			console.log(a);
+			//a.download = "individualDetailReport.pdf";
+			a.target="_blank";
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
+			$scope.filepath = a.href;
+			console.log($scope.filepath);
+			return;
+		})
+		
 	}
 
 }])
