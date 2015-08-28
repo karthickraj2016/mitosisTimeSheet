@@ -64,7 +64,7 @@ angular.module('myApp.controllers')
 
 	$scope.pendingInvoice = function(){
 		
-		var date = new Date();
+	/*	var date = new Date();
 		console.log(date);
 	
 		var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
@@ -77,7 +77,9 @@ angular.module('myApp.controllers')
 		var menuJson = angular.toJson({
 			"firstday": firstday1,"lastday":lastday1
 
-		});
+		});*/
+		
+		var menuJson=angular.toJson({"firstday":$scope.finance.fromdate,"lastday":$scope.finance.todate});
 	
 		$http({
 			url: 'rest/invoiceReports/pendingInvoiceReports',

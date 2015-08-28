@@ -62,7 +62,7 @@
 			</td>
 			<td>
 				<span ng-click="copyCurrentEntry(sheet)" ng-show="!showEdit">{{sheet.project.projectName}}</span>
-				<span id="{{sheet.project.id}}" ng-show="showEdit"><select class="form-control" ng-model="sheet.project" ng-options="item.projectId as item.projectName for item in projectList" style="color: #777777;">
+				<span id="{{sheet.project.id}}" ng-show="showEdit"><select class="form-control" ng-model="sheet.project" ng-options="item as item.projectName for item in projectList" style="color: #777777;">
 				<option value="">{{sheet.project.projectName}}</option>
 				</select> 
 				</span>

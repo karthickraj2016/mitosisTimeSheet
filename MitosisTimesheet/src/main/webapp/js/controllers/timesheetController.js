@@ -190,7 +190,7 @@ angular.module('myApp.controllers')
 				reqParam.hours=hour;
 			}	
 			var menuJson = angular.toJson({
-				"date": reqParam.entryDate,"hours":reqParam.hours,"issueNumber":reqParam.issueNumber,"description":reqParam.description,"id":reqParam.id,"ProjectId":reqParam.project
+				"date": reqParam.entryDate,"hours":reqParam.hours,"issueNumber":reqParam.issueNumber,"description":reqParam.description,"id":reqParam.id,"ProjectId":reqParam.project.projectId
 
 
 			});

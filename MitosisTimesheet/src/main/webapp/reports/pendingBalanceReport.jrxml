@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pendingBalanceReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="80"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.x" value="96"/>
+	<property name="ireport.y" value="47"/>
 	<queryString>
 		<![CDATA[SELECT cust.customer_name,project.project_name,invoice.invoice_date,invoice.invoice_amount,invoice.paid_amount,invoice.balance_amount,invoice.invoice_number FROM invoice_hdr invoice,customer_details cust,project_details project
 where balance_amount>0 and invoice.project_id=project.id and cust.id=project.customer_id
-order by invoice.id;]]>
+;]]>
 	</queryString>
 	<field name="customer_name" class="java.lang.String"/>
 	<field name="project_name" class="java.lang.String"/>
@@ -15,16 +15,104 @@ order by invoice.id;]]>
 	<field name="paid_amount" class="java.math.BigDecimal"/>
 	<field name="balance_amount" class="java.math.BigDecimal"/>
 	<field name="invoice_number" class="java.lang.String"/>
-	<variable name="total" class="java.math.BigDecimal" calculation="Sum">
+	<variable name="balnceOfcustomer" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{balance_amount}]]></variableExpression>
 	</variable>
+	<variable name="totalBalance" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$V{balnceOfcustomer}]]></variableExpression>
+	</variable>
+	<group name="customerBalanceGroup" minHeightToStartNewPage="1">
+		<groupExpression><![CDATA[$F{customer_name}]]></groupExpression>
+		<groupHeader>
+			<band height="64">
+				<staticText>
+					<reportElement x="1" y="0" width="91" height="21"/>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[Customer Name :]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="91" y="1" width="100" height="20"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{customer_name}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement mode="Transparent" x="0" y="32" width="554" height="32"/>
+				</rectangle>
+				<line>
+					<reportElement x="105" y="32" width="1" height="32"/>
+				</line>
+				<line>
+					<reportElement x="202" y="32" width="1" height="32"/>
+				</line>
+				<line>
+					<reportElement x="284" y="32" width="1" height="32"/>
+				</line>
+				<line>
+					<reportElement x="377" y="32" width="1" height="32"/>
+				</line>
+				<line>
+					<reportElement x="461" y="32" width="1" height="32"/>
+				</line>
+				<staticText>
+					<reportElement x="7" y="37" width="88" height="21"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[Project Name]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="111" y="38" width="85" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[Invoice Number]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="212" y="38" width="65" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[Invoice Date]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="291" y="39" width="80" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[Invoice Amount]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="385" y="39" width="70" height="19"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[Paid Amount]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="465" y="41" width="86" height="15"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[Balance Amount]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="33">
+				<rectangle>
+					<reportElement mode="Transparent" x="377" y="0" width="177" height="33"/>
+				</rectangle>
+				<line>
+					<reportElement x="461" y="0" width="1" height="32"/>
+				</line>
+				<staticText>
+					<reportElement x="378" y="1" width="82" height="29"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[Customer Balance]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="468" y="9" width="77" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{balnceOfcustomer}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="56" splitType="Stretch">
+		<band height="79" splitType="Stretch">
 			<staticText>
-				<reportElement x="139" y="23" width="342" height="20"/>
+				<reportElement x="130" y="19" width="342" height="35"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
@@ -32,158 +120,87 @@ order by invoice.id;]]>
 			</staticText>
 		</band>
 	</title>
-	<pageHeader>
-		<band height="36" splitType="Stretch"/>
-	</pageHeader>
-	<columnHeader>
-		<band height="34" splitType="Stretch">
-			<rectangle>
-				<reportElement x="0" y="0" width="555" height="33"/>
-			</rectangle>
-			<line>
-				<reportElement x="84" y="1" width="1" height="33"/>
-			</line>
-			<line>
-				<reportElement x="179" y="2" width="1" height="32"/>
-			</line>
-			<line>
-				<reportElement x="330" y="2" width="1" height="30"/>
-			</line>
-			<line>
-				<reportElement x="410" y="0" width="1" height="32"/>
-			</line>
-			<line>
-				<reportElement x="264" y="0" width="1" height="32"/>
-			</line>
-			<staticText>
-				<reportElement x="85" y="2" width="94" height="30"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Project Name]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="2" width="84" height="30"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Customer Name]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="265" y="0" width="65" height="31"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Invoice Date]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="331" y="1" width="80" height="30"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Invoice Amount]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="411" y="0" width="70" height="30"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Paid Amount]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="180" y="1" width="85" height="30"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Invoice Number]]></text>
-			</staticText>
-			<line>
-				<reportElement x="481" y="0" width="1" height="32"/>
-			</line>
-			<staticText>
-				<reportElement x="481" y="8" width="74" height="15"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[balance Amount]]></text>
-			</staticText>
-		</band>
-	</columnHeader>
 	<detail>
-		<band height="41" splitType="Stretch">
+		<band height="40" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="-1" width="555" height="41"/>
+				<reportElement x="0" y="0" width="554" height="40"/>
 			</rectangle>
 			<line>
-				<reportElement x="84" y="-2" width="1" height="42"/>
+				<reportElement x="105" y="0" width="1" height="40"/>
 			</line>
 			<line>
-				<reportElement x="179" y="-3" width="1" height="43"/>
+				<reportElement x="202" y="0" width="1" height="40"/>
 			</line>
 			<line>
-				<reportElement x="264" y="-2" width="1" height="42"/>
+				<reportElement x="284" y="0" width="1" height="40"/>
 			</line>
 			<line>
-				<reportElement x="330" y="0" width="1" height="41"/>
+				<reportElement x="377" y="0" width="1" height="40"/>
 			</line>
 			<line>
-				<reportElement x="410" y="0" width="1" height="41"/>
-			</line>
-			<line>
-				<reportElement x="481" y="-3" width="1" height="43"/>
+				<reportElement x="461" y="0" width="1" height="40"/>
 			</line>
 			<textField>
-				<reportElement x="0" y="0" width="85" height="40"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{customer_name}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="85" y="2" width="94" height="39"/>
+				<reportElement x="3" y="10" width="100" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{project_name}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="180" y="2" width="84" height="38"/>
+				<reportElement x="113" y="11" width="82" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{invoice_number}]]></textFieldExpression>
 			</textField>
+			<textField pattern="dd-MM-yyyy">
+				<reportElement x="206" y="12" width="75" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{invoice_date}]]></textFieldExpression>
+			</textField>
 			<textField>
-				<reportElement x="331" y="2" width="79" height="39"/>
+				<reportElement x="291" y="12" width="79" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{invoice_amount}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="411" y="0" width="70" height="40"/>
+				<reportElement x="386" y="13" width="68" height="18"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{paid_amount}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="482" y="2" width="73" height="38"/>
+				<reportElement x="467" y="12" width="79" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{balance_amount}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="264" y="2" width="67" height="38"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[new SimpleDateFormat("dd-MM-yyyy").format($F{invoice_date})]]></textFieldExpression>
-			</textField>
 		</band>
 	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
 	<pageFooter>
-		<band height="48" splitType="Stretch">
+		<band height="54" splitType="Stretch">
 			<textField>
-				<reportElement x="230" y="14" width="100" height="20"/>
+				<reportElement x="223" y="18" width="100" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="29" splitType="Stretch">
+		<band height="34" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="0" width="555" height="29"/>
+				<reportElement mode="Transparent" x="377" y="0" width="177" height="33"/>
 			</rectangle>
+			<line>
+				<reportElement x="461" y="1" width="1" height="33"/>
+			</line>
 			<staticText>
-				<reportElement x="412" y="0" width="69" height="29"/>
+				<reportElement x="385" y="6" width="69" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Total:]]></text>
+				<text><![CDATA[Total Balance]]></text>
 			</staticText>
-			<line>
-				<reportElement x="410" y="0" width="1" height="29"/>
-			</line>
-			<line>
-				<reportElement x="481" y="0" width="1" height="29"/>
-			</line>
 			<textField>
-				<reportElement x="481" y="0" width="74" height="29"/>
+				<reportElement x="467" y="6" width="80" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{total}]]></textFieldExpression>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{totalBalance}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>
