@@ -35,7 +35,7 @@
 		</property>
 	</bean>
 
-	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
+<!-- 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
 		p:entityManagerFactory-ref="entityManagerFactory" />
 	<bean id="myTask" class="com.mitosis.timesheet.util.MyTask" />
 
@@ -62,7 +62,7 @@
 			</list>
 		</property>
 	</bean>
-
+ -->
 
 
 	<!-- <tx:annotation-driven transaction-manager="transactionManager"/> -->
