@@ -11,7 +11,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
@@ -136,6 +144,8 @@ public class EmployeeMaster extends JasperUtil{
 		List<EmployeeMasterModel> masterModel=new ArrayList<EmployeeMasterModel>();
 
 		masterModel=masterService.showEmployeeDetailsEntryList();
+		
+		System.out.println(masterModel);
 
 		return masterModel;
 	}
@@ -442,40 +452,47 @@ public class EmployeeMaster extends JasperUtil{
 
 	public void ExpMailToHr() throws ParseException{
 		
-		Date date  = new Date();
-		
-		
-		Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date();
 
-		DecimalFormat crunchifyFormatter = new DecimalFormat("###,###");
-		
 		List<EmployeeMasterModel> employeeList = new ArrayList<EmployeeMasterModel>();
 		
 		employeeList = masterService.showEmployeeDetailsEntryList();
 		
-		DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-		String joiningdateInString = "2014-08-25";
-		Date date2 = sdf.parse(joiningdateInString);
 		
-		 long difference = date.getTime() - date2.getTime();
+		for(int i=0;i<employeeList.size();i++){
 		
-		 int daydiff = (int) (difference / (24 * 60 * 60 * 1000));
+			String todaysDate = new SimpleDateFormat("dd-MM-yyyy").format(date);
+			String joiningDate = new SimpleDateFormat("dd-MM-yyyy").format(employeeList.get(i).getJoiningDate());
+
+				String date1 = joiningDate;
+		        String time1 = "10:00 AM";
+		        String date2 = todaysDate;
+		        String time2 = "10:00 AM";
+
+		        String format = "dd-MM-yyyy hh:mm a";
+
+		        SimpleDateFormat sdf = new SimpleDateFormat(format);
+
+		        Date dateObj1 = sdf.parse(date1 + " " + time1);
+		        Date dateObj2 = sdf.parse(date2 + " " + time2);
+		        long diff = dateObj2.getTime() - dateObj1.getTime();
+		
+		        int days = (int) (diff / (24 * 60 * 60 * 1000));
 		 
-		 int hourdiff = (int) (difference / (60 * 60 * 1000));
-		 
-		 int daydifference =Integer.valueOf(crunchifyFormatter.format(daydiff));
-		
-		 int hourdifference = Integer.valueOf(crunchifyFormatter.format(hourdiff));
+		        int hours = (int) ((diff / (60 * 60 * 1000))/365) ;
+		        
+
 			
-		if(daydifference==365 && hourdifference<=24){
+		if(days % 365==0 && hours % 24 ==0){
+			
+			
+			int totalYears = days/365;
 	
-			
-		/*	final String username = "testingemail2016@gmail.com";
+			final String username = "testingemail2016@gmail.com";
 			final String password = "Kart@2016";
-			final String content = "<p>Thank you for registering. You have an account with username<br/><b>"
-					+ userList.getUserName()
-					+ "</b>. In order to complete your registration, Click the link below</p><br/><a href='" + url + "/"
-					+ projectName + "/rest/account/activeUser?id=" + id + "'>click here for activation</a>";
+			final String content = "<p>Your Ward. Mr. <b>"
+					+ employeeList.get(i).getFirstName()+ "&nbsp;" +employeeList.get(i).getLastName()
+					+ "</b>. Has completed &nbsp;" +totalYears+ "&nbsp; year in Mitosis. Lets enjoy and celebrate</a>";
 			System.out.println(content);
 			Properties props = new Properties();
 			props.put("mail.smtp.auth", "true");
@@ -496,8 +513,8 @@ public class EmployeeMaster extends JasperUtil{
 
 				Message message = new MimeMessage(session);
 				message.setFrom(new InternetAddress("testingemail2016@gmail.com"));
-				message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(jsonObject.getString("email")));
-				message.setSubject("MITOSIS-TimeSheet Registration");
+				message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("karthick.k@mitosistech.com"));
+				message.setSubject("One Year Completion");
 				message.setContent(content, "text/html");
 
 				Transport.send(message);
@@ -508,10 +525,12 @@ public class EmployeeMaster extends JasperUtil{
 	    } catch (Exception e) {
 	      e.printStackTrace();
 			}
+
 			
-			*/
 			
-			
+		}
+		
+
 		}
 	
 	}

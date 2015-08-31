@@ -35,9 +35,9 @@
 		</property>
 	</bean>
 
-<!-- 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
+ 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
 		p:entityManagerFactory-ref="entityManagerFactory" />
-	<bean id="myTask" class="com.mitosis.timesheet.util.MyTask" />
+	<bean id="myTask" class="com.mitosis.timesheet.util.ExpMailToHr" />
 
 	<bean id="myJob"
 		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
@@ -45,24 +45,18 @@
 		<property name="targetMethod" value="printCurrentTime" />
 	</bean>
 	<bean id="simpleTrigger"
-		class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail" ref="myJob" />
-		<property name="repeatInterval" value="86400000" />
-		<property name="startDelay" value="1000" />
+		<property name="cronExpression" value="0 00 10 * * ?" />
 	</bean>
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-		<property name="jobDetails">
-			<list>
-				<ref bean="myJob" />
-			</list>
-		</property>
 		<property name="triggers">
 			<list>
 				<ref bean="simpleTrigger" />
 			</list>
 		</property>
 	</bean>
- -->
+
 
 
 	<!-- <tx:annotation-driven transaction-manager="transactionManager"/> -->

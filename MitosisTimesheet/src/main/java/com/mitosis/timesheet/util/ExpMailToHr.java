@@ -5,14 +5,14 @@ import java.util.Calendar;
 
 import com.mitosis.timesheet.webservice.EmployeeMaster;
 
-public class MyTask {
+public class ExpMailToHr {
 	
 	
 	 public void printCurrentTime() throws ParseException {  
 		  // printing current system time  
 		 EmployeeMaster hrMail = new EmployeeMaster();
 		 
-		 hrMail.ExpMailToHr();
+ 		 hrMail.ExpMailToHr();
 		 
 		 
 		 }  

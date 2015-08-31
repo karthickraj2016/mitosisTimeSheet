@@ -109,6 +109,8 @@ angular.module('myApp.controllers')
 			}
 
 			$scope.employeeEntryList=emp;
+			
+			console.log(emp);
 
 			$scope.$watch('currentPage + numPerPage', function() {
 				var begin = (($scope.currentPage - 1) * $scope.numPerPage)
@@ -340,11 +342,16 @@ angular.module('myApp.controllers')
 
 			var yearsOfExp=y2-expStartDate[2];
 			var monthsOfExp=m2-expStartDate[1];
+			
+			
 		
 			var menuJson=angular.toJson({"id":employeelist[i].id,"userId":employeelist[i].userId.userId,"employeeId":employeelist[i].employeeId,"firstName":employeelist[i].firstName,"lastName":employeelist[i].lastName,"joiningDate":employeelist[i].joiningEntryDate,
 				"expStartDate":employeelist[i].expStartEntryDate,"yearsOfExp":yearsOfExp,"monthsOfExp":monthsOfExp,"asOnDate":$scope.asOnDate,"lobId":employeelist[i].lob.id,"billable":employeelist[i].billable});
 
-
+			console.log(menuJson);
+			
+			
+			
 			$http({
 				url: 'rest/employeeMaster/findEmployeeExpAndUpdate',
 				method: 'POST',
