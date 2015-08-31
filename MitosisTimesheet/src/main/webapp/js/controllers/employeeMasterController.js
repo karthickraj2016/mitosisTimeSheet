@@ -257,7 +257,7 @@ angular.module('myApp.controllers')
 			return;
 		}
 
-		var menuJson=angular.toJson({"id":reqParam.id,"userId":reqParam.userId,"employeeId":reqParam.employeeId,"firstName":reqParam.firstName,"lastName":reqParam.lastName,"joiningDate":reqParam.joiningEntryDate,"expStartDate":reqParam.expStartEntryDate,
+		var menuJson=angular.toJson({"id":reqParam.id,"userId":reqParam.userId.userId,"employeeId":reqParam.employeeId,"firstName":reqParam.firstName,"lastName":reqParam.lastName,"joiningDate":reqParam.joiningEntryDate,"expStartDate":reqParam.expStartEntryDate,
 			"yearsOfExp":reqParam.yearsOfExperience,"monthsOfExp":reqParam.monthsOfExperience,"level":reqParam.level,"asOnDate":$scope.asOnDate,"lobId":reqParam.lob.id,"billable":reqParam.billable});
 
 		$http({
@@ -340,8 +340,8 @@ angular.module('myApp.controllers')
 
 			var yearsOfExp=y2-expStartDate[2];
 			var monthsOfExp=m2-expStartDate[1];
-
-			var menuJson=angular.toJson({"id":employeelist[i].id,"userId":employeelist[i].userId,"employeeId":employeelist[i].employeeId,"firstName":employeelist[i].firstName,"lastName":employeelist[i].lastName,"joiningDate":employeelist[i].joiningEntryDate,
+		
+			var menuJson=angular.toJson({"id":employeelist[i].id,"userId":employeelist[i].userId.userId,"employeeId":employeelist[i].employeeId,"firstName":employeelist[i].firstName,"lastName":employeelist[i].lastName,"joiningDate":employeelist[i].joiningEntryDate,
 				"expStartDate":employeelist[i].expStartEntryDate,"yearsOfExp":yearsOfExp,"monthsOfExp":monthsOfExp,"asOnDate":$scope.asOnDate,"lobId":employeelist[i].lob.id,"billable":employeelist[i].billable});
 
 
@@ -386,6 +386,78 @@ angular.module('myApp.controllers')
 			console.log($scope.filepath);
 			return;
 		})
+	},
+	
+	$scope.employeesExperienceReport =function(){
+
+		var date = new Date();
+		var currentDate=new Date();
+		var dd = ("0"+ (date.getDate())).slice(-2);
+		var mm = ("0"+ (date.getMonth()+1)).slice(-2); 
+		var yyyy = date.getFullYear();
+		date=dd+"-"+mm+"-"+yyyy;
+		var dateRev=yyyy+"-"+mm+"-"+dd;
+		
+		var menuJson=angular.toJson({"date":date,"dateRev":dateRev})
+		
+		$http({
+			url: 'rest/employeeMaster/employeesExperienceReport',
+			method: 'POST',
+			data:menuJson,
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).success(function(result, status, headers) {
+
+			var a = document.createElement('a');
+			a.href = "/MitosisTimesheet/reports/"+result.pdfFileName;
+			console.log(a);
+			//a.download = "individualDetailReport.pdf";
+			a.target="_blank";
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
+			$scope.filepath = a.href;
+			console.log($scope.filepath);
+			return;
+		})
+
+	},
+	
+	$scope.employeeOverallExperienceReport = function(){
+		
+		var date = new Date();
+		var currentDate=new Date();
+		var dd = ("0"+ (date.getDate())).slice(-2);
+		var mm = ("0"+ (date.getMonth()+1)).slice(-2); 
+		var yyyy = date.getFullYear();
+		date=dd+"-"+mm+"-"+yyyy;
+		var dateRev=yyyy+"-"+mm+"-"+dd;
+		
+		var menuJson=angular.toJson({"date":date,"dateRev":dateRev})
+		
+		$http({
+			url: 'rest/employeeMaster/employeeOverallExperienceReport',
+			method: 'POST',
+			data:menuJson,
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).success(function(result, status, headers) {
+
+			var a = document.createElement('a');
+			a.href = "/MitosisTimesheet/reports/"+result.pdfFileName;
+			console.log(a);
+			//a.download = "individualDetailReport.pdf";
+			a.target="_blank";
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
+			$scope.filepath = a.href;
+			console.log($scope.filepath);
+			return;
+		})
+		
 	}
 
 }])

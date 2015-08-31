@@ -166,6 +166,13 @@ angular.module('myApp.controllers')
 		
 		$scope.payment.commisionamount=$scope.receiptDetails.paidAmount-$scope.payment.receivedamount;
 		
+		if($scope.payment.commisionamount<0){
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("Received Amount Must be Less Than Receipt Amount");			
+		    $('#receivedAmt').val('');
+		    $('#receivedAmt').focus();
+		}		
+		
 	}
 	
 	$scope.calculateAmount = function(){
@@ -220,6 +227,13 @@ angular.module('myApp.controllers')
    $scope.calculateCommision=function(sheet){
 		
 	   sheet.commisionAmount=sheet.paidAmount-sheet.receivedAmount;
+	   
+	   if(sheet.commisionAmount<0){
+		   $(".alert-msg1").show().delay(1000).fadeOut(); 
+		   $(".alert-danger").html("Received Amount Must be Less Than Receipt Amount");	
+		   sheet.receivedAmount="";
+		   sheet.commisionAmount="";
+	   }
 		
 	}
 

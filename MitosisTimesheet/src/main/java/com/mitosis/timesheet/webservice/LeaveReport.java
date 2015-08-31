@@ -157,6 +157,15 @@ public class LeaveReport extends JasperUtil{
 
 	public JSONObject leaveSummaryReport(JSONObject jsonObject) throws Exception {
 
+		HttpSession session= request.getSession(true);
+
+		if(session.getAttribute("userId")==null){
+			return null;
+		}
+		Object userId = session.getAttribute("userId");
+
+		int employeeId =(Integer) request.getSession().getAttribute("userId");
+
 		String fromDateString = jsonObject.getString("fromdate");
         String fromDateReverse =fromDateString.split("-")[2]+"-"+fromDateString.split("-")[1]+"-"+fromDateString.split("-")[0];
 
@@ -183,14 +192,14 @@ public class LeaveReport extends JasperUtil{
 		parameters.put("beginDate",beginDate);
 		parameters.put("totalLeaveDays", totalLeaveDays);
 
-		String pdfFilePath = pdfPath+"reports/LeaveSummaryReport"+".pdf";
+		String pdfFilePath = pdfPath+"reports/LeaveSummaryReport"+employeeId+".pdf";
 
 		RenderJr(reportFilePath, parameters,pdfFilePath);
 
 		JRBeanCollectionDataSource ds = null;
 
 		jsonobject.put("report","report successful");
-		jsonobject.put("pdfFileName", "LeaveSummaryReport"+".pdf");
+		jsonobject.put("pdfFileName", "LeaveSummaryReport"+employeeId+".pdf");
 
 		return jsonobject;
 	}

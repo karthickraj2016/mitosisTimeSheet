@@ -136,9 +136,11 @@ angular.module('myApp', ['ui.router','myApp.controllers','ngStorage','ui.bootstr
 						 templateUrl: 'html/bank_reconcile.html',
 					     controller :'bankReconcileController'
 					 })
-					 
-					 
-					 
-				 }]);
+					 .state('financeReport', {
+						 url: '/financeReport',
+						 templateUrl: 'html/finance_report.html',
+					     controller :'financeReportController'
+					 })
+			 }]);
 
 angular.module('myApp.controllers',[])

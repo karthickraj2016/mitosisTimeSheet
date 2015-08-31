@@ -4,28 +4,34 @@ angular.module('myApp.controllers')
 
 .controller('individualreportController', ['$scope', '$http', '$state','$rootScope', function($scope, $http, $state, $rootScope) {
 
-
 	$scope.dates = function() {
 		$scope.timesheet = '';
 		$scope.timesheet={};
 		var dt = new Date();
-		var dd = dt.getDate();
-		var mm = dt.getMonth()+1; 
+		var mm = ("0"+ (dt.getMonth())).slice(-2); 
+		var mm1 = ("0"+ (dt.getMonth()+1)).slice(-2); 
 		var yyyy = dt.getFullYear();
-		dt=dd+"-"+mm+"-"+yyyy;
-		var dt1= new Date();
-		var dd1 = dt1.getDate();
-		var mm1 = dt1.getMonth()+1;
-		var yyyy1 = dt1.getFullYear();
-		dt1=dd1+"-"+mm1+"-"+yyyy1;
-		$scope.timesheet.fromdate=dt;	
-		$scope.timesheet.todate=dt1;
+
+		var date1=new Date(yyyy,mm,1);
+		var d=("0"+ date1.getDate()).slice(-2);
+		var m=("0"+ (date1.getMonth()+1)).slice(-2);
+		var y= date1.getFullYear();
+		date1=d+"-"+m+"-"+y;
+		$scope.timesheet.fromdate=date1;
+
+		var date2=new Date(yyyy,mm1,0);
+		var d1=("0"+date2.getDate()).slice(-2);
+		var m1=("0"+ (date2.getMonth()+1)).slice(-2);
+		var y1= date2.getFullYear();
+		date2=d1+"-"+m1+"-"+y1;
+		$scope.timesheet.todate =date2;
 	};
+
 
 	$scope.dateOptions = {
 			changeYear: true,
 			changeMonth: true,
-			maxDate:'0d',
+			/*maxDate:'0d',*/
 			/*minDate:-30,*/
 			dateFormat:'dd-mm-yy'
 

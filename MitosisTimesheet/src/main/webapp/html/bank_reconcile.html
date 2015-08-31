@@ -106,7 +106,7 @@
        <input type="text" required class="form-control" ui-date="dateOptions" ui-date-format="dd-mm-yy" ng-model="payment.recievedDate">
     </div>
     <div class="form-group" style="margin: 0;">
-      	<input class="form-control" type="text" onkeypress="return isNumber(event)" placeholder="Received Amount" ng-model="payment.receivedamount" ng-change="calculateCommisionAmount()" required>
+      	<input class="form-control" id="receivedAmt" type="text" onkeypress="return isNumber(event)" placeholder="Bank Received Amount" ng-model="payment.receivedamount" ng-change="calculateCommisionAmount()" required>
     </div>
     <div class="form-group" style="margin: 0;">
        <input class="form-control" type="text" onkeypress="return isNumber(event)" placeholder="Exchange Rate" ng-model="payment.exchangerate" ng-change="calculateAmount()" required>
