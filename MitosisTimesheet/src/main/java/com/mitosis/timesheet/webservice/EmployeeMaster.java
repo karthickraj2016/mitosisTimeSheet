@@ -458,8 +458,26 @@ public class EmployeeMaster extends JasperUtil{
 		
 		employeeList = masterService.showEmployeeDetailsEntryList();
 		
+		String hrMail = null ;
+		
 		
 		for(int i=0;i<employeeList.size();i++){
+			
+			
+			if(employeeList.get(i).getEmployee().isManageEmployees()){
+				
+				hrMail = employeeList.get(i).getEmployee().geteMail();
+			
+				
+			}
+		}
+		
+		
+		
+		
+		for(int i=0;i<employeeList.size();i++){
+			
+	
 		
 			String todaysDate = new SimpleDateFormat("dd-MM-yyyy").format(date);
 			String joiningDate = new SimpleDateFormat("dd-MM-yyyy").format(employeeList.get(i).getJoiningDate());
@@ -483,14 +501,14 @@ public class EmployeeMaster extends JasperUtil{
 		        
 
 			
-		if(days % 365==0 && hours % 24 ==0){
+		if(days % 365 == 0 && hours % 24 == 0){
 			
 			
 			int totalYears = days/365;
 	
 			final String username = "testingemail2016@gmail.com";
 			final String password = "Kart@2016";
-			final String content = "<p>Your Ward. Mr. <b>"
+			final String content = "<p>Mr. <b>"
 					+ employeeList.get(i).getFirstName()+ "&nbsp;" +employeeList.get(i).getLastName()
 					+ "</b>. Has completed &nbsp;" +totalYears+ "&nbsp; year in Mitosis. Lets enjoy and celebrate</a>";
 			System.out.println(content);
@@ -513,7 +531,7 @@ public class EmployeeMaster extends JasperUtil{
 
 				Message message = new MimeMessage(session);
 				message.setFrom(new InternetAddress("testingemail2016@gmail.com"));
-				message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("karthick.k@mitosistech.com"));
+				message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(hrMail));
 				message.setSubject("One Year Completion");
 				message.setContent(content, "text/html");
 
