@@ -49,7 +49,7 @@ public class EmployeeMaster extends JasperUtil{
 	EmployeeMasterService masterService=new EmployeeMasterServiceImpl();
 	EmployeeMasterModel masterModel=new EmployeeMasterModel();
 
-	@Context private HttpServletRequest request;
+	@Context private HttpServletRequest request;	
 
 	@Path("/getLobList")
 	@GET
@@ -144,8 +144,6 @@ public class EmployeeMaster extends JasperUtil{
 		List<EmployeeMasterModel> masterModel=new ArrayList<EmployeeMasterModel>();
 
 		masterModel=masterService.showEmployeeDetailsEntryList();
-		
-		System.out.println(masterModel);
 
 		return masterModel;
 	}
@@ -364,7 +362,7 @@ public class EmployeeMaster extends JasperUtil{
 
 		return jsonObject;
 	}
-	
+
 	@Path("/employeesExperienceReport")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -380,21 +378,21 @@ public class EmployeeMaster extends JasperUtil{
 		Object userId = session.getAttribute("userId");
 
 		int employeeId =(Integer) request.getSession().getAttribute("userId");
-		
-		String date = jsonObject.getString("date");
-        String dateRev =jsonObject.getString("dateRev");
 
-        JSONObject jsonobject = new JSONObject();
+		String date = jsonObject.getString("date");
+		String dateRev =jsonObject.getString("dateRev");
+
+		JSONObject jsonobject = new JSONObject();
 
 		String reportFilePath = request.getSession().getServletContext().getRealPath("/")+ "reports/EmployeeExperienceReport.jrxml";
 
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		String path = this.getClass().getClassLoader().getResource("/").getPath();
 		String pdfPath = path.replaceAll("WEB-INF/classes/", "");
-		
+
 		parameters.put("date", date);
 		parameters.put("dateRev",dateRev);
-		
+
 		String pdfFilePath = pdfPath+"reports/EmployeeExperienceReport"+employeeId+".pdf";
 
 		RenderJr(reportFilePath, parameters,pdfFilePath);
@@ -406,7 +404,7 @@ public class EmployeeMaster extends JasperUtil{
 
 		return jsonobject;
 	}
-	
+
 	@Path("/employeeOverallExperienceReport")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -422,21 +420,21 @@ public class EmployeeMaster extends JasperUtil{
 		Object userId = session.getAttribute("userId");
 
 		int employeeId =(Integer) request.getSession().getAttribute("userId");
-		
-		String date = jsonObject.getString("date");
-        String dateRev =jsonObject.getString("dateRev");
 
-        JSONObject jsonobject = new JSONObject();
+		String date = jsonObject.getString("date");
+		String dateRev =jsonObject.getString("dateRev");
+
+		JSONObject jsonobject = new JSONObject();
 
 		String reportFilePath = request.getSession().getServletContext().getRealPath("/")+ "reports/EmployeeOverallExperienceReport.jrxml";
 
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		String path = this.getClass().getClassLoader().getResource("/").getPath();
 		String pdfPath = path.replaceAll("WEB-INF/classes/", "");
-		
+
 		parameters.put("date", date);
 		parameters.put("dateRev",dateRev);
-		
+
 		String pdfFilePath = pdfPath+"reports/EmployeeOverallExperienceReport"+employeeId+".pdf";
 
 		RenderJr(reportFilePath, parameters,pdfFilePath);
@@ -451,105 +449,103 @@ public class EmployeeMaster extends JasperUtil{
 
 
 	public void ExpMailToHr() throws ParseException{
-		
+
 		Date date = new Date();
 
 		List<EmployeeMasterModel> employeeList = new ArrayList<EmployeeMasterModel>();
-		
+
 		employeeList = masterService.showEmployeeDetailsEntryList();
-		
+
 		String hrMail = null ;
-		
-		
+
+
 		for(int i=0;i<employeeList.size();i++){
-			
-			
+
+
 			if(employeeList.get(i).getEmployee().isManageEmployees()){
-				
+
 				hrMail = employeeList.get(i).getEmployee().geteMail();
-			
-				
+
+
 			}
 		}
-		
-		
-		
-		
+
 		for(int i=0;i<employeeList.size();i++){
-			
-	
-		
+
+
+
 			String todaysDate = new SimpleDateFormat("dd-MM-yyyy").format(date);
 			String joiningDate = new SimpleDateFormat("dd-MM-yyyy").format(employeeList.get(i).getJoiningDate());
 
-				String date1 = joiningDate;
-		        String time1 = "10:00 AM";
-		        String date2 = todaysDate;
-		        String time2 = "10:00 AM";
+			String date1 = joiningDate;
+			String time1 = "10:00 AM";
+			String date2 = todaysDate;
+			String time2 = "10:00 AM";
 
-		        String format = "dd-MM-yyyy hh:mm a";
+			String format = "dd-MM-yyyy hh:mm a";
 
-		        SimpleDateFormat sdf = new SimpleDateFormat(format);
+			SimpleDateFormat sdf = new SimpleDateFormat(format);
 
-		        Date dateObj1 = sdf.parse(date1 + " " + time1);
-		        Date dateObj2 = sdf.parse(date2 + " " + time2);
-		        long diff = dateObj2.getTime() - dateObj1.getTime();
-		
-		        int days = (int) (diff / (24 * 60 * 60 * 1000));
-		 
-		        int hours = (int) ((diff / (60 * 60 * 1000))/365) ;
-		        
-
+			Date dateObj1 = sdf.parse(date1 + " " + time1);
+			Date dateObj2 = sdf.parse(date2 + " " + time2);
 			
-		if(days % 365 == 0 && hours % 24 == 0){
-			
-			
-			int totalYears = days/365;
-	
-			final String username = "testingemail2016@gmail.com";
-			final String password = "Kart@2016";
-			final String content = "<p>Mr. <b>"
-					+ employeeList.get(i).getFirstName()+ "&nbsp;" +employeeList.get(i).getLastName()
-					+ "</b>. Has completed &nbsp;" +totalYears+ "&nbsp; year in Mitosis. Lets enjoy and celebrate</a>";
-			System.out.println(content);
-			Properties props = new Properties();
-			props.put("mail.smtp.auth", "true");
-			props.put("mail.smtp.starttls.enable", "true");
-			props.put("mail.smtp.host", "smtp.gmail.com");
-			props.put("mail.smtp.port", "587");
+			long diff = dateObj2.getTime() - dateObj1.getTime();
 
-			System.out.println(props);
+			int days = (int) (diff / (24 * 60 * 60 * 1000));
 
-			Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-				protected PasswordAuthentication getPasswordAuthentication() {
+			int hours = (int) ((diff / (60 * 60 * 1000))/365) ;
 
-					return new PasswordAuthentication(username, password);
+
+
+			if(days % 365 == 0 && hours % 24 == 0){
+
+
+				int totalYears = days/365;
+
+				final String username = "testingemail2016@gmail.com";
+				final String password = "Kart@2016";
+				final String content = "<p>Mr. <b>"
+						+ employeeList.get(i).getFirstName()+ "&nbsp;" +employeeList.get(i).getLastName()
+						+ "</b>. Has completed &nbsp;" +totalYears+ "&nbsp; year in Mitosis. Lets enjoy and celebrate</a>";
+				System.out.println(content);
+				Properties props = new Properties();
+				props.put("mail.smtp.auth", "true");
+				props.put("mail.smtp.starttls.enable", "true");
+				props.put("mail.smtp.host", "smtp.gmail.com");
+				props.put("mail.smtp.port", "587");
+
+				System.out.println(props);
+
+				Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+					protected PasswordAuthentication getPasswordAuthentication() {
+
+						return new PasswordAuthentication(username, password);
+					}
+				});
+
+				try {
+
+					Message message = new MimeMessage(session);
+					message.setFrom(new InternetAddress("testingemail2016@gmail.com"));
+					message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(hrMail));
+					message.setSubject("One Year Completion");
+					message.setContent(content, "text/html");
+
+					Transport.send(message);
+					System.out.println("DONE");
+
+				} catch (MessagingException e) {
+					throw new RuntimeException(e);
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-			});
 
-			try {
 
-				Message message = new MimeMessage(session);
-				message.setFrom(new InternetAddress("testingemail2016@gmail.com"));
-				message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(hrMail));
-				message.setSubject("One Year Completion");
-				message.setContent(content, "text/html");
 
-				Transport.send(message);
-				System.out.println("DONE");
-
-			} catch (MessagingException e) {
-				throw new RuntimeException(e);
-	    } catch (Exception e) {
-	      e.printStackTrace();
 			}
 
-			
-			
-		}
-		
 
 		}
-	
+
 	}
 }
