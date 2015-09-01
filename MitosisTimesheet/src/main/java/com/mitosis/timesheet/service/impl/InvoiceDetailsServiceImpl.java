@@ -112,15 +112,30 @@ public class InvoiceDetailsServiceImpl implements InvoiceDetailsService {
 		companyInfo = invoiceDetailsDao.getCompanyInfo();
 		return companyInfo;
 	}
+	
 	@Override
 	public List<InvoiceHdrModel> getInvoiceList(int projectId) {
 		List<InvoiceHdrModel> invoiceList = new ArrayList<InvoiceHdrModel>();
 		invoiceList = invoiceDetailsDao.getInvoiceList(projectId);
 		return invoiceList;
 	} 
+	
 	@Override
 	public InvoiceHdrModel getInvoiceHdr(String invoiceNumber){
 		return invoiceDetailsDao.getInvoiceHdr(invoiceNumber);
+	}
+	
+	@Override
+	public List<InvoiceDetailsModel> getInvoiceDetails(int invoiceno){
+		List<InvoiceDetailsModel> invoiceDetailsList = new ArrayList<InvoiceDetailsModel>();
+		invoiceDetailsList = invoiceDetailsDao.getInvoiceDetails(invoiceno);
+		
+		return invoiceDetailsList;
+		
+		
+		
+		
+		
 	}
 	
 	

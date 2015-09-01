@@ -37,4 +37,6 @@ public interface InvoiceDetailsDao {
 	public List<InvoiceHdrModel> getInvoiceList(int projectId);
 
 	public InvoiceHdrModel getInvoiceHdr(String invoiceNumber);
+
+	public List<InvoiceDetailsModel> getInvoiceDetails(int invoiceno);
 }

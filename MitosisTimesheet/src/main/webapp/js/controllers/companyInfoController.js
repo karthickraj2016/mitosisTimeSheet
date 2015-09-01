@@ -75,6 +75,8 @@ angular.module('myApp.controllers')
 			$scope.comp.mobileNumber="";}
 		if($scope.comp.taxId==null){
 			$scope.comp.taxId="";}
+
+		
 		var menuJson=angular.toJson({"id":$scope.comp.id,"companyName":$scope.comp.companyName,"companyAddress":$scope.comp.companyAddress,"phoneNumber":$scope.comp.phoneNumber,"mobileNumber":$scope.comp.mobileNumber,"logo":$scope.res,"accountNumber":$scope.comp.accountNumber,"bankName":$scope.comp.bankName,"bankAddress":$scope.comp.bankAddress,"ifscCode":$scope.comp.ifscCode,"micrCode":$scope.comp.micrCode,
 			"branch":$scope.comp.branch,"taxId":$scope.comp.taxId,"accountName":$scope.comp.accountName,"companyUrl":$scope.comp.companyUrl,"swiftCode":$scope.comp.swiftCode});
 		$http({

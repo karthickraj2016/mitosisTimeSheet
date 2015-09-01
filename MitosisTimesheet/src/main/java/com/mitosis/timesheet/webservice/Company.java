@@ -1,16 +1,20 @@
 package com.mitosis.timesheet.webservice;
 
+import java.math.BigInteger;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
+
 import com.mitosis.timesheet.model.CompanyInfoModel;
 import com.mitosis.timesheet.service.CompanyService;
 import com.mitosis.timesheet.service.impl.CompanyServiceImpl;
@@ -30,6 +34,7 @@ public class Company {
 		if(jsonObject.has("id")){
 			company.setId(jsonObject.getInt("id"));
 		}
+		
 		company.setCompanyName(jsonObject.getString("companyName"));
 		company.setCompanyAddress(jsonObject.getString("companyAddress"));
 		company.setPhoneNumber(jsonObject.getString("phoneNumber"));
@@ -38,7 +43,7 @@ public class Company {
 		company.setCompanyUrl(jsonObject.getString("companyUrl"));
 		company.setTaxId(jsonObject.getString("taxId"));
 		company.setLogo(jsonObject.getString("logo"));
-		company.setAccountNumber(jsonObject.getInt("accountNumber"));
+		company.setAccountNumber(jsonObject.getString("accountNumber"));
 		company.setAccountName(jsonObject.getString("accountName"));
 		company.setBankName(jsonObject.getString("bankName"));
 		company.setBankAddress(jsonObject.getString("bankAddress"));

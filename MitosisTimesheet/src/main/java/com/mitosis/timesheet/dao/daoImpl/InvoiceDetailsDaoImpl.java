@@ -297,6 +297,27 @@ public class InvoiceDetailsDaoImpl extends BaseService implements InvoiceDetails
 			}
 			return invoicehdr;
 	}
+
+	@Override
+	public List<InvoiceDetailsModel> getInvoiceDetails(int invoiceno) {
+		List<InvoiceDetailsModel> invoiceDetails = new ArrayList<InvoiceDetailsModel>();
+		try{
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<InvoiceDetailsModel> cq = qb.createQuery(InvoiceDetailsModel.class);
+			Root<InvoiceDetailsModel> root = cq.from(InvoiceDetailsModel.class);
+			Predicate condition = qb.equal(root.get("invoiceNumber"),invoiceno);
+			cq.where(condition);
+			cq.select(root);		
+			invoiceDetails = entityManager.createQuery(cq).getResultList();
+			}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close();
+		}
+		return invoiceDetails;
+	}
 	
 
 }

@@ -1,5 +1,7 @@
 package com.mitosis.timesheet.model;
 
+import java.math.BigInteger;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,7 +39,7 @@ public class CompanyInfoModel {
 	private String logo;
 	
 	@Column(name="account_number")
-	private Integer accountNumber;
+	private String accountNumber;
 	
 	@Column(name="bank_name")
 	private String bankName;
@@ -111,11 +113,11 @@ public class CompanyInfoModel {
 		this.logo = logo;
 	}
 
-	public Integer getAccountNumber() {
+	public String getAccountNumber() {
 		return accountNumber;
 	}
 
-	public void setAccountNumber(Integer accountNumber) {
+	public void setAccountNumber(String accountNumber) {
 		this.accountNumber = accountNumber;
 	}
 

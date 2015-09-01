@@ -405,6 +405,7 @@ public class InvoiceDetails {
 		invoicehdrModel.setInvoiceNumber(invoiceHdrModel.getInvoiceNumber());
 		invoiceDetailsModel.setId(id);
 		invoiceDetailsModel.setInvoice(invoicehdrModel);
+	
 		return json;
 
 /*
@@ -491,8 +492,45 @@ public class InvoiceDetails {
 		return projectCostHdrList;	
 
 
+	}
+	
+	
+	@Path("/getInvoiceList")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<InvoiceHdrModel> getInvoiceList(JSONObject jsonObject) throws JSONException{
+		
+			
+		List<InvoiceHdrModel> invoiceList = new ArrayList<InvoiceHdrModel>();
+		
+		
+		invoiceList = InvoiceService.getInvoiceList(jsonObject.getInt("projectId"));
+		
+		
+		return invoiceList;
 
 	}
+	
+	
+	@Path("/getInvoiceDetails")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<InvoiceDetailsModel> getInvoiceDetails(int invoiceno) throws JSONException{
+		
+			
+		List<InvoiceDetailsModel> invoiceDetailsList = new ArrayList<InvoiceDetailsModel>();
+		
+		
+		invoiceDetailsList = InvoiceService.getInvoiceDetails(invoiceno);
+		
+		
+		return invoiceDetailsList;
+
+	}
+
+	
 
 
 /*
