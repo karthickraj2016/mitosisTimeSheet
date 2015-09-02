@@ -1,0 +1,152 @@
+
+<div ng-init="list()">
+<div class="container" style="margin-top: 6%;"><div class="row"><div class="col-xs-12 col-md-12"><h2 class="text-center">Invoice</h2></div></div></div>
+
+<form class="" role="form" ng-submit="generateReport()">
+<div class="container" style="width: 100%;">
+	<div class="form-invoice form-horizontal">
+	<div class="row">
+	<div class="col-sm-6">
+    <div class="form-group">
+      <label class="control-label col-sm-4 textleft" for="">Customer Name<span>:</span></label>
+      <div class="col-sm-8">
+        <select  class="form-control empdet-form" ng-model="invoice.customer"  ng-options="item as item.customerName for item in customerList" required style="color: #777777;" ng-change="loadProjects()">
+ 	    <option value="">Customer Name</option>
+ 		</select> 
+	    
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-4 textleft">Project<span>:</span></label>
+      <div class="col-sm-8">          
+        <select  class="form-control empdet-form"  ng-model="invoice.projectlist" ng-options="option as option.projectName for option in projectList" ng-change="projectBasedSelections(invoice.projectlist);" required style="color: #777777;">
+	    <option value="" ng-selected="true">Project</option>
+		</select> 
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-4 textleft">Project Type<span>:</span></label>
+      <div class="col-sm-8">   
+       <input type="text" class="form-control" ng-disabled="true" ng-model="invoice.projectType"  placeholder="">       	
+      </div>
+    </div>
+    </div>
+    
+    <div class="col-sm-6">
+    <div ng-init="dates()" class="form-group">
+      <label class="control-label col-sm-4 textleft" for="">Invoice Date<span>:</span></label>
+      <div class="col-sm-8">
+       <input type="text" required class="form-control empdet-form" ng-model="invoice.invoicedate" placeholder="Invoice Date" ui-date="dateOptions" ui-date-format="dd-mm-yy" ng-model="invoice.date">
+       </div>
+    </div>
+    
+    <div class="form-group">
+      <label class="control-label col-sm-4 textleft">Invoice No<span>:</span></label>
+      <div class="col-sm-8">          
+        <input type="text" class="form-control"  ng-model="invoice.invoiceno" ng-options="option as option.invoiceNumber for option in invoiceList" ng-change="invoiceSelection(invoice.invoiceno);"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-4 textleft">Invoice Amount<span>:</span></label>
+      <div class="col-sm-8">          
+        <input type="text" class="form-control" ng-model="invoice.invoiceamt"  onkeypress="return isNumber(event)" id="" placeholder="" required ng-blur="sumCost()">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-4 textleft">Currency<span>:</span></label>
+      <div class="col-sm-8">          
+        <input type="text" class="form-control" ng-model="invoice.currency" id="" placeholder="" readonly>
+      </div>
+    </div>
+    </div>
+    
+   
+    <div class="container" style="width: 100%;">
+    
+     <table class="table" style="">
+	<thead class="thead-mit-ts">
+		<tr>
+			<th class="">From Date</th>
+			<th class="">To Date</th>
+			<th class="">Description</th>
+			<th class="">Team Members</th>
+			<th class="">Rate Per Hour</th>
+			<th class="">Billable Hours</th>
+			<th class="">Amount</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+
+		<tr ng-repeat="sheet in invoiceList">
+			
+			<td>
+
+				<span ng-show="!showEdit">{{sheet.fromdate}}</span>
+				<span ng-show="showEdit"><input class="form-control" ui-date="dateOptions" ui-date-format="dd-mm-yy" type="text" ng-model="sheet.fromdate" ></span>
+				<span style="color:red" ng-show="sheet.fromdate == '' || sheet.fromdate == undefined">Required</span> 
+			</td>
+			<td>
+				<span ng-show="!showEdit">{{sheet.todate}}</span>
+				<span ng-show="showEdit"><input class="form-control" ui-date="dateOptions" ui-date-format="dd-mm-yy" type="text" ng-model="sheet.todate"></span>
+				<span style="color:red" ng-show="sheet.todate == '' || sheet.todate == undefined">Required</span>
+			</td>
+			
+			<td >
+				<span ng-show="!showEdit">{{sheet.description}}</span>
+				<span ng-show="showEdit"><textarea rows="1" class="form-control" type="text" ng-model="sheet.description"></textarea></span>
+				<span style="color:red" ng-show="sheet.description == '' || sheet.description == undefined">Required</span>
+			</td>
+			<td>
+				<span ng-show="!showEdit">{{sheet.teammember}}</span>
+				<span id="{{sheet.employee.id}}" ng-show="showEdit"><select class="form-control" ng-model="sheet.teammember" ng-options="item.member.name as item.member.name for item in invoice.teammembers" style="color: #777777;">
+				<option value="">Team Members</option>
+				</select> 
+				</span>
+			</td>
+			<td>
+				<span ng-show="!showEdit">{{sheet.rateperhour}}</span>
+				<span id="{{sheet.id}}" ng-show="showEdit"><input class="form-control" id="{{sheet.id}}" type="text" onkeypress="return isNumber(event)" ng-change="amountCalForUpdate(sheet)" ng-model="sheet.rateperhour"></span>
+			<!-- 	<span style="color:red" ng-show="sheet.rateperhour == '' || sheet.rateperhour == undefined">Required</span> -->
+			</td>
+			<td>
+				<span ng-show="!showEdit">{{sheet.billablehours}}</span>
+				<span id="{{sheet.id}}" ng-show="showEdit"><input class="form-control" id="{{sheet.id}}" type="text" onkeypress="return isNumber(event)" ng-change="amountCalForUpdate(sheet)" ng-model="sheet.billablehours"></span>
+			<!-- 	<span style="color:red" ng-show="sheet.billablehours == '' || sheet.billablehours == undefined">Required</span> -->
+			</td>
+			<td>
+				<span ng-show="!showEdit">{{sheet.amount}}</span>
+				<span id="{{sheet.id}}" ng-show="showEdit"><input class="form-control" id="{{sheet.id}}" type="text" onkeypress="return isNumber(event)" ng-model="sheet.amount"></span>
+				<!-- <span style="color:red" ng-show="sheet.amount == '' || sheet.amount == undefined">Required</span> -->
+			</td>
+			
+			<!-- <td style="word-spacing: 15px;">
+
+	            <a><span class="glyphicon glyphicon-pencil" ng-click="showEdit = !showEdit;pencilClick(sheet)" ng-show="!showEdit"></span></a>
+				<a><span class="glyphicon glyphicon-remove" ng-click="deleteteammembers(sheet)" ng-show="!showEdit"></span></a>
+				<a><span class="glyphicon glyphicon-ok" ng-click="showEdit = !showEdit;updateteammembers(sheet)" ng-show="showEdit" ng-disabled="checkRequired(sheet);"></span></a> 
+				<a><span class="glyphicon glyphicon-ban-circle" ng-click="showEdit = !showEdit;teammemberslist(sheet)" ng-show="showEdit"></span></a> 			
+			</td> -->
+		</tr>
+	</tbody>
+</table>
+     	
+    </div>
+
+    
+   
+    
+    
+    <pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="numPerPage" class="pagination-sm" boundary-links="true"></pagination>
+    </div>
+    </div>
+ 	 <div class="text-center">
+ 	 <input type="submit" class="btn btn-primary btn-sm" value="Submit"/>
+	</div>
+
+</div>
+</form>
+<div class="alert-msg col-xs-12 col-sm-6"><p class="alert-success"></p></div>
+ <div class="alert-msg1 col-xs-12 col-sm-6"><p class="alert-danger"></p></div>
+
+ </div>

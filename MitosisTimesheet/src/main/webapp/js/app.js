@@ -141,6 +141,11 @@ angular.module('myApp', ['ui.router','myApp.controllers','ngStorage','ui.bootstr
 						 templateUrl: 'html/finance_report.html',
 					     controller :'financeReportController'
 					 })
+					 .state('invoiceView', {
+						 url: '/financeReport',
+						 templateUrl: 'html/invoiceView.html',
+					     controller :'invoiceViewController'
+					 })
 			 }]);
 
 angular.module('myApp.controllers',[])

@@ -132,6 +132,13 @@ angular.module('myApp.controllers')
 				$('#addDet').show();
 				return;
 			}
+			
+			if(projectType = "Hourly"){
+				
+				$('#costdet').readonly("true");
+				
+			}
+			
 
 
 			var menuJson=angular.toJson({"id":$scope.hdrid,"projectId":$scope.project.projectId,"projectType":$scope.cost.projectType,
@@ -213,7 +220,17 @@ angular.module('myApp.controllers')
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("Please Select Employee");
 			return;
-		}else if($scope.cost.costOfEmp==undefined | $scope.cost.costOfEmp==''){
+		}
+		else if($scope.cost.projectType!="Monthly"){
+			
+			
+			$('#rate').attr('readonly', true);
+			
+			
+			
+			
+		}
+		else if($scope.cost.costOfEmp==undefined | $scope.cost.costOfEmp==''){
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("Please Enter Rate");
 			return;

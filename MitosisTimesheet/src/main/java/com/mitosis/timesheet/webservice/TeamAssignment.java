@@ -148,7 +148,9 @@ public class TeamAssignment {
 		teamAssignModel.setMember(member);
 		role.setId(jsonobject.getInt("roleId"));
 		teamAssignModel.setRole(role);
-		if(jsonobject.has("releaseDate")){
+	
+		System.out.println(jsonobject);
+		if(jsonobject.has("releaseDate") && !"null".equals(jsonobject.getString("releaseDate"))){
 		DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		String dateInString = jsonobject.getString("releaseDate");
 		Date releaseDate = sdf.parse(dateInString); 

@@ -46,7 +46,9 @@ public class ProjectCostDetails {
 		if(jsonObject.has("id")){
 			hdrModel.setId(jsonObject.getInt("id"));			
 		}
-		if(jsonObject.has("projectCost")){
+		if(jsonObject.has("projectCost") && !"".equals(jsonObject.get("projectCost"))){
+			
+		
 			int cost=jsonObject.getInt("projectCost");
 			BigDecimal projectCost=new BigDecimal(cost); 
 			hdrModel.setProjectCost(projectCost);
