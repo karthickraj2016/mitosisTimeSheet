@@ -318,6 +318,52 @@ public class InvoiceDetailsDaoImpl extends BaseService implements InvoiceDetails
 		}
 		return invoiceDetails;
 	}
+
+	@Override
+	public ProjectCostHdrModel getCostHdrId(int projectId) {
+		
+		ProjectCostHdrModel projectCostHdrModel = new ProjectCostHdrModel();
+		try{
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<ProjectCostHdrModel> cq = qb.createQuery(ProjectCostHdrModel.class);
+			Root<ProjectCostHdrModel> root = cq.from(ProjectCostHdrModel.class);
+			Predicate condition = qb.equal(root.get("project").get("projectId"),projectId);
+			Predicate conditions = qb.and(condition);
+			cq.where(conditions);
+			cq.select(root);		
+			projectCostHdrModel = entityManager.createQuery(cq).getSingleResult();
+			}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close();
+		}
+		return projectCostHdrModel;
+	}
+
+	@Override
+	public ProjectCostDetailsModel getMemberRate(int projectCostId,int memberId) {
+		ProjectCostDetailsModel projectCostHdrModel = new ProjectCostDetailsModel();
+		try{
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<ProjectCostDetailsModel> cq = qb.createQuery(ProjectCostDetailsModel.class);
+			Root<ProjectCostDetailsModel> root = cq.from(ProjectCostDetailsModel.class);
+			Predicate condition = qb.equal(root.get("projectCostHdr"),projectCostId);
+			Predicate condition1 = qb.equal(root.get("employee").get("id"),memberId);
+			Predicate conditions = qb.and(condition,condition1);
+			cq.where(conditions);
+			cq.select(root);		
+			projectCostHdrModel = entityManager.createQuery(cq).getSingleResult();
+			}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close();
+		}
+		return projectCostHdrModel;
+	}
 	
 
 }

@@ -4,6 +4,11 @@ angular.module('myApp.controllers')
 
 .controller('projectCostDetailsController', ['$scope', '$http', '$state','$rootScope', function($scope, $http, $state, $rootScope) {
 
+	
+	
+	$scope.rateshow = true;
+	$scope.costshow = true;
+	
 	$http({
 
 		url: 'rest/teamAssignment/getMemberList',
@@ -132,12 +137,7 @@ angular.module('myApp.controllers')
 				$('#addDet').show();
 				return;
 			}
-			
-			if(projectType = "Hourly"){
-				
-				$('#costdet').readonly("true");
-				
-			}
+		
 			
 
 
@@ -221,20 +221,11 @@ angular.module('myApp.controllers')
 			$(".alert-danger").html("Please Select Employee");
 			return;
 		}
-		else if($scope.cost.projectType!="Monthly"){
-			
-			
-			$('#rate').attr('readonly', true);
-			
-			
-			
-			
-		}
 		else if($scope.cost.costOfEmp==undefined | $scope.cost.costOfEmp==''){
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("Please Enter Rate");
 			return;
-		}else if(($scope.cost.costOfEmp).length>4){
+		}else if(parseInt(($scope.cost.costOfEmp)).length>4){
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("Invalid Rate");
 			$('#rate').val('');
@@ -249,7 +240,7 @@ angular.module('myApp.controllers')
 
 		var empRate=[];
 
-		empRate={"member":$scope.member,"rate":$scope.cost.costOfEmp,"index":$scope.iterator};
+		empRate={"member":$scope.member,"rate":parseFloat($scope.cost.costOfEmp),"index":$scope.iterator};
 
 		$scope.empList.push(empRate);
 		$scope.iterator++;
@@ -294,5 +285,43 @@ angular.module('myApp.controllers')
 			$(".alert-success").html("Employee Cost Detail Deleted");
 		}
 
+	}
+	
+	
+	
+	$scope.costTypeChange = function(){
+	
+		
+		
+		var projectType=$scope.cost.projectType;
+
+		if(projectType=="Hourly"){
+			
+			$scope.costshow = false;
+			$scope.rateshow= true;
+
+			
+			
+		}
+		
+		else if(projectType=="Monthly"){
+			
+			
+			$scope.rateshow = false;
+			$scope.costshow = true;
+			
+		}
+		else{
+			
+
+			$scope.rateshow = true;
+			$scope.costshow = true;
+			
+			
+			
+		}
+		
+		
+		
 	}
 }])

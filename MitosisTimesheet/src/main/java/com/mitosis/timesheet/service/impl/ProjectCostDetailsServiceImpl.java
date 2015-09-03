@@ -13,44 +13,44 @@ import com.mitosis.timesheet.service.ProjectCostDetailsService;
 public class ProjectCostDetailsServiceImpl implements ProjectCostDetailsService {
 
 	ProjectCostDetailsDao costDao=new ProjectCostDetailsDaoImpl();
-	
+
 	@Override
 	public int addDetailsInHdr(ProjectCostHdrModel hdrModel) {
-		
+
 		int hdrId;
-		
+
 		hdrId=costDao.addDetailsInHdr(hdrModel);
-		
+
 		return hdrId;
 	}
 
 	@Override
 	public boolean addDetailsInCostDetails(ProjectCostDetailsModel detailsModel) {
-	
+
 		boolean insert=false;
-		
+
 		insert=costDao.addDetailsInCostDetails(detailsModel);
-		
+
 		return insert;
 	}
 
 	@Override
 	public boolean addFixedProjectCostDetails(ProjectCostHdrModel hdrModel) {
-      
+
 		boolean insert=false;
-		
+
 		insert=costDao.addFixedProjectCostDetails(hdrModel);
-		
+
 		return insert;
 	}
 
 	@Override
 	public ProjectCostHdrModel projectValidation(int projectId) {
-     
+
 		ProjectCostHdrModel hdrModel=new ProjectCostHdrModel();
-		
+
 		hdrModel=costDao.projectValidation(projectId);
-		
+
 		return hdrModel;
 	}
 
@@ -58,10 +58,19 @@ public class ProjectCostDetailsServiceImpl implements ProjectCostDetailsService 
 	public List<ProjectModel> getProjectList() {
 
 		List<ProjectModel> projectList = new ArrayList<ProjectModel>();
-		
+
 		projectList=costDao.getProjectList();
 		System.out.println(projectList);
 		return projectList;
+	}
+
+	@Override
+	public  List<ProjectCostHdrModel> getTeamMembers(int projectId) {
+		List<ProjectCostHdrModel> TeamMembers = new ArrayList<ProjectCostHdrModel>();
+
+		TeamMembers=costDao.getTeamMembers(projectId);
+		return TeamMembers;
+		
 	}
 
 }

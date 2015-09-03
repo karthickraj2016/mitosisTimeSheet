@@ -74,7 +74,7 @@
     </div>
     <div class="form-group">
 
-       <select  class="form-control" style="color: #777777;" ng-model="member.teamlist" ng-options="item as item.member.name for item in invoice.teammembers"  style="color: #777777;">
+       <select  class="form-control" style="color: #777777;" ng-model="member.teamlist" ng-options="item as item.member.name for item in invoice.teammembers" ng-change="calculateRate(member.teamlist,invoice.projectlist)" style="color: #777777;">
 	    <option value="" ng-selected="true">Team Members</option>
 		</select>
     </div>

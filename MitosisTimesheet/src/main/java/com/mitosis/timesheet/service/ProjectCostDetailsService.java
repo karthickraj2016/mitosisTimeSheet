@@ -18,4 +18,6 @@ public interface ProjectCostDetailsService {
 
 	public List<ProjectModel> getProjectList();
 
+	public List<ProjectCostHdrModel> getTeamMembers(int projectId);
+
 }

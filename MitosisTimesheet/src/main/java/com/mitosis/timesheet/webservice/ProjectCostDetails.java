@@ -46,7 +46,7 @@ public class ProjectCostDetails {
 		if(jsonObject.has("id")){
 			hdrModel.setId(jsonObject.getInt("id"));			
 		}
-		if(jsonObject.has("projectCost") && !"".equals(jsonObject.get("projectCost"))){
+		if(jsonObject.has("projectCost") && !"".equals(jsonObject.get("projectCost")) || !jsonObject.get("projectCost").equals(null)){
 			
 		
 			int cost=jsonObject.getInt("projectCost");
@@ -64,14 +64,20 @@ public class ProjectCostDetails {
 
 		for(int i=0;i<jsonArray.length();i++){
 			ProjectCostDetailsModel detailsModel=new ProjectCostDetailsModel();
+	
 
 			detailsModel.setProjectCostHdr(hdrId);
 
 			JSONObject jsonObject1=new JSONObject();
 
 			jsonObject1.put("emp",jsonArray.get(i));
-
-			int empRate=(int)jsonObject1.getJSONObject("emp").getInt("rate");
+			
+			String rateString =String.valueOf(jsonObject1.getJSONObject("emp").get("rate")); 
+		
+			
+			Double ratedouble = Double.parseDouble(rateString);
+			
+			BigDecimal empRate = BigDecimal.valueOf(ratedouble);
 
 			int employeeId=(int)jsonObject1.getJSONObject("emp").getJSONObject("member").getInt("id");
 
@@ -80,9 +86,8 @@ public class ProjectCostDetails {
 				detailsModel.setId(detId);
 			}
 			userModel.setId(employeeId);
-			detailsModel.setEmployee(userModel);
-			BigDecimal rate=new BigDecimal(empRate);		
-			detailsModel.setRate(rate);
+			detailsModel.setEmployee(userModel);		
+			detailsModel.setRate(empRate);
 
 
 			boolean insert=false;
@@ -172,4 +177,28 @@ public class ProjectCostDetails {
 		return projectList;
 
 	}
+	
+	
+	@Path("/getTeamMember")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<ProjectCostHdrModel> getTeamMember(JSONObject jsonObject) throws JSONException {
+		
+		
+		int projectId= jsonObject.getInt("projectId");
+		
+		List<ProjectCostHdrModel> projectCostHdrModel = new ArrayList<ProjectCostHdrModel>();
+		
+		
+		
+		projectCostHdrModel = costService.getTeamMembers(projectId);
+
+
+		return projectCostHdrModel;
+
+	}
+	
+	
+	
 }

@@ -200,6 +200,21 @@ angular.module('myApp.controllers')
 				'Content-Type': 'application/json'
 			}
 		}).success(function(result, status, headers) {
+			
+			
+			if(result.length<=0){
+				
+				
+				$(".alert-msg1").show().delay(1000).fadeOut(); 
+				$(".alert-danger").html("Please Enter project cost for" +project.projectName+ "!");
+				
+				$scope.invoice.projectlist="Project";
+				return;
+				
+				
+			}
+			
+			else{
 
 
 			$scope.projectTypeList=result;
@@ -221,11 +236,52 @@ angular.module('myApp.controllers')
 			}
 
 			console.log($scope.invoice.teammembers);
+			}
 
 		});
+		
+	
 
 	}
 	
+	
+	$scope.calculateRate = function(teammember,project){
+		
+		
+		console.log(teammember);
+		
+		console.log(project);
+		
+		
+		
+		var menuJson = angular.toJson({"memberId":teammember.member.id,"projectId":project.projectId}); 
+		
+		
+		
+		$http({
+
+			url: 'rest/invoiceDetails/getMemberRate',
+			method: 'POST',
+			data: menuJson,
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).success(function(result, status, headers) {
+			
+			
+			$scope.member.rateperhour= result.rate;
+			
+			console.log($scope.member.rateperhour);
+			
+			
+			
+			
+		});
+		
+		
+		
+		
+	}
 	
 	
 	$scope.pencilClick = function(sheet){
@@ -245,9 +301,9 @@ angular.module('myApp.controllers')
 		var datevalidationtoDate = new Date(($scope.member.todate).split("-")[1]+"-"+($scope.member.todate).split("-")[0]+"-"+($scope.member.todate).split("-")[2]);;
 
 		
-		index =$scope.member.rateperhour.length-1;
+/*		index =$scope.member.rateperhour.length-1;
 		
-		var lastnum = $scope.member.rateperhour.slice(index, $scope.member.rateperhour.length);
+		var lastnum = $scope.member.rateperhour.slice(index, $scope.member.rateperhour.length);*/
 		
 		
 		
@@ -354,14 +410,7 @@ angular.module('myApp.controllers')
 			$scope.invoiceList[sheet.index]=$scope.previoussheet;
 			return;
 
-		}else if(fromdate.getDay()===2 || fromdate.getDay()===3 || todate.getDay()===2 || todate.getDay()===3){
-			$(".alert-msg1").show().delay(1000).fadeOut(); 
-			$(".alert-danger").html("FromDate or Todate cannot be on Saturdays or Sundays!!!!");
-			$scope.invoiceList[sheet.index]=$scope.previoussheet;
-			return;
-
 		}
-
 		if(sheet.fromdate==undefined||sheet.todate==undefined){
 
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
@@ -498,7 +547,7 @@ angular.module('myApp.controllers')
 		var totalSum= 0;
 		try{
 			for(var i = 0; i < $scope.invoiceList.length; i++){
-				var revenue = parseInt($scope.invoiceList[i].amount);
+				var revenue = parseFloat($scope.invoiceList[i].amount);
 				totalSum += revenue;
 			}
 		}

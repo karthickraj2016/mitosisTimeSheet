@@ -124,4 +124,23 @@ public class ProjectCostDetailsDaoImpl extends BaseService implements ProjectCos
 		return projectlist;
 	}
 
+	@Override
+	public List<ProjectCostHdrModel> getTeamMembers(int projectId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*@Override
+	public List<ProjectCostHdrModel> getTeamMembers(int projectId) {
+		List<ProjectCostHdrModel> TeamMembers = new ArrayList<ProjectCostHdrModel>();
+		try{
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<ProjectCostHdrModel> cq = qb.createQuery(ProjectCostHdrModel.class);
+			Root<ProjectCostHdrModel> root = cq.from(ProjectCostHdrModel.class);
+			Predicate condition = qb.equal(root.get("projectCostDetails").get("project"),projectId);
+		return null;
+	}*/
+
 }
