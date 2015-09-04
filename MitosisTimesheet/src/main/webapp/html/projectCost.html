@@ -48,7 +48,7 @@ $(document).ready(function () {
     <div class="form-group" id="h-show">
       <label class="control-label col-sm-4 textleft">Member<span>:</span></label>
       <div class="col-sm-8">
-         <select name="select-type"  ng-blur="nameValidation(member)" class="form-control" ng-model="member" ng-options="item as item.name for item in memberlist" style="color: #777777;">
+     <select name="select-type"  ng-blur="nameValidation(member)" class="form-control" ng-model="member" ng-options="item as item.member.name for item in memberlist" style="color: #777777;">
      <option value="">Member</option>
 	</select>
      </div>

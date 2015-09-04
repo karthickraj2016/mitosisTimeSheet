@@ -215,8 +215,10 @@ public class InvoiceDetails {
 		customerModel.setAddress(customer.getString("address"));
 
 		invoiceHdrModel.setInvoiceDate(invoiceDate);
+		
+		String invamount= jsonObject.get("invoiceamt").toString();
 
-		double invamt = Double.parseDouble((String) jsonObject.get("invoiceamt"));		
+		double invamt = Double.parseDouble(invamount);		
 		BigDecimal invoiceamount = BigDecimal.valueOf(invamt);
 
 

@@ -5,6 +5,8 @@ import java.util.List;
 import com.mitosis.timesheet.model.ProjectCostDetailsModel;
 import com.mitosis.timesheet.model.ProjectCostHdrModel;
 import com.mitosis.timesheet.model.ProjectModel;
+import com.mitosis.timesheet.model.TeamAssignmentModel;
+import com.mitosis.timesheet.webservice.TeamAssignment;
 
 public interface ProjectCostDetailsService {
 
@@ -18,6 +20,6 @@ public interface ProjectCostDetailsService {
 
 	public List<ProjectModel> getProjectList();
 
-	public List<ProjectCostHdrModel> getTeamMembers(int projectId);
+	public List<TeamAssignmentModel> getTeamMembers(int projectId);
 
 }

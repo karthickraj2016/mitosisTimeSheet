@@ -8,6 +8,7 @@ import com.mitosis.timesheet.dao.daoImpl.ProjectCostDetailsDaoImpl;
 import com.mitosis.timesheet.model.ProjectCostDetailsModel;
 import com.mitosis.timesheet.model.ProjectCostHdrModel;
 import com.mitosis.timesheet.model.ProjectModel;
+import com.mitosis.timesheet.model.TeamAssignmentModel;
 import com.mitosis.timesheet.service.ProjectCostDetailsService;
 
 public class ProjectCostDetailsServiceImpl implements ProjectCostDetailsService {
@@ -65,8 +66,8 @@ public class ProjectCostDetailsServiceImpl implements ProjectCostDetailsService 
 	}
 
 	@Override
-	public  List<ProjectCostHdrModel> getTeamMembers(int projectId) {
-		List<ProjectCostHdrModel> TeamMembers = new ArrayList<ProjectCostHdrModel>();
+	public  List<TeamAssignmentModel> getTeamMembers(int projectId) {
+		List<TeamAssignmentModel> TeamMembers = new ArrayList<TeamAssignmentModel>();
 
 		TeamMembers=costDao.getTeamMembers(projectId);
 		return TeamMembers;

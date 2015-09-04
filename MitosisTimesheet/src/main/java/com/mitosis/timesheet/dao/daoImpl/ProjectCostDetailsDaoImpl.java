@@ -12,6 +12,7 @@ import com.mitosis.timesheet.dao.ProjectCostDetailsDao;
 import com.mitosis.timesheet.model.ProjectCostDetailsModel;
 import com.mitosis.timesheet.model.ProjectCostHdrModel;
 import com.mitosis.timesheet.model.ProjectModel;
+import com.mitosis.timesheet.model.TeamAssignmentModel;
 import com.mitosis.timesheet.util.BaseService;
 
 public class ProjectCostDetailsDaoImpl extends BaseService implements ProjectCostDetailsDao {
@@ -125,22 +126,28 @@ public class ProjectCostDetailsDaoImpl extends BaseService implements ProjectCos
 	}
 
 	@Override
-	public List<ProjectCostHdrModel> getTeamMembers(int projectId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*@Override
-	public List<ProjectCostHdrModel> getTeamMembers(int projectId) {
-		List<ProjectCostHdrModel> TeamMembers = new ArrayList<ProjectCostHdrModel>();
+	public List<TeamAssignmentModel> getTeamMembers(int projectId) {
+		
+		List<TeamAssignmentModel> teamMembers = new ArrayList<TeamAssignmentModel>();
+		
+		
 		try{
 			begin();
 			entityManager.getEntityManagerFactory().getCache().evictAll();
 			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
-			CriteriaQuery<ProjectCostHdrModel> cq = qb.createQuery(ProjectCostHdrModel.class);
-			Root<ProjectCostHdrModel> root = cq.from(ProjectCostHdrModel.class);
-			Predicate condition = qb.equal(root.get("projectCostDetails").get("project"),projectId);
-		return null;
-	}*/
+			CriteriaQuery<TeamAssignmentModel> cq = qb.createQuery(TeamAssignmentModel.class);
+			Root<TeamAssignmentModel> root = cq.from(TeamAssignmentModel.class);
+			cq.where(qb.equal(root.get("project"), projectId));
+			cq.select(root);
+			teamMembers = entityManager.createQuery(cq).getResultList();
+		}catch(Exception e){
+				
+			e.printStackTrace();
+			}finally{
+				close();
+			}
+			return teamMembers;
+	}
+
 
 }

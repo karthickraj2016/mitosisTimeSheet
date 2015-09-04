@@ -18,6 +18,7 @@ import org.codehaus.jettison.json.JSONObject;
 import com.mitosis.timesheet.model.ProjectCostDetailsModel;
 import com.mitosis.timesheet.model.ProjectCostHdrModel;
 import com.mitosis.timesheet.model.ProjectModel;
+import com.mitosis.timesheet.model.TeamAssignmentModel;
 import com.mitosis.timesheet.model.UserDetailsModel;
 import com.mitosis.timesheet.service.ProjectCostDetailsService;
 import com.mitosis.timesheet.service.impl.ProjectCostDetailsServiceImpl;
@@ -183,19 +184,19 @@ public class ProjectCostDetails {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<ProjectCostHdrModel> getTeamMember(JSONObject jsonObject) throws JSONException {
+	public List<TeamAssignmentModel> getTeamMember(JSONObject jsonObject) throws JSONException {
 		
 		
 		int projectId= jsonObject.getInt("projectId");
 		
-		List<ProjectCostHdrModel> projectCostHdrModel = new ArrayList<ProjectCostHdrModel>();
+		List<TeamAssignmentModel> teamMembers = new ArrayList<TeamAssignmentModel>();
 		
 		
 		
-		projectCostHdrModel = costService.getTeamMembers(projectId);
+		teamMembers = costService.getTeamMembers(projectId);
 
 
-		return projectCostHdrModel;
+		return teamMembers;
 
 	}
 	

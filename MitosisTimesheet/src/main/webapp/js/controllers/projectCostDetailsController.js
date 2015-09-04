@@ -289,18 +289,34 @@ angular.module('myApp.controllers')
 	
 	
 	
-	$scope.costTypeChange = function(){
+	$scope.costTypeChange = function(project){
 	
 		
+		var menuJson = angular.toJson({"projectId":project.projectId})
 		
 		var projectType=$scope.cost.projectType;
 
+		
 		if(projectType=="Hourly"){
 			
 			$scope.costshow = false;
 			$scope.rateshow= true;
-
 			
+			$http({
+
+				url: 'rest/projectCost/getTeamMember',
+				method: 'POST',
+				data: menuJson,
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).success(function(result, status, headers) {
+				
+				$scope.memberlist = result;
+				
+
+
+			});			
 			
 		}
 		
@@ -309,6 +325,24 @@ angular.module('myApp.controllers')
 			
 			$scope.rateshow = false;
 			$scope.costshow = true;
+			
+			$http({
+
+				url: 'rest/projectCost/getTeamMember',
+				method: 'POST',
+				data: menuJson,
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).success(function(result, status, headers) {
+				
+				$scope.memberlist = result;
+				
+
+
+			});	
+			
+			
 			
 		}
 		else{

@@ -117,12 +117,16 @@ angular.module('myApp.controllers')
 		if($scope.member.rateperhour && $scope.member.billablehours==undefined || $scope.member.billablehours=="" || isNaN($scope.member.billablehours)){
 			
 		
-			index =$scope.member.rateperhour.length-1;
+			index =$scope.member.rateperhour.toString().length-1;
 			
 			
-		 var lastnum = $scope.member.rateperhour.slice(index, $scope.member.rateperhour.length);
+		 var lastnum = $scope.member.rateperhour.toString().slice(index, $scope.member.rateperhour.length);
 		 
-		
+		 
+		 console.log($scope.member);
+
+		 
+	
 
 
 		 if(lastnum=="."){
@@ -154,8 +158,31 @@ angular.module('myApp.controllers')
 
 			$scope.member.billablehours = parseFloat($scope.member.billablehours);
 
-			$scope.member.amount=parseFloat($scope.member.billablehours*$scope.member.rateperhour);
+			$scope.member.amount=parseFloat($scope.member.billablehours*$scope.member.rateperhour).toFixed(2);
 		}
+		
+		
+		 if($scope.invoiceList==undefined || $scope.invoiceList== "" || $scope.invoiceList.length<0){
+			 
+			 
+			 $scope.invoice.invoiceamt = $scope.member.amount * 1;
+			 
+			 
+		 }
+		 else {
+			 
+			 for(i=0;i<=$scope.invoiceList.length;i++){
+				 
+				 
+				 $scope.invoice.invoiceamt = parseFloat($scope.invoiceList[i].amount) +  parseFloat($scope.member.amount);
+				 
+				 
+			 }
+			 
+			 
+			 
+		 }
+		 
 		
 		
 	}
@@ -163,21 +190,81 @@ angular.module('myApp.controllers')
 	$scope.amountCalForUpdate = function (sheet){
 
 		console.log(sheet);
+		
+		
+		index =sheet.rateperhour.toString().length-1;
+		
+		
+		 var lastnum = sheet.rateperhour.toString().slice(index, sheet.rateperhour.length);
+		
 
 		if(sheet.rateperhour && sheet.billablehours==undefined||sheet.billablehours==""){
+			
+			
+			
+			
+			 if(lastnum=="."){
+				 
+				 
+				 sheet.rateperhour =sheet.rateperhour;
+				 
+				 sheet.amount = sheet.rateperhour+0.00;
+				 
+				 
+			 }
+			 
+			 else{
 
-			sheet.rateperhour =parseFloat(sheet.rateperhour);
+				 	sheet.rateperhour =parseFloat(sheet.rateperhour);
 
-			sheet.amount=parseFloat(1.0*sheet.rateperhour);
+
+				 	sheet.amount=parseFloat((1.0*sheet.rateperhour).toFixed(2));
+
+				 
+			 }
+			
 
 		}else {
+			
+			
+			if(lastnum=="."){
+				 
+				 
+				 sheet.rateperhour =sheet.rateperhour;
+				 
+				 sheet.amount = (sheet.rateperhour+0.00) * sheet.billablehours;
+				 
+				 
+			 }
+			else{
 
 			sheet.rateperhour =parseFloat(sheet.rateperhour);
 
 			sheet.billablehours = parseFloat(sheet.billablehours);
 
-			sheet.amount=parseFloat(sheet.billablehours*sheet.rateperhour);
-		}
+			sheet.amount=parseFloat(sheet.billablehours*sheet.rateperhour).toFixed(2);
+		
+			}
+	}
+		
+		
+		if($scope.invoiceList==undefined || $scope.invoiceList== "" || $scope.invoiceList.length<0){
+			 
+			 
+			 $scope.invoice.invoiceamt = sheet.amount * 1;
+			 
+			 
+		 }
+		 else {
+			 
+			 for(i=0;i<=$scope.invoiceList.length;i++){
+				 
+				 
+				 $scope.invoice.invoiceamt = parseFloat($scope.invoiceList[i].amount);
+				 
+				 
+			 }
+		 }
 	}
 
 	$scope.projectBasedSelections = function(project){
@@ -247,11 +334,7 @@ angular.module('myApp.controllers')
 	
 	$scope.calculateRate = function(teammember,project){
 		
-		
-		console.log(teammember);
-		
-		console.log(project);
-		
+	
 		
 		
 		var menuJson = angular.toJson({"memberId":teammember.member.id,"projectId":project.projectId}); 
@@ -356,11 +439,6 @@ angular.module('myApp.controllers')
 				$scope.member.billablehours='';
 
 			}
-
-			if($scope.member.teamlist==undefined || $scope.member.teamlist==null || $scope.member.teamlist==""){
-
-				memberobj ="";
-			}
 			
 			if(lastnum="."){
 				
@@ -368,6 +446,11 @@ angular.module('myApp.controllers')
 				
 			}
 
+			if($scope.member.teamlist==undefined || $scope.member.teamlist==null || $scope.member.teamlist==""){
+
+				memberobj ="";
+			}
+			
 			else if($scope.member.teamlist.member.name){
 				memberobj=$scope.member.teamlist.member.name;
 			}
@@ -389,6 +472,10 @@ angular.module('myApp.controllers')
 			$scope.member.amount='';
 			$scope.member.rateperhour='';
 		}
+			
+			
+
+			
 	}
 
 	$scope.updateteammembers= function(sheet){
