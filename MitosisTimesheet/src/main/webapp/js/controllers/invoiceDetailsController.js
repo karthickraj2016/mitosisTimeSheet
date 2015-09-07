@@ -407,7 +407,7 @@ angular.module('myApp.controllers')
 	}
 	
 	
-	$scope.calculateRate = function(teammember,project){
+	$scope.calculateRateForInsert = function(teammember,project){
 		
 	
 		
@@ -425,22 +425,48 @@ angular.module('myApp.controllers')
 				'Content-Type': 'application/json'
 			}
 		}).success(function(result, status, headers) {
-			
-			
-			$scope.member.rateperhour= result.rate;
-			
-			console.log($scope.member.rateperhour);
-			
-			
+	
+				$scope.member.rateperhour= result.rate;
+				
+				console.log($scope.member.rateperhour);
 			
 			
 		});
-		
-		
-		
+
 		
 	}
 	
+	
+	
+$scope.calculateRateForUpdate = function(project,sheet){
+		
+	
+		
+		
+		var menuJson = angular.toJson({"memberId":sheet.teammember,"projectId":project.projectId}); 
+		
+		
+		
+		$http({
+
+			url: 'rest/invoiceDetails/getMemberRate',
+			method: 'POST',
+			data: menuJson,
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).success(function(result, status, headers) {
+	
+				sheet.rateperhour= result.rate;
+				
+				console.log(sheet.rateperhour);
+				
+				
+				
+			
+			
+		});
+}
 	
 	$scope.pencilClick = function(sheet){
 	
