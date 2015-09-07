@@ -86,14 +86,13 @@ public class ProjectCostDetailsDaoImpl extends BaseService implements ProjectCos
 		CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<ProjectCostHdrModel> cq = qb.createQuery(ProjectCostHdrModel.class);
 		Root<ProjectCostHdrModel> root = cq.from(ProjectCostHdrModel.class);
-		cq.where(qb.equal(root.get("project"), projectId));
+		cq.where(qb.equal(root.get("project").get("projectId"), projectId));
 		cq.select(root);
 		costModel = entityManager.createQuery(cq).getSingleResult();
 		commit();
 		flush();
 	}catch(Exception e){
-			
-			System.out.println(e);
+		e.printStackTrace();
 		}finally{
 			close();
 		}

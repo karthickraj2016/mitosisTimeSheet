@@ -122,8 +122,6 @@ angular.module('myApp.controllers')
 			
 		 var lastnum = $scope.member.rateperhour.toString().slice(index, $scope.member.rateperhour.length);
 		 
-		 
-		 console.log($scope.member);
 
 		 
 	
@@ -166,23 +164,58 @@ angular.module('myApp.controllers')
 			 
 			 
 			 $scope.invoice.invoiceamt = $scope.member.amount * 1;
+			 $scope.invoice.invoiceamt =  $scope.invoice.invoiceamt.toFixed(2);
 			 
 			 
 		 }
-		 else {
+		 else  {
 			 
-			 for(i=0;i<=$scope.invoiceList.length;i++){
+			 if($scope.member.billablehours==""){
 				 
+				 $scope.member.amount=parseFloat(1*$scope.member.rateperhour).toFixed(2);
 				 
-				 $scope.invoice.invoiceamt = parseFloat($scope.invoiceList[i].amount) +  parseFloat($scope.member.amount);
+				 var total=0;
+				 
+				 for(i=0;i<$scope.invoiceList.length;i++){
+					 
+					 total+= parseFloat($scope.invoiceList[i].amount);
+					 
+					
+				 }
+				 
+				 $scope.invoice.invoiceamt = total+ parseFloat($scope.member.amount);
+				 $scope.invoice.invoiceamt =  $scope.invoice.invoiceamt.toFixed(2);
 				 
 				 
 			 }
 			 
+			 else{
 			 
+			 $scope.member.amount=parseFloat($scope.member.billablehours*$scope.member.rateperhour).toFixed(2);
+			
 			 
+			 console.log($scope.invoice.invoiceamt);
+			 
+			 var total=0;
+			 
+			 for(i=0;i<$scope.invoiceList.length;i++){
+				 
+				 total+= parseFloat($scope.invoiceList[i].amount);
+				 
+				
+			 }
+			 
+			 $scope.invoice.invoiceamt = total+ parseFloat($scope.member.amount);
+			 $scope.invoice.invoiceamt =  $scope.invoice.invoiceamt.toFixed(2);
+
+		 }
 		 }
 		 
+		 if(isNaN($scope.invoice.invoiceamt)){
+				
+				$scope.invoice.invoiceamt = undefined;
+				
+			}
 		
 		
 	}
@@ -196,6 +229,9 @@ angular.module('myApp.controllers')
 		
 		
 		 var lastnum = sheet.rateperhour.toString().slice(index, sheet.rateperhour.length);
+		 
+		 
+
 		
 
 		if(sheet.rateperhour && sheet.billablehours==undefined||sheet.billablehours==""){
@@ -209,6 +245,7 @@ angular.module('myApp.controllers')
 				 sheet.rateperhour =sheet.rateperhour;
 				 
 				 sheet.amount = sheet.rateperhour+0.00;
+				 sheet.amount = sheet.amount.toFixed(2);
 				 
 				 
 			 }
@@ -219,6 +256,8 @@ angular.module('myApp.controllers')
 
 
 				 	sheet.amount=parseFloat((1.0*sheet.rateperhour).toFixed(2));
+				 	
+				 	sheet.amount =sheet.amount.toFixed(2)
 
 				 
 			 }
@@ -233,6 +272,8 @@ angular.module('myApp.controllers')
 				 sheet.rateperhour =sheet.rateperhour;
 				 
 				 sheet.amount = (sheet.rateperhour+0.00) * sheet.billablehours;
+				 
+				 sheet.amount = sheet.amount.toFixed(2);
 				 
 				 
 			 }
@@ -253,18 +294,32 @@ angular.module('myApp.controllers')
 			 
 			 $scope.invoice.invoiceamt = sheet.amount * 1;
 			 
+			 $scope.invoice.invoiceamt = $scope.invoice.invoiceamt.toFixed(2);
+			 
 			 
 		 }
 		 else {
 			 
-			 for(i=0;i<=$scope.invoiceList.length;i++){
+			 var total=0;
+			 
+			 for(i=0;i<$scope.invoiceList.length;i++){
 				 
+				 total+= parseFloat($scope.invoiceList[i].amount);
 				 
-				 $scope.invoice.invoiceamt = parseFloat($scope.invoiceList[i].amount);
-				 
-				 
+				
 			 }
+			 
+			 $scope.invoice.invoiceamt = total;
+			 
+			 $scope.invoice.invoiceamt = $scope.invoice.invoiceamt.toFixed(2);
+			 console.log($scope.invoice.invoiceamt);
 		 }
+		
+		if(isNaN($scope.invoice.invoiceamt)){
+			
+			$scope.invoice.invoiceamt = undefined;
+			
+		}
 	}
 
 	$scope.projectBasedSelections = function(project){
@@ -277,6 +332,10 @@ angular.module('myApp.controllers')
 		$scope.invoice.currency="";
 		$scope.invoice.invoiceamt="";
 		$scope.invoice.teammembers=[];
+		$scope.member.description='';
+		$scope.member.teamlist="Team Members"
+		$scope.member.rateperhour=undefined;
+		$scope.member.billablehours =undefined;
 
 		$http({
 
@@ -287,6 +346,9 @@ angular.module('myApp.controllers')
 				'Content-Type': 'application/json'
 			}
 		}).success(function(result, status, headers) {
+			
+			
+	
 			
 			
 			if(result.length<=0){
@@ -308,6 +370,19 @@ angular.module('myApp.controllers')
 			console.log($scope.projectTypeList);
 			$scope.invoice.projectType =$scope.projectTypeList[0].projectType;
 			$scope.invoice.currency=$scope.projectTypeList[0].currencyCode;
+			
+			if($scope.invoice.projectType=="Monthly"){
+				
+				$('#memberamount').prop('readonly', false);
+
+				
+			} 
+			
+			else{
+				
+				$('#memberamount').prop('readonly', true);
+				
+			}
 
 			for(var i=0;i<result[0].projectCostDetails.length;i++){
 
@@ -382,19 +457,19 @@ angular.module('myApp.controllers')
 
 		var datevalidationfromDate =new Date(($scope.member.fromdate).split("-")[1]+"-"+($scope.member.fromdate).split("-")[0]+"-"+($scope.member.fromdate).split("-")[2]);	
 		var datevalidationtoDate = new Date(($scope.member.todate).split("-")[1]+"-"+($scope.member.todate).split("-")[0]+"-"+($scope.member.todate).split("-")[2]);;
+		
+		
+		if(isNaN($scope.member.rateperhour)){
+			
+			$scope.member.rateperhour=undefined;
 
-		
-/*		index =$scope.member.rateperhour.length-1;
-		
-		var lastnum = $scope.member.rateperhour.slice(index, $scope.member.rateperhour.length);*/
-		
-		
-		
-		
+			
+		}
+	
 		if (datevalidationfromDate > datevalidationtoDate) {
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("FromDate cannot be after ToDate!");
-			return;
+			return;	
 
 		}
 		if($scope.member.fromdate==undefined||$scope.member.todate==undefined){
@@ -408,13 +483,13 @@ angular.module('myApp.controllers')
 			$(".alert-danger").html("please enter the member details for description");
 			return;	
 
-		}else if($scope.member.rateperhour==undefined || isNaN($scope.member.rateperhour) ||$scope.member.rateperhour==""){
+		}else if(($scope.member.rateperhour==undefined || isNaN($scope.member.rateperhour) ||$scope.member.rateperhour=="") &&($scope.invoice.projectType!="Monthly")){
 
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("please enter the member details for rate");
 			return;	
 
-		}else if(($scope.member.billablehours==undefined || isNaN($scope.member.billablehours) ||$scope.member.billablehours=="")&&($scope.invoice.projectType=="Hourly")){
+		}else if(($scope.member.billablehours==undefined || isNaN($scope.member.billablehours) ||$scope.member.billablehours=="")&&($scope.invoice.projectType!="Monthly")){
 
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("please enter the member details for billable hours");
@@ -434,18 +509,19 @@ angular.module('myApp.controllers')
 				$scope.invoiceList =[];
 			}
 
-			if($scope.member.billablehours==undefined){
+			if($scope.member.billablehours==undefined || isNaN($scope.member.billablehours)){
 
 				$scope.member.billablehours='';
 
 			}
 			
-			if(lastnum="."){
+			if($scope.member.rateperhour==undefined || isNaN($scope.member.rateperhour)){
 				
-				$scope.member.rateperhour =$scope.member.rateperhour+ 0.00;
+				
+				$scope.member.rateperhour ='';
 				
 			}
-
+		
 			if($scope.member.teamlist==undefined || $scope.member.teamlist==null || $scope.member.teamlist==""){
 
 				memberobj ="";
@@ -546,9 +622,46 @@ angular.module('myApp.controllers')
 
 	$scope.deleteteammembers = function(sheet){
 
+		
+		console.log($scope.indexing);
 		$scope.invoiceList.splice(sheet.index,1);
-		$(".alert-msg").show().delay(1000).fadeOut(); 
-		$(".alert-success").html("Member Details deleted Successfully!!!!");
+		$scope.iterator--;
+		
+		
+		
+		console.log($scope.invoiceList);
+		
+		if($scope.invoiceList.length<=0){
+			
+			
+			
+			
+			 $scope.invoice.invoiceamt =undefined;
+			$(".alert-msg").show().delay(1000).fadeOut(); 
+			$(".alert-success").html("Member Details deleted Successfully!!!!");
+			
+		}
+		
+		else{
+			
+			 var total=0;
+			 
+			 for(i=0;i<$scope.invoiceList.length;i++){
+				 
+				 total+= parseFloat($scope.invoiceList[i].amount);
+				 
+				
+			 }
+			 
+			 $scope.invoice.invoiceamt = total;
+			 
+			 $scope.invoice.invoiceamt = $scope.invoice.invoiceamt.toFixed(2);
+			
+		}
+		
+		
+		 
+		
 	}
 
 	$scope.teammemberslist= function(sheet){
@@ -631,20 +744,36 @@ angular.module('myApp.controllers')
 	}
 	$scope.sumCost = function(){
 
-		var totalSum= 0;
+		var totalSum= parseFloat($scope.member.amount);
+		
+		var sum =0;
+		
+		if($scope.invoiceList.length<=0){
+			
+			$scope.invoice.invoiceamt = $scope.member.amount;
+				
+		}
+		
+		else{
 		try{
 			for(var i = 0; i < $scope.invoiceList.length; i++){
 				var revenue = parseFloat($scope.invoiceList[i].amount);
-				totalSum += revenue;
+				sum += revenue;
 			}
+			
+			console.log("revenue-------->"+revenue);
+			
 		}
 		catch(err)
 		{
 			$scope.invoiceList=[];
 			totalSum=0;
+			sum=0;
 		}
 		console.log("Sum of amounts==>"+totalSum);
+		$scope.invoice.invoiceamt = totalSum+sum;
 		return(totalSum);
+		}
 	}
 
 }])

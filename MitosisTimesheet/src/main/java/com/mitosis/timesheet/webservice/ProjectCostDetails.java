@@ -47,12 +47,16 @@ public class ProjectCostDetails {
 		if(jsonObject.has("id")){
 			hdrModel.setId(jsonObject.getInt("id"));			
 		}
-		if(jsonObject.has("projectCost") && !"".equals(jsonObject.get("projectCost")) || !jsonObject.get("projectCost").equals(null)){
+		if(jsonObject.has("projectCost")){
+			
+			
+			if(!"".equals(jsonObject.get("projectCost")) || !jsonObject.get("projectCost").equals(null)){
 			
 		
 			int cost=jsonObject.getInt("projectCost");
 			BigDecimal projectCost=new BigDecimal(cost); 
 			hdrModel.setProjectCost(projectCost);
+			}
 		}
 		hdrModel.setCurrencyCode(jsonObject.getString("currencyCode"));
 

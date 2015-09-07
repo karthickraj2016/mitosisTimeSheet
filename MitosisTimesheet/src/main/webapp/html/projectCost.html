@@ -27,8 +27,9 @@ $(document).ready(function () {
    	<div class="form-group">
       <label class="control-label col-sm-4 textleft">Project<span>:</span></label>
       <div class="col-sm-8">
-        <select  class="form-control empdet-form" required  ng-model="project" ng-options="item as item.projectName for item in projectlist" ng-blur="projectValidation(project);" style="color: #777777;">
+        <select  class="form-control empdet-form" required  ng-model="project" ng-options="item as item.projectName for item in projectlist"  ng-change="projectchange(project)"style="color: #777777;">
 	    <option value="">Project</option>
+	    <!-- ng-blur="projectValidation(project);" -->
 	    </select> 
       </div>
     </div>
@@ -57,7 +58,7 @@ $(document).ready(function () {
 	</div>
 	
 	<div class="col-md-6 col-xs-12" >   	
-   	<div class="form-group" ng-show=costshow>
+   	<div class="form-group"  ng-show=costshow>
       <label class="control-label col-sm-4 textleft">Cost<span>:</span></label>
       <div class="col-sm-8">
         <input class="form-control" type="text" id="costdet" onkeypress="return isNumber(event)" placeholder="" ng-model="cost.projectCost">
@@ -71,7 +72,7 @@ $(document).ready(function () {
 		</div>
     </div> 
     
-    <div class="form-group" id="hr-show" ng-show=rateshow>
+    <div class="form-group" id="hr-show">
     <label class="control-label col-sm-4 textleft">Rate<span>:</span></label>
 	    <div class="col-sm-8">
 	    <input class="form-control" id="rate" type="text" onkeypress="return isNumber(event)"  ng-model="cost.costOfEmp">
@@ -105,14 +106,14 @@ $(document).ready(function () {
 			<td>
 				<span ng-show="!showEdit">{{sheet.member.name}}</span>
 				<span ng-show="showEdit">
-				<select class="form-control" ng-model="sheet.member" ng-options="item as item.name for item in memberlist">
+				<select class="form-control" ng-model="sheet.member" ng-options="item as item.member.name for item in memberlist">
     			<option value="">{{sheet.member.name}}</option>
 				</select></span>
 			</td>
 			<td>
 				<span ng-show="!showEdit">{{sheet.rate}}</span>
 				<span ng-show="showEdit" ><input class="form-control" type="text" ng-model="sheet.rate" ></span>
-				<span style="color:red" ng-show="sheet.rate == '' || sheet.rate == undefined">Required</span>
+				<span style="color:red" ng-show="sheet.rate == '' || sheet.rate == undefined"></span>
 			</td>
 			<td style="word-spacing: 15px;">
 				<a><span class="glyphicon glyphicon-pencil" ng-click="showEdit = !showEdit" ng-show="!showEdit"></span></a>
