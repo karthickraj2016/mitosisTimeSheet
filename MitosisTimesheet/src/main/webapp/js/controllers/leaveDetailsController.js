@@ -155,12 +155,12 @@ angular.module('myApp.controllers')
 			$(".alert-danger").html("FromDate cannot be after ToDate!");
 			return;
 		}
-		else if(fromdate.getDay()===2 || fromdate.getDay()===3 || todate.getDay()===2 || todate.getDay()===3){
+		/*else if(fromdate.getDay()===2 || fromdate.getDay()===3 || todate.getDay()===2 || todate.getDay()===3){
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("FromDate or Todate cannot be on Saturdays or Sundays!!!!");
 			return;
 
-		}
+		}*/
 		else{
 
 			var menuJson = angular.toJson({

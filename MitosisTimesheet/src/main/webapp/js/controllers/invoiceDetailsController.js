@@ -714,7 +714,7 @@ $scope.calculateRateForUpdate = function(project,sheet){
 		
 		var jsonstring=JSON.stringify($rootScope.invoiceList);	
 		console.log($scope.invoice.customer+','+$scope.invoice.projectlist);
-		var sc=Number($scope.sumCost());
+		var sc=$scope.invoice.invoiceamt;
 		var val=true;
 		if(sc>0)
 		{
@@ -800,7 +800,7 @@ $scope.calculateRateForUpdate = function(project,sheet){
 		}
 		console.log("Sum of amounts==>"+totalSum);
 		$scope.invoice.invoiceamt = totalSum+sum;
-		return(totalSum);
+		return($scope.invoice.invoiceamt);
 		}
 	}
 

@@ -161,7 +161,8 @@ public class InvoiceDetails {
 			invoicedetail.setDescription((String) jsonobject.getJSONObject("value").get("description"));
 
 			if(jsonobject.getJSONObject("value").has("teammember") && jsonobject.getJSONObject("value").get("teammember")!=""){
-				invoicedetail.setTeamMember((String) jsonobject.getJSONObject("value").get("teammember"));
+				
+				invoicedetail.setTeamMember((String) jsonobject.getJSONObject("value").getJSONObject("teammember").getString("name"));
 			}		
 
 			if(jsonobject.getJSONObject("value").has("billablehours") && !jsonobject.getJSONObject("value").get("billablehours").toString().equals("")){
