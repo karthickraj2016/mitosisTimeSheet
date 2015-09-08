@@ -50,7 +50,7 @@ public class ProjectCostDetails {
 		if(jsonObject.has("projectCost")){
 			
 			
-			if(!"".equals(jsonObject.get("projectCost")) || !jsonObject.get("projectCost").equals(null)){
+			if(!"".equals(jsonObject.get("projectCost")) && !jsonObject.get("projectCost").equals(null)){
 			
 		
 			int cost=jsonObject.getInt("projectCost");

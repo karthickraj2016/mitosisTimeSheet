@@ -216,6 +216,12 @@ angular.module('myApp.controllers')
 				$scope.invoice.invoiceamt = undefined;
 				
 			}
+		 
+		 if(isNaN($scope.member.amount)){
+			 
+			 $scope.member.amount = undefined;
+			 
+		 }
 		
 		
 	}
@@ -320,6 +326,12 @@ angular.module('myApp.controllers')
 			$scope.invoice.invoiceamt = undefined;
 			
 		}
+		
+		if(isNaN(sheet.amount)){
+			 
+			 sheet.amount = undefined;
+			 
+		 }
 	}
 
 	$scope.projectBasedSelections = function(project){
@@ -336,6 +348,7 @@ angular.module('myApp.controllers')
 		$scope.member.teamlist="Team Members"
 		$scope.member.rateperhour=undefined;
 		$scope.member.billablehours =undefined;
+		$scope.member.amount=undefined;
 
 		$http({
 
@@ -371,7 +384,7 @@ angular.module('myApp.controllers')
 			$scope.invoice.projectType =$scope.projectTypeList[0].projectType;
 			$scope.invoice.currency=$scope.projectTypeList[0].currencyCode;
 			
-			if($scope.invoice.projectType=="Monthly"){
+			if($scope.invoice.projectType=="Monthly" || $scope.invoice.projectType=="Fixed"){
 				
 				$('#memberamount').prop('readonly', false);
 
@@ -509,13 +522,13 @@ $scope.calculateRateForUpdate = function(project,sheet){
 			$(".alert-danger").html("please enter the member details for description");
 			return;	
 
-		}else if(($scope.member.rateperhour==undefined || isNaN($scope.member.rateperhour) ||$scope.member.rateperhour=="") &&($scope.invoice.projectType!="Monthly")){
+		}else if(($scope.member.rateperhour==undefined || isNaN($scope.member.rateperhour) ||$scope.member.rateperhour=="") &&($scope.invoice.projectType=="Monthly")){
 
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("please enter the member details for rate");
 			return;	
 
-		}else if(($scope.member.billablehours==undefined || isNaN($scope.member.billablehours) ||$scope.member.billablehours=="")&&($scope.invoice.projectType!="Monthly")){
+		}else if(($scope.member.billablehours==undefined || isNaN($scope.member.billablehours) ||$scope.member.billablehours=="")&&($scope.invoice.projectType=="Hourly")){
 
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("please enter the member details for billable hours");
@@ -553,7 +566,7 @@ $scope.calculateRateForUpdate = function(project,sheet){
 				memberobj ="";
 			}
 			
-			else if($scope.member.teamlist.member.name){
+			else if($scope.member.teamlist.member){
 				memberobj=$scope.member.teamlist.member;
 			}
 			
@@ -615,14 +628,14 @@ $scope.calculateRateForUpdate = function(project,sheet){
 			$scope.invoiceList[sheet.index]=$scope.previoussheet;
 			return;	
 
-		}else if(sheet.rateperhour==undefined || isNaN(sheet.rateperhour) ||sheet.rateperhour==""){
+		}else if(sheet.rateperhour==undefined || isNaN(sheet.rateperhour) ||sheet.rateperhour=="" &&($scope.invoice.projectType!="Monthly")){
 
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("please enter the member details for rate");
 			$scope.invoiceList[sheet.index]=$scope.previoussheet;
 			return;	
 
-		}else if((sheet.billablehours==undefined || isNaN(sheet.billablehours) ||sheet.billablehours=="")&&(sheet.projectType=="Hourly")){
+		}else if((sheet.billablehours==undefined || isNaN(sheet.billablehours) ||sheet.billablehours=="")&&($scope.invoice.projectType=="Hourly")){
 
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("please enter the member details for billable hours");
@@ -771,9 +784,21 @@ $scope.calculateRateForUpdate = function(project,sheet){
 		}
 	}
 	$scope.sumCost = function(){
-
-		var totalSum= parseFloat($scope.member.amount);
 		
+		var totalSum;
+		
+		if($scope.member.amount=="" || isNaN($scope.member.amount) || $scope.member.amount==undefined){
+			
+			
+			totalSum =0;
+			
+			
+		}
+		else{
+
+		
+			totalSum= parseFloat($scope.member.amount);
+		}
 		var sum =0;
 		
 		if($scope.invoiceList.length<=0){
@@ -800,7 +825,6 @@ $scope.calculateRateForUpdate = function(project,sheet){
 		}
 		console.log("Sum of amounts==>"+totalSum);
 		$scope.invoice.invoiceamt = totalSum+sum;
-		return($scope.invoice.invoiceamt);
 		}
 	}
 

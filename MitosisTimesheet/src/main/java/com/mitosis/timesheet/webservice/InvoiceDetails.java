@@ -160,7 +160,7 @@ public class InvoiceDetails {
 			invoicedetail.setInvoiceToDate(invoiceToDate);
 			invoicedetail.setDescription((String) jsonobject.getJSONObject("value").get("description"));
 
-			if(jsonobject.getJSONObject("value").has("teammember") && jsonobject.getJSONObject("value").get("teammember")!=""){
+			if(jsonobject.getJSONObject("value").has("teammember") && !jsonobject.getJSONObject("value").get("teammember").toString().equals("")){
 				
 				invoicedetail.setTeamMember((String) jsonobject.getJSONObject("value").getJSONObject("teammember").getString("name"));
 			}		
@@ -172,7 +172,7 @@ public class InvoiceDetails {
 
 			}
 
-			if(jsonobject.getJSONObject("value").has("rateperhour")){
+			if(jsonobject.getJSONObject("value").has("rateperhour") && !jsonobject.getJSONObject("value").get("rateperhour").toString().equals("")){
 
 				String stringrateperhour = jsonobject.getJSONObject("value").get("rateperhour").toString();
 
@@ -222,15 +222,11 @@ public class InvoiceDetails {
 		double invamt = Double.parseDouble(invamount);		
 		BigDecimal invoiceamount = BigDecimal.valueOf(invamt);
 
-
-
-		/*		BigDecimal invoiceAmt = new BigDecimal(jsonObject.getInt("invoiceamt"));*/
 		invoiceHdrModel.setInvoiceAmount(invoiceamount);
 		invoiceHdrModel.setProject(projectModel);
 		invoiceHdrModel.setCustomer(customerModel);
 		invoiceHdrModel.setCurrencyCode(jsonObject.getString("currency"));
 		invoiceHdrModel.setInvoiceStatus("unpaid");
-		/*		BigDecimal balanceAmt = new BigDecimal(jsonObject.getInt("invoiceamt"));*/
 		invoiceHdrModel.setBalanceAmount(invoiceamount);
 		invoiceHdrModel.setPaidAmount(new BigDecimal(0));
 

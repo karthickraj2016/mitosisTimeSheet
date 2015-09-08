@@ -316,6 +316,13 @@ angular.module('myApp.controllers')
 	},
 
 	$scope.update = function(sheet){
+		
+		
+		if(($scope.cost.costOfEmp==undefined | $scope.cost.costOfEmp=='') && $scope.cost.projectType!="Monthly"){
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("Please Enter Rate");
+			return;
+		}
 
 		$scope.empList[sheet.index]=sheet;
 
@@ -353,7 +360,7 @@ angular.module('myApp.controllers')
 	
 		}
 		
-		else if(projectType=="Monthly"){
+		else {
 			
 			
 
