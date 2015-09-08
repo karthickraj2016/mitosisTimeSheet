@@ -133,8 +133,8 @@
 				<span style="color:red" ng-show="sheet.description == '' || sheet.description == undefined">Required</span>
 			</td>
 			<td>
-				<span ng-show="!showEdit">{{sheet.teammember}}</span>
-				<span id="{{sheet.employee.id}}" ng-show="showEdit"><select class="form-control" ng-model="sheet.teammember" ng-change="calculateRateForUpdate(invoice.projectlist,sheet)" ng-options="item.member.name as item.member.name for item in invoice.teammembers" style="color: #777777;">
+				<span ng-show="!showEdit">{{sheet.teammember.name}}</span>
+				<span id="{{sheet.employee.id}}" ng-show="showEdit"><select class="form-control" ng-model="sheet.teammember" ng-change="calculateRateForUpdate(invoice.projectlist,sheet)" ng-options="item.member as item.member.name for item in invoice.teammembers" style="color: #777777;">
 				<option value="">Team Members</option>
 				</select> 
 				</span>

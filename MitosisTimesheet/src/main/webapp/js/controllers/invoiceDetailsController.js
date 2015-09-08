@@ -443,7 +443,7 @@ $scope.calculateRateForUpdate = function(project,sheet){
 	
 		
 		
-		var menuJson = angular.toJson({"memberId":sheet.teammember,"projectId":project.projectId}); 
+		var menuJson = angular.toJson({"memberId":sheet.teammember.id,"projectId":project.projectId}); 
 		
 		
 		
@@ -459,7 +459,7 @@ $scope.calculateRateForUpdate = function(project,sheet){
 	
 				sheet.rateperhour= result.rate;
 				
-				console.log(sheet.rateperhour);
+				$scope.amountCalForUpdate(sheet);
 				
 				
 				
@@ -554,8 +554,10 @@ $scope.calculateRateForUpdate = function(project,sheet){
 			}
 			
 			else if($scope.member.teamlist.member.name){
-				memberobj=$scope.member.teamlist.member.name;
+				memberobj=$scope.member.teamlist.member;
 			}
+			
+			console.log($scope.member.teamlist);
 			invoice = {"fromdate":$scope.member.fromdate,"todate":$scope.member.todate,"description":$scope.member.description,"billablehours":$scope.member.billablehours,"amount":$scope.member.amount,"index":$scope.iterator,"rateperhour":$scope.member.rateperhour};
 			invoice["teammember"]=memberobj;
 			console.log(invoice);
