@@ -116,7 +116,7 @@ $(document).ready(function () {
 				<span style="color:red" ng-show="sheet.rate == '' || sheet.rate == undefined"></span>
 			</td>
 			<td style="word-spacing: 15px;">
-				<a><span class="glyphicon glyphicon-pencil" ng-click="showEdit = !showEdit" ng-show="!showEdit"></span></a>
+				<a><span class="glyphicon glyphicon-pencil" ng-click="showEdit = !showEdit;pencilClick(sheet)" ng-show="!showEdit"></span></a>
 				<a><span class="glyphicon glyphicon-remove" ng-click="confirmDelete(sheet)" ng-show="!showEdit"></span></a>
 				<a><span class="glyphicon glyphicon-ok" ng-click="showEdit = !showEdit;update(sheet)" ng-show="showEdit" ng-disabled="checkRequired(sheet);"></span></a>
 				<a><span class="glyphicon glyphicon-ban-circle" ng-click="showEdit = !showEdit" ng-show="showEdit"></span></a>

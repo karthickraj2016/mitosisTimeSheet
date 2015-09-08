@@ -22,4 +22,8 @@ public interface ProjectCostDetailsService {
 
 	public List<TeamAssignmentModel> getTeamMembers(int projectId);
 
+	public List<ProjectCostHdrModel> getAllProjectsCostHdr();
+
+	public List<ProjectCostDetailsModel> getAllProjectsCostDetails();
+
 }

@@ -205,5 +205,35 @@ public class ProjectCostDetails {
 	}
 	
 	
+	@Path("/getAllProjectCosts")
+	@GET
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public JSONObject getAllProjects() throws JSONException {
+		
+		JSONObject jsonObject  = new JSONObject();
+		
+		
+		List<ProjectCostHdrModel> projectCostHdrModel = new ArrayList<ProjectCostHdrModel>();
+		
+		projectCostHdrModel = costService.getAllProjectsCostHdr();
+
+		List<ProjectCostDetailsModel> projectCostDetailsModel = new ArrayList<ProjectCostDetailsModel>();
+		
+		
+		projectCostDetailsModel = costService.getAllProjectsCostDetails();
+		
+		
+		jsonObject.put("projectCostHdrList", projectCostHdrModel);
+		jsonObject.put("projectCostDetailsList", projectCostDetailsModel);
+		
+
+
+		return jsonObject;
+
+	}
+	
+	
+	
 	
 }

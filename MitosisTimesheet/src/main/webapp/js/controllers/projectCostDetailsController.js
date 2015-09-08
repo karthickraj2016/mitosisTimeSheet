@@ -5,7 +5,7 @@ angular.module('myApp.controllers')
 .controller('projectCostDetailsController', ['$scope', '$http', '$state','$rootScope', function($scope, $http, $state, $rootScope) {
 
 	$scope.costshow = true;
-	
+
 
 	$http({
 
@@ -22,123 +22,117 @@ angular.module('myApp.controllers')
 		$scope.projectlist=result;
 	});
 
-	$scope.projectValidation= function(project){
 
-			},
-	
-	
 	$scope.projectchange = function (project){
-				
-				
-				
-				var menuJson = angular.toJson({"projectId":project.projectId})
 
-				$http({
 
-					url: 'rest/projectCost/getTeamMember',
-					method: 'POST',
-					data: menuJson,
-					headers: {
-						'Content-Type': 'application/json'
-					}
-				}).success(function(result, status, headers) {
-					
 
-					$scope.memberlist=result;
+		var menuJson = angular.toJson({"projectId":project.projectId})
 
-			
-				});	
-				
-				
-		
-				
-				
+		$http({
+
+			url: 'rest/projectCost/getTeamMember',
+			method: 'POST',
+			data: menuJson,
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).success(function(result, status, headers) {
+
+
+			$scope.memberlist=result;
+
+
+		});	
+
+
+
+		$scope.emp=undefined;
+
+		var menuJson = angular.toJson({"projectId":project.projectId})
+
+		$http({
+
+			url: 'rest/projectCost/projectValidation',
+			method: 'POST',
+			data: menuJson,
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).success(function(result, status, headers) {
+
+			console.log(result);
+
+			if(result.projectType==null){
+				$('#h-show').hide();
+				$('#hr-show').hide();
+				$('#buttons').hide();
+				$('#rateTable').hide();
+				$scope.cost=undefined;
+				$scope.hdrid=undefined;
+				$scope.empList=undefined;
 				$scope.emp=undefined;
+				return;
+			}else if(result.projectType=="Fixed"){
+				$('#h-show').hide();
+				$('#hr-show').hide();
+				$('#buttons').hide();
+				$('#rateTable').hide();
+				$scope.cost=result;
+				$scope.hdrid=result.id;
 
-				var menuJson = angular.toJson({"projectId":project.projectId})
+			}else{
 
-				$http({
+				if(result.projectType="Hourly"){
 
-					url: 'rest/projectCost/projectValidation',
-					method: 'POST',
-					data: menuJson,
-					headers: {
-						'Content-Type': 'application/json'
+					$scope.costshow = false;
+
+				}
+				if(result.projectType="Monthly"){
+
+					$scope.costshow = true;
+
+				}
+
+				$('#h-show').show();
+				$('#hr-show').show();
+				$('#buttons').show();
+				$('#rateTable').show();
+
+				$scope.cost=result;
+				$scope.hdrid=result.id;
+
+				for(var i=0;i<result.projectCostDetails.length;i++){
+
+
+					if(angular.isUndefined($scope.emp)){
+						$scope.emp= new Array();
+						$scope.index=0;
 					}
-				}).success(function(result, status, headers) {
-					
-					console.log(result);
 
-					if(result.projectType==null){
-						$('#h-show').hide();
-						$('#hr-show').hide();
-						$('#buttons').hide();
-						$('#rateTable').hide();
-						$scope.cost=undefined;
-						$scope.hdrid=undefined;
-						$scope.empList=undefined;
-						$scope.emp=undefined;
-						return;
-					}else if(result.projectType=="Fixed"){
-						$('#h-show').hide();
-						$('#hr-show').hide();
-						$('#buttons').hide();
-						$('#rateTable').hide();
-						$scope.cost=result;
-						$scope.hdrid=result.id;
+					var empRate=[];
 
-					}else{
-						
-						if(result.projectType="Hourly"){
-							
-							$scope.costshow = false;
-							
-						}
-						if(result.projectType="Monthly"){
-							
-							$scope.costshow = true;
-							
-						}
+					empRate={"member":result.projectCostDetails[i].employee,"rate":result.projectCostDetails[i].rate,"id":result.projectCostDetails[i].id,"index":$scope.index};
 
-						$('#h-show').show();
-						$('#hr-show').show();
-						$('#buttons').show();
-						$('#rateTable').show();
+					$scope.emp.push(empRate);
+					$scope.index++;
+				}
 
-						$scope.cost=result;
-						$scope.hdrid=result.id;
+				$scope.empList=$scope.emp;
+				console.log($scope.empList);
+			}
+		});
 
-						for(var i=0;i<result.projectCostDetails.length;i++){
-							
 
-							if(angular.isUndefined($scope.emp)){
-								$scope.emp= new Array();
-								$scope.index=0;
-							}
 
-							var empRate=[];
 
-							empRate={"member":result.projectCostDetails[i].employee,"rate":result.projectCostDetails[i].rate,"id":result.projectCostDetails[i].id,"index":$scope.index};
-							
-							$scope.emp.push(empRate);
-						    $scope.index++;
-						}
 
-						$scope.empList=$scope.emp;
-						console.log($scope.empList);
-					}
-				});
 
-		
-		
-		
-		
-		
 	}
 
 	$scope.addProjectCostDetails = function(){
 
-		
+
 		if(($scope.cost.currencyCode).length>3){
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("Invalid Currency Code");
@@ -147,12 +141,12 @@ angular.module('myApp.controllers')
 			$('#addDet').show();
 			return;
 		}
-		
+
 		if(isNaN($scope.cost.costOfEmp)){
-			
+
 			$scope.cost.costOfEmp=undefined;
-			
-			
+
+
 		}
 
 		var projectType=$scope.cost.projectType;
@@ -172,8 +166,8 @@ angular.module('myApp.controllers')
 				$('#addDet').show();
 				return;
 			}
-		
-			
+
+
 
 
 			var menuJson=angular.toJson({"id":$scope.hdrid,"projectId":$scope.project.projectId,"projectType":$scope.cost.projectType,
@@ -205,7 +199,7 @@ angular.module('myApp.controllers')
 			});
 
 		}else{
-			
+
 			if($scope.empList==undefined){
 				$(".alert-msg1").show().delay(1000).fadeOut(); 
 				$(".alert-danger").html("Please Add Employees");
@@ -250,8 +244,8 @@ angular.module('myApp.controllers')
 	},
 
 	$scope.addEmployeeRate = function(){
-		
-		
+
+
 
 		if($scope.member==undefined | $scope.member=="Member" ){
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
@@ -271,20 +265,20 @@ angular.module('myApp.controllers')
 		}
 
 		if(angular.isUndefined($scope.empList)){
-			$scope.empList= new Array();
+			$scope.empList= [];
 			$scope.iterator=0;
 		}
-		
+
 		$scope.iterator = $scope.empList.length+1;
 
-		var empRate=[];
-		
+		var empRate= new Array();
+
 		$scope.cost.costOfEmp=parseFloat($scope.cost.costOfEmp);
-		
+
 		if(isNaN($scope.cost.costOfEmp)){
-			
+
 			$scope.cost.costOfEmp = undefined;
-			
+
 		}
 
 		empRate={"member":$scope.member.member,"rate":$scope.cost.costOfEmp,"index":$scope.iterator};
@@ -297,7 +291,7 @@ angular.module('myApp.controllers')
 	},
 
 	$scope.nameValidation = function(member){
-		
+
 		console.log("member:---------->"+member);
 
 		var listLength=$scope.empList.length;
@@ -317,10 +311,18 @@ angular.module('myApp.controllers')
 
 	$scope.update = function(sheet){
 		
+		console.log($scope.empList[sheet.index-1]);
+		console.log(sheet[sheet.index-1]);
 		
-		if(($scope.cost.costOfEmp==undefined | $scope.cost.costOfEmp=='') && $scope.cost.projectType!="Monthly"){
+		
+
+
+		if((sheet.rate==undefined | sheet.rate=='') && $scope.cost.projectType!="Monthly"){
+			
+			
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("Please Enter Rate");
+			$scope.empList[sheet.index-1]=$scope.previoussheet;
 			return;
 		}
 
@@ -343,33 +345,40 @@ angular.module('myApp.controllers')
 
 	}
 	
-		
-	$scope.costTypeChange = function(project){
+	
+	$scope.pencilClick = function(sheet){
 	
 		
-		var menuJson = angular.toJson({"projectId":project.projectId})
+		$scope.previoussheet=angular.copy(sheet);
+
 		
+	}
+
+
+	$scope.costTypeChange = function(project){
+
+
+		var menuJson = angular.toJson({"projectId":project.projectId})
+
 		var projectType=$scope.cost.projectType;
 
-		
+
 		if(projectType=="Hourly"){
-			
-			
+
+
 			$scope.costshow=false;
-			
-	
+
+
 		}
-		
+
 		else {
-			
-			
 
 			$scope.costshow=true;
-			
-			
+
+
 		}
 
-		
-		
+
+
 	}
 }])

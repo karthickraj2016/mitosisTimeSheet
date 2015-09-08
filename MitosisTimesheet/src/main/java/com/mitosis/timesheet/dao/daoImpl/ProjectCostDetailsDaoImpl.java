@@ -148,5 +148,49 @@ public class ProjectCostDetailsDaoImpl extends BaseService implements ProjectCos
 			return teamMembers;
 	}
 
+	@Override
+	public List<ProjectCostHdrModel> getAllProjectsCostHdr() {
+		
+		List<ProjectCostHdrModel> projectCostHdrModel = new ArrayList<ProjectCostHdrModel>();
+		
+		try{
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<ProjectCostHdrModel> cq = qb.createQuery(ProjectCostHdrModel.class);
+			Root<ProjectCostHdrModel> root = cq.from(ProjectCostHdrModel.class);
+			cq.select(root);
+			projectCostHdrModel = entityManager.createQuery(cq).getResultList();
+		}catch(Exception e){
+				
+			e.printStackTrace();
+			}finally{
+				close();
+			}
+			return projectCostHdrModel;
+	}
+
+
+	@Override
+	public List<ProjectCostDetailsModel> getAllProjectsCostDetails() {
+		List<ProjectCostDetailsModel> projectCostDetailsModel = new ArrayList<ProjectCostDetailsModel>();
+		
+		try{
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<ProjectCostDetailsModel> cq = qb.createQuery(ProjectCostDetailsModel.class);
+			Root<ProjectCostDetailsModel> root = cq.from(ProjectCostDetailsModel.class);
+			cq.select(root);
+			projectCostDetailsModel = entityManager.createQuery(cq).getResultList();
+		}catch(Exception e){
+				
+			e.printStackTrace();
+			}finally{
+				close();
+			}
+			return projectCostDetailsModel;
+	}
+
 
 }

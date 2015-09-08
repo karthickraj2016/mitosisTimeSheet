@@ -337,6 +337,8 @@ angular.module('myApp.controllers')
 	$scope.projectBasedSelections = function(project){
 
 		var menuJson = angular.toJson({"project":project});
+		
+		$('#memberamount').prop('readonly', false);
 
 		$scope.invoice.invoiceno="";
 		$scope.invoiceList=[];
@@ -384,30 +386,45 @@ angular.module('myApp.controllers')
 			$scope.invoice.projectType =$scope.projectTypeList[0].projectType;
 			$scope.invoice.currency=$scope.projectTypeList[0].currencyCode;
 			
-			if($scope.invoice.projectType=="Monthly" || $scope.invoice.projectType=="Fixed"){
+			if($scope.invoice.projectType=="Monthly"){
 				
 				$('#memberamount').prop('readonly', false);
 
 				
 			} 
 			
+			else if($scope.invoice.projectType=="Fixed"){
+			
+				$('#rateperhour').hide();
+				$('#billablehour').hide();
+				$('#memberamount').prop('readonly', false);
+			
+			}
 			else{
 				
 				$('#memberamount').prop('readonly', true);
-				
 			}
+			
+			console.log("result------->:"+result);
 
-			for(var i=0;i<result[0].projectCostDetails.length;i++){
+			for(var i=0;i<result.length;i++){
 
 				if(angular.isUndefined($scope.invoice.teammembers)){
 					$scope.invoice.teammembers= new Array();
 				}
 
 				var teammembers=[];
+				
+				for(var j=0;j<result[i].projectCostDetails.length;j++){
+					
+					
 
-				teammembers={"member":result[0].projectCostDetails[i].employee};
+					teammembers={"member":result[i].projectCostDetails[j].employee};
 
-				$scope.invoice.teammembers.push(teammembers);
+					$scope.invoice.teammembers.push(teammembers);
+					
+				}
+
 			}
 
 			console.log($scope.invoice.teammembers);
@@ -440,6 +457,9 @@ angular.module('myApp.controllers')
 		}).success(function(result, status, headers) {
 	
 				$scope.member.rateperhour= result.rate;
+				
+				
+				$scope.amountCalForinsert();
 				
 				console.log($scope.member.rateperhour);
 			

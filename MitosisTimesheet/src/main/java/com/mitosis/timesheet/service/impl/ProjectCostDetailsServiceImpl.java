@@ -74,4 +74,29 @@ public class ProjectCostDetailsServiceImpl implements ProjectCostDetailsService 
 		
 	}
 
+	@Override
+	public List<ProjectCostHdrModel> getAllProjectsCostHdr() {
+		
+		List<ProjectCostHdrModel> projectCostHdrModel = new ArrayList<ProjectCostHdrModel>();
+		
+		projectCostHdrModel = costDao.getAllProjectsCostHdr();
+		
+		
+		// TODO Auto-generated method stub
+		return projectCostHdrModel;
+	}
+
+	@Override
+	public List<ProjectCostDetailsModel> getAllProjectsCostDetails() {
+
+		List<ProjectCostDetailsModel> projectCostDetailsModel = new ArrayList<ProjectCostDetailsModel>();
+		
+		projectCostDetailsModel = costDao.getAllProjectsCostDetails();
+		
+		
+		// TODO Auto-generated method stub
+		return projectCostDetailsModel;
+		
+	}
+
 }
