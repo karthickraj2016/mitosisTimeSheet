@@ -473,10 +473,7 @@ $scope.calculateRateForUpdate = function(project,sheet){
 				sheet.rateperhour= result.rate;
 				
 				$scope.amountCalForUpdate(sheet);
-				
-				
-				
-			
+
 			
 		});
 }
@@ -522,7 +519,7 @@ $scope.calculateRateForUpdate = function(project,sheet){
 			$(".alert-danger").html("please enter the member details for description");
 			return;	
 
-		}else if(($scope.member.rateperhour==undefined || isNaN($scope.member.rateperhour) ||$scope.member.rateperhour=="") &&($scope.invoice.projectType=="Monthly")){
+		}else if(($scope.member.rateperhour==undefined || isNaN($scope.member.rateperhour) ||$scope.member.rateperhour=="") &&($scope.invoice.projectType!="Monthly")){
 
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("please enter the member details for rate");
