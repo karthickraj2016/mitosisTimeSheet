@@ -24,6 +24,7 @@ angular.module('myApp.controllers')
 
 
 	$scope.projectchange = function (project){
+		
 
 
 
@@ -49,7 +50,9 @@ angular.module('myApp.controllers')
 
 		$scope.emp=undefined;
 
-		var menuJson = angular.toJson({"projectId":project.projectId})
+		var menuJson = angular.toJson({"projectId":project.projectId});
+		
+		
 
 		$http({
 
@@ -80,17 +83,22 @@ angular.module('myApp.controllers')
 				$('#rateTable').hide();
 				$scope.cost=result;
 				$scope.hdrid=result.id;
+				$scope.cost.projectType=result.projectType;
 
-			}else{
+			}else if(result.projectType=="Hourly"){
 
-				if(result.projectType="Hourly"){
 
 					$scope.costshow = false;
+					$scope.cost = {projectType: result.projectType};
+					//$scope.cost.projectType=
 
 				}
-				if(result.projectType="Monthly"){
+			else if(result.projectType="Monthly"){
 
 					$scope.costshow = true;
+					$scope.cost = {projectType: result.projectType};
+					console.log($scope.cost.projectType);
+					
 
 				}
 
@@ -120,7 +128,7 @@ angular.module('myApp.controllers')
 
 				$scope.empList=$scope.emp;
 				console.log($scope.empList);
-			}
+			
 		});
 
 

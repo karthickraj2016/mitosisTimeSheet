@@ -114,7 +114,7 @@ angular.module('myApp.controllers')
 	$scope.amountCalForinsert = function(){
 	
 
-		if($scope.member.rateperhour && $scope.member.billablehours==undefined || $scope.member.billablehours=="" || isNaN($scope.member.billablehours)){
+		if($scope.member.rateperhour){
 			
 		
 			index =$scope.member.rateperhour.toString().length-1;
@@ -122,10 +122,6 @@ angular.module('myApp.controllers')
 			
 		 var lastnum = $scope.member.rateperhour.toString().slice(index, $scope.member.rateperhour.length);
 		 
-
-		 
-	
-
 
 		 if(lastnum=="."){
 			 
@@ -137,7 +133,7 @@ angular.module('myApp.controllers')
 			 
 		 }
 		 
-		 else{
+		 else if($scope.member.billablehours==undefined || $scope.member.billablehours=="" || isNaN($scope.member.billablehours)){
 
 				$scope.member.rateperhour =parseFloat($scope.member.rateperhour);
 
@@ -148,15 +144,16 @@ angular.module('myApp.controllers')
 		 }
 		
 			
-			
-
-		}	else {
+			else if($scope.member.billablehours) {
 
 			$scope.member.rateperhour =parseFloat($scope.member.rateperhour);
 
 			$scope.member.billablehours = parseFloat($scope.member.billablehours);
 
 			$scope.member.amount=parseFloat($scope.member.billablehours*$scope.member.rateperhour).toFixed(2);
+		}
+		
+		
 		}
 		
 		
@@ -397,6 +394,8 @@ angular.module('myApp.controllers')
 			
 				$('#rateperhour').hide();
 				$('#billablehour').hide();
+				$('#members').hide();
+				
 				$('#memberamount').prop('readonly', false);
 			
 			}
@@ -539,7 +538,7 @@ $scope.calculateRateForUpdate = function(project,sheet){
 			$(".alert-danger").html("please enter the member details for description");
 			return;	
 
-		}else if(($scope.member.rateperhour==undefined || isNaN($scope.member.rateperhour) ||$scope.member.rateperhour=="") &&($scope.invoice.projectType!="Monthly")){
+		}else if(($scope.member.rateperhour==undefined || isNaN($scope.member.rateperhour) ||$scope.member.rateperhour=="") &&($scope.invoice.projectType=="Hourly")){
 
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("please enter the member details for rate");
@@ -645,7 +644,7 @@ $scope.calculateRateForUpdate = function(project,sheet){
 			$scope.invoiceList[sheet.index]=$scope.previoussheet;
 			return;	
 
-		}else if(sheet.rateperhour==undefined || isNaN(sheet.rateperhour) ||sheet.rateperhour=="" &&($scope.invoice.projectType!="Monthly")){
+		}else if(sheet.rateperhour==undefined || isNaN(sheet.rateperhour) ||sheet.rateperhour=="" &&($scope.invoice.projectType=="Hourly")){
 
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("please enter the member details for rate");

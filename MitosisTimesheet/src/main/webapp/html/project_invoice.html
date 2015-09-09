@@ -72,7 +72,7 @@
     <div class="form-group">
     <textarea rows="1" class="form-control" ng-model="member.description" placeholder="Description"></textarea>
     </div>
-    <div class="form-group">
+    <div id="members" class="form-group">
 
        <select  class="form-control" style="color: #777777;" ng-model="member.teamlist" ng-options="item as item.member.name for item in invoice.teammembers" ng-change="calculateRateForInsert(member.teamlist,invoice.projectlist)" style="color: #777777;">
 	    <option value="" ng-selected="true">Team Members</option>
