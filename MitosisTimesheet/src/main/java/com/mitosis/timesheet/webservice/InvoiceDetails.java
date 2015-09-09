@@ -421,20 +421,7 @@ public class InvoiceDetails {
 
 		return json;
 
-		/*
-		 inserthdr = InvoiceService.create(invoiceHdrModel);
-		boolean insertdtl = InvoiceService.create(invoiceDetailList);
-
-		if(inserthdr && insertdtl ){
-
-			json.put("value", "updated Successfully");
-			return json;
-		}
-		else{
-			json.put("value", "updationfailed ");
-			return json;
-		}*/
-
+	
 
 	}
 

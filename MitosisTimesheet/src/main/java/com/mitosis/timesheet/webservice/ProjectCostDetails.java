@@ -77,12 +77,19 @@ public class ProjectCostDetails {
 
 			jsonObject1.put("emp",jsonArray.get(i));
 			
+			
+			if(jsonObject1.getJSONObject("emp").has("rate") && !jsonObject1.getJSONObject("emp").get("rate").toString().equals("")){
+			
 			String rateString =String.valueOf(jsonObject1.getJSONObject("emp").get("rate")); 
 		
 			
 			Double ratedouble = Double.parseDouble(rateString);
 			
 			BigDecimal empRate = BigDecimal.valueOf(ratedouble);
+			
+			detailsModel.setRate(empRate);
+			
+			}
 
 			int employeeId=(int)jsonObject1.getJSONObject("emp").getJSONObject("member").getInt("id");
 
@@ -92,7 +99,7 @@ public class ProjectCostDetails {
 			}
 			userModel.setId(employeeId);
 			detailsModel.setEmployee(userModel);		
-			detailsModel.setRate(empRate);
+			
 
 
 			boolean insert=false;
