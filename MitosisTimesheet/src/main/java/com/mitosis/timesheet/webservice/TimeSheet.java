@@ -182,8 +182,6 @@ public class TimeSheet {
 
 		double hoursallowed=totalhours-hoursentered;
 		
-		ProjectModel project = new ProjectModel();
-
 
 		if(totalhours>=hourentry){
 

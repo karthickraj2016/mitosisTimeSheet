@@ -63,7 +63,6 @@ public class TeamReport {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<TeamAssignmentModel> getprojectList() throws JSONException, JRException, IOException, ParseException{
-		JSONObject jsonobject = new JSONObject();
 
 		HttpSession session= request.getSession(true);
 

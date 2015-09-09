@@ -122,8 +122,6 @@ public class CustomerPayment {
 		public Object getProjects(JSONObject jsonObject) throws JSONException, ParseException {
 			ProjectService p=new ProjectServiceImpl();
 			
-			JSONObject project = new JSONObject();
-			
 			int cusId=jsonObject.getInt("customerId");
 			List<ProjectModel> projects=p.getProjectList(cusId);
 			return projects;

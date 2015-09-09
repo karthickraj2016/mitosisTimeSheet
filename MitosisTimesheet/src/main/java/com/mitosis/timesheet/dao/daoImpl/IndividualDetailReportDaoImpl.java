@@ -118,9 +118,7 @@ public class IndividualDetailReportDaoImpl extends BaseService implements Indivi
 	@Override
 	public List<SummaryReport> getIndividualSummaryReportHours(Date fromdate,
 			Date toDate, int employeeId) {
-		/*ArrayList<TimeSheetModel> hours = new ArrayList<TimeSheetModel>();*/
-		
-		TimeSheetModel timesheetModel = new TimeSheetModel();
+	
 		List<SummaryReport> timeSheetList = new ArrayList<SummaryReport>();
 		List<Double> hours = new ArrayList<Double>();
 		

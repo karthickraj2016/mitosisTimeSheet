@@ -129,7 +129,7 @@ public class TeamReportDaoImpl extends BaseService implements TeamReportDao {
 	@Override
 	public List<SummaryReport> getTeamSummarySumHours(Date fromDate, Date toDate,
 			int memberId, int projectId) {
-		TimeSheetModel timesheetModel = new TimeSheetModel();
+		
 		List<SummaryReport> timeSheetList = new ArrayList<SummaryReport>();
 		List<Double> hours = new ArrayList<Double>();
 		
@@ -283,7 +283,6 @@ public class TeamReportDaoImpl extends BaseService implements TeamReportDao {
  }
 	@Override
 	public List<SummaryReport> getAllProjectsSumHours(Date fromDate, Date toDate){
-		TimeSheetModel timesheetModel = new TimeSheetModel();
 		List<SummaryReport> timeSheetList = new ArrayList<SummaryReport>();
 		List<Double> hours = new ArrayList<Double>();
 		

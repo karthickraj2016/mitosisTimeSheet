@@ -25,6 +25,8 @@ angular.module('myApp.controllers')
 
 	$scope.projectchange = function (project){
 		
+		$scope.empList=undefined;
+		
 
 
 
@@ -84,6 +86,7 @@ angular.module('myApp.controllers')
 				$scope.cost=result;
 				$scope.hdrid=result.id;
 				$scope.cost.projectType=result.projectType;
+				return;
 
 			}else if(result.projectType=="Hourly"){
 
@@ -240,7 +243,16 @@ angular.module('myApp.controllers')
 					$scope.project="Project";
 					$scope.empList=undefined;
 					$scope.emp=undefined;
-				}else{
+				}
+				
+				else if(result.value=="enterrate"){
+					
+					$(".alert-msg1").show().delay(1000).fadeOut(); 
+					$(".alert-danger").html("Please enter rate");
+					
+					
+				}
+				else{
 					$(".alert-msg1").show().delay(1000).fadeOut(); 
 					$(".alert-danger").html("Process Failed");
 				}
@@ -361,9 +373,17 @@ angular.module('myApp.controllers')
 
 		
 	}
+	
+	$scope.teammemberslist= function(sheet){
+
+		$scope.empList[sheet.index-1]=$scope.previoussheet;
+
+	}
 
 
 	$scope.costTypeChange = function(project){
+		
+		$scope.member="Member";
 
 
 		var menuJson = angular.toJson({"projectId":project.projectId})
@@ -375,6 +395,9 @@ angular.module('myApp.controllers')
 
 
 			$scope.costshow=false;
+			
+		
+			
 
 
 		}

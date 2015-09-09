@@ -37,7 +37,13 @@ public class Company {
 		
 		company.setCompanyName(jsonObject.getString("companyName"));
 		company.setCompanyAddress(jsonObject.getString("companyAddress"));
-		company.setPhoneNumber(jsonObject.getString("phoneNumber"));
+		
+		if(jsonObject.has("phoneNumber") && !jsonObject.getString("phoneNumber").equals("")){
+			
+			company.setPhoneNumber(jsonObject.getString("phoneNumber"));
+			
+		}
+		
 		company.setMobileNumber(jsonObject.getString("mobileNumber"));
 		company.setBranch(jsonObject.getString("branch"));
 		company.setCompanyUrl(jsonObject.getString("companyUrl"));

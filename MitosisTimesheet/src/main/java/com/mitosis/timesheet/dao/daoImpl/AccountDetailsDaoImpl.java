@@ -38,10 +38,6 @@ public class AccountDetailsDaoImpl extends BaseService implements AccountDetails
 	@Override
 	public boolean updateNewPassword(UserDetailsModel userDetailsModel) {
 		
-		
-		UserDetailsModel userDetailsmodel = new UserDetailsModel();
-
-
 		try{
 			begin();
 			entityManager.getEntityManagerFactory().getCache().evictAll();

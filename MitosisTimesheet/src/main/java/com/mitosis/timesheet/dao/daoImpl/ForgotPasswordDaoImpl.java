@@ -38,10 +38,7 @@ public class ForgotPasswordDaoImpl extends BaseService implements ForgotPassword
 
 	@Override
 	public boolean update(UserDetailsModel userDetailsModel) {
-		
-		UserDetailsModel userDetailsmodel = new UserDetailsModel();
-		
-		System.out.println(userDetailsModel);
+
 		try{
 			begin();
 			entityManager.getEntityManagerFactory().getCache().evictAll();

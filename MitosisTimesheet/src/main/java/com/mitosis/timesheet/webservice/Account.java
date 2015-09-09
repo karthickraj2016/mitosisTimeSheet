@@ -34,8 +34,7 @@ public class Account {
 	@Path("/getaccountdetails")
 	@Produces(MediaType.APPLICATION_JSON)
 	public UserDetailsModel getAccountDetails(){
-		
-		JSONObject jsonObject = new JSONObject();
+	
 		
 		UserDetailsModel userDetailsModel = new UserDetailsModel();
 		

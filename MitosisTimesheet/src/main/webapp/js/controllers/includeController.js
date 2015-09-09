@@ -20,7 +20,12 @@ angular.module('myApp.controllers')
 			console.log(result);
 			if(result.name==""){
 				$state.go('login')
-			}else{
+			}else if(result.adminFlag==2){
+				
+				$scope.leavereportlist=true;
+				
+			}
+				else{
 				$rootScope.name=result.name;
 				$rootScope.manageFinance=result.manageFinance;
 				$rootScope.manageProject=result.manageProject;
