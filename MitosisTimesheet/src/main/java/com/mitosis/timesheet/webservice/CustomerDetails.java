@@ -47,7 +47,7 @@ public class CustomerDetails {
 		if (jsonObject.has("skypeId")) {
 			customerModel.setSkypeId(jsonObject.getString("skypeId"));	
 		}
-		if (jsonObject.has("phone")) {
+		if (jsonObject.has("phone") && !jsonObject.getString("phone").equals("") && !jsonObject.getString("phone").equals(null)) {
 			/*BigInteger phone = new BigInteger(jsonObject.getString("phone"));*/
 			customerModel.setPhone(Long.valueOf(jsonObject.getString("phone")));
 		}
@@ -98,7 +98,7 @@ public class CustomerDetails {
 		if (jsonObject.has("skypeId")) {
 			customerModel.setSkypeId(jsonObject.getString("skypeId"));
 		}
-		if (jsonObject.has("phone")) {
+		if (jsonObject.has("phone") && !jsonObject.getString("phone").equals("") && !jsonObject.getString("phone").equals(null)) {
 			/*BigInteger phone = new BigInteger(jsonObject.getString("phone"));*/
 			
 			customerModel.setPhone(Long.valueOf(jsonObject.getString("phone")));

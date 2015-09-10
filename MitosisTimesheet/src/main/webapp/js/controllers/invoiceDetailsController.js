@@ -246,9 +246,6 @@ angular.module('myApp.controllers')
 		var lastnum = sheet.rateperhour.toString().slice(index, sheet.rateperhour.length);
 
 
-
-
-
 		if(sheet.rateperhour){
 
 
@@ -364,6 +361,11 @@ angular.module('myApp.controllers')
 		$('#rateperhour').show();
 		$('#billablehour').show();
 		$('#members').show();
+		
+		
+		$('#rate').show();
+		$('#billablehours').show();
+		$('#teammembers').show();
 		$scope.invoice.projectType="";
 
 
@@ -375,7 +377,7 @@ angular.module('myApp.controllers')
 		$scope.invoice.teammembers=[];
 		$scope.member.description='';
 		$scope.member.teamlist="Team Members"
-			$scope.member.rateperhour=undefined;
+		$scope.member.rateperhour=undefined;
 		$scope.member.billablehours =undefined;
 		$scope.member.amount=undefined;
 
@@ -423,7 +425,7 @@ angular.module('myApp.controllers')
 					$('#rateperhour').hide();
 					$('#billablehour').hide();
 					$('#members').hide();
-
+		
 					$('#memberamount').prop('readonly', false);
 
 				}
@@ -530,6 +532,16 @@ angular.module('myApp.controllers')
 
 
 		$scope.previoussheet=angular.copy(sheet);
+		
+		
+		if($scope.invoice.projectType=="Fixed"){
+			
+			
+			$('#rate').hide();
+			$('#billablehours').hide();
+			$('#teammembers').hide();
+		}
+	
 
 
 	}
@@ -567,13 +579,24 @@ angular.module('myApp.controllers')
 			$(".alert-danger").html("please enter the member details for description");
 			return;	
 
-		}else if(($scope.member.rateperhour==undefined || isNaN($scope.member.rateperhour) ||$scope.member.rateperhour=="") &&($scope.invoice.projectType=="Hourly")){
+		}else if(($scope.member.teamlist=="Team Members")&&($scope.invoice.projectType=="Hourly")){
+
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("please add members");
+			return;	
+		}
+		
+		
+		else if(($scope.member.rateperhour==undefined || isNaN($scope.member.rateperhour) ||$scope.member.rateperhour=="") &&($scope.invoice.projectType=="Hourly")){
 
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("please enter the member details for rate");
 			return;	
 
-		}else if(($scope.member.billablehours==undefined || isNaN($scope.member.billablehours) ||$scope.member.billablehours=="")&&($scope.invoice.projectType=="Hourly")){
+		}
+		
+		
+		else if(($scope.member.billablehours==undefined || isNaN($scope.member.billablehours) ||$scope.member.billablehours=="")&&($scope.invoice.projectType=="Hourly")){
 
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("please enter the member details for billable hours");
@@ -586,6 +609,7 @@ angular.module('myApp.controllers')
 			return;	
 
 		}
+		
 
 
 		else{
@@ -656,7 +680,7 @@ angular.module('myApp.controllers')
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("FromDate cannot be after ToDate!");
 
-			$scope.invoiceList[sheet.index]=$scope.previoussheet;
+			$scope.invoiceList[$scope.invoiceList.indexOf(sheet)]=$scope.previoussheet;
 			return;
 
 		}
@@ -664,40 +688,40 @@ angular.module('myApp.controllers')
 
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("please enter the member details of from date and todate");
-			$scope.invoiceList[sheet.index]=$scope.previoussheet;
+			$scope.invoiceList[$scope.invoiceList.indexOf(sheet)]=$scope.previoussheet;
 			return;
 
 		}else if(sheet.description==undefined||sheet.description==""){
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("please enter the member details for description");
-			$scope.invoiceList[sheet.index]=$scope.previoussheet;
+			$scope.invoiceList[$scope.invoiceList.indexOf(sheet)]=$scope.previoussheet;
 			return;	
 
 		}else if(sheet.rateperhour==undefined || isNaN(sheet.rateperhour) ||sheet.rateperhour=="" &&($scope.invoice.projectType=="Hourly")){
 
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("please enter the member details for rate");
-			$scope.invoiceList[sheet.index]=$scope.previoussheet;
+			$scope.invoiceList[$scope.invoiceList.indexOf(sheet)]=$scope.previoussheet;
 			return;	
 
 		}else if((sheet.billablehours==undefined || isNaN(sheet.billablehours) ||sheet.billablehours=="")&&($scope.invoice.projectType=="Hourly")){
 
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("please enter the member details for billable hours");
-			$scope.invoiceList[sheet.index]=$scope.previoussheet;
+			$scope.invoiceList[$scope.invoiceList.indexOf(sheet)]=$scope.previoussheet;
 			return;	
 
 		}else if(sheet.amount==undefined || isNaN(sheet.amount) || sheet.amount==""){
 
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("please enter the member details for amount");
-			$scope.invoiceList[sheet.index]=$scope.previoussheet;
+			$scope.invoiceList[$scope.invoiceList.indexOf(sheet)]=$scope.previoussheet;
 			return;	
 
 		}
 
 		else{
-			$scope.invoiceList[sheet.index]=sheet;
+			$scope.invoiceList[$scope.invoiceList.indexOf(sheet)]=sheet;
 
 			$(".alert-msg").show().delay(1000).fadeOut(); 
 			$(".alert-success").html("Member Details updated successfully!!!!!");
@@ -709,8 +733,7 @@ angular.module('myApp.controllers')
 	$scope.deleteteammembers = function(sheet){	
 
 
-		console.log($scope.indexing);
-		$scope.invoiceList.splice(sheet.index,1);
+		$scope.invoiceList.splice($scope.invoiceList.indexOf(sheet),1);
 		$scope.iterator--;
 
 
@@ -752,7 +775,9 @@ angular.module('myApp.controllers')
 
 	$scope.teammemberslist= function(sheet){
 
-		$scope.invoiceList[sheet.index]=$scope.previoussheet;
+		$scope.invoiceList[$scope.invoiceList.indexOf(sheet)]=$scope.previoussheet;
+		
+		$scope.sumCost();
 
 	}
 

@@ -15,6 +15,7 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import com.google.gson.Gson;
 import com.mitosis.timesheet.model.ProjectCostDetailsModel;
 import com.mitosis.timesheet.model.ProjectCostHdrModel;
 import com.mitosis.timesheet.model.ProjectModel;
@@ -78,7 +79,7 @@ public class ProjectCostDetails {
 			jsonObject1.put("emp",jsonArray.get(i));
 			
 			
-			if(jsonObject1.getJSONObject("emp").has("rate") && !jsonObject1.getJSONObject("emp").get("rate").toString().equals("")){
+			if(jsonObject1.getJSONObject("emp").has("rate") && !jsonObject1.getJSONObject("emp").get("rate").toString().equals("") && !jsonObject1.getJSONObject("emp").get("rate").equals(null)){
 			
 			String rateString =String.valueOf(jsonObject1.getJSONObject("emp").get("rate")); 
 		
@@ -231,7 +232,10 @@ public class ProjectCostDetails {
 		projectCostDetailsModel = costService.getAllProjectsCostDetails();
 		
 		
-		jsonObject.put("projectCostHdrList", projectCostHdrModel);
+		String gson = new Gson().toJson(projectCostHdrModel);
+		
+		
+		jsonObject.put("projectCostHdrList", gson);
 		jsonObject.put("projectCostDetailsList", projectCostDetailsModel);
 
 		return jsonObject;

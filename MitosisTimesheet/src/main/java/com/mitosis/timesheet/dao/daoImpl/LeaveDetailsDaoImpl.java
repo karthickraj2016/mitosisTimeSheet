@@ -87,7 +87,7 @@ public class LeaveDetailsDaoImpl  extends BaseService implements LeaveDetailsDao
 			CriteriaQuery<LeaveDetailsModel> cq = qb.createQuery(LeaveDetailsModel.class);
 			Root<LeaveDetailsModel> root = cq.from(LeaveDetailsModel.class);
 			cq.select(root);
-			cq.orderBy(qb.desc(root.get("id")));
+			cq.orderBy(qb.desc(root.get("fromDate")),qb.asc(root.get("employee").get("name")));
 			leaveModel = entityManager.createQuery(cq).getResultList();
 		}catch(Exception e){
 			e.printStackTrace();

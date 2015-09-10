@@ -146,6 +146,12 @@ angular.module('myApp', ['ui.router','myApp.controllers','ngStorage','ui.bootstr
 						 templateUrl: 'html/invoiceView.html',
 					     controller :'invoiceViewController'
 					 })
+					 
+					 .state('projectCostView', {
+						 url: '/projectCost',
+						 templateUrl: 'html/projectCostView.html',
+					     controller :'projectCostViewController'
+					 })
 			 }]);
 
 angular.module('myApp.controllers',[])

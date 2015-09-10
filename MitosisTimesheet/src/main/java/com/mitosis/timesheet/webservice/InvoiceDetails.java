@@ -208,8 +208,12 @@ public class InvoiceDetails {
 		customerModel.setCustomerId(Integer.parseInt(customer.get("customerId").toString()));
 
 		customerModel.setCustomerName(customer.getString("customerName"));
-
-		customerModel.setPhone(Long.valueOf(customer.getString("phone")));
+		
+		
+		if (customer.has("phone") && !customer.getString("phone").equals("") && !customer.get("phone").equals(null)) {
+			/*BigInteger phone = new BigInteger(jsonObject.getString("phone"));*/
+			customerModel.setPhone(Long.valueOf(customer.getString("phone")));
+		}
 
 		customerModel.setMobile(Long.valueOf(customer.getString("mobile")));
 

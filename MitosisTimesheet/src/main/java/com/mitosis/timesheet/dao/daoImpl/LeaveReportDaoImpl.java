@@ -35,7 +35,7 @@ public class LeaveReportDaoImpl  extends BaseService implements LeaveReportDao{
 			Predicate conditions = qb.and(condition1,condition2);
 			cq.where(conditions);
 			cq.select(root);
-			cq.orderBy(qb.asc(root.get("employee").get("name")), qb.asc(root.get("fromDate")));
+			cq.orderBy(qb.asc(root.get("fromDate")),qb.asc(root.get("employee").get("name")));
 			leaveDetailList = entityManager.createQuery(cq).getResultList();
 			commit();
 		} catch (Exception e) {

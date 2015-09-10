@@ -106,9 +106,11 @@ $(document).ready(function () {
 			<td>
 				<span ng-show="!showEdit">{{sheet.member.name}}</span>
 				<span ng-show="showEdit">
-				<select class="form-control" ng-model="sheet.member" ng-options="item as item.member.name for item in memberlist">
-    			<option value="">{{sheet.member.name}}</option>
+				<select class="form-control" ng-model="sheet.member" ng-options="item.member as item.member.name for item in memberlist">
+    			<option value="" ng-disabled=true>{{sheet.member.name}}</option>
+    			
 				</select></span>
+				
 			</td>
 			<td>
 				<span ng-show="!showEdit">{{sheet.rate}}</span>

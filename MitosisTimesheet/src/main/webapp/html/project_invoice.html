@@ -129,24 +129,24 @@
 			
 			<td >
 				<span ng-show="!showEdit">{{sheet.description}}</span>
-				<span ng-show="showEdit"><textarea rows="1" class="form-control" type="text" ng-model="sheet.description"></textarea></span>
+				<span ng-show="showEdit"><textarea rows="1" id="description" class="form-control" type="text" ng-model="sheet.description"></textarea></span>
 				<span style="color:red" ng-show="sheet.description == '' || sheet.description == undefined">Required</span>
 			</td>
 			<td>
 				<span ng-show="!showEdit">{{sheet.teammember.name}}</span>
-				<span id="{{sheet.employee.id}}" ng-show="showEdit"><select class="form-control" ng-model="sheet.teammember" ng-change="calculateRateForUpdate(invoice.projectlist,sheet)" ng-options="item.member as item.member.name for item in invoice.teammembers" style="color: #777777;">
-				<option value="">Team Members</option>
+				<span id="{{sheet.employee.id}}" ng-show="showEdit"><select  id="teammembers" class="form-control" ng-model="sheet.teammember" ng-change="calculateRateForUpdate(invoice.projectlist,sheet)" ng-options="item.member as item.member.name for item in invoice.teammembers" style="color: #777777;">
+				<option value="" ng-disabled="true">{{sheet.teammember.name}}</option>
 				</select> 
 				</span>
 			</td>
 			<td>
 				<span ng-show="!showEdit">{{sheet.rateperhour}}</span>
-				<span id="{{sheet.id}}" ng-show="showEdit"><input class="form-control" id="{{sheet.id}}" type="text" onkeypress="return isNumber(event)" ng-change="amountCalForUpdate(sheet)" ng-model="sheet.rateperhour"></span>
+				<span id="{{sheet.id}}" ng-show="showEdit"><input id="rate" class="form-control" id="{{sheet.id}}" type="text" onkeypress="return isNumber(event)" ng-change="amountCalForUpdate(sheet)" ng-model="sheet.rateperhour"></span>
 			<!-- 	<span style="color:red" ng-show="sheet.rateperhour == '' || sheet.rateperhour == undefined">Required</span> -->
 			</td>
 			<td>
 				<span ng-show="!showEdit">{{sheet.billablehours}}</span>
-				<span id="{{sheet.id}}" ng-show="showEdit"><input class="form-control" id="{{sheet.id}}" type="text" onkeypress="return isNumber(event)" ng-change="amountCalForUpdate(sheet)" ng-model="sheet.billablehours"></span>
+				<span id="{{sheet.id}}" ng-show="showEdit"><input id="billablehours" class="form-control" id="{{sheet.id}}" type="text" onkeypress="return isNumber(event)" ng-change="amountCalForUpdate(sheet)" ng-model="sheet.billablehours"></span>
 			<!-- 	<span style="color:red" ng-show="sheet.billablehours == '' || sheet.billablehours == undefined">Required</span> -->
 			</td>
 			<td>

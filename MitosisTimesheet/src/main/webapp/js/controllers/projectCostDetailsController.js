@@ -4,8 +4,8 @@ angular.module('myApp.controllers')
 
 .controller('projectCostDetailsController', ['$scope', '$http', '$state','$rootScope', function($scope, $http, $state, $rootScope) {
 
-	$scope.costshow = true;
-
+	
+	$scope.costshow=true;
 
 	$http({
 
@@ -26,6 +26,7 @@ angular.module('myApp.controllers')
 	$scope.projectchange = function (project){
 
 		$scope.empList=undefined;
+		$scope.costshow = true;
 
 
 
@@ -161,9 +162,6 @@ angular.module('myApp.controllers')
 		}
 
 		var projectType=$scope.cost.projectType;
-
-
-
 
 
 		if(projectType=="Hourly"){
@@ -337,41 +335,66 @@ angular.module('myApp.controllers')
 					$(".alert-msg1").show().delay(1000).fadeOut(); 
 					$(".alert-danger").html("Employee Name Already Entered");
 					$scope.member='Member';
-					return;
+					return false;
 				}
 			}
 		}
 	},
+	
 
 	$scope.update = function(sheet){
+		
+		
+		if($scope.cost.projectType=="Hourly"){
+		
+		
+		var i;
 
-		console.log($scope.empList[sheet.index-1]);
-		console.log(sheet[sheet.index-1]);
+		for(i=0;i<$scope.empList.length;i++){
 
+			if($scope.empList[i].rate=="" || $scope.empList[i].rate==undefined || isNaN($scope.empList[i].rate)){
 
+				$(".alert-msg1").show().delay(1000).fadeOut(); 
+				$(".alert-danger").html("Please enter Rate for hourly");
+				return;
 
+			}	
+		}
+		
+		}
+		
+		
+		
+		
 
 		if((sheet.rate==undefined | sheet.rate=='') && $scope.cost.projectType!="Monthly"){
 
 
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("Please Enter Rate");
-			$scope.empList[sheet.index-1]=$scope.previoussheet;
+			$scope.empList[$scope.empList.indexOf(sheet)]=$scope.previoussheet;
 			return;
 		}
 
-		$scope.empList[sheet.index]=sheet;
+		$scope.empList[$scope.empList.indexOf(sheet)]=sheet;
 
 		$(".alert-msg").show().delay(1000).fadeOut(); 
 		$(".alert-success").html("Employee Cost Detail Updated");
+		
+		console.log($scope.empList);
+		
+
+
 
 	},
 
 	$scope.confirmDelete = function(sheet){
+		
+		console.log(sheet);
 
 		if(confirm('Are you sure you want to delete?')){
 
-			$scope.empList.splice(sheet.index-1,1);
+			$scope.empList.splice($scope.empList.indexOf(sheet),1);
 
 			$(".alert-msg").show().delay(1000).fadeOut(); 
 			$(".alert-success").html("Employee Cost Detail Deleted");
@@ -384,13 +407,15 @@ angular.module('myApp.controllers')
 
 
 		$scope.previoussheet=angular.copy(sheet);
+		
+		console.log(sheet.member.name);
 
 
 	}
 
 	$scope.teammemberslist= function(sheet){
 
-		$scope.empList[sheet.index-1]=$scope.previoussheet;
+		$scope.empList[$scope.empList.indexOf(sheet)]=$scope.previoussheet;
 
 	}
 
@@ -410,17 +435,11 @@ angular.module('myApp.controllers')
 
 			$scope.costshow=false;
 
-
-
-
-
 		}
 
 		else {
 
 			$scope.costshow=true;
-
-
 		}
 
 
