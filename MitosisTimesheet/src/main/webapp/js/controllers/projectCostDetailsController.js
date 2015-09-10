@@ -24,9 +24,9 @@ angular.module('myApp.controllers')
 
 
 	$scope.projectchange = function (project){
-		
+
 		$scope.empList=undefined;
-		
+
 
 
 
@@ -53,8 +53,8 @@ angular.module('myApp.controllers')
 		$scope.emp=undefined;
 
 		var menuJson = angular.toJson({"projectId":project.projectId});
-		
-		
+
+
 
 		$http({
 
@@ -91,47 +91,47 @@ angular.module('myApp.controllers')
 			}else if(result.projectType=="Hourly"){
 
 
-					$scope.costshow = false;
-					$scope.cost = {projectType: result.projectType};
-					//$scope.cost.projectType=
+				$scope.costshow = false;
+				$scope.cost = {projectType: result.projectType};
+				//$scope.cost.projectType=
 
-				}
+			}
 			else if(result.projectType="Monthly"){
 
-					$scope.costshow = true;
-					$scope.cost = {projectType: result.projectType};
-					console.log($scope.cost.projectType);
-					
+				$scope.costshow = true;
+				$scope.cost = {projectType: result.projectType};
+				console.log($scope.cost.projectType);
 
+
+			}
+
+			$('#h-show').show();
+			$('#hr-show').show();
+			$('#buttons').show();
+			$('#rateTable').show();
+
+			$scope.cost=result;
+			$scope.hdrid=result.id;
+
+			for(var i=0;i<result.projectCostDetails.length;i++){
+
+
+				if(angular.isUndefined($scope.emp)){
+					$scope.emp= new Array();
+					$scope.index=0;
 				}
 
-				$('#h-show').show();
-				$('#hr-show').show();
-				$('#buttons').show();
-				$('#rateTable').show();
+				var empRate=[];
 
-				$scope.cost=result;
-				$scope.hdrid=result.id;
+				empRate={"member":result.projectCostDetails[i].employee,"rate":result.projectCostDetails[i].rate,"id":result.projectCostDetails[i].id,"index":$scope.index};
 
-				for(var i=0;i<result.projectCostDetails.length;i++){
+				$scope.emp.push(empRate);
+				$scope.index++;
+			}
 
+			$scope.empList=$scope.emp;
+			console.log($scope.empList);
 
-					if(angular.isUndefined($scope.emp)){
-						$scope.emp= new Array();
-						$scope.index=0;
-					}
-
-					var empRate=[];
-
-					empRate={"member":result.projectCostDetails[i].employee,"rate":result.projectCostDetails[i].rate,"id":result.projectCostDetails[i].id,"index":$scope.index};
-
-					$scope.emp.push(empRate);
-					$scope.index++;
-				}
-
-				$scope.empList=$scope.emp;
-				console.log($scope.empList);
-			
 		});
 
 
@@ -161,6 +161,27 @@ angular.module('myApp.controllers')
 		}
 
 		var projectType=$scope.cost.projectType;
+
+
+
+
+
+		if(projectType=="Hourly"){
+
+			var i;
+
+			for(i=0;i<$scope.empList.length;i++){
+
+				if($scope.empList[i].rate=="" || $scope.empList[i].rate==undefined || isNaN($scope.empList[i].rate)){
+
+					$(".alert-msg1").show().delay(1000).fadeOut(); 
+					$(".alert-danger").html("Please enter Rate for hourly");
+					return;
+
+				}	
+			}
+
+		}
 
 		if(projectType=="Fixed"){
 
@@ -209,7 +230,8 @@ angular.module('myApp.controllers')
 				$('#addDet').show();
 			});
 
-		}else{
+		}
+		else{
 
 			if($scope.empList==undefined){
 				$(".alert-msg1").show().delay(1000).fadeOut(); 
@@ -243,14 +265,6 @@ angular.module('myApp.controllers')
 					$scope.project="Project";
 					$scope.empList=undefined;
 					$scope.emp=undefined;
-				}
-				
-				else if(result.value=="enterrate"){
-					
-					$(".alert-msg1").show().delay(1000).fadeOut(); 
-					$(".alert-danger").html("Please enter rate");
-					
-					
 				}
 				else{
 					$(".alert-msg1").show().delay(1000).fadeOut(); 
@@ -330,16 +344,16 @@ angular.module('myApp.controllers')
 	},
 
 	$scope.update = function(sheet){
-		
+
 		console.log($scope.empList[sheet.index-1]);
 		console.log(sheet[sheet.index-1]);
-		
-		
+
+
 
 
 		if((sheet.rate==undefined | sheet.rate=='') && $scope.cost.projectType!="Monthly"){
-			
-			
+
+
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("Please Enter Rate");
 			$scope.empList[sheet.index-1]=$scope.previoussheet;
@@ -364,16 +378,16 @@ angular.module('myApp.controllers')
 		}
 
 	}
-	
-	
+
+
 	$scope.pencilClick = function(sheet){
-	
-		
+
+
 		$scope.previoussheet=angular.copy(sheet);
 
-		
+
 	}
-	
+
 	$scope.teammemberslist= function(sheet){
 
 		$scope.empList[sheet.index-1]=$scope.previoussheet;
@@ -382,7 +396,7 @@ angular.module('myApp.controllers')
 
 
 	$scope.costTypeChange = function(project){
-		
+
 		$scope.member="Member";
 
 
@@ -395,9 +409,9 @@ angular.module('myApp.controllers')
 
 
 			$scope.costshow=false;
-			
-		
-			
+
+
+
 
 
 		}

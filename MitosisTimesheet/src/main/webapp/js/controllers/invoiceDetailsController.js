@@ -359,6 +359,8 @@ angular.module('myApp.controllers')
 
 		$('#memberamount').prop('readonly', false);
 		
+		$('#invoiceamt').prop('readonly',false);
+		
 		$('#rateperhour').show();
 		$('#billablehour').show();
 		$('#members').show();
@@ -411,7 +413,7 @@ angular.module('myApp.controllers')
 
 					$('#memberamount').prop('readonly', false);
 					
-					$('#invoiceamt').prop('readonly',true);
+					$('#invoiceamt').prop('readonly',false);
 
 
 				} 
@@ -704,7 +706,7 @@ angular.module('myApp.controllers')
 
 	}
 
-	$scope.deleteteammembers = function(sheet){
+	$scope.deleteteammembers = function(sheet){	
 
 
 		console.log($scope.indexing);
@@ -775,7 +777,7 @@ angular.module('myApp.controllers')
 		if(sc>0)
 		{
 			console.log("sc greater than zero");
-			if(Number($scope.invoice.invoiceamt)==sc)
+			if(Number($scope.sumCost())==sc)
 			{val=true;}
 			else{
 				val=false;}
@@ -868,6 +870,7 @@ angular.module('myApp.controllers')
 			}
 			console.log("Sum of amounts==>"+totalSum);
 			$scope.invoice.invoiceamt = totalSum+sum;
+			return $scope.invoice.invoiceamt;
 		}
 	}
 

@@ -78,21 +78,6 @@ public class ProjectCostDetails {
 			jsonObject1.put("emp",jsonArray.get(i));
 			
 			
-			if(jsonObject1.getJSONObject("emp").get("rate").toString().equals("") || jsonObject1.getJSONObject("emp").get("rate").toString().equals(null)){
-				
-				if(jsonObject.getString("projectType").equals("Hourly")){
-					
-					json.put("value","enterrate");
-					
-					return json;
-
-					
-				}
-				
-				
-			}
-			
-			
 			if(jsonObject1.getJSONObject("emp").has("rate") && !jsonObject1.getJSONObject("emp").get("rate").toString().equals("")){
 			
 			String rateString =String.valueOf(jsonObject1.getJSONObject("emp").get("rate")); 
