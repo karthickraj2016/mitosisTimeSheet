@@ -356,7 +356,7 @@ angular.module('myApp.controllers')
 
 		$('#memberamount').prop('readonly', false);
 		
-		$('#invoiceamt').prop('readonly',false);
+		$('#invoiceamt').prop('readonly',true);
 		
 		$('#rateperhour').show();
 		$('#billablehour').show();
@@ -415,7 +415,7 @@ angular.module('myApp.controllers')
 
 					$('#memberamount').prop('readonly', false);
 					
-					$('#invoiceamt').prop('readonly',false);
+					$('#invoiceamt').prop('readonly',true);
 
 
 				} 
@@ -427,6 +427,7 @@ angular.module('myApp.controllers')
 					$('#members').hide();
 		
 					$('#memberamount').prop('readonly', false);
+					$('#invoiceamt').prop('readonly',true);
 
 				}
 				else{
@@ -630,7 +631,7 @@ angular.module('myApp.controllers')
 
 			}
 
-			if($scope.member.teamlist==undefined || $scope.member.teamlist==null || $scope.member.teamlist==""){
+			if($scope.member.teamlist==undefined || $scope.member.teamlist==null || $scope.member.teamlist=="" || $scope.member.teamlist=="Team Members"){
 
 				memberobj ="";
 			}

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.2396694214876067"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="75"/>
 	<property name="ireport.y" value="96"/>
 	<style name="rect" forecolor="#404040" backcolor="#FF0000" fill="Solid"/>
 	<parameter name="invoiceDetailsList" class="java.lang.Object"/>
@@ -35,9 +35,9 @@
 				<textFieldExpression class="java.lang.String"><![CDATA["Invoice"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="461" y="64" width="33" height="17"/>
+				<reportElement x="449" y="64" width="33" height="17"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA["Ph:"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Mobile:"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="263" y="0" width="293" height="17"/>
@@ -54,7 +54,7 @@
 			<textField isBlankWhenNull="true">
 				<reportElement x="441" y="64" width="114" height="17"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[((com.mitosis.timesheet.model.CompanyInfoModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).companyInfo).getPhoneNumber()]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[((com.mitosis.timesheet.model.CompanyInfoModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).companyInfo).getMobileNumber()]]></textFieldExpression>
 			</textField>
 			<image>
 				<reportElement x="87" y="5" width="168" height="68"/>

@@ -27,6 +27,7 @@ angular.module('myApp.controllers')
 
 		$scope.empList=undefined;
 		$scope.costshow = true;
+		console.log($scope.empList);
 
 
 
@@ -353,7 +354,9 @@ angular.module('myApp.controllers')
 		for(i=0;i<$scope.empList.length;i++){
 
 			if($scope.empList[i].rate=="" || $scope.empList[i].rate==undefined || isNaN($scope.empList[i].rate)){
-
+				
+				$scope.empList[$scope.empList.indexOf(sheet)]=$scope.previoussheet; 
+				
 				$(".alert-msg1").show().delay(1000).fadeOut(); 
 				$(".alert-danger").html("Please enter Rate for hourly");
 				return;
