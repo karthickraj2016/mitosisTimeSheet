@@ -21,6 +21,7 @@ import com.mitosis.timesheet.model.ProjectCostHdrModel;
 import com.mitosis.timesheet.model.ProjectModel;
 import com.mitosis.timesheet.model.TeamAssignmentModel;
 import com.mitosis.timesheet.model.UserDetailsModel;
+import com.mitosis.timesheet.pojo.ProjectViewVo;
 import com.mitosis.timesheet.service.ProjectCostDetailsService;
 import com.mitosis.timesheet.service.impl.ProjectCostDetailsServiceImpl;
 
@@ -213,32 +214,17 @@ public class ProjectCostDetails {
 	}
 	
 	
-	@Path("/getAllProjectCosts")
+	@Path("/viewAllProjectCosts")
 	@GET
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public JSONObject getAllProjects() throws JSONException {
-		
-		JSONObject jsonObject  = new JSONObject();
-		
+	public List<ProjectCostHdrModel> getAllProjects() throws JSONException {
 		
 		List<ProjectCostHdrModel> projectCostHdrModel = new ArrayList<ProjectCostHdrModel>();
 		
 		projectCostHdrModel = costService.getAllProjectsCostHdr();
 
-		List<ProjectCostDetailsModel> projectCostDetailsModel = new ArrayList<ProjectCostDetailsModel>();
-		
-		
-		projectCostDetailsModel = costService.getAllProjectsCostDetails();
-		
-		
-		String gson = new Gson().toJson(projectCostHdrModel);
-		
-		
-		jsonObject.put("projectCostHdrList", gson);
-		jsonObject.put("projectCostDetailsList", projectCostDetailsModel);
-
-		return jsonObject;
+		return projectCostHdrModel;
 
 	}
 	

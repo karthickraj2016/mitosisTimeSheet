@@ -44,6 +44,8 @@ public class TimeSheet {
 	@Produces(MediaType.APPLICATION_JSON)
 	
 	public JSONObject insertDetails(JSONObject jsonobject) throws JSONException, ParseException{
+		
+		
 
 		TimeSheetModel timeSheetModel = new TimeSheetModel();
 
@@ -125,6 +127,8 @@ public class TimeSheet {
   /*@Consumes(MediaType.APPLICATION_JSON)*/
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<TimeSheetModel> showlist() throws JSONException, ParseException {
+		
+
 		HttpSession session= request.getSession(true);
 
 		if(session.getAttribute("userId")==null){

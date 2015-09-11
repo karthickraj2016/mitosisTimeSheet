@@ -38,28 +38,28 @@ public class CustomerDetails {
 		
 		customerModel.setCustomerName(jsonObject.getString("customerName"));
 		
-		if (jsonObject.has("email")) {
+		if (jsonObject.has("email") && !jsonObject.getString("email").equals("") && !jsonObject.getString("email").equals(null)) {
 			customerModel.setEmail(jsonObject.getString("email"));
 		}
-		if (jsonObject.has("address")) {
+		if (jsonObject.has("address") && !jsonObject.getString("address").equals("") && !jsonObject.getString("address").equals(null)) {
 			customerModel.setAddress(jsonObject.getString("address"));
 		}
-		if (jsonObject.has("skypeId")) {
+		if (jsonObject.has("skypeId") && !jsonObject.getString("skypeId").equals("") && !jsonObject.getString("skypeId").equals(null)) {
 			customerModel.setSkypeId(jsonObject.getString("skypeId"));	
 		}
 		if (jsonObject.has("phone") && !jsonObject.getString("phone").equals("") && !jsonObject.getString("phone").equals(null)) {
 			/*BigInteger phone = new BigInteger(jsonObject.getString("phone"));*/
 			customerModel.setPhone(Long.valueOf(jsonObject.getString("phone")));
 		}
-		if (jsonObject.has("mobile")) {
+		if (jsonObject.has("mobile") && !jsonObject.getString("mobile").equals("") && !jsonObject.getString("mobile").equals(null)) {
 			/*BigInteger mobile = new BigInteger(jsonObject.getString("mobile"));*/
 			customerModel.setMobile(Long.valueOf(jsonObject.getString("mobile")));
 		}
-		if (jsonObject.has("website")) {
+		if (jsonObject.has("website") && !jsonObject.getString("website").equals("") && !jsonObject.getString("website").equals(null)) {
 			customerModel.setWebsite(jsonObject.getString("website"));
 		}
 		
-		if (jsonObject.has("fax")) {
+		if (jsonObject.has("fax")  && !jsonObject.getString("fax").equals("") && !jsonObject.getString("website").equals(null)) {
 			customerModel.setFax(jsonObject.getString("fax"));
 		}
 		
@@ -89,13 +89,13 @@ public class CustomerDetails {
 		if (jsonObject.has("customerName")) {
 			customerModel.setCustomerName(jsonObject.getString("customerName"));
 		}
-		if (jsonObject.has("email")) {
+		if (jsonObject.has("email") && !jsonObject.getString("email").equals("") && !jsonObject.getString("email").equals(null)) {
 			customerModel.setEmail(jsonObject.getString("email"));
 		}
-		if (jsonObject.has("address")) {
+		if (jsonObject.has("address") && !jsonObject.getString("address").equals("") && !jsonObject.getString("address").equals(null)) {
 			customerModel.setAddress(jsonObject.getString("address"));
 		}
-		if (jsonObject.has("skypeId")) {
+		if (jsonObject.has("skypeId") && !jsonObject.getString("skypeId").equals("") && !jsonObject.getString("skypeId").equals(null)) {
 			customerModel.setSkypeId(jsonObject.getString("skypeId"));
 		}
 		if (jsonObject.has("phone") && !jsonObject.getString("phone").equals("") && !jsonObject.getString("phone").equals(null)) {
@@ -104,14 +104,14 @@ public class CustomerDetails {
 			customerModel.setPhone(Long.valueOf(jsonObject.getString("phone")));
 			
 		}
-		if (jsonObject.has("mobile")) {
+		if (jsonObject.has("mobile") && !jsonObject.getString("mobile").equals("") && !jsonObject.getString("mobile").equals(null)) {
 		/*	BigInteger mobile = new BigInteger(jsonObject.getString("mobile"));*/
 			customerModel.setMobile(Long.valueOf(jsonObject.getString("mobile")));
 		}
-		if (jsonObject.has("website")) {
+		if (jsonObject.has("website") && !jsonObject.getString("website").equals("") && !jsonObject.getString("website").equals(null)) {
 			customerModel.setWebsite(jsonObject.getString("website"));
 		}
-		if (jsonObject.has("fax")) {
+		if (jsonObject.has("fax")  && !jsonObject.getString("fax").equals("") && !jsonObject.getString("fax").equals(null)) {
 			customerModel.setFax(jsonObject.getString("fax"));
 		}
 		

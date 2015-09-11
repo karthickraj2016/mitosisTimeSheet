@@ -258,9 +258,23 @@ angular.module('myApp.controllers')
 			$scope.list();
 			return;
 		}
+		
+		console.log(reqParam);
 
 		var menuJson=angular.toJson({"id":reqParam.id,"userId":reqParam.userId.userId,"employeeId":reqParam.employeeId,"firstName":reqParam.firstName,"lastName":reqParam.lastName,"joiningDate":reqParam.joiningEntryDate,"expStartDate":reqParam.expStartEntryDate,
-			"yearsOfExp":reqParam.yearsOfExperience,"monthsOfExp":reqParam.monthsOfExperience,"level":reqParam.level,"asOnDate":$scope.asOnDate,"lobId":reqParam.lob.id,"billable":reqParam.billable});
+			"yearsOfExp":reqParam.yearsOfExperience,"monthsOfExp":reqParam.monthsOfExperience,"level":reqParam.level,"asOnDate":$scope.asOnDate,"billable":reqParam.billable});
+		
+		if(reqParam.lob!=null){
+			
+			menuJson.push({"lobId":reqParam.lob.id});
+			
+			
+		}
+		
+		
+		console.log(menuJson);
+		
+		
 
 		$http({
 			url: 'rest/employeeMaster/updateEmployeeDetails',

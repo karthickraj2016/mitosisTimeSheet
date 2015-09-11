@@ -118,6 +118,8 @@ angular.module('myApp.controllers')
 
 
 			index =$scope.member.rateperhour.toString().length-1;
+			
+			var rateperhour;
 
 
 			var lastnum = $scope.member.rateperhour.toString().slice(index, $scope.member.rateperhour.length);
@@ -147,9 +149,10 @@ angular.module('myApp.controllers')
 			else if($scope.member.billablehours==undefined || $scope.member.billablehours=="" || isNaN($scope.member.billablehours)){
 
 				$scope.member.rateperhour =parseFloat($scope.member.rateperhour);
-
-
-				$scope.member.amount=parseFloat((1.0*$scope.member.rateperhour).toFixed(2));
+				
+				rateperhour = $scope.member.rateperhour + 0.00;
+				
+				$scope.member.amount=parseFloat((rateperhour).toFixed(2));
 
 
 			}
@@ -157,12 +160,13 @@ angular.module('myApp.controllers')
 
 			else if($scope.member.billablehours) {
 
-
 				$scope.member.rateperhour =parseFloat($scope.member.rateperhour);
+				
+				rateperhour = $scope.member.rateperhour * 1.0;
 
 				$scope.member.billablehours = parseFloat($scope.member.billablehours);
 
-				$scope.member.amount=parseFloat($scope.member.billablehours*$scope.member.rateperhour).toFixed(2);
+				$scope.member.amount=parseFloat($scope.member.billablehours*rateperhour).toFixed(2);
 			}
 
 
@@ -275,7 +279,7 @@ angular.module('myApp.controllers')
 					sheet.rateperhour =parseFloat(sheet.rateperhour);
 
 
-					sheet.amount=parseFloat((1.0*sheet.rateperhour).toFixed(2));
+					sheet.amount=parseFloat((1.00*sheet.rateperhour).toFixed(2));
 
 
 				}
