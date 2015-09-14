@@ -21,7 +21,6 @@ import com.mitosis.timesheet.model.ProjectCostHdrModel;
 import com.mitosis.timesheet.model.ProjectModel;
 import com.mitosis.timesheet.model.TeamAssignmentModel;
 import com.mitosis.timesheet.model.UserDetailsModel;
-import com.mitosis.timesheet.pojo.ProjectViewVo;
 import com.mitosis.timesheet.service.ProjectCostDetailsService;
 import com.mitosis.timesheet.service.impl.ProjectCostDetailsServiceImpl;
 
@@ -228,6 +227,20 @@ public class ProjectCostDetails {
 
 	}
 	
+/*	@Path("/pendingProjectCosts")
+	@GET
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<ProjectModel> pendingProjectCosts() throws JSONException {
+		
+		List<ProjectModel> projectModel = new ArrayList<ProjectModel>();
+		
+		projectModel = costService.getAllProjectsCostHdr();
+
+		return projectCostHdrModel;
+
+	}
+	*/
 	
 	
 	

@@ -1,7 +1,25 @@
+<script>
+
+$('.btn-ok').click(function(){
+	$('.emp-det-show').fadeOut(200);
+	$('.overlay').fadeOut(200);
+})
+
+</script>
+
+
 <div ng-init="list();" class="container" style="margin-top: 5%;"><div class="row"><div class="col-xs-12 col-md-12">
-<h2 class="text-center">Total Project Cost Details</h2></div></div></div>
+<h2 class="text-center">All Project Cost Details</h2></div></div></div>
 
 <div class="container" style="width: 100%;">
+ <div class="row len_show" style="padding: 20px;">
+<span>Show
+<select ng-model="numPerPage" >
+<option>15</option>
+<option>25</option>
+<option>35</option>
+<option>50</option>
+</select> Entries</span></div>
 <table class="table" id="rateTable" style="margin-top: 2%;">
 	<thead class="thead-mit-ts">
 		<tr>
@@ -12,13 +30,51 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="sheet in empList">
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
+		<tr ng-repeat="sheet in filteredParticipantsResults">
+			<td>	
+				<span style="cursor: pointer;" ng-click="memberDetails(sheet)" >{{sheet.project.projectName}}</span>
+			</td>
+			<td><span>{{sheet.projectType}}</span></td>
+			<td><span>{{sheet.projectCost}}</span></td>
+			<td><span>{{sheet.currencyCode}}</span></td>
 			
 		</tr>
 	</tbody>
 </table>
  </div>
+  <div class="alert-msg col-xs-12 col-sm-6"><p class="alert-success"></p></div>
+ <div class="alert-msg1 col-xs-12 col-sm-6"><p class="alert-danger"></p></div>
+ <pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="numPerPage" class="pagination-sm" boundary-links="true"></pagination>
+ <div class="emp-det-show">
+<h2 class="text-center popuph4"><strong>Member Details</strong></h2>
+ <table class="table popup" style="margin-bottom: 5px;">
+ 				<thead style="background: #C9D4D7;">
+			    <tr>
+               	<th>S.no</th><th>Emp Id</th><th>Name</th><th>Rate</th>              
+               	</tr>
+			    </thead>
+			            
+			    <tbody>
+        <tr>
+        <td colspan="4">
+        <div class="scrollit">
+            <table class="table-striped" style="width: 550px;">
+            
+            
+             <tr ng-repeat="sheet in memDetList">
+            
+                <td class="dettd"></td>
+                <td class="dettd">{{sheet.employee.id}}</td>
+                <td class="dettd lm">{{sheet.employee.name}}</td>
+                <td class="dettd lm">{{sheet.rate}}</td>
+              </tr>
+			      </table>
+			        </div>
+			        </td>
+			        </tr>
+			    </tbody>
+                
+                </table>
+  				<button type="submit" style="float: right; margin-right: 30px;" class="btn-ok btn btn-primary btn-sm">Ok</button>
+ </div>
+<div class="overlay"></div>
