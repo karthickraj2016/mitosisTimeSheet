@@ -160,6 +160,7 @@ public class ProjectCostDetailsDaoImpl extends BaseService implements ProjectCos
 			CriteriaQuery<ProjectCostHdrModel> cq = qb.createQuery(ProjectCostHdrModel.class);
 			Root<ProjectCostHdrModel> root = cq.from(ProjectCostHdrModel.class);
 			cq.select(root);
+			cq.orderBy(qb.asc(root.get("project").get("projectName")));
 			projectCostHdrModel = entityManager.createQuery(cq).getResultList();
 		}catch(Exception e){
 				
@@ -182,6 +183,7 @@ public class ProjectCostDetailsDaoImpl extends BaseService implements ProjectCos
 			CriteriaQuery<ProjectCostDetailsModel> cq = qb.createQuery(ProjectCostDetailsModel.class);
 			Root<ProjectCostDetailsModel> root = cq.from(ProjectCostDetailsModel.class);
 			cq.select(root);
+			cq.orderBy(qb.desc(root.get("id")));
 			projectCostDetailsModel = entityManager.createQuery(cq).getResultList();
 		}catch(Exception e){
 				

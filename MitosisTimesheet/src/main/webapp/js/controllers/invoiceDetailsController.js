@@ -359,6 +359,7 @@ angular.module('myApp.controllers')
 		var menuJson = angular.toJson({"project":project});
 
 		$('#memberamount').prop('readonly', false);
+		$('#editamount').prop('readonly',false);
 		
 		$('#invoiceamt').prop('readonly',true);
 		
@@ -418,6 +419,7 @@ angular.module('myApp.controllers')
 				if($scope.invoice.projectType=="Monthly"){
 
 					$('#memberamount').prop('readonly', false);
+					$('#editamount').prop('readonly',false);
 					
 					$('#invoiceamt').prop('readonly',true);
 
@@ -432,12 +434,14 @@ angular.module('myApp.controllers')
 		
 					$('#memberamount').prop('readonly', false);
 					$('#invoiceamt').prop('readonly',true);
+					$('#editamount').prop('readonly',false);
 
 				}
 				else{
 
 					$('#memberamount').prop('readonly', true);
 					$('#invoiceamt').prop('readonly',true);
+					$('#editamount').prop('readonly',true);
 				}
 
 				console.log("result------->:"+result);
@@ -545,7 +549,23 @@ angular.module('myApp.controllers')
 			$('#rate').hide();
 			$('#billablehours').hide();
 			$('#teammembers').hide();
+			$('#editamount').prop('readonly',false);
 		}
+		else if($scope.invoice.projectType=="Monthly"){
+			
+		
+			$('#editamount').prop('readonly',false);
+		}
+		
+		else if($scope.invoice.projectType=="Hourly"){
+			
+			$('#editamount').prop('readonly',true);
+			
+		}
+		
+		
+		
+		
 	
 
 
@@ -818,7 +838,7 @@ angular.module('myApp.controllers')
 				"invoicedate":$scope.invoice.invoicedate,
 				"project":$scope.invoice.projectlist,
 				"projecttype":$scope.invoice.projectType,
-				"invoiceamt":$scope.invoice.invoiceamt,
+				"invoiceamt":$scope.invoice.invoiceamt.toFixed(2),
 				"currency":$scope.invoice.currency,
 				"invoicelist":$scope.invoiceList,
 				"currency":$scope.invoice.currency
@@ -888,8 +908,9 @@ angular.module('myApp.controllers')
 					var revenue = parseFloat($scope.invoiceList[i].amount);
 					sum += revenue;
 				}
-
 				console.log("revenue-------->"+revenue);
+				
+				sum = parseFloat(sum.toFixed(2));
 
 			}
 			catch(err)
@@ -900,7 +921,7 @@ angular.module('myApp.controllers')
 			}
 			console.log("Sum of amounts==>"+totalSum);
 			$scope.invoice.invoiceamt = totalSum+sum;
-			return $scope.invoice.invoiceamt;
+			return $scope.invoice.invoiceamt.toFixed(2);
 		}
 	}
 

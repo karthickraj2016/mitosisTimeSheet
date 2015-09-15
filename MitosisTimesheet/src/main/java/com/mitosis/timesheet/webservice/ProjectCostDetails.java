@@ -2,14 +2,21 @@ package com.mitosis.timesheet.webservice;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
@@ -23,11 +30,15 @@ import com.mitosis.timesheet.model.TeamAssignmentModel;
 import com.mitosis.timesheet.model.UserDetailsModel;
 import com.mitosis.timesheet.service.ProjectCostDetailsService;
 import com.mitosis.timesheet.service.impl.ProjectCostDetailsServiceImpl;
+import com.mitosis.timesheet.util.JasperUtil;
 
 @Path("projectCost")
-public class ProjectCostDetails {
+public class ProjectCostDetails  extends JasperUtil{
 
 	ProjectCostDetailsService costService=new ProjectCostDetailsServiceImpl();
+	
+	
+	@Context private HttpServletRequest request;
 
 	@Path("/addHourlyProjectCostDetails")
 	@POST
@@ -227,20 +238,46 @@ public class ProjectCostDetails {
 
 	}
 	
-/*	@Path("/pendingProjectCosts")
+	@Path("/pendingProjectCosts")
 	@GET
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<ProjectModel> pendingProjectCosts() throws JSONException {
+	public List<ProjectModel> pendingProjectCosts() throws Exception {
+		
+		
+		HttpSession session= request.getSession(true);
+
+		if(session.getAttribute("userId")==null){
+			return null;
+		}
+		Object userId = session.getAttribute("userId");
+
+		int employeeId =(Integer) request.getSession().getAttribute("userId");
 		
 		List<ProjectModel> projectModel = new ArrayList<ProjectModel>();
 		
-		projectModel = costService.getAllProjectsCostHdr();
+		String reportFilePath = request.getSession().getServletContext()
+				.getRealPath("/")
+				+ "reports/employeeDetailsReport.jrxml";
 
-		return projectCostHdrModel;
+
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		String path = this.getClass().getClassLoader().getResource("/").getPath();
+		String pdfPath = path.replaceAll("WEB-INF/classes/", "");
+		String imagePath = this.getClass().getClassLoader().getResource("/").getPath().replaceAll("WEB-INF/classes/", "");
+
+		String pdfFilePath = pdfPath
+				+ "reports/employeeDetailsReport" + employeeId + ".pdf";
+
+		RenderJr(reportFilePath, parameters,pdfFilePath);
+
+
+		JRBeanCollectionDataSource ds = null;
+
+		return projectModel;
 
 	}
-	*/
+	
 	
 	
 	

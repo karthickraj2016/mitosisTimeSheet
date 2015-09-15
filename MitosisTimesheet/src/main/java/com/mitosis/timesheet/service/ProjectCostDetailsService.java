@@ -26,4 +26,5 @@ public interface ProjectCostDetailsService {
 
 	public List<ProjectCostDetailsModel> getAllProjectsCostDetails();
 
+
 }

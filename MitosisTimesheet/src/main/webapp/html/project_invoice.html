@@ -151,7 +151,7 @@
 			</td>
 			<td>
 				<span ng-show="!showEdit">{{sheet.amount}}</span>
-				<span id="{{sheet.id}}" ng-show="showEdit"><input class="form-control" id="{{sheet.id}}" type="text" onkeypress="return isNumber(event)" ng-model="sheet.amount" ng-change="sumCost();"></span>
+				<span " ng-show="showEdit"><input class="form-control" id="editamount" type="text" onkeypress="return isNumber(event)" ng-model="sheet.amount" ng-change="sumCost();"></span>
 			  <!--  <span style="color:red" ng-show="sheet.amount == '' || sheet.amount == undefined">Required</span>  -->
 			</td>
 			

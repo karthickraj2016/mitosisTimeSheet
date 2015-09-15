@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.2396694214876067"/>
-	<property name="ireport.x" value="74"/>
+	<property name="ireport.zoom" value="1.5000000000000044"/>
+	<property name="ireport.x" value="235"/>
 	<property name="ireport.y" value="0"/>
 	<style name="rect" forecolor="#404040" backcolor="#FF0000" fill="Solid"/>
 	<parameter name="invoiceDetailsList" class="java.lang.Object"/>
@@ -35,7 +35,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA["Invoice"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="441" y="64" width="41" height="17"/>
+				<reportElement x="441" y="54" width="41" height="17"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA["Mobile:"]]></textFieldExpression>
 			</textField>
@@ -47,12 +47,12 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[((com.mitosis.timesheet.model.CompanyInfoModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).companyInfo).getCompanyName()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="388" y="29" width="167" height="35"/>
+				<reportElement x="325" y="31" width="230" height="25"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[((com.mitosis.timesheet.model.CompanyInfoModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).companyInfo).getCompanyAddress()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="441" y="64" width="114" height="17"/>
+				<reportElement x="437" y="54" width="114" height="17"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[((com.mitosis.timesheet.model.CompanyInfoModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).companyInfo).getMobileNumber()]]></textFieldExpression>
 			</textField>
@@ -61,17 +61,19 @@
 				<imageExpression class="java.lang.String"><![CDATA[$P{logoimage}+"/logo2.png"]]></imageExpression>
 			</image>
 			<textField isBlankWhenNull="true">
-				<reportElement x="368" y="16" width="187" height="13"/>
-				<textElement textAlignment="Right"/>
+				<reportElement mode="Transparent" x="368" y="16" width="187" height="29" backcolor="#000000"/>
+				<textElement textAlignment="Right">
+					<font size="13" isBold="true" isItalic="false"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[((com.mitosis.timesheet.model.CompanyInfoModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).companyInfo).getTaxId()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="421" y="81" width="28" height="17"/>
+				<reportElement x="421" y="68" width="28" height="17"/>
 				<textElement textAlignment="Left"/>
 				<textFieldExpression class="java.lang.String"><![CDATA["URL:"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="420" y="81" width="136" height="17"/>
+				<reportElement x="420" y="68" width="136" height="17"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[((com.mitosis.timesheet.model.CompanyInfoModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).companyInfo).getCompanyUrl()]]></textFieldExpression>
 			</textField>
@@ -158,7 +160,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[((com.mitosis.timesheet.model.ProjectModel)((com.mitosis.timesheet.model.InvoiceHdrModel)((com.mitosis.timesheet.pojo.InvoiceDetailsReport)$P{invoiceDetailsList}).invoiceHdr).getProject()).getProjectName()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="388" y="16" width="80" height="29"/>
+				<reportElement x="376" y="16" width="80" height="29"/>
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font size="14"/>
 				</textElement>

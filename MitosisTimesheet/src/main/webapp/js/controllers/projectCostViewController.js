@@ -17,8 +17,6 @@ angular.module('myApp.controllers')
 
 	
 	$scope.list = function (){
-	
-		
 		
 		$http({
 
@@ -62,7 +60,6 @@ angular.module('myApp.controllers')
 			$(".alert-danger").html("No members in this project!!!");	
 
 		}
-		
 		else {
 		$scope.viewdet();
 	
