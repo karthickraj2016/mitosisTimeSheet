@@ -165,7 +165,7 @@ angular.module('myApp.controllers')
 	$scope.calculateCommisionAmount=function(){
 		
 		$scope.payment.commisionamount=$scope.receiptDetails.paidAmount-$scope.payment.receivedamount;
-		
+		$scope.payment.commisionamount = 	$scope.payment.commisionamount.toFixed(2);
 		if($scope.payment.commisionamount<0){
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("Received Amount Must be Less Than Receipt Amount");			
@@ -178,6 +178,8 @@ angular.module('myApp.controllers')
 	$scope.calculateAmount = function(){
 		
 		$scope.payment.paidAmountInr=$scope.payment.receivedamount*$scope.payment.exchangerate;
+		
+		$scope.payment.paidAmountInr=$scope.payment.paidAmountInr.toFixed(2);
 	    		
 	}
 
@@ -228,6 +230,8 @@ angular.module('myApp.controllers')
 		
 	   sheet.commisionAmount=sheet.paidAmount-sheet.receivedAmount;
 	   
+	   sheet.commisionAmount = sheet.commisionAmount.toFixed(2);	
+	   
 	   if(sheet.commisionAmount<0){
 		   $(".alert-msg1").show().delay(1000).fadeOut(); 
 		   $(".alert-danger").html("Received Amount Must be Less Than Receipt Amount");	
@@ -240,6 +244,8 @@ angular.module('myApp.controllers')
    $scope.calculateRate = function(sheet){
 		
 	sheet.paidAmountInr=sheet.receivedAmount*sheet.exchangeRate;
+	
+	sheet.paidAmountInr=sheet.paidAmountInr.toFixed(2);
    }
 
 	$scope.updatePaymentInfo = function(reqParam){

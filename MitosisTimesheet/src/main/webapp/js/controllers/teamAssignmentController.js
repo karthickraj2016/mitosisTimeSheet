@@ -111,6 +111,7 @@ angular.module('myApp.controllers')
 		}).success(function(result, status, headers) {
 
 			console.log(result);
+			console.log($scope.project);
 
 			$scope.projectlist=result;
 		});
@@ -127,6 +128,8 @@ angular.module('myApp.controllers')
 
 			var a=result; 
 			var emp;
+			
+			console.log($scope.project);
 			
 			for(var i=0;i<a.length;i++){
 
@@ -308,7 +311,7 @@ angular.module('myApp.controllers')
 			if(result.value=="inserted"){
 				$(".alert-msg").show().delay(1000).fadeOut(); 
 				$(".alert-success").html("Team Assignment Entry Added Successfully.");
-				$scope.project="";
+				console.log($scope.project);
 				$scope.member="";
 				$scope.role="";
 				$scope.releaseDate="";

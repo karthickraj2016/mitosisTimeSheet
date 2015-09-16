@@ -4,12 +4,15 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
-		<![CDATA[SELECT (SELECT count(*) from employee_master) as employee_count,employee_master.employee_id,employee_master.first_name, employee_master.last_name, lob_master.lob_name
+		<![CDATA[SELECT user_details.email,(SELECT count(*) from employee_master) as employee_count,employee_master.employee_id,employee_master.first_name, employee_master.last_name, lob_master.lob_name
 FROM employee_master
 LEFT OUTER JOIN lob_master
 ON employee_master.lob_id=lob_master.id
-order by lob_name,employee_master.employee_id;]]>
+LEFT OUTER JOIN user_details
+ON employee_master.user_id = user_details.id
+order by lob_name,employee_master.employee_id]]>
 	</queryString>
+	<field name="email" class="java.lang.String"/>
 	<field name="employee_count" class="java.lang.Long"/>
 	<field name="employee_id" class="java.lang.String"/>
 	<field name="first_name" class="java.lang.String"/>
@@ -36,26 +39,34 @@ order by lob_name,employee_master.employee_id;]]>
 					<reportElement x="0" y="47" width="555" height="33"/>
 				</rectangle>
 				<staticText>
-					<reportElement x="32" y="54" width="100" height="20"/>
+					<reportElement x="9" y="52" width="79" height="20"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
 					<text><![CDATA[Employee Id]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="207" y="52" width="100" height="20"/>
+					<reportElement x="108" y="52" width="100" height="20"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
 					<text><![CDATA[First Name]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="419" y="52" width="100" height="20"/>
+					<reportElement x="253" y="52" width="100" height="20"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
 					<text><![CDATA[Last Name]]></text>
 				</staticText>
 				<line>
-					<reportElement x="147" y="47" width="1" height="33"/>
+					<reportElement x="96" y="47" width="1" height="33"/>
 				</line>
 				<line>
-					<reportElement x="355" y="47" width="1" height="33"/>
+					<reportElement x="227" y="47" width="1" height="33"/>
 				</line>
+				<line>
+					<reportElement x="372" y="47" width="1" height="33"/>
+				</line>
+				<staticText>
+					<reportElement x="407" y="52" width="98" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[Email Id]]></text>
+				</staticText>
 			</band>
 		</groupHeader>
 		<groupFooter>
@@ -64,21 +75,24 @@ order by lob_name,employee_master.employee_id;]]>
 					<reportElement x="0" y="0" width="555" height="27"/>
 				</rectangle>
 				<line>
-					<reportElement x="355" y="0" width="1" height="27"/>
+					<reportElement x="227" y="0" width="1" height="27"/>
 				</line>
 				<staticText>
-					<reportElement x="200" y="5" width="110" height="20"/>
+					<reportElement x="228" y="0" width="144" height="27"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
 					<text><![CDATA[Total]]></text>
 				</staticText>
 				<line>
-					<reportElement x="147" y="0" width="1" height="27"/>
+					<reportElement x="96" y="0" width="1" height="27"/>
 				</line>
 				<textField isBlankWhenNull="true">
-					<reportElement x="407" y="5" width="127" height="20"/>
+					<reportElement x="373" y="2" width="182" height="25"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
 					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{totalemployees}]]></textFieldExpression>
 				</textField>
+				<line>
+					<reportElement x="372" y="0" width="1" height="28"/>
+				</line>
 			</band>
 		</groupFooter>
 	</group>
@@ -100,36 +114,41 @@ order by lob_name,employee_master.employee_id;]]>
 		<band height="49"/>
 	</pageHeader>
 	<detail>
-		<band height="36">
+		<band height="37">
 			<rectangle>
 				<reportElement x="0" y="0" width="555" height="36"/>
 			</rectangle>
 			<textField isBlankWhenNull="true">
-				<reportElement x="172" y="9" width="150" height="20"/>
+				<reportElement x="100" y="9" width="127" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{first_name}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="397" y="9" width="137" height="20"/>
+				<reportElement x="228" y="9" width="145" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{last_name}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="147" y="0" width="1" height="36"/>
+				<reportElement x="96" y="0" width="1" height="36"/>
 			</line>
 			<line>
-				<reportElement x="355" y="0" width="1" height="36"/>
+				<reportElement x="227" y="0" width="1" height="36"/>
 			</line>
 			<textField isBlankWhenNull="true">
-				<reportElement x="32" y="9" width="100" height="20"/>
+				<reportElement x="9" y="9" width="79" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{employee_id}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="372" y="0" width="1" height="36"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="373" y="0" width="175" height="36"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{email}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="42" splitType="Stretch"/>
-	</columnFooter>
 	<pageFooter>
 		<band height="55" splitType="Stretch">
 			<textField>

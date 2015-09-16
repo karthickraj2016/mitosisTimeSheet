@@ -88,20 +88,20 @@ public class BankReconcile {
     	customerPaymentModel.setId(jsonObject.getInt("id"));
     	customerPaymentModel.setReceiptNumber(jsonObject.getString("receiptNumber"));
     	
-    	BigDecimal receivedAmount=new BigDecimal(jsonObject.getInt("receivedAmount"));
+    	BigDecimal receivedAmount=new BigDecimal(jsonObject.getString("receivedAmount"));
     	customerPaymentModel.setReceivedAmount(receivedAmount);
 		
-    	BigDecimal commisionAmount=new BigDecimal(jsonObject.getInt("commisionAmount"));
+    	BigDecimal commisionAmount=new BigDecimal(jsonObject.getString("commisionAmount"));
     	customerPaymentModel.setCommisionAmount(commisionAmount);
     	
-    	BigDecimal exchangeRate=new BigDecimal(jsonObject.getInt("exchangeRate"));
+    	BigDecimal exchangeRate=new BigDecimal(jsonObject.getString("exchangeRate"));
     	customerPaymentModel.setExchangeRate(exchangeRate);
     	
-    	BigDecimal paidAmount=new BigDecimal(jsonObject.getInt("paidAmount"));
+    	BigDecimal paidAmount=new BigDecimal(jsonObject.getString("paidAmount"));
     	/*BigDecimal sum = paidAmount.add(customerPayment.getPaidAmount());*/
     	customerPaymentModel.setPaidAmount(paidAmount);
     	
-    	BigDecimal paidAmountInr=new BigDecimal(jsonObject.getInt("paidAmountInr"));
+    	BigDecimal paidAmountInr=new BigDecimal(jsonObject.getString("paidAmountInr"));
     	customerPaymentModel.setPaidAmountInr(paidAmountInr);
     	
     	DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");

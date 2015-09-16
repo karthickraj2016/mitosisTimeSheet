@@ -150,7 +150,8 @@ public class TeamAssignment {
 		teamAssignModel.setRole(role);
 	
 		System.out.println(jsonobject);
-		if(jsonobject.has("releaseDate") && !"null".equals(jsonobject.getString("releaseDate"))){
+	
+		if(jsonobject.has("releaseDate") && !jsonobject.getString("releaseDate").equals("") && !jsonobject.get("releaseDate").equals(null)){
 		DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		String dateInString = jsonobject.getString("releaseDate");
 		Date releaseDate = sdf.parse(dateInString); 
