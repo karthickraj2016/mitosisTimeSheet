@@ -45,7 +45,7 @@ public class InvoiceReportsDaoImpl  extends BaseService implements InvoiceReport
 			Predicate condition3 = qb.and(condition1,condition2);
 			subquery.where(condition3);
 			subquery.select(subRoot);
-			Predicate condition4 = qb.equal(root.get("billable"),"yes");
+			Predicate condition4 = qb.equal(root.get("billable"),"Yes");
 			Predicate condition5 = qb.not(qb.exists(subquery));
 			Predicate condition6 = qb.and(condition4,condition5);
 			cq.where(condition6);		

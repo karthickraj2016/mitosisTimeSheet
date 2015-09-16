@@ -61,7 +61,7 @@ angular.module('myApp.controllers')
 			}else{
 
 				var a = document.createElement('a');
-				a.href = "/MitosisTimesheet/reports/"+result.pdfFileName;
+				a.href ="/"+projectName+"/reports/"+result.pdfFileName;
 				console.log(a);
 				//a.download = "individualDetailReport.pdf";
 				a.target="_blank";
@@ -100,7 +100,7 @@ angular.module('myApp.controllers')
 			}else{
 
 				var a = document.createElement('a');
-				a.href = "/MitosisTimesheet/reports/"+result.pdfFileName;
+				a.href = "/"+projectName+"/reports/"+result.pdfFileName;
 				console.log(a);
 				//a.download = "individualSummaryReport.pdf";
 				a.target="_blank";

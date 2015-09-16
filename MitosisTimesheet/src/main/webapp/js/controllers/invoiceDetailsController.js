@@ -859,7 +859,7 @@ angular.module('myApp.controllers')
 					$(".alert-success").html("Invoice Details are successfully Inserted!!!!!");
 
 					var a = document.createElement('a');
-					a.href = "/MitosisTimesheet/reports/"+result.pdfFileName;
+					a.href = "/"+projectName+"/reports/"+result.pdfFileName;
 					console.log(a);
 					//a.download = "individualDetailReport.pdf";
 					a.target="_blank";
