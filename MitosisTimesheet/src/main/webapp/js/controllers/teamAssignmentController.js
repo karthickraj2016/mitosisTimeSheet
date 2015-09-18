@@ -1,4 +1,4 @@
-'use strict';
+	'use strict';
 
 angular.module('myApp.controllers')
 
@@ -111,11 +111,24 @@ angular.module('myApp.controllers')
 		}).success(function(result, status, headers) {
 
 			console.log(result);
+			
 			console.log($scope.project);
+		
 
 			$scope.projectlist=result;
+			
+			
+			$scope.showAssignedTeamList();
 		});
 
+		
+		
+	}
+	
+	
+	$scope.showAssignedTeamList = function (){
+		
+		console.log($scope.project);
 
 		$http({
 			url: 'rest/teamAssignment/showAssignedTeamList',
@@ -130,6 +143,9 @@ angular.module('myApp.controllers')
 			var emp;
 			
 			console.log($scope.project);
+			console.log($scope.member);
+			console.log($scope.role);
+			
 			
 			for(var i=0;i<a.length;i++){
 
@@ -267,7 +283,7 @@ angular.module('myApp.controllers')
 	$scope.validateAssignment = function(){
 
 		var menuJson = angular.toJson({
-			"projectId":$scope.project.projectId,"memberId":$scope.member.id,"roleId":$scope.role.id
+			"projectId":$scope.teamAss.projectId,"memberId":$scope.teamAss.memberId,"roleId":$scope.teamAss.roleId
 		});
 
 		$http({
@@ -294,10 +310,9 @@ angular.module('myApp.controllers')
 
 	};
 
-	$scope.assignTeam = function(){
-
+	$scope.assignTeam = function(menuJson){
 		var menuJson = angular.toJson({
-			"projectId":$scope.project.projectId,"memberId":$scope.member.id,"roleId":$scope.role.id,"releaseDate":$scope.releaseDate
+			"projectId":$scope.teamAss.projectId,"memberId":$scope.teamAss.memberId,"roleId":$scope.teamAss.roleId,"releaseDate":$scope.teamAss.releaseDate
 		});
 
 		$http({
@@ -312,9 +327,9 @@ angular.module('myApp.controllers')
 				$(".alert-msg").show().delay(1000).fadeOut(); 
 				$(".alert-success").html("Team Assignment Entry Added Successfully.");
 				console.log($scope.project);
-				$scope.member="";
-				$scope.role="";
-				$scope.releaseDate="";
+				$scope.teamAss.memberId="";
+				$scope.teamAss.roleId="";
+				$scope.teamAss.releaseDate="";
 				$scope.teamList();
 			}else if(result.value=="error"){
 				$(".alert-msg1").show().delay(1000).fadeOut(); 

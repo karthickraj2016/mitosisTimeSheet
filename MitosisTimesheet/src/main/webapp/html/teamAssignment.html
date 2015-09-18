@@ -5,25 +5,25 @@
 <div class="teamassgn-form-div">
 <form class="form-inline project-form" role="form" id="addEntry" ng-submit="validateAssignment()">		
 
-	<div class="form-group">
-    <select id="project" class="form-control" required ng-model="project" ng-options="item as item.projectName for item in projectlist" style="color: #777777;">
+	<div class="form-group"> 
+    <select id="project" class="form-control" required ng-model="teamAss.projectId" ng-options="item.projectId as item.projectName for item in projectlist" style="color: #777777;">
     <option value="">Project</option>
     </select> 
     </div>
 	
     <div class="form-group">
-    <select id="member" class="form-control" required ng-model="member" ng-options="item as item.name for item in memberlist"  style="color: #777777;">
+    <select id="member" class="form-control" required ng-model="teamAss.memberId" ng-options="item.id as item.name for item in memberlist"  style="color: #777777;">
     <option value="">Members</option>
     </select> 
     </div>
     
     <div class="form-group">
-    <select id="role" class="form-control" required ng-model="role" ng-options="item as item.roleName for item in rolelist" style="color: #777777;">
+    <select id="role" class="form-control" required ng-model="teamAss.roleId" ng-options="item.id as item.roleName for item in rolelist" style="color: #777777;">
     <option value="">Role</option>
     </select> 
     </div>
     <div class="form-group">
-       <input type="text" class="form-control" ui-date="dateOptions" ui-date-format="dd-mm-yy" ng-model="releaseDate" placeholder="Release Date">
+       <input type="text" class="form-control" ui-date="dateOptions" ui-date-format="dd-mm-yy" ng-model="teamAss.releaseDate" placeholder="Release Date">
     </div>
 	<div class="form-group btn-formproject">
 	<button type="submit" class="btn btn-primary">Add</button>
