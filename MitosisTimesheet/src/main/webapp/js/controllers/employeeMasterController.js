@@ -261,18 +261,31 @@ angular.module('myApp.controllers')
 		
 		console.log(reqParam);
 
-		var menuJson=angular.toJson({"id":reqParam.id,"userId":reqParam.userId.userId,"employeeId":reqParam.employeeId,"firstName":reqParam.firstName,"lastName":reqParam.lastName,"joiningDate":reqParam.joiningEntryDate,"expStartDate":reqParam.expStartEntryDate,
-			"yearsOfExp":reqParam.yearsOfExperience,"monthsOfExp":reqParam.monthsOfExperience,"level":reqParam.level,"asOnDate":$scope.asOnDate,"billable":reqParam.billable});
+		
+		var menuJson;
+		console.log(typeof(menuJson));
 		
 		if(reqParam.lob!=null){
 			
-			menuJson.push({"lobId":reqParam.lob.id});
+
+			
+			 menuJson=angular.toJson({"id":reqParam.id,"userId":reqParam.userId.userId,"employeeId":reqParam.employeeId,"firstName":reqParam.firstName,"lastName":reqParam.lastName,"joiningDate":reqParam.joiningEntryDate,"expStartDate":reqParam.expStartEntryDate,
+				"yearsOfExp":reqParam.yearsOfExperience,"monthsOfExp":reqParam.monthsOfExperience,"level":reqParam.level,"asOnDate":$scope.asOnDate,"billable":reqParam.billable,"lobId":+reqParam.lob.id});
+		
+			
+			
+		}
+		
+		else{
+			
+			 menuJson=angular.toJson({"id":reqParam.id,"userId":reqParam.userId.userId,"employeeId":reqParam.employeeId,"firstName":reqParam.firstName,"lastName":reqParam.lastName,"joiningDate":reqParam.joiningEntryDate,"expStartDate":reqParam.expStartEntryDate,
+					"yearsOfExp":reqParam.yearsOfExperience,"monthsOfExp":reqParam.monthsOfExperience,"level":reqParam.level,"asOnDate":$scope.asOnDate,"billable":reqParam.billable});
 			
 			
 		}
 		
 		
-		console.log(menuJson);
+		
 		
 		
 

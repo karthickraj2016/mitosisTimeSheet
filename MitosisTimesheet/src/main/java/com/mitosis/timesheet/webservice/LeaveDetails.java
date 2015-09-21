@@ -1,5 +1,7 @@
 package com.mitosis.timesheet.webservice;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -46,12 +48,17 @@ public class LeaveDetails {
 	
 	int employeeId=jsonObject.getInt("employeeId");
 	
+	String fromLeaveType = jsonObject.getString("fromleavetype");
+	
+	String toLeaveType = jsonObject.getString("toleavetype");
+	
 	DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 	String fromdateInString = jsonObject.getString("fromDate");
 	Date frmDate = sdf.parse(fromdateInString);
 		
 	String todateInString = jsonObject.getString("toDate");
 	Date toDate = sdf.parse(todateInString);
+
 	
 	 Calendar fromcal = Calendar.getInstance();
 	    Calendar tocal = Calendar.getInstance();
@@ -69,6 +76,21 @@ public class LeaveDetails {
 	        }
 	    }
 	    
+		BigDecimal totalLeave = new BigDecimal(leavedays);
+	    
+	    if(fromLeaveType.equals("First Half") || fromLeaveType.equals("Second Half")){
+	    	
+	    	
+	    	totalLeave = totalLeave.subtract(new BigDecimal(0.5),new MathContext(2));
+	    	
+	    	
+	    }
+	    
+	    if(toLeaveType.equals("First Half") || toLeaveType.equals("Second Half")){
+
+	    	totalLeave = totalLeave.subtract(new BigDecimal(0.5),new MathContext(2));
+	    }
+	    
 	
 	if (jsonObject.has("reason")) {
 		leaveModel.setReason(jsonObject.getString("reason"));
@@ -80,7 +102,7 @@ public class LeaveDetails {
 	leaveModel.setEmployee(userModel);
 	leaveModel.setFromDate(frmDate);
 	leaveModel.setToDate(toDate);
-	leaveModel.setNoOfDays(leavedays);
+	leaveModel.setNoOfDays(totalLeave);
 	/*leaveModel.setStatus(status);*/
 	
 	boolean validation = false;
@@ -148,6 +170,30 @@ public class LeaveDetails {
         	fromcal.add(Calendar.DATE,1);
         }
     }
+    
+    
+	String fromLeaveType = jsonObject.getString("fromleavetype");
+	
+	String toLeaveType = jsonObject.getString("toleavetype");
+	
+	BigDecimal totalLeave = new BigDecimal(leavedays);
+    
+    if(fromLeaveType.equals("First Half") || fromLeaveType.equals("Second Half")){
+    	
+
+
+    	totalLeave = totalLeave.subtract(new BigDecimal(0.5),new MathContext(2));
+    	
+    	
+    }
+    
+    if(toLeaveType.equals("First Half") || toLeaveType.equals("Second Half")){
+    	
+    	
+    	
+    	totalLeave = totalLeave.subtract(new BigDecimal(0.5),new MathContext(2));
+    }
+    
 	
 	/*String status=jsonObject.getString("status");*/
 	
@@ -158,7 +204,7 @@ public class LeaveDetails {
 	leaveModel.setEmployee(userModel);
 	leaveModel.setFromDate(frmDate);
 	leaveModel.setToDate(toDate);
-	leaveModel.setNoOfDays(leavedays);
+	leaveModel.setNoOfDays(totalLeave);
 	/*leaveModel.setStatus(status);*/
 	boolean validation = false;
 	

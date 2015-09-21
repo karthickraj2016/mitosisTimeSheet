@@ -1,5 +1,6 @@
 package com.mitosis.timesheet.model;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -42,12 +43,12 @@ public class LeaveDetailsModel {
 	private String status;
 	
 	@Column(name="no_of_days")
-	private Integer noOfDays;
+	private BigDecimal noOfDays;
 	
-	public Integer getNoOfDays() {
+	public BigDecimal getNoOfDays() {
 		return noOfDays;
 	}
-	public void setNoOfDays(Integer noOfDays) {
+	public void setNoOfDays(BigDecimal noOfDays) {
 		this.noOfDays = noOfDays;
 	}
 

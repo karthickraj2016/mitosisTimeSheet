@@ -11,6 +11,11 @@ angular.module('myApp.controllers')
 	,$scope.maxSize = 5;
 	$scope.units;
 	
+	
+	$scope.leaveTypes=["Full Day","First Half","Second Half"];
+	$scope.fromTypedisplay = true; 
+
+	
 	$rootScope.navbar=true;
 	
 	$scope.checkRequired = function(sheet){
@@ -164,7 +169,7 @@ angular.module('myApp.controllers')
 		else{
 
 			var menuJson = angular.toJson({
-				"employeeId": $scope.employee.id,"fromDate":$scope.fromDate,"toDate":$scope.toDate,"reason":$scope.reason
+				"employeeId": $scope.employee.id,"fromDate":$scope.fromDate,"toDate":$scope.toDate,"reason":$scope.reason,"fromleavetype":$scope.fromleavetype,"toleavetype":$scope.toleavetype
 			});
 
 			$http({
@@ -260,4 +265,24 @@ angular.module('myApp.controllers')
 		})
 	}
 	
+	$scope.todatechange = function (){
+		
+		$scope.toTypedisplay = true;
+	
+		
+	}
+	
+	
+	$scope.fromdatechange = function (){
+		
+		$scope.toTypedisplay = false;
+		
+		$scope.fromleavetype = "Full day";
+		console.log($scope.fromleavetype);
+		
+		
+	}
+	
+	
+
 }])

@@ -16,9 +16,21 @@
     </div> 
     
     <div ng-init="dates()" class="form-group">
-       <input type="text" placeholder="To Date" required class="form-control" ui-date="dateOptionsTo" ui-date-format="dd-mm-yy" ng-model="toDate">
+       <input type="text" placeholder="To Date" required class="form-control" ui-date="dateOptionsTo" ui-date-format="dd-mm-yy" ng-change="todatechange()" ng-model="toDate">
     </div> 
     
+   	<div class="form-group">
+    <select class="form-control" required ng-model="fromleavetype" ng-show=fromTypedisplay ng-options ="item for item in leaveTypes"  style="color: #777777; width: 200px;">
+  <option ng-disabled="true" value="">Full day</option> 
+	</select> 
+    </div>
+    
+    
+    <div class="form-group">
+    <select  class="form-control" required ng-model="toleavetype" ng-show=toTypedisplay ng-options ="item for item in leaveTypes" ng-change="showToLeaveType()" style="color: #777777; width: 200px;">
+ 	<option ng-disabled="true" value="">Full day</option> 
+    </select> 
+    </div>
     <div class="form-group">
       <textarea rows="1" cols="30" class="form-control" ng-model="reason" placeholder="Reason"></textarea>
     </div>
