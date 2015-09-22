@@ -10,14 +10,14 @@ angular.module('myApp.controllers')
 	,$scope.numPerPage = 8
 	,$scope.maxSize = 5;
 	$scope.units;
-	
-	
+
+
 	$scope.leaveTypes=["Full Day","First Half","Second Half"];
 	$scope.fromTypedisplay = true; 
 
-	
+
 	$rootScope.navbar=true;
-	
+
 	$scope.checkRequired = function(sheet){
 		if(sheet.frmEntryDate == '' || sheet.frmEntryDate == undefined) {
 			return true;
@@ -41,6 +41,7 @@ angular.module('myApp.controllers')
 		dt=dd+"-"+mm+"-"+yyyy;
 		$scope.fromDate=dt;
 		$scope.toDate=dt;
+		$scope.toTypedisplay = false;
 
 	};
 
@@ -51,6 +52,7 @@ angular.module('myApp.controllers')
 			dateFormat: 'dd-mm-yy',
 			onSelect: function(selected) {
 				$scope.toDate=selected;
+				
 				/*$scope.dateOptionsTo("option","minDate", selected);*/
 			}
 
@@ -61,6 +63,7 @@ angular.module('myApp.controllers')
 			changeMonth: true,
 			dateFormat: 'dd-mm-yy',
 	};
+
 
 
 
@@ -87,6 +90,9 @@ angular.module('myApp.controllers')
 	});
 
 	$scope.list = function() {
+		
+
+
 
 		$http({
 			url: 'rest/leaveDetails/showLeaveEntryList',
@@ -96,23 +102,34 @@ angular.module('myApp.controllers')
 				'Content-Type': 'application/json'
 			}
 		}).success(function(result, status, headers) {
-			
+
 			var a=result; 
 			var emp;
-			
+
+			console.log("result:"+a);
+
+
+
 			for(var i=0;i<a.length;i++){
 
 				if(angular.isUndefined(emp)){
 					emp = new Array();
-				}				
+				}	
+				
+				if(a[i].toLeaveType=="null"){
+					a[i].toLeaveType="";
+
+				}
 
 				var empRate={"id":a[i].id,"employee":{"id":a[i].employee.id,"name":a[i].employee.name},"frmEntryDate":a[i].frmEntryDate,"toEntryDate":a[i].toEntryDate,
-						"noOfDays":a[i].noOfDays, "reason":a[i].reason};
+						"fromLeaveType":a[i].fromLeaveType,"toLeaveType":a[i].toLeaveType,	"noOfDays":a[i].noOfDays, "reason":a[i].reason};
 
 				emp.push(empRate);
 			}
 
 			$scope.leaveEntryList=emp; 
+			
+		
 
 			$scope.$watch('currentPage + numPerPage', function() {
 				var begin = (($scope.currentPage - 1) * $scope.numPerPage)
@@ -148,6 +165,8 @@ angular.module('myApp.controllers')
 	$scope.insertLeaveEntry = function(){
 
 
+
+
 		var fromdate = new Date($scope.fromDate.split('-')[2],$scope.fromDate.split('-')[1],$scope.fromDate.split('-')[0]);
 		var todate = new Date($scope.toDate.split('-')[2],$scope.toDate.split('-')[1],$scope.toDate.split('-')[0]);
 
@@ -160,6 +179,24 @@ angular.module('myApp.controllers')
 			$(".alert-danger").html("FromDate cannot be after ToDate!");
 			return;
 		}
+
+		if($scope.fromLeaveType =="Second Half" && $scope.toLeaveType =="Second Half"){
+
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("Both From Leave Type and to leave Type cannot be second half!");
+			$scope.fromLeaveType='';
+			$scope.toLeaveType='';
+			return;
+
+
+		}
+		
+		if(fromdate==todate){
+			
+			$scope.toLeaveType='';
+			
+			
+		}
 		/*else if(fromdate.getDay()===2 || fromdate.getDay()===3 || todate.getDay()===2 || todate.getDay()===3){
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("FromDate or Todate cannot be on Saturdays or Sundays!!!!");
@@ -169,7 +206,7 @@ angular.module('myApp.controllers')
 		else{
 
 			var menuJson = angular.toJson({
-				"employeeId": $scope.employee.id,"fromDate":$scope.fromDate,"toDate":$scope.toDate,"reason":$scope.reason,"fromleavetype":$scope.fromleavetype,"toleavetype":$scope.toleavetype
+				"employeeId": $scope.employee.id,"fromDate":$scope.fromDate,"toDate":$scope.toDate,"reason":$scope.reason,"fromLeaveType":$scope.fromLeaveType,"toLeaveType":$scope.toLeaveType
 			});
 
 			$http({
@@ -185,30 +222,96 @@ angular.module('myApp.controllers')
 					$(".alert-msg").show().delay(1000).fadeOut(); 
 					$(".alert-success").html("Leave Entry Added Successfully");
 					$scope.reason='';
+					$scope.fromLeaveType ='';
+					$scope.toLeaveType='';
+					$scope.list();	
+					
+
 				}else if (result.value=="already exist"){
 					$(".alert-msg1").show().delay(1000).fadeOut(); 
 					$(".alert-danger").html("Leave Entry Already Entered");
+					$scope.list();	
 				}else{
 					$(".alert-msg1").show().delay(1000).fadeOut(); 
 					$(".alert-danger").html("Process Failed");
+					$scope.list();	
 				}
-				$scope.list();	
+			
 
 			})
 		}
 	},
+	
+	
+	$scope.pencilClick = function (sheet){
+		
+		if(sheet.frmEntryDate == sheet.toEntryDate){
+			
+			$('#toleavetype').hide();
+
+		}
+		
+		else{
+		
+		
+		
+		$('#toleavetype').show();
+		}
+	
+		$scope.leaveLists =angular.copy(sheet);
+		
+	}
+	
+	$scope.cancel = function (sheet){
+		
+		sheet = $scope.leaveLists;
+		
+	}
 
 	$scope.updateLeaveEntry = function(reqParam){
+		
+	
+		
+		
+	if(	$('#toleavetype').is(':hidden')){
+		
+		if(reqParam.toLeaveType){
+			
+			reqParam.toLeaveType="";
+			$('#toleavetype').hide();
+			
+		}
+		
+		
+	}
+		
+		
 
 		if (reqParam.frmEntryDate > reqParam.toEntryDate) {
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("FromDate cannot be after ToDate!");
 			$scope.list();
 			return;
-		}else{
+		}
+		
+		if(reqParam.fromLeaveType =="Second Half" && reqParam.toLeaveType =="Second Half"){
+
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("Both From Leave Type and to leave Type cannot be second half!");
+			$scope.list();
+			return;
+
+
+		}
+		
+		if(reqParam.toLeaveType=="null"){
+			reqParam.toLeaveType='';
+
+		}
+		else{
 
 			var menuJson = angular.toJson({
-				"id":reqParam.id,"employeeId": reqParam.employee.id,"fromDate":reqParam.frmEntryDate,"toDate":reqParam.toEntryDate,"reason":reqParam.reason,
+				"id":reqParam.id,"employeeId": reqParam.employee.id,"fromDate":reqParam.frmEntryDate,"toDate":reqParam.toEntryDate,"reason":reqParam.reason,"fromLeaveType":reqParam.fromLeaveType,"toLeaveType":reqParam.toLeaveType
 			});
 
 			$http({
@@ -264,25 +367,76 @@ angular.module('myApp.controllers')
 			$scope.list();	
 		})
 	}
-	
+
 	$scope.todatechange = function (){
+
+		if($scope.fromDate == $scope.toDate){
+			$scope.toLeaveType='';
+
+			$scope.toTypedisplay = false;
+
+		}
 		
+		else{
+
 		$scope.toTypedisplay = true;
-	
-		
+		}
+
 	}
-	
-	
+
+
 	$scope.fromdatechange = function (){
-		
-		$scope.toTypedisplay = false;
-		
+
+		if($scope.fromDate == $scope.toDate){
+			
+			$scope.toLeaveType='';
+
+			$scope.toTypedisplay = false;
+
+		}
+
 		$scope.fromleavetype = "Full day";
 		console.log($scope.fromleavetype);
+
+
+	}
+	
+	
+	$scope.editFromDateChange = function(sheet){
+		
+		if(sheet.frmEntryDate == sheet.toEntryDate){
+			
+			$('#toleavetype').hide();
+
+		}
+
+			
+		
+		
+		
 		
 		
 	}
 	
-	
+	$scope.editToDateChange = function(sheet){
+		
+		
+
+		if(sheet.frmEntryDate == sheet.toEntryDate){
+			
+			$('#toleavetype').hide();
+
+		}
+		
+		else{
+
+			$('#toleavetype').show();
+			}
+
+
+		
+	}
+
+
 
 }])

@@ -33,9 +33,15 @@ public class LeaveDetailsModel {
 	@Column(name="from_date")
 	private Date fromDate;
 	
+	@Column(name="from_date_Leave_type")
+	private String fromLeaveType;
+
 	@Column(name="to_date")
 	private Date toDate;
 	
+	@Column(name="to_date_Leave_type")
+	private String toLeaveType;
+
 	@Column(name="reason")
 	private String reason;
 	
@@ -123,5 +129,21 @@ public class LeaveDetailsModel {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	public String getfromLeaveType() {
+		return fromLeaveType;
+	}
+	public void setfromLeaveType(String fromLeaveType) {
+		this.fromLeaveType = fromLeaveType;
+	}
+	
+	public String gettoLeaveType() {
+		return toLeaveType;
+	}
+	public void settoLeaveType(String toLeaveType) {
+		this.toLeaveType = toLeaveType;
+	}
+	
+	
 
 }

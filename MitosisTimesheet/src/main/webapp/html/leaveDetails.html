@@ -12,7 +12,7 @@
     </div>
 	
     <div ng-init="dates()" class="form-group">
-       <input type="text" id="fromDate" placeholder="From Date" required class="form-control" ui-date="dateOptionsFrom" ng-change="fromdatechange(fromDate)" ui-date-format="dd-mm-yy" ng-model="fromDate">
+       <input type="text" id="fromDate" placeholder="From Date" required class="form-control" ui-date="dateOptionsFrom" ng-change="fromdatechange()" ui-date-format="dd-mm-yy" ng-model="fromDate">
     </div> 
     
     <div ng-init="dates()" class="form-group">
@@ -20,15 +20,15 @@
     </div> 
     
    	<div class="form-group">
-    <select class="form-control" required ng-model="fromleavetype" ng-show=fromTypedisplay ng-options ="item for item in leaveTypes"  style="color: #777777; width: 200px;">
-  <option ng-disabled="true" value="">Full day</option> 
+    <select class="form-control" required ng-model="fromLeaveType" ng-show=fromTypedisplay ng-options ="item for item in leaveTypes" style="color: #777777; width: 200px;">
+ 	 <option ng-disabled="true" value="">Select From Leave Type</option> 
 	</select> 
     </div>
     
     
     <div class="form-group">
-    <select  class="form-control" required ng-model="toleavetype" ng-show=toTypedisplay ng-options ="item for item in leaveTypes" ng-change="showToLeaveType()" style="color: #777777; width: 200px;">
- 	<option ng-disabled="true" value="">Full day</option> 
+    <select  class="form-control" ng-model="toLeaveType" ng-show=toTypedisplay ng-options ="item for item in leaveTypes" ng-change="showToLeaveType()" style="color: #777777; width: 200px;">
+ 	<option ng-disabled="true" value="">Select To Leave Type</option> 
     </select> 
     </div>
     <div class="form-group">
@@ -59,7 +59,9 @@
 		<tr>
 			<th class="">Employee Name</th>
 			<th class="">From Date</th>
+			<th class="">From Leave Type</th>
 			<th class="">To Date</th>
+			<th class="">To Leave Type</th>
 		    <th class="">Reason</th>
 		    <th class="">No of days</th>
 		    <th></th>
@@ -71,7 +73,7 @@
 				<span ng-show="!showEdit">{{sheet.employee.name}}</span>
 				<span ng-show="showEdit">
 				<select  class="form-control" required ng-model="sheet.employee" ng-options="item as item.name for item in employeeNameList" style="color: #777777;">
-    			<option value="">{{sheet.employee.name}}</option>
+    			<option value="" ng-disabled=true>{{sheet.employee.name}}</option>
     			</select> 
 				</span>
 				<span style="color:red" ng-show="sheet.employee.name == '' || sheet.employee.name == undefined">Required</span>
@@ -82,9 +84,26 @@
 				<span style="color:red" ng-show="sheet.frmEntryDate == '' || sheet.frmEntryDate == undefined">Required</span>
 			</td>
 			<td>
+				<span ng-show="!showEdit">{{sheet.fromLeaveType}}</span>
+				<span ng-show="showEdit">
+				<select  class="form-control" required ng-model="sheet.fromLeaveType" ng-options="item for item in leaveTypes" ng-change="editFromDateChange(sheet)" style="color: #777777;">
+    			<option value="" ng-disabled=true>{{sheet.fromLeaveType}}</option>
+    			</select> 
+				</span>
+				<span style="color:red" ng-show="sheet.fromLeaveType == '' || sheet.fromLeaveType == undefined">Required</span>
+			</td>
+			<td>
 				<span ng-show="!showEdit">{{sheet.toEntryDate}}</span>
-				<span ng-show="showEdit"><input class="form-control" ui-date="dateOptionsTo" ui-date-format="dd-mm-yy" type="text" ng-model="sheet.toEntryDate"></span>
+				<span ng-show="showEdit"><input class="form-control" ui-date="dateOptionsTo" ui-date-format="dd-mm-yy" type="text" ng-model="sheet.toEntryDate" ng-change="editToDateChange(sheet)"></span>
 				<span style="color:red" ng-show="sheet.toEntryDate == '' || sheet.toEntryDate == undefined">Required</span>
+			</td>
+				<td>
+				<span ng-show="!showEdit">{{sheet.toLeaveType}}</span>
+				<span id="toleavetype" ng-show="showEdit">
+				<select class="form-control" ng-model="sheet.toLeaveType" ng-options="item for item in leaveTypes" style="color: #777777;">
+    			<option value="" ng-disabled=true>{{sheet.toLeaveType}}</option>
+    			</select> 
+				</span>
 			</td>
 			<td >
 				<span ng-show="!showEdit">{{sheet.reason}}</span>
@@ -95,7 +114,7 @@
 				<span ng-show="showEdit"><input class="form-control" type="text" ng-model="sheet.noOfDays" readonly></span>
 			</td>
 			<td style="word-spacing: 15px;">
-				<a><span class="glyphicon glyphicon-pencil" ng-click="showEdit = !showEdit" ng-show="!showEdit"></span></a>
+				<a><span class="glyphicon glyphicon-pencil" ng-click="showEdit = !showEdit;pencilClick(sheet)" ng-show="!showEdit"></span></a>
 				<a><span class="glyphicon glyphicon-remove" ng-click="confirmDelete(sheet.id)" ng-show="!showEdit"></span></a>
 				<a><span class="glyphicon glyphicon-ok" ng-click="showEdit = !showEdit;updateLeaveEntry(sheet)" ng-show="showEdit" ng-disabled="checkRequired(sheet);"></span></a>
 				<a><span class="glyphicon glyphicon-ban-circle" ng-click="showEdit = !showEdit" ng-show="showEdit"></span></a>
