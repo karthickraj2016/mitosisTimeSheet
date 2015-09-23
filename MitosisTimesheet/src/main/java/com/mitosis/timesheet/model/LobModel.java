@@ -21,6 +21,17 @@ public class LobModel {
 	
 	@Column(name="lob_name")
 	private String lobName;
+	
+	@Column(name="skills")
+	private String skills;
+
+	public String getSkills() {
+		return skills;
+	}
+
+	public void setSkills(String skills) {
+		this.skills = skills;
+	}
 
 	public Integer getId() {
 		return id;

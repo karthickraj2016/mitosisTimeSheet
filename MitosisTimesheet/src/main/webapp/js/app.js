@@ -152,6 +152,12 @@ angular.module('myApp', ['ui.router','myApp.controllers','ngStorage','ui.bootstr
 						 templateUrl: 'html/projectCostView.html',
 					     controller :'projectCostViewController'
 					 })
+					 
+					  .state('lobMaster', {
+						 url: '/lobMaster',
+						 templateUrl: 'html/lobMaster.html',
+					     controller :'lobMasterController'
+					 })
 			 }]);
 
 angular.module('myApp.controllers',[])
