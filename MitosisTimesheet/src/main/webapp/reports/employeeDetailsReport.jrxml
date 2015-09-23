@@ -93,19 +93,19 @@ order by lob_name,employee_master.employee_id]]>
 				<rectangle>
 					<reportElement x="0" y="0" width="555" height="27"/>
 				</rectangle>
+				<line>
+					<reportElement x="492" y="0" width="1" height="28"/>
+				</line>
 				<staticText>
-					<reportElement x="268" y="0" width="224" height="27"/>
+					<reportElement x="269" y="0" width="224" height="27"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
 					<text><![CDATA[Total]]></text>
 				</staticText>
 				<textField isBlankWhenNull="true">
-					<reportElement x="492" y="2" width="63" height="25"/>
+					<reportElement x="491" y="3" width="63" height="25"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
 					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{totalemployees}]]></textFieldExpression>
 				</textField>
-				<line>
-					<reportElement x="492" y="0" width="1" height="28"/>
-				</line>
 			</band>
 		</groupFooter>
 	</group>
