@@ -67,8 +67,6 @@ public class LobMaster {
 			jsonObject.put("value","inserted");
 
 		}
-
-
 		else{
 
 			jsonObject.put("value","alreadyentered");
