@@ -28,15 +28,23 @@ public class LobMasterServiceImpl implements LobMasterService{
 		boolean insert =lobMasterDao.insert(lobModel);
 		
 		// TODO Auto-generated method stub
-		return false;
+		return insert;
 	}
 
 	@Override
-	public boolean validate(String lobName) {
+	public boolean validate(LobModel lobModel) {
 		
 		
-		boolean validate = lobMasterDao.validate(lobName);
+		boolean validate = lobMasterDao.validate(lobModel);
 		return validate;
+	}
+
+	@Override
+	public boolean delete(int id) {
+		// TODO Auto-generated method stub
+		
+		boolean delete =lobMasterDao.delete(id);
+		return delete;
 	}
 
 }

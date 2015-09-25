@@ -11,6 +11,8 @@ public interface LobMasterDao {
 
 	public boolean insert(LobModel lobModel);
 
-	public boolean validate(String lobName);
+	public boolean validate(LobModel lobModel);
+
+	public boolean delete(int id);
 
 }

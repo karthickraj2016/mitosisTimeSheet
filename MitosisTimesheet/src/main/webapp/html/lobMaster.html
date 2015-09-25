@@ -2,7 +2,7 @@
 <div class="container" style="margin-top: 8%;"><div class="row"><div class="col-xs-12 col-md-12"><h2 class="text-center">lob Master</h2></div></div></div>
 <div class="container" style="width: 100%;">
 <div class="teamassgn-form-div">
-<form class="form-inline project-form" role="form" id="addEntry">		
+<form class="form-inline project-form" role="form" id="addEntry" ng-submit="insert()">		
 
 	<div class="form-group"> 
 	
@@ -46,29 +46,28 @@
 		</tr>
 	</thead>
 	<tbody>
-				<tr ng-repeat="sheet in filteredParticipantsResults=(lobLists | filter:search) | startFrom:(currentPage-1)*numPerPage | limitTo:numPerPage">
+				<tr ng-repeat="sheet in lobLists | startFrom:(currentPage-1)*numPerPage | limitTo:numPerPage">
 			<td >
-				<span ng-show="!showEdit">{{sheet.lob.lobName}}</span>
+				<span ng-show="!showEdit">{{sheet.lobName}}</span>
 				<span ng-show="showEdit" >
-				<select  class="form-control" required ng-model="sheet.lob" ng-options="item as item.lobName for item in lobLists" ng-change="lobChange()" style="color: #777777;">
-    			<option value="">{{sheet.lob.lobName}}</option>
+				 <input type="text" class="form-control" ng-model="sheet.lobName" placeholder="lobName">
     			</select> 
 				</span>
-				<span style="color:red" ng-show="sheet.lob == '' || sheet.lob == undefined">Required</span>
+				<span style="color:red" ng-show="sheet.lobName == '' || sheet.lobName== undefined">Required</span>
 			</td>
 			
 			<td >
 				<span ng-show="!showEdit">{{sheet.skills}}</span>
 				<span ng-show="showEdit"><textarea rows="1" class="form-control" type="text" ng-model="sheet.skills"></textarea></span>
-				<span style="color:red" ng-show="sheet.skills == '' || sheet.skills == undefined">Required</span>
+				<!-- <span style="color:red" ng-show="sheet.skills == '' || sheet.skills == undefined">Required</span> -->
 			</td>
 			
 			<td style="word-spacing: 15px;">	
 			    
-				<a><span class="glyphicon glyphicon-pencil" ng-click="showEdit = !showEdit" ng-show="!showEdit"></span></a>
+				<a><span class="glyphicon glyphicon-pencil" ng-click="showEdit = !showEdit;pencilClick(sheet)" ng-show="!showEdit"></span></a>
 				<a><span class="glyphicon glyphicon-remove" ng-click="confirmDelete(sheet.id)" ng-show="!showEdit"></span></a>
-				<a><span class="glyphicon glyphicon-ok" ng-click="showEdit = !showEdit;validateUpdate(sheet)" ng-show="showEdit" ng-disabled="checkRequired(sheet);"></span></a> 
-				<a><span class="glyphicon glyphicon-ban-circle" ng-click="showEdit = !showEdit" ng-show="showEdit"></span></a> 			
+				<a><span class="glyphicon glyphicon-ok" ng-click="showEdit = !showEdit;Update(sheet)" ng-show="showEdit" ng-disabled="checkRequired(sheet);"></span></a> 
+				<a><span class="glyphicon glyphicon-ban-circle" ng-click="showEdit = !showEdit;cancel(sheet)" ng-show="showEdit"></span></a> 			
 			</td>
 		</tr>
 	</tbody>

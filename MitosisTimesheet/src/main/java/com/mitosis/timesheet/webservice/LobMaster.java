@@ -49,28 +49,101 @@ public class LobMaster {
 		JSONObject jsonObject = new JSONObject();
 
 		LobModel lobModel = new LobModel();
-		
+
 		lobModel.setLobName(jsonobject.getString("lobName"));
-		
-		lobModel.setSkills(jsonobject.getString("skills"));
-		
-		
-		
-		boolean validation =lobMasterService.validate(lobModel.getLobName());
-		
-		if(validation){
-			
-			boolean insert = lobMasterService.insert(lobModel);
-			 jsonObject.put("value","inserted");
+
+		if(jsonobject.has("skills") && !jsonobject.getString("skills").equals(null) && !jsonobject.getString("skills").equals("")){
+
+			lobModel.setSkills(jsonobject.getString("skills"));
 
 		}
-		
+
+
+		boolean validation =lobMasterService.validate(lobModel);
+
+		if(!validation){
+
+			boolean insert = lobMasterService.insert(lobModel);
+			jsonObject.put("value","inserted");
+
+		}
+
 
 		else{
-			
+
 			jsonObject.put("value","alreadyentered");
-			
-			
+
+
+		}
+
+		return jsonObject;
+
+	}
+
+
+	@Path("/updateEntry")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public JSONObject update(JSONObject jsonobject) throws JSONException{
+
+
+		JSONObject jsonObject = new JSONObject();
+
+		LobModel lobModel = new LobModel();
+
+		lobModel.setLobName(jsonobject.getString("lobName"));
+
+		lobModel.setId(jsonobject.getInt("id"));
+
+		if(jsonobject.has("skills") && !jsonobject.getString("skills").equals(null) && !jsonobject.getString("skills").equals("")){
+
+			lobModel.setSkills(jsonobject.getString("skills"));
+
+		}
+		boolean validation =lobMasterService.validate(lobModel);
+
+		if(!validation){
+
+			boolean insert = lobMasterService.insert(lobModel);
+			jsonObject.put("value","inserted");
+
+		}
+
+
+		else{
+
+			jsonObject.put("value","alreadyentered");
+
+
+		}
+
+		return jsonObject;
+
+	}
+
+	@Path("/deleteEntry")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public JSONObject delete(JSONObject jsonObject) throws JSONException{
+
+		boolean deleted = false;
+
+		deleted=lobMasterService.delete(jsonObject.getInt("id"));
+
+
+		if(deleted){
+
+			jsonObject.put("value","deleted");
+
+
+		}
+		else{
+
+			jsonObject.put("value","failed");
+
+
 		}
 
 		return jsonObject;
