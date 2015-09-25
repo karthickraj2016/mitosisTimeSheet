@@ -161,9 +161,8 @@ angular.module('myApp.controllers')
 	
 	$scope.cancel = function (sheet){
 		
-		
 		sheet=$scope.lists;
-		$scope.lobLists[$scope.lobLists.indexof(sheet)] = sheet;
+		$scope.list();
 	}
 
 

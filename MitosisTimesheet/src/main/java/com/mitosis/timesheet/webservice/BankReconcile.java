@@ -32,8 +32,7 @@ public class BankReconcile {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<CustomerPaymentModel> getPaymentDetails(JSONObject jsonObject) throws JSONException, ParseException {
-		
-		System.out.println(jsonObject);
+	
 		
 		String invoiceNumber=jsonObject.getString("invoiceNumber");
 		
@@ -52,8 +51,7 @@ public class BankReconcile {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public CustomerPaymentModel getReceiptDetails(JSONObject jsonObject) throws JSONException, ParseException {
-		
-		System.out.println(jsonObject);
+	
 		
 		String receiptNumber=jsonObject.getString("receiptNumber");
 		
