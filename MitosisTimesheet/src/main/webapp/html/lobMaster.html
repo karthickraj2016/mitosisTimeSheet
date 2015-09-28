@@ -47,7 +47,7 @@
 		</tr>
 	</thead>
 	<tbody>
-				<tr ng-repeat="sheet in lobLists | startFrom:(currentPage-1)*numPerPage | limitTo:numPerPage">
+				<tr ng-repeat="sheet in lobLists | startFrom:(currentPage-1)*numPerPage | limitTo:numPerPage|filter:search">
 			<td >
 				<span ng-show="!showEdit">{{sheet.lobName}}</span>
 				<span ng-show="showEdit" >

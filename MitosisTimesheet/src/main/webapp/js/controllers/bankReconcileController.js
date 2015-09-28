@@ -142,13 +142,12 @@ angular.module('myApp.controllers')
 
 	$scope.getReceiptDetails = function(){
 
-		var menuJson = angular.toJson({
+		/*var menuJson = angular.toJson({
 			"receiptNumber": $scope.receipt.receiptNumber
-		});
+		});*/
 		$http({
 			url: 'rest/bankReconcile/getReceiptDetails',
-			method: 'POST',
-			data:menuJson,
+			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json'
 			}
@@ -157,6 +156,27 @@ angular.module('myApp.controllers')
 			$scope.receiptDetails = result;
 			console.log(result);
 			$scope.id=result.id;
+			
+			var begin = (($scope.currentPage - 1) * $scope.numPerPage)
+			, end = begin + $scope.numPerPage;
+			$scope.filteredParticipantsResults = $scope.receiptDetails.slice(begin, end);
+			$scope.totalItems =	$scope.receiptDetails.length;
+			$scope.dates();
+			
+			$scope.filter = function() {
+				$scope.$watch('search', function(term) {
+					if(term==undefined){
+						$scope.totalItems =	$scope.receiptDetails.length; 
+					}
+					window.setTimeout(function() {
+						$scope.totalItems = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
+
+						$scope.noOfPages = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
+					}, 10);
+				});
+
+			};
+			
 
 		});
 
@@ -249,6 +269,35 @@ angular.module('myApp.controllers')
    }
 
 	$scope.updatePaymentInfo = function(reqParam){
+		
+		if(reqParam.bankReceivedDateStr=="" || reqParam.bankReceivedDateStr==null || reqParam.bankReceivedDateStr==undefined){
+			
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("Please select bank Recieved Date!!!");
+			$scope.getReceiptDetails();
+			return;
+			
+		}
+		
+		if(reqParam.receivedAmount=="" || reqParam.receivedAmount==null || reqParam.receivedAmount==undefined){
+			
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("Please select bank Recieved Amount!!!");
+			$scope.getReceiptDetails();
+			return;
+			
+		}
+		
+		if(reqParam.exchangeRate=="" || reqParam.exchangeRate==null || reqParam.exchangeRate==undefined){
+			
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("Please select Exchange Rate!!!");
+			$scope.getReceiptDetails();
+			return;
+			
+		}
+		
+		
 
 		var menuJson = angular.toJson({
 			"id":reqParam.id,

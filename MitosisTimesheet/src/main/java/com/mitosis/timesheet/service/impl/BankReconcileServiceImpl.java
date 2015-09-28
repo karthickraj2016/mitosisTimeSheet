@@ -14,11 +14,11 @@ public class BankReconcileServiceImpl implements BankReconcileService {
 	BankReconcileDao reconcileDao=new BankReconcileDaoImpl();
 	
 	@Override
-	public CustomerPaymentModel getReceiptDetails(String receiptNumber) {
+	public List<CustomerPaymentModel> getReceiptDetails() {
 		
-		CustomerPaymentModel paymentModel=new CustomerPaymentModel();
+		List<CustomerPaymentModel> paymentModel=new ArrayList<CustomerPaymentModel>();
 		
-		paymentModel=reconcileDao.getReceiptDetails(receiptNumber);
+		paymentModel=reconcileDao.getReceiptDetails();
 		
 		return paymentModel;
 	}

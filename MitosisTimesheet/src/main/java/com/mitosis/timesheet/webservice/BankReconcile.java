@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -47,17 +48,17 @@ public class BankReconcile {
 	
 
 	@Path("/getReceiptDetails")
-	@POST
+	@GET
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public CustomerPaymentModel getReceiptDetails(JSONObject jsonObject) throws JSONException, ParseException {
+	public List<CustomerPaymentModel> getReceiptDetails() throws JSONException, ParseException {
 	
 		
-		String receiptNumber=jsonObject.getString("receiptNumber");
+		/*String receiptNumber=jsonObject.getString("receiptNumber");*/
 		
-		CustomerPaymentModel customerPayment = new CustomerPaymentModel();
+		List<CustomerPaymentModel> customerPayment = new ArrayList<CustomerPaymentModel>();
 		
-		customerPayment=reconcileService.getReceiptDetails(receiptNumber);
+		customerPayment=reconcileService.getReceiptDetails();
 		
 		System.out.println(customerPayment);
 		
@@ -76,7 +77,7 @@ public class BankReconcile {
 		
 		CustomerPaymentModel customerPayment = new CustomerPaymentModel();
 		
-		customerPayment=reconcileService.getReceiptDetails(jsonObject.getString("receiptNumber"));
+		/*customerPayment=reconcileService.getReceiptDetails(jsonObject.getString("receiptNumber"));*/
     	
 		
 		InvoiceHdrModel invoiceHdr=new InvoiceHdrModel();

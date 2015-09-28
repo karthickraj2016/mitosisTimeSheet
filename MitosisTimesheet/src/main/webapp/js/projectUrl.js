@@ -1,1 +1,1 @@
-var projectName = "MitosisTimesheet";
+var projectName="MitosisTimesheet";

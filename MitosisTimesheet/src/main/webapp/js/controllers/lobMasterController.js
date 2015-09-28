@@ -23,11 +23,28 @@ angular.module('myApp.controllers')
 
 			$scope.lobLists=result;
 			$scope.totalItems =	$scope.lobLists.length;
+			
+			$scope.filter = function() {
+				$scope.$watch('search', function(term) {
+					if(term==undefined){
+						$scope.totalItems =	$scope.lobLists.length; 
+
+
+					}
+					window.setTimeout(function() {
+						$scope.totalItems = Math.ceil($scope.lobLists.length/$scope.maxSize);
+
+						$scope.noOfPages = Math.ceil($scope.lobLists.length/$scope.maxSize);
+					}, 10);
+				});
+
+			};
 
 		});
 
 	},
 
+	
 
 	$scope.insert = function (){
 
@@ -66,6 +83,8 @@ angular.module('myApp.controllers')
 
 	}
 
+	
+	
 
 	$scope.Update = function (sheet){
 

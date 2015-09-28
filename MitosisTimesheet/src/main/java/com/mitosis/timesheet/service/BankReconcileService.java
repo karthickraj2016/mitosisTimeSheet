@@ -7,7 +7,7 @@ import com.mitosis.timesheet.model.InvoiceHdrModel;
 
 public interface BankReconcileService {
 
-	public CustomerPaymentModel getReceiptDetails(String receiptNumber);
+	public List<CustomerPaymentModel> getReceiptDetails();
 
 	public List<CustomerPaymentModel> getPaymentDetails(String invoiceNumber);
 

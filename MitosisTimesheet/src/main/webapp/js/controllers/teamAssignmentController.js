@@ -176,8 +176,6 @@ angular.module('myApp.controllers')
 				$scope.$watch('search', function(term) {
 					if(term==undefined){
 						$scope.totalItems =	$scope.teamLists.length; 
-
-
 					}
 					window.setTimeout(function() {
 						$scope.totalItems = Math.ceil($scope.filteredParticipantsResults.length/$scope.maxSize);
