@@ -99,7 +99,7 @@
 			</td>
 				<td>
 				<span ng-show="!showEdit">{{sheet.toLeaveType}}</span>
-				<span id="toleavetype" ng-show="showEdit">
+				<span id="toleavetype" ng-show="showEdit && toleaveType">
 				<select class="form-control" ng-model="sheet.toLeaveType" ng-options="item for item in leaveTypes" style="color: #777777;">
     			<option value="" ng-disabled=true>{{sheet.toLeaveType}}</option>
     			</select> 

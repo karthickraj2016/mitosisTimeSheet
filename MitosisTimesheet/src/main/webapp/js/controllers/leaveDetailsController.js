@@ -270,9 +270,11 @@ angular.module('myApp.controllers')
 
 	$scope.updateLeaveEntry = function(reqParam){
 		
+		
+		
 	
 		
-		
+/*		
 	if(	$('#toleavetype').is(':hidden')){
 		
 		if(reqParam.toLeaveType){
@@ -283,11 +285,17 @@ angular.module('myApp.controllers')
 		}
 		
 		
-	}
+	}*/
 		
+	var fromdate = new Date((reqParam.frmEntryDate).split("-")[1]+"-"+(reqParam.frmEntryDate).split("-")[0]+"-"+(reqParam.frmEntryDate).split("-")[2]);
+	var todate = new Date((reqParam.toEntryDate).split("-")[1]+"-"+(reqParam.toEntryDate).split("-")[0]+"-"+(reqParam.toEntryDate).split("-")[2]);
+	
+	
+	
+	
 		
 
-		if (reqParam.frmEntryDate > reqParam.toEntryDate) {
+		if (fromdate > todate) {
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
 			$(".alert-danger").html("FromDate cannot be after ToDate!");
 			$scope.list();
@@ -406,7 +414,7 @@ angular.module('myApp.controllers')
 		
 		if(sheet.frmEntryDate == sheet.toEntryDate){
 			
-			$('#toleavetype').hide();
+			$scope.toleaveType = false;
 
 		}
 
@@ -424,13 +432,13 @@ angular.module('myApp.controllers')
 
 		if(sheet.frmEntryDate == sheet.toEntryDate){
 			
-			$('#toleavetype').hide();
+			$scope.toleaveType = false;
 
 		}
 		
 		else{
 
-			$('#toleavetype').show();
+			$scope.toleaveType = true;
 			}
 
 

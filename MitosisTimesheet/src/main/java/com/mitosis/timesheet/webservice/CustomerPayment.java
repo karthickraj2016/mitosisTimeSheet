@@ -158,4 +158,23 @@ public class CustomerPayment {
 			String rno=jsonObject.getString("receiptNumber");
 			return i.checkReceiptNo(rno);
 		}
+		
+		@Path("/pendingReceiptList")
+		@GET
+	/*	@Consumes(MediaType.APPLICATION_JSON)*/
+		@Produces(MediaType.APPLICATION_JSON)
+		public List<InvoiceHdrModel> pendingReceiptList() throws JSONException, ParseException {
+			
+			List<InvoiceHdrModel> ReceiptList = new ArrayList<InvoiceHdrModel>();
+			
+			
+			ReceiptList = paymentservice.pendingReceiptList();
+					
+			
+			
+			
+			return ReceiptList;
+			
+	
+		}
 }

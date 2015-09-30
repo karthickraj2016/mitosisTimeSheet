@@ -57,7 +57,7 @@ angular.module('myApp.controllers')
 
 	$scope.customerChanged = function() {
 		var cusid = angular.toJson({
-			"customerId": $scope.customers.customerId
+			"customerId": $scope.bankReconcile.customer.customerId
 		});
 		$http({
 			url: 'rest/payment/projectList',
@@ -75,7 +75,7 @@ angular.module('myApp.controllers')
 	}
 	$scope.projectChanged = function() {
 		var pid = angular.toJson({
-			"projectId": $scope.projects.projectId
+			"projectId": $scope.bankReconcile.project.projectId
 		});
 		$http({
 			url: 'rest/payment/invoiceList',
@@ -94,7 +94,7 @@ angular.module('myApp.controllers')
 	$scope.invoiceChanged = function() {
 		$scope.invoice={};
 		var ino = angular.toJson({
-			"invoiceNumber": $scope.invoices.invoiceNumber
+			"invoiceNumber": $scope.bankReconcile.invoiceNumber
 		});
 		$http({
 			url: 'rest/payment/invoiceHdr',
@@ -105,18 +105,22 @@ angular.module('myApp.controllers')
 			}
 		}).success(function(result, status, headers) {			
 			console.log(result);
-			$scope.invoice.date=result.invoiceDateStr;
-			$scope.invoice.status=result.invoiceStatus;
-			$scope.invoice.invoiceAmount=result.invoiceAmount;
-			$scope.invoice.paidAmount=result.paidAmount;
-			$scope.invoice.balanceAmount=result.balanceAmount;
-			$scope.invoice.currencyCode=result.currencyCode;
+			$scope.bankReconcile.invoiceDate=result.invoiceDateStr;
+			$scope.bankReconcile.invoiceStatus=result.invoiceStatus;
+			$scope.bankReconcile.invoiceAmount=result.invoiceAmount;
+			$scope.bankReconcile.paidAmount=result.paidAmount;
+			$scope.bankReconcile.balanceAmount=result.balanceAmount;
+			$scope.bankReconcile.currencyCode=result.currencyCode;
 		});
 
 	}
 	$scope.addPayment = function(){
+		
+		
+		bankReconcile.customer.id
+	
 		var payment = angular.toJson({
-			"invoiceNumber": $scope.invoices.invoiceNumber,"currencyCode":$scope.invoice.currencyCode,"receiptDate":$scope.payment.receiptDate,"receiptNumber":$scope.payment.receiptNumber,"paidAmount":$scope.payment.paidAmount
+			"invoiceNumber": $scope.bankReconcile.invoiceNumber,"currencyCode":$scope.bankReconcile.currencyCode,"receiptDate":$scope.bankReconcile.receiptDate,"receiptNumber":$scope.bankReconcile.receiptNumber,"paidAmount":$scope.bankReconcile.paidAmount
 		});
 		$http({
 			url: 'rest/payment/addPayment',
@@ -213,6 +217,7 @@ angular.module('myApp.controllers')
 			$scope.payment.paidAmount="";
 		}
 	}
+	
 
 
 	$scope.receiptCheck = function(){

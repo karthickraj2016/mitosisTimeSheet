@@ -1,15 +1,21 @@
 package com.mitosis.timesheet.dao.daoImpl;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import com.mitosis.timesheet.dao.CustomerPaymentDao;
 import com.mitosis.timesheet.model.CustomerPaymentModel;
 import com.mitosis.timesheet.model.InvoiceHdrModel;
+import com.mitosis.timesheet.model.LeaveDetailsModel;
 import com.mitosis.timesheet.util.BaseService;
 
 @SuppressWarnings("rawtypes")
@@ -205,6 +211,33 @@ public class CustomerPaymentImpl extends BaseService implements
 		} finally {
 		}
 		return invoice;
+	}
+
+	@Override
+	public List<InvoiceHdrModel> pendingReceiptList() {
+		List<InvoiceHdrModel> pendingReceiptList = new ArrayList<InvoiceHdrModel>();
+		
+		try {
+			begin();
+			entityManager.getEntityManagerFactory().getCache().evictAll();
+			CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<InvoiceHdrModel> cq = qb.createQuery(InvoiceHdrModel.class);
+			Root<InvoiceHdrModel> root = cq.from(InvoiceHdrModel.class);
+			Expression<Integer> balanceAmount = root.get("balanceAmount");
+			Predicate condition1 = qb.greaterThan(balanceAmount, 0);
+			Predicate conditions = qb.and(condition1);
+			cq.where(conditions);
+			cq.select(root);
+			cq.orderBy(qb.asc(root.get("customer").get("customerName")),qb.asc(root.get("project").get("projectName")),qb.asc(root.get("id")));
+			pendingReceiptList = entityManager.createQuery(cq).getResultList();
+			commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+
+		return pendingReceiptList;
 	}
 
 }

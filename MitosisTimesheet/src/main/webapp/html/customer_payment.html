@@ -11,47 +11,43 @@
     <div class="form-group">
       <label class="control-label col-sm-5 textleft">Customer Name<span>:</span></label>
       <div class="col-sm-7">
-        <select  class="form-control empdet-form" required style="color: #777777;" ng-model="customers" ng-options="item as item.customerName for item in customerList" ng-change="customerChanged()">
-	  	<option value="">Select Customer</option>
-	  	</select> 
+       <span class="form-control" ng-model="bankReconcile.customer">{{bankReconcile.customer.customerName}}</span> 
       </div>
     </div>
     <div class="form-group">
       <label class="control-label col-sm-5 textleft" >Project<span>:</span></label>
       <div class="col-sm-7">          
-        <select  class="form-control empdet-form" required style="color: #777777;" ng-model="projects" ng-options="item as item.projectName for item in projectList" ng-change="projectChanged()">
-	    <option value="">Select Project</option>
-	    </select> 
+        <span class="form-control" ng-model="bankReconcile.project">{{bankReconcile.project.projectName}}</span> 
       </div>
     </div>
     <div class="form-group">
       <label class="control-label col-sm-5 textleft">Invoice No<span>:</span></label>
       <div class="col-sm-7">          
-        <select  class="form-control empdet-form" required style="color: #777777;" ng-model="invoices" ng-options="item as item.invoiceNumber for item in invoiceList" ng-change="invoiceChanged()">
-	   <option value="">Select Invoice</option>
-		</select> 
+         <span class="form-control" ng-model="bankReconcile.invoiceNumber">{{bankReconcile.invoiceNumber}}</span>
       </div>
     </div>
     
     </div>
     
-    <div class="col-md-4 col-sm-6">
+ 
+    
+    <div class="col-md-4 col-sm-6">  
     <div ng-init="dates()" class="form-group">
       <label class="control-label col-sm-5 textleft">Invoice Date<span>:</span></label>
       <div class="col-sm-7">
-       <span class="form-control">{{invoice.date}}</span> 
+       <span class="form-control">{{bankReconcile.invoiceDateStr}}</span> 
        </div>
     </div>
     <div class="form-group">
       <label class="control-label col-sm-5 textleft">Paid Status<span>:</span></label>
       <div class="col-sm-7">          
-        <span class="form-control">{{invoice.status}}</span> 
+        <span class="form-control">{{bankReconcile.invoiceStatus}}</span> 
       </div>
     </div>
     <div class="form-group">
       <label class="control-label col-sm-5 textleft">Invoice Amount<span>:</span></label>
       <div class="col-sm-7">          
-        <span class="form-control">{{invoice.invoiceAmount}}</span> 
+        <span class="form-control">{{bankReconcile.invoiceAmount}}</span> 
       </div>
     </div>
     </div>
@@ -60,19 +56,19 @@
     <div class="form-group">
       <label class="control-label col-sm-5 textleft">Paid So Far<span>:</span></label>
       <div class="col-sm-7">          
-        <span class="form-control">{{invoice.paidAmount}}</span> 
+        <span class="form-control">{{bankReconcile.paidAmount}}</span> 
       </div>
     </div>
     <div class="form-group">
       <label class="control-label col-sm-5 textleft">Balance Amount<span>:</span></label>
       <div class="col-sm-7">          
-        <span class="form-control">{{invoice.balanceAmount}}</span> 
+        <span class="form-control">{{bankReconcile.balanceAmount}}</span> 
       </div>
     </div>
     <div class="form-group">
       <label class="control-label col-sm-5 textleft">Currency<span>:</span></label>
       <div class="col-sm-7">          
-        <span class="form-control">{{invoice.currencyCode}}</span> 
+        <span class="form-control" ng-model="currencyCode">{{bankReconcile.currencyCode}}</span> 
       </div>
     </div>
     </div>

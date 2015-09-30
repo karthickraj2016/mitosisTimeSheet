@@ -158,6 +158,11 @@ angular.module('myApp', ['ui.router','myApp.controllers','ngStorage','ui.bootstr
 						 templateUrl: 'html/lobMaster.html',
 					     controller :'lobMasterController'
 					 })
+					  .state('pendingReceipt', {
+						 url: '/pendingReceipt',
+						 templateUrl: 'html/pendingReceiptDetails.html',
+					     controller :'pendingReceiptController'
+					 })
 			 }]);
 
 angular.module('myApp.controllers',[])

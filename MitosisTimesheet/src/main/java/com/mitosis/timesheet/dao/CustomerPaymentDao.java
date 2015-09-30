@@ -3,6 +3,7 @@ package com.mitosis.timesheet.dao;
 import java.util.List;
 
 import com.mitosis.timesheet.model.CustomerPaymentModel;
+import com.mitosis.timesheet.model.InvoiceHdrModel;
 
 public interface CustomerPaymentDao {
 	public boolean save(CustomerPaymentModel c);
@@ -10,4 +11,5 @@ public interface CustomerPaymentDao {
 	public List<CustomerPaymentModel> showlist();
 	public CustomerPaymentModel show(int id);
 	public boolean checkReceiptNo(String receiptNo);
+	public List<InvoiceHdrModel> pendingReceiptList();
 }
