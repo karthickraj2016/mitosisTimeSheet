@@ -116,8 +116,12 @@ angular.module('myApp.controllers')
 	}
 	$scope.addPayment = function(){
 		
+		console.log($scope.payment.paidAmount);
 		
-		if($scope.bankReconcile.balanceAmount<=0){
+		var balanceCal=parseFloat($scope.payment.paidAmount) - $scope.bankReconcile.balanceAmount;
+		
+		
+		if(balanceCal>0){
 			
 			
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
@@ -198,9 +202,6 @@ angular.module('myApp.controllers')
 				$(".alert-msg").show().delay(1000).fadeOut(); 
 				$(".alert-success").html("Receipt Deleted Successfully");
 				$scope.list();	
-				
-				$scope.bankReconcile.paidAmount=result.paidAmount;
-				$scope.bankReconcile.balanceAmount=result.balanceAmount;
 				
 			}
 		})
