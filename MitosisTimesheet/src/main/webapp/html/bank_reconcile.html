@@ -171,9 +171,11 @@
 	<tbody>
 		<tr ng-repeat="sheet in filteredParticipantsResults| filter:search">
 			<td>
+			
 				<span ng-show="!showEdit">{{sheet.invoiceHdr.project.projectName}}</span>
 				<span ng-show="showEdit"><input class="form-control" type="text" ng-model="sheet.invoiceHdr.project.projectName" readonly></span>
 			</td>
+			<td>
 				<span ng-show="!showEdit">{{sheet.invoiceHdr.invoiceNumber}}</span>
 				<span id="{{sheet.id}}" ng-show="showEdit"><input class="form-control" type="text" ng-model="sheet.invoiceHdr.invoiceNumber" readonly></span>
 			</td>

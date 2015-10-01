@@ -117,10 +117,19 @@ angular.module('myApp.controllers')
 	$scope.addPayment = function(){
 		
 		
-		bankReconcile.customer.id
+		if($scope.bankReconcile.balanceAmount<=0){
+			
+			
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("there is no balance Amount in this invoice!!!!");
+			return;	
+			
+		}
+		
+		
 	
 		var payment = angular.toJson({
-			"invoiceNumber": $scope.bankReconcile.invoiceNumber,"currencyCode":$scope.bankReconcile.currencyCode,"receiptDate":$scope.bankReconcile.receiptDate,"receiptNumber":$scope.bankReconcile.receiptNumber,"paidAmount":$scope.bankReconcile.paidAmount
+			"invoiceNumber": $scope.bankReconcile.invoiceNumber,"currencyCode":$scope.bankReconcile.currencyCode,"receiptDate":$scope.payment.receiptDate,"receiptNumber":$scope.payment.receiptNumber,"paidAmount":$scope.payment.paidAmount
 		});
 		$http({
 			url: 'rest/payment/addPayment',
@@ -131,11 +140,17 @@ angular.module('myApp.controllers')
 				$(".alert-msg").show().delay(1000).fadeOut(); 
 				$(".alert-success").html("Receipt Added Successfully");
 			}
+	
+			$scope.invoiceChanged();
+			
+		
 			$scope.payment.receiptNumber="";
 			$scope.payment.paidAmount="";
 			$scope.payment.receiptDate="";
-			$scope.invoiceChanged();
 			$scope.list();
+			
+			
+			
 		})
 	}
 	$scope.list = function() {
@@ -182,7 +197,11 @@ angular.module('myApp.controllers')
 			if(result.value="success"){
 				$(".alert-msg").show().delay(1000).fadeOut(); 
 				$(".alert-success").html("Receipt Deleted Successfully");
-				$scope.list();			
+				$scope.list();	
+				
+				$scope.bankReconcile.paidAmount=result.paidAmount;
+				$scope.bankReconcile.balanceAmount=result.balanceAmount;
+				
 			}
 		})
 	}

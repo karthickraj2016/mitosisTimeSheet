@@ -199,7 +199,7 @@ public class CustomerPaymentImpl extends BaseService implements
 			// System.out.println("NEW=="+newBalance);
 			invoice.setBalanceAmount(newBalance);
 			invoice.setPaidAmount(newPaid);
-			 if (invoice.getInvoiceAmount().equals(invoice.getPaidAmount())) {
+			 if (invoice.getBalanceAmount().equals(invoice.getPaidAmount())) {
 				invoice.setInvoiceStatus("PAID");
 			} else if(newBalance.signum()<0){
 				invoice.setInvoiceStatus("PAID");
