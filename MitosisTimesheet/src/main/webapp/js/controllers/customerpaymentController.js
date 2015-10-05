@@ -53,6 +53,8 @@ angular.module('myApp.controllers')
 	});
 	
 	
+	
+	
 
 
 	$scope.customerChanged = function() {
@@ -125,7 +127,7 @@ angular.module('myApp.controllers')
 			
 			
 			$(".alert-msg1").show().delay(1000).fadeOut(); 
-			$(".alert-danger").html("there is no balance Amount in this invoice!!!!");
+			$(".alert-danger").html("Paid amount cannot be greater than or equal to balance amount!!!!");
 			return;	
 			
 		}
@@ -135,12 +137,13 @@ angular.module('myApp.controllers')
 		var payment = angular.toJson({
 			"invoiceNumber": $scope.bankReconcile.invoiceNumber,"currencyCode":$scope.bankReconcile.currencyCode,"receiptDate":$scope.payment.receiptDate,"receiptNumber":$scope.payment.receiptNumber,"paidAmount":$scope.payment.paidAmount
 		});
+		
 		$http({
 			url: 'rest/payment/addPayment',
 			method: 'POST',
 			data:payment
 		}).success(function(result, status, headers) {
-			if(result="true"){
+			if(result.flag=="true"){
 				$(".alert-msg").show().delay(1000).fadeOut(); 
 				$(".alert-success").html("Receipt Added Successfully");
 			}
@@ -158,6 +161,9 @@ angular.module('myApp.controllers')
 		})
 	}
 	$scope.list = function() {
+		
+		
+		$scope.bankReconcile=$localStorage.bankReconcile;
 
 		$http({
 			url: 'rest/payment/showPaymentlist',
@@ -208,6 +214,22 @@ angular.module('myApp.controllers')
 	}
 
 	$scope.updateReceipt =function(reqParam){
+		
+		
+		var balanceCal=parseFloat(reqParam.paidAmount) - reqParam.invoiceHdr.invoiceAmount;
+		
+		
+		if(balanceCal>=0){
+			
+			
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("Paid amount cannot be greater than or equal to balance amount!!!!");
+			 $scope.list();
+			 $scope.paymentList=$scope.sheetList;
+			
+			return;	
+			
+		}
 
 		var payment = angular.toJson({"id":reqParam.id,
 			"invoiceNumber": reqParam.invoiceHdr.invoiceNumber,"currencyCode":reqParam.currencyCode,"receiptDate":reqParam.receiptDateStr,"receiptNumber":reqParam.receiptNumber,"paidAmount":reqParam.paidAmount
@@ -222,10 +244,13 @@ angular.module('myApp.controllers')
 			}
 		}).success(function(result, status, headers) {
 
-			if(result=="true"){
+			if(result.flag=="true"){
 				$(".alert-msg").show().delay(1000).fadeOut(); 
 				$(".alert-success").html("Receipt Updated Successfully");
-				$scope.list();			
+				$scope.list();
+				$scope.bankReconcile.balanceAmount = result.balanceAmount;
+				$scope.bankReconcile.paidAmount = result.paidAmount;
+				$scope.bankReconcile.paidStatus = result.paidStatus;
 			}
 		})
 
@@ -238,6 +263,18 @@ angular.module('myApp.controllers')
 		}
 	}
 	
+	
+	$scope.pencilClick=function(sheet){
+		
+		
+		$scope.sheetList = angular.copy(sheet);
+	}
+	
+	
+	$scope.cancel = function(sheet){
+		
+		$scope.sheetList = angular.copy(sheet);
+	}
 
 
 	$scope.receiptCheck = function(){

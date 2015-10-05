@@ -74,7 +74,7 @@ public class CustomerPaymentModel {
 	public String getBankReceivedDateStr() {
 		if(getBankReceivedDate()==null){
 			
-			return "NotEntered";
+			return "";
 		}
 		Date d=getBankReceivedDate();
 		return new SimpleDateFormat("dd-MM-yyyy").format(d);		

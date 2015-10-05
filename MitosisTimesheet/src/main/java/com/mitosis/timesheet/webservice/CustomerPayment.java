@@ -39,7 +39,11 @@ public class CustomerPayment {
 		@POST
 		@Consumes(MediaType.APPLICATION_JSON)
 		@Produces(MediaType.APPLICATION_JSON)
-		public boolean addCompany(JSONObject jsonObject) throws JSONException, ParseException{
+		public JSONObject addCompany(JSONObject jsonObject) throws JSONException, ParseException{
+			
+			
+			JSONObject jsonobject = new JSONObject();
+			
 			boolean flag=false;
 			if(jsonObject.has("id")){
 				payment.setId(jsonObject.getInt("id"));
@@ -62,7 +66,26 @@ public class CustomerPayment {
 			if(jsonObject.has("receivedAmount")){
 			payment.setReceivedAmount(BigDecimal.valueOf(jsonObject.getDouble("receivedAmount")));}
 			flag=paymentservice.save(payment);
-			return flag;
+			
+			if(flag){
+				
+				System.out.println(payment);
+				
+				
+				jsonobject.put("paidAmount",payment.getPaidAmount());
+				jsonobject.put("balanceAmount",payment.getInvoiceHdr().getBalanceAmount());
+				jsonobject.put("paidstatus", payment.getInvoiceHdr().getInvoiceStatus());
+				jsonobject.put("flag", "true");
+				return jsonobject;
+				
+				
+			}
+			else{
+				
+				return jsonobject;
+				
+			}
+			
 	}
 		@Path("/showPayment")
 		@POST
