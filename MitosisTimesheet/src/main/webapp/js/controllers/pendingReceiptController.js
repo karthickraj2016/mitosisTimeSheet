@@ -67,8 +67,7 @@ $scope.list = function (){
 
 $scope.showBankReconcile = function(sheet){
 	
-	
-	//$rootScope.bankReconcile = sheet;
+
 	$localStorage.bankReconcile = sheet;
 	
 	$state.go("customer_payment");

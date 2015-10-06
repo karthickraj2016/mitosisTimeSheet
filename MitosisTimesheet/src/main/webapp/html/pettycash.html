@@ -1,0 +1,101 @@
+<div ng-init="list()">
+<div class="container" style="margin-top: 8%;"><div class="row"><div class="col-xs-12 col-md-12"><h2 class="text-center">PettyCash Details</h2></div></div></div>
+<div class="container" style="width: 100%;">
+<div class="divpc-form">
+
+<form   class="form-inline" role="form" id="addEntry" ng-submit="">
+    <div ng-init="dates()" class="form-group">
+       <input type="text" required class="form-control" ui-date="dateOptions" ui-date-format="dd-mm-yy" ng-model="timesheet.date">
+    </div>
+    <div class="form-group">
+    <select id="" class="form-control" required ng-model="" ng-options="" ng-blur="validateEmployee(employee)">
+    <option value="">Category</option>
+    <option value="">1</option>
+    <option value="">2</option>
+    <option value="">3</option>
+    </select> 
+    </div>
+    <div class="form-group">
+    <select id="" class="form-control" required ng-model="employee" ng-options="item as item.name for item in employeeNameList" ng-blur="validateEmployee(employee)">
+    <option value="">Sub-Category</option>
+    <option value="">1</option>
+    <option value="">2</option>
+    </select> 
+    </div>
+    <div class="form-group">
+    <input id="" type="text" placeholder="Description" required class="form-control">
+    </div>   
+    <div class="form-group">
+    <input id="" type="text" placeholder="Amount" required class="form-control">
+    </div>
+    <div class="pull-right" style="word-spacing: 12px; width: 140px;">
+    <button type="submit" class="btn btn-primary">Add</button>
+	<button type="reset"  class="btn btn-primary">Clear</button>
+	</div> 
+	
+  </form>
+  </div>
+</div>
+</div>
+<div class="container" style="width: 100%;">
+<div class="row">
+<div class="col-sm-6 len_show" style="padding: 20px;">
+<span>Show
+<select ng-model="numPerPage" >
+<option>15</option>
+<option>25</option>
+<option>35</option>
+<option>50</option>
+</select> Entries</span></div>
+<div class="col-sm-6 search-tab"> 
+	       <input type="text" id="search" required class="form-control" ng-change="filter()" ng-model="search" placeholder="Search"></input>
+</div>
+</div>
+<table class="table">
+	<thead class="thead-mit-ts">
+		<tr>
+			<th>Date</th>
+			<th>Category</th>
+			<th>Subcategory</th>
+			<th>Description</th>
+			<th>Amount</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="sheet in filteredParticipantsResults=(employeeEntryList | filter:search) | startFrom:(currentPage-1)*numPerPage | limitTo:numPerPage">
+			<td>
+			   <span ng-show=""></span>
+				<span ng-show=""><input class="form-control" ng-model="" style="color: #777777;">
+				</span>
+			</td>
+			<td>
+			   <span ng-show=""></span>
+				<span ng-show=""><input class="form-control" ng-model="" style="color: #777777;">
+				</span>
+			</td>
+			<td>
+			   <span ng-show=""></span>
+				<span ng-show=""><input class="form-control" ng-model="" style="color: #777777;">
+				</span>
+			</td>
+			<td>
+			   <span ng-show=""></span>
+				<span ng-show=""><input class="form-control" ng-model="" style="color: #777777;">
+				</span>
+			</td>
+			<td>
+			   <span ng-show=""></span>
+				<span ng-show=""><input class="form-control" ng-model="" style="color: #777777;">
+				</span>
+			</td>
+			<td></td>
+		</tr>
+	</tbody>
+</table>
+<button class="btn btn-primary" ng-click="calculateAndUpdateExp()">Update Experience</button>
+<pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="numPerPage" class="pagination-sm" boundary-links="true"></pagination>
+</div>
+ <div class="alert-msg col-xs-12 col-sm-6"><p class="alert-success"></p></div>
+ <div class="alert-msg1 col-xs-12 col-sm-6"><p class="alert-danger"></p></div>
+ </div>

@@ -159,7 +159,6 @@ angular.module('myApp.controllers')
 
 			$scope.cost.costOfEmp=undefined;
 
-
 		}
 
 		var projectType=$scope.cost.projectType;

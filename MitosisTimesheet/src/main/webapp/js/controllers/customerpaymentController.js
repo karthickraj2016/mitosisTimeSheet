@@ -219,7 +219,7 @@ angular.module('myApp.controllers')
 		var balanceCal=parseFloat(reqParam.paidAmount) - reqParam.invoiceHdr.invoiceAmount;
 		
 		
-		if(balanceCal>=0){
+		if(balanceCal>0){
 			
 			
 			$(".alert-msg1").show().delay(1000).fadeOut(); 

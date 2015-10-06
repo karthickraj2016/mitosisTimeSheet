@@ -163,6 +163,25 @@ angular.module('myApp', ['ui.router','myApp.controllers','ngStorage','ui.bootstr
 						 templateUrl: 'html/pendingReceiptDetails.html',
 					     controller :'pendingReceiptController'
 					 })
+					 
+					  .state('expenses', {
+						 url: '/expenses',
+						 templateUrl: 'html/expenses.html',
+						 controller :'expensesController'
+					    
+					 })
+					   .state('pettyCash', {
+						 url: '/pettyCash',
+						 templateUrl: 'html/pettycash.html',
+					    
+					 })
+					  .state('issueCheque', {
+						 url: '/issueCheque',
+						 templateUrl: 'html/issuecheque.html',
+					    
+					 })
+				
+					 
 			 }]);
 
 angular.module('myApp.controllers',[])

@@ -1,0 +1,146 @@
+<!-- <div ng-init="list()">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid top-header-fixed">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <div class="logo"><img src="images/logo2.png"></div>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar" ng-controller="HeaderController">
+      <ul class="nav navbar-nav" style="margin-left: 30px; margin-top: 8px;">
+        <li ng-class="{ active: isActive('/timesheet')}"><a ui-sref="timesheet">Home</a></li>
+         <li ng-show="manageFinance" ng-class="{ active: isActive('/finance')}"><a class="dropdown-toggle" data-toggle="dropdown"> Finance<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li><a ui-sref="levelMaster">Monthly Revenue Projection</a></li>
+           <li><a ui-sref="company_info">Company Information</a></li>
+          <li><a ui-sref="projectCostDetails">Project Cost </a></li>
+           <li><a ui-sref="invoice">Invoice</a></li>
+         <li><a ui-sref="customer_payment">Receipt</a></li>
+                   <li><a ui-sref="">Bank Reconcile</a></li> 
+          </ul>
+        </li>
+          <li ng-show="manageCustomer" ng-class="{ active: isActive('/customerDetails')}"><a ui-sref="customerDetails">Customer Details</a></li>
+     <li ng-show="manageProject" ng-class="{ active: isActive('/project')}"><a ui-sref="project">Project Details</a></li>
+        <li ng-show="manageTeam" ng-class="{ active: isActive('/teamAssignment')}"><a ui-sref="teamAssignment">Team Assignment</a></li>
+         <li ng-show="manageEmployees" ng-class="{ active: isActive('/employeeMaster')}"><a ui-sref="employeeMaster">Employee Master</a></li>
+       <li ng-class="{ active: isActive('/reports')}"><a class="dropdown-toggle" data-toggle="dropdown"> Reports<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li><a ui-sref="individualreport" >Individual Reports</a></li>
+            <li><a ui-sref="teamreport">Team Reports</a></li>
+          </ul>
+        </li>
+        </ul>      
+    </div>
+    <section class="jtr">
+		<span class="cp" onclick="show_hide()">
+		<img class="opt" style="height: 50px; width: 50px; border-radius: 50%;" src="images/user.jpg"></img></span> 
+		<section id="acc_opt">
+		<span ng-model="name">{{name}}</span>
+		<a ui-sref="account">Account</a>
+		<a ng-click="logout();">Logout</a>
+		</section></section>
+  </div>
+</nav>
+</div> -->
+
+<div ng-init="list()">
+
+<div class="container" style="margin-top: 8%;"><div class="row"><div class="col-xs-12 col-md-12"><h2 class="text-center">Expenses Master</h2></div></div></div>
+<div class="container" style="width: 100%;">
+<div class="divexp-form" style="word-spacing: 80px;">
+
+<form   class="form-inline" role="form" id="addEntry" ng-submit="insert()">
+    <div class="form-group">
+   <textarea rows="1" cols="15" required class="form-control" ng-model="expenseDescription" placeholder="Description"></textarea>
+    </div>
+    <div class="form-group">
+    <select id="userId" class="form-control" required ng-options="item for item in payingModes" ng-model="payingMode">
+    <option value="" ng-disabled=true>Paying Mode</option>
+<!--     <option value="">Cheque</option>
+    <option value="">Cash</option>
+    <option value="">Card</option> -->
+    </select> 
+    </div>
+    <div class="form-group">
+    <select id="userId" class="form-control" required ng-model="period" ng-options="item for item in periods">
+    <option value="" ng-disabled=true>Period</option>
+<!--     <option value="">Yearly</option>
+    <option value="">Monthly</option> -->
+    </select> 
+    </div>   
+    <div class="pull-right" style="word-spacing: 12px; width: 140px;">
+    <button type="submit" class="btn btn-primary">Add</button>
+	<button type="reset"  class="btn btn-primary">Clear</button>
+	</div> 
+	
+  </form>
+  </div>
+</div>
+<div class="container" style="width: 100%;">
+<div class="row">
+<div class="col-sm-6 len_show" style="padding: 20px;">
+<span>Show
+<select ng-model="numPerPage" >
+<option>15</option>
+<option>25</option>
+<option>35</option>
+<option>50</option>
+</select> Entries</span></div>
+<div class="col-sm-6 search-tab"> 
+	       <input type="text" id="search" required class="form-control" ng-change="filter()" ng-model="search" placeholder="Search"></input>
+</div>
+</div>
+<table class="table">
+	<thead class="thead-mit-ts">
+		<tr>
+			<th>Expense Description</th>
+			<th>Paying Mode</th>
+			<th>period</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="sheet in filteredParticipantsResults=(expensesList | filter:search) | startFrom:(currentPage-1)*numPerPage | limitTo:numPerPage">
+		<td>
+				<span ng-show="!showEdit">{{sheet.description}}</span>
+				<span ng-show="showEdit" ><input class="form-control" type="text" ng-model="sheet.description"></span>
+				<span style="color:red" ng-show="sheet.description == '' || sheet.description"></span>
+			</td>
+			<td>
+				<span ng-show="!showEdit">{{sheet.payingMode}}</span>
+				<span ng-show="showEdit">
+				  <select id="userId" class="form-control" required ng-options="item for item in payingModes" ng-model="sheet.payingMode">
+    				<option value="" ng-disabled=true>{{sheet.payingMode}}<</option>
+    				</select> 
+				     </span>
+				     <span style="color:red" ng-show="sheet.payingMode == '' || sheet.payingMode == undefined"></span>
+
+			</td>
+			<td>
+				<span ng-show="!showEdit">{{sheet.period}}</span>
+				<span ng-show="showEdit" >
+			   <select id="userId" class="form-control" required ng-model="sheet.period" ng-options="item for item in periods">
+    			<option value="" ng-disabled=true>{{sheet.period}}</option>
+    			</select>
+				</span>
+				<span style="color:red" ng-show="sheet.period == '' || sheet.period == undefined"></span>
+			</td>
+			<td style="word-spacing: 15px;">
+				<a><span class="glyphicon glyphicon-pencil" ng-click="showEdit = !showEdit;pencilClick(sheet)" ng-show="!showEdit"></span></a>
+				<a><span class="glyphicon glyphicon-remove" ng-click="confirmDelete(sheet.id)" ng-show="!showEdit"></span></a>
+				<a><span class="glyphicon glyphicon-ok" ng-click="showEdit = !showEdit;update(sheet)" ng-show="showEdit" ng-disabled="checkRequired(sheet);"></span></a>
+				<a><span class="glyphicon glyphicon-ban-circle" ng-click="showEdit = !showEdit;cancel()" ng-show="showEdit"></span></a>
+     		</td>
+		</tr>
+	</tbody>
+</table>
+<!-- <button class="btn btn-primary" ng-click="calculateAndUpdateExp()">Update Experience</button> -->
+<pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="numPerPage" class="pagination-sm" boundary-links="true"></pagination>
+</div>
+ <div class="alert-msg col-xs-12 col-sm-6"><p class="alert-success"></p></div>
+ <div class="alert-msg1 col-xs-12 col-sm-6"><p class="alert-danger"></p></div>
+ </div>
+ </div>
