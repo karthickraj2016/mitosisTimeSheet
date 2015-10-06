@@ -115,6 +115,16 @@ angular.module('myApp.controllers')
 	
 	$scope.update = function(sheet){
 		
+		
+		if(sheet.description==""){
+			
+			$(".alert-msg1").show().delay(1000).fadeOut(); 
+			$(".alert-danger").html("Please enter Expenses Description!!!!");
+			$scope.list();
+			return;
+			
+		}
+		
 		var menuJson=angular.toJson({"expenseDescription":sheet.description,"payingMode":sheet.payingMode,"period":sheet.period,"id":sheet.id});
 		
 	
